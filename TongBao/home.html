@@ -197,30 +197,10 @@
 				-webkit-overflow-scrolling: auto !important
 			}
 		</style>
-
 	</head>
 
 	<body>
-
 		<div id="app" class="shouye">
-			<!--<div class="m-slider">-->
-			<!--<div class="slider-wrapper" style="transform: translate3d(-375px, 0px, 0px); transition-duration: 0ms;">-->
-			<!--<div class="slider-item"><a href="http://mp.weixin.qq.com/s/SsbmjHysHy2nnjhq7xy81A" target="_blank"><img-->
-			<!--src="http://www.tongtongww.com/storage/upload/1f1deb0d0a241576301fad9a4af2b045.jpg" alt=""></a>-->
-			<!--</div>-->
-			<!--<div class="slider-item"><a href="http://mp.weixin.qq.com/s/rxOUqg8W3MkPLBpycOzitA" target="_blank"><img-->
-			<!--src="http://www.tongtongww.com/storage/upload/a0c300f0a8865a472d94390a866d9027.jpg" alt=""></a>-->
-			<!--</div>-->
-			<!--<div class="slider-item"><a href="http://mp.weixin.qq.com/s/SsbmjHysHy2nnjhq7xy81A" target="_blank"><img-->
-			<!--src="http://www.tongtongww.com/storage/upload/1f1deb0d0a241576301fad9a4af2b045.jpg" alt=""></a>-->
-			<!--</div>-->
-			<!--<div class="slider-item"><a href="http://mp.weixin.qq.com/s/rxOUqg8W3MkPLBpycOzitA" target="_blank"><img-->
-			<!--src="http://www.tongtongww.com/storage/upload/a0c300f0a8865a472d94390a866d9027.jpg" alt=""></a>-->
-			<!--</div>-->
-			<!--</div>-->
-			<!--<div class="slider-pagination"><span class="slider-pagination-item slider-pagination-item-active"></span><span-->
-			<!--class="slider-pagination-item"></span></div>-->
-			<!--</div>-->
 			<div id="aui-slide3">
 				<div class="aui-slide-wrap">
 					<div class="aui-slide-node bg-dark">
@@ -457,44 +437,45 @@
 					<div class="aui-bar-tab-label">我的</div>
 			</footer>
 
-			<script type="text/javascript">
-				apiready = function() {
-					api.parseTapmode();
-				}
-				$('#xiaoxi_tip').hide();
-				var tab = new auiTab({
-					element: document.getElementById("footer"),
-					index: 1
-				}, function(ret) {
-					switch(ret.index) {
-						case 1:
-							break;
-						case 2:
-							window.location.replace("fabu.html")
-							break;
-						case 3:
-							window.location.replace("xiaoxi.html")
-							break;
-						case 4:
-							window.location.replace("wode.html")
-
-							break;
-					}
-				});
-
-				var slide3 = new auiSlide({
-					container: document.getElementById("aui-slide3"),
-					// "width":300,
-					"height": 180,
-					"speed": 500,
-					"autoPlay": 3000, //自动播放
-					"loop": true,
-					"pageShow": true,
-					"pageStyle": 'dot',
-					'dotPosition': 'center'
-				})
-			</script>
 			</div>
 	</body>
+
+	<script type="text/javascript">
+		apiready = function() {
+			api.parseTapmode();
+		}
+		$('#xiaoxi_tip').hide();
+		var tab = new auiTab({
+			element: document.getElementById("footer"),
+			index: 1
+		}, function(ret) {
+			switch(ret.index) {
+				case 1:
+					break;
+				case 2:
+					window.location.replace("fabu.html")
+					break;
+				case 3:
+					window.location.replace("xiaoxi.html")
+					break;
+				case 4:
+					window.location.replace("wode.html")
+
+					break;
+			}
+		});
+
+		var slide3 = new auiSlide({
+			container: document.getElementById("aui-slide3"),
+			// "width":300,
+			"height": 180,
+			"speed": 500,
+			"autoPlay": 3000, //自动播放
+			"loop": true,
+			"pageShow": true,
+			"pageStyle": 'dot',
+			'dotPosition': 'center'
+		})
+	</script>
 
 </html>
