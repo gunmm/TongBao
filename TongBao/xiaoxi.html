@@ -120,7 +120,7 @@
 		});
 
 		function detail(id) {
-			console.log(id)
+			window.location.href = "message/chat_datail.html?id=" + id;
 		}
 
 		$('#xiaoxi_tip').hide();
@@ -131,8 +131,8 @@
 			function(ret) {
 				switch(ret.index) {
 					case 1:
-                        window.location.replace("home.html")
-                        break;
+						window.location.replace("home.html")
+						break;
 					case 2:
 						window.location.replace("fabu.html")
 						break;
