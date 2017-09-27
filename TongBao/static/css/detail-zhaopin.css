@@ -1,0 +1,378 @@
+
+.job-head{
+	padding: 15px 0 15px 10px;
+	width: 100%;
+}
+.job-name span:first-child{
+	font-family:NotoSansHans-Bold;
+	font-size:16px;
+	color:#2c2c2c!important;
+	font-weight: 600;
+}
+.job-name span{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#ec9d1d;
+	margin-right: 10px;
+}
+.zhiwei {
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+	padding-top: 7px;
+}
+.zhiwei span{
+	margin-left: 10px;
+}
+.require{
+	padding-top: 7px;
+}
+
+.require .yaoqiu{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+}
+.require li{
+	padding-left: 5px;
+	overflow: hidden;
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	
+	color:#717171;
+}
+.require li span {
+    text-align: center;
+    display: inline-block;
+    margin-left: 2px;
+    float: left;
+	
+}
+.require li  i{
+	 width: 1px;
+    height: 12px;
+    float: left;
+    /* color: red; */
+    border-right: 1px solid black;
+    margin-top: 5px;
+    margin-left: 5px;
+    
+}
+.require li:last-child i{
+	border: none;
+}
+.fuli{
+	padding-top: 10px;
+}
+.fuli span{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+}
+.fuli li{
+	border:1px solid #3095e3;
+	height: 18px;
+	text-align: center;
+	line-height: 18px;
+	border-radius: 4px;
+	font-family:NotoSansHans-Regular;
+	font-size:1.2rem;
+	color:#3095e3;
+	margin-left: 6px;
+}
+.collec ul{
+	padding: 15px 5px 15px 10px;
+}
+.collec ul li{
+	float: left;
+	font-family:NotoSansHans-Regular;
+	
+	color:#717171;
+}
+.collec ul li:first-child{
+	width: 37%;
+}
+.collec ul li:nth-child(2){
+	margin-left: 19px;
+	width: 24%;
+}
+.collec ul li:nth-child(3){
+	margin-left: 18px;
+}
+.job-address h3{
+	padding: 15px 5px 15px 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#2c2c2c;
+	font-weight: 600;
+}
+.job-address p{
+	padding: 15px 5px 15px 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:15px;
+	color:#2c2c2c;
+	font-weight: 600;
+}
+.ico-right{
+	background: url(../img/ico-right1.png)no-repeat;
+	background-size:cover ;
+	width: 8px;
+    height: 15px;
+    position: relative;
+    top: 4px;
+    margin-right: 10px;
+    
+}
+.job-deions h3{
+	padding: 0px 5px 15px 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#2c2c2c;
+	font-weight: 600;
+}
+.div1{
+	height: 10px;
+    width: 100%;
+    background: #F5F5F5;
+}
+.content{
+	padding: 15px 17px 15px 10px;
+	
+	overflow: hidden;
+	width: 100%;
+}
+.content p{
+	font-family:NotoSansHans-Regular;
+	font-size:15px;
+	color:#717171;
+	line-height:2.25rem;
+	text-align:justify;
+}
+.go-all{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#3095e3;
+	font-weight: 500;
+}
+.company-intro{
+	width: 100%;
+	padding-bottom:10px ;
+	padding: 0px 17px 1px 10px;
+	line-height: 24px;
+}
+.company-intro p:first-child{
+	font-weight: 500;
+}
+.company-intro p{
+	font-family:NotoSansHans-Regular;
+	font-size:15px;
+	color:#717171;
+	line-height: 38px;
+}
+.company-content{
+	padding: 15px 17px 15px 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:15px;
+	color:#717171;
+	line-height:22.5px;
+	text-align:justify;
+	
+}
+.company-content p:first-child{
+	font-family:NotoSansHans-Regular;
+	font-size:15px;
+	color:#2c2c2c;
+}
+.company-content p:nth-child(2){
+	font-family:NotoSansHans-Regular;
+	font-size:15px;
+	color:#717171;
+	line-height:22.5px;
+}
+
+.company-content ul li{
+	float: left;
+	width: 80px;
+	height: 80px;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+.company-content ul li img{
+	width: 100%;
+	height: 100%;
+}
+.tousu{
+	height: 62px;
+	background: #F5F5F5;
+	width: 100%;
+}
+.tousu-main{
+	background:#ffffff;
+	border:1px solid #cccccc;
+	border-radius:4px;
+	width:66px;
+	height:28px;
+	top: 16px;
+	right:17px ;
+	line-height: 24px;
+	text-align: center;
+}
+.ico-tousu{
+	width: 12px;
+	height: 14px;
+	background:url(../img/ico-tousu.png)no-repeat;
+	background-size:cover ;
+	position: relative;
+	top: 3px;
+}
+.ico-tousu span{
+	font-family:HiraginoSansGB-W3;
+	font-size:14px;
+	color:#097ed8;
+}
+/*相似职位*/
+.m-list .padd{
+	line-height: 31px;
+	padding: 15px 5px 15px 0px;
+}
+.m-main{
+	width: 100%;
+}
+.m-main li{
+	width: 100%;
+	
+}
+.m-main li a{
+	color: #333333;;
+}
+.recruit-list{
+	width: 100%;
+}
+
+.recruit-header{
+	width: 100%;
+}
+.recruit-header h3{
+	font-family:NotoSansHans-Bold;
+	font-size:16px;
+	color:#2c2c2c;
+	font-weight: 600;
+}
+.recruit-header p{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#ec9d1d;
+	margin-right: 1rem;
+}
+.recruit-header h4{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+	
+}
+.recruit-header h4 span{
+	margin-left: 10px;
+}
+
+.recruit-header span{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#717171;
+	margin-right: 15px;
+}
+.recruit-pos{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#717171;
+}
+.name-list{
+	width: 50%;
+}
+.name-list li{
+	float: left;
+	padding-right: 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+	
+}
+.module-title {
+	padding: 10px 10px 10px 10px;
+}
+.module-title span{
+	font-family: NotoSansHans-Regular;
+    font-size: 16px;
+    color: #2c2c2c;
+    font-weight: 600;
+}
+    
+/*尾部*/
+footer{
+	position: fixed;
+	left:0;
+	bottom: 0;
+	width: 100%;
+	height: 56px;
+	
+	
+}
+footer{
+	width: 100%;
+}
+footer li{
+	float: left;
+	text-align: center;
+	padding-top: 12px;
+}
+footer li img{
+	width: 22px;
+	height: 19px;
+	margin: 0 auto;
+	display: block;
+	
+}
+footer li span{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#ffffff;
+	margin-top: 3px;
+}
+footer li:first-child{
+	width: 21.3%;
+	background:#097ed8;
+	
+}
+footer .second{
+	width: 21.3%;
+	background:#3095e3;
+
+}
+.third{
+	width: 21.3%;
+	background: #FFFFFF;
+}
+.third span{
+	font-family:NotoSansHans-Regular;
+	
+	color:#717171;
+}
+footer .last{
+	width: 36%;
+	padding-top: 12px;
+	background:#ec9d1d;
+	height: 100%;
+	height: 56px;
+	line-height: 30px;
+	
+}
+footer .last span{
+	font-size:16px;
+	
+	
+}
+/*尾部*/
+

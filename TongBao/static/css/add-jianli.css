@@ -1,0 +1,155 @@
+.compile-head {
+	height: 70px;
+	
+}
+.compile-head{
+	padding-left: 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#2c2c2c;
+	padding-left: 10px;
+	line-height: 70px;
+}
+.compile-pic{
+	width: 50px;
+	height: 50px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 29px;
+}
+.compile-pic img{
+	width: 100%;
+	height: 100%;
+}
+.g-right{
+	display: block;
+}
+.right-posi{
+	position: absolute;
+	top: 15px;
+	right: 10px;
+	margin-top: 12px;
+}
+.compile-news{
+	height: 42px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#2c2c2c;
+	font-weight: 600;
+	padding-left: 10px;
+	line-height: 60px;
+}
+.compile-moudle{
+	margin: 10px;
+}
+.compile-moudle p{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#717171;
+	line-height: 32px;
+}
+.compile-moudle p .bianji{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#3095e3;
+}
+.compile-moudle p .shanchu{
+	margin-right: 20px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#ec9d1d!important;
+	
+}
+.status{
+	margin-bottom: 5px;
+	color:#2c2c2c!important;
+}
+
+.self-appra{
+	
+	width: 73%;
+}
+ @media screen and (min-width:320px){
+	.self-appra{width: 76%;}
+}
+@media screen and (max-width:320px){
+	.self-appra{width: 71%;}
+	
+}
+.zbxx a{
+	font-size: 16px!important;
+	
+}
+.zbxx {
+	margin-bottom: 5px!important;
+}
+.full-name{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#717171;
+	margin-top: 5px;
+}
+.footer-bootom{
+	height: 55px;
+	height: 55px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.footer-bootom ul{
+	height: 100%;
+}
+.footer-bootom ul li{
+	width: 50%;
+	text-align: center;
+	line-height: 55px;
+}
+.footer-bootom ul li span{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#717171;
+}
+.footer-bootom ul li:nth-child(2) span{
+	color:#3095e3;
+}
+.ico-zhanshi1{
+    background: url(../img/ico-quxiaozhanshi1.png)no-repeat;
+    background-size: cover;
+    position: relative;
+    top: 5px;
+   height: 22px;
+   width: 22px;
+    margin-right: 5px;
+}
+.ico-zhanshi2{
+    background: url(../img/ico-quxiaozhanshi2.png)no-repeat;
+    background-size: cover;
+    position: relative;
+    top: 5px;
+    height: 22px;
+    width: 22px;
+    margin-right: 5px;
+}
+.ico-yulan{
+    background: url(../img/ico-yulanjianli.png)no-repeat;
+    background-size: cover;
+    position: relative;
+    top: 5px;
+    height: 22px;
+    width: 22px;
+    margin-right: 5px;
+}
+.text-main p:first-child{
+	
+	 font-size:16px!important; 
+	
+}
+.text-main p:nth-child(2){
+	
+	 font-size:14px!important; 
+	
+}
+.bt-h{
+	height: 50px;
+}

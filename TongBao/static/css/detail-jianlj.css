@@ -1,0 +1,319 @@
+
+.detail-head{
+	padding: 15px 0 15px 11px;
+	width: 100%;
+} 
+.head-pic{
+	width: 75px;
+	height: 75px;
+	border-radius: 50%;
+	margin: 0px auto;
+}
+.mingzi{
+	font-size: 16px;
+	color:#2c2c2c;
+}
+.head-pic img{
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+/*.head-main{
+	width: 70%;
+	margin-left: 10px;
+}*/
+.head-name p{
+	font-family:NotoSansHans-Bold;
+	font-size:16px;
+	color:#2c2c2c;
+	font-weight: 600;
+	
+}
+.head-name span{
+	margin-left: 30px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#717171;
+}
+.head-quali{
+	padding: 10px 0;
+}
+.head-quali ul {
+	
+}
+.head-quali ul li{
+	/*float: left;*/
+	
+	font-size: 15px;
+	padding-top: 10px;
+	padding-left: 10px;
+	color: #717171;
+	
+	
+	
+}
+/*.head-quali ul li:nth-child(2){
+		margin-left: 10px;
+}
+.head-quali ul li:nth-child(3){
+		margin-left: 10px;
+}
+.head-quali ul li:last-child{
+	border: none;
+	margin-left: 10px;
+	
+}*/
+.call span{
+	font-family:NotoSansHans-Regular;
+	font-size: 14px;
+	font-weight: 500;
+	color:#2c2c2c;
+}
+@media screen and (min-width:320px){
+	.call span{font-size:14px;}
+}
+@media screen and (max-width:320px){
+	.call span{font-size:12px}
+}
+.call .email{
+	margin-left: 12px;
+}
+.collec ul{
+	padding: 16px 26px 15px 10px;
+}
+.collec ul li{
+	float: left;
+	font-family:NotoSansHans-Regular;
+	
+	color:#717171;
+}
+.collec ul li:first-child{
+	width: 37%;
+}
+.collec ul li:nth-child(2){
+	margin-left: 19px;
+	width: 24%;
+}
+.collec ul li:nth-child(3){
+	margin-left: 18px;
+}
+.ico-boy{
+	background:url(../img/ico-boy.png)no-repeat;
+	background-size:cover ;
+	width: 12px;
+	height: 13px;
+	position: relative;
+	left:10px;
+}
+.ico-girl{
+	background:url(../img/ico-girl.png)no-repeat;
+	background-size:cover ;
+	width: 12px;
+	height: 13px;
+	position: relative;
+	left:10px;
+}
+.div1{
+	height: 10px;
+	width: 100%;
+	background: #F5F5F5;
+}
+.hope-job h3{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#2c2c2c;
+	padding: 15px 0 15px 10px;
+	font-weight: 600;
+}
+.name-job{
+	padding: 15px 0 15px 10px;
+}
+.job-name{
+	font-family:NotoSansHans-Regular;
+	font-size:15px;
+	color:#2c2c2c;
+}
+.job-money{
+	font-family:NotoSansHans-Regular;
+	font-size:15px;
+	color:#717171;
+}
+
+.job-exp h3{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#2c2c2c;
+	width: 100%;
+	font-weight: 600;
+	padding: 10px 0 10px 10px;
+}
+.job-time{
+	padding: 20px 0 0 14px;
+}
+.ico-round{
+	background:url(../img/ico-round.png)no-repeat;
+	background-size:cover ;
+	width: 11px;
+	height: 11px;
+	position: relative;
+	
+}
+.job-content{
+	margin-left: 19px;
+	margin-top: -5px;
+	padding-bottom: 20px;
+}
+.job-content p{
+	padding-left: 10px;
+	padding-top: 10px;
+}
+.job-content p:first-child{
+	font-family:NotoSansHans-Regular;
+	font-size:15px;
+	color:#2c2c2c;
+	font-weight: 600;
+	}
+	
+.job-content p:nth-child(2){
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#717171;
+	line-height:21px;
+}
+.job-time-2{
+	padding-left: 14px;
+	margin-top: -5px;
+}
+.job-time span{
+	font-size:14px ;
+	color:#717171;
+}
+.job-time-2 span{
+	font-size:14px ;
+	color:#717171;
+}
+.tousu{
+	height: 62px;
+	background: #F5F5F5;
+	width: 100%;
+}
+.tousu-main{
+	background:#ffffff;
+	border:1px solid #cccccc;
+	border-radius:4px;
+	width:66px;
+	height:28px;
+	top: 16px;
+	right:17px ;
+	line-height: 24px;
+	text-align: center;
+}
+.ico-tousu{
+	width: 12px;
+	height: 14px;
+	background:url(../img/ico-tousu.png)no-repeat;
+	background-size:cover ;
+	position: relative;
+	top: 3px;
+}
+.ico-tousu span{
+	font-family:HiraginoSansGB-W3;
+	font-size:14px;
+	color:#097ed8;
+}
+/*相似职业*/
+.m-list .padd{
+	line-height: 31px;
+	padding-bottom: 5px;
+	
+}
+.m-main{
+	width: 100%;
+}
+.m-main li{
+	width: 100%;
+	
+}
+.m-main li a{
+	color: #333333;;
+}
+.recruit-list{
+	width: 100%;
+}
+
+.recruit-header{
+	width: 100%;
+}
+.recruit-header h3{
+	
+}
+.recruit-header h4{
+	font-family:NotoSansHans-Bold;
+	font-size:16px;
+	color:#2c2c2c;
+	font-weight: 600;
+	
+}
+.recruit-header p{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#ec9d1d;
+	margin-right: 1rem;
+}
+.recruit-header h4{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+	
+}
+.recruit-header h4 span{
+	margin-left: 10px;
+}
+
+.recruit-header span{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#717171;
+	margin-right: 15px;
+}
+.recruit-pos{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#717171;
+}
+.name-list{
+	width: 50%;
+}
+.name-list li{
+	float: left;
+	padding-right: 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+	
+}
+.module-title {
+	padding: 10px 10px 10px 15px;
+}
+/*相似职业结束*/
+footer{
+	position: fixed;
+	left:0;
+	bottom: 0;
+	width: 100%;
+	height: 56px;
+	
+	
+}
+
+.ico-shoucang{
+	
+	background:url(../img/shoucang2.png)no-repeat;
+	background-size:cover ;
+	position: relative;
+	width: 20px;
+	position: relative;
+	top: 3px;
+	
+	
+}

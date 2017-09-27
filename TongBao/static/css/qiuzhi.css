@@ -1,0 +1,231 @@
+.div1{
+	height: 104px;
+}
+.tab-nav{
+	
+	height: 44px;
+	margin: 0 auto;padding: 10px 0;
+}
+.tab-nav li{
+	float: left;
+	width: 25%;
+	text-align: center;
+	padding: 0px 10px;
+    overflow: hidden;
+	margin: 0 auto;
+}
+.nav-jlgl li{
+	width: 33.33%!important;
+}
+.nav-jlgl li:nth-child(3){
+	border: none!important;
+}
+.tab-nav li span{
+   font-family: NotoSansHans-Regular;
+    font-size: 14px;
+    color: #717171;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 75%;
+    float: left;
+}
+.tab-panl{
+    position: fixed;
+    bottom: 0;
+    background: rgb(255, 255, 255);
+    top: 104px;
+    width: 100%;
+   
+}
+.term-t{
+	 top: 82px!important;
+}
+.sl-show{
+	position: absolute;
+    background: rgb(255, 255, 255);
+    top: 111px;
+    width: 100%;
+    height: 110%;
+}
+.current{
+	color:#097ed8!important;
+	border:none!important;
+}
+/*导航栏*/
+.province,.job{
+	width: 43%;
+	background:#ededed;;
+}
+.province li,.job li{
+	/*background:#ffffff;*/
+	box-shadow:inset -1px -1px 0 0 #dedede;
+	width:100%;
+	height:44px;
+	line-height: 44px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#717171;
+	padding-left: 20px;
+}
+.city,.job-list {
+	width: 57%;
+}
+.city ul li,.job-list ul li{
+	height:44px;
+	line-height: 44px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#717171;
+	padding-left: 20px;
+}
+.money li{
+    padding: 10px;
+    line-height: 30px;
+    color: #4d4545;
+    font-size:16px;
+    border-bottom: 1px solid #e5dfdf;
+}
+.choice li{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	overflow: hidden;
+	padding: 10px;
+    line-height: 30px;
+    color: #4d4545;
+   
+    border-bottom: 1px solid #e5dfdf;
+}
+.choice li span{
+	float: right;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#717171;
+	
+}
+.ico-right{
+	background: url(../img/ico-right1.png)no-repeat;
+	background-size:cover ;
+	position: relative;
+	top: 8px;
+	width: 8px;
+	height: 15px;
+	margin-left: 5px;
+	
+}
+.button{
+	width: 92%;
+	height: 42px;
+	margin: 20px 15px 0 15px;
+	background:#097ed8;
+	border-radius:4px;
+	text-align: center;
+	line-height: 42px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#ffffff;
+}
+/*内容*/
+.m-list .padd{
+	line-height: 28px;
+	padding: 15px 5px 10px 5px;
+	
+}
+.m-main{
+	width: 100%;
+}
+.m-main li{
+	width: 100%;
+	
+}
+.m-main li a{
+	color: #333333;;
+}
+.recruit-list{
+	width: 100%;
+}
+
+.recruit-header{
+	width: 100%;
+}
+.recruit-header h3{
+	font-family:NotoSansHans-Bold;
+	font-size:16px;
+	color:#2c2c2c;
+	font-weight: 500;
+}
+.recruit-header p{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#ec9d1d;
+	margin-right: 1rem;
+}
+.recruit-header h4{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+	
+}
+.recruit-header h4 span{
+	margin-left: 10px;
+}
+
+.recruit-header span{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#717171;
+	margin-right: 1.5rem;
+}
+.recruit-pos{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#717171;
+}
+.name-list{
+	width: 50%;
+}
+.name-list li{
+	float: left;
+	padding-right: 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+	
+}
+.ico-show{
+	background: url(../../view/img/ico-show.png);
+	background-size:cover ;
+	position: relative;
+	top: 0px;
+	width: 8px;
+	height: 12px;
+	}
+
+	#show-more{
+		height: 44px;
+		width: 100%;
+		text-align: center;
+		line-height: 44px;
+		background: gainsboro;
+		font-family:NotoSansHans-Regular;
+		font-size:14px;
+		color:#717171;
+	}
+
+.both-all{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 0;
+    z-index: 9999;
+}
+.ico-bottom {
+    background: url(../img/ico-bot.png)no-repeat;
+    background-size: cover;
+    position: relative;
+    left: 3px;
+    width: 12px;
+    height: 7px;
+    top: 5px;
+    top: 5px;
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>消息</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+		<link rel="stylesheet" href="css/aui.css" />
+		<script type="text/javascript" src="js/api.js"></script>
+		<script type="text/javascript" src="js/aui-tab.js"></script>
+		<script type="text/javascript" src="js/aui-dialog.js"></script>
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+	</head>
+
+	<body>
+		<ul id="xiaoxi_list" class="aui-list aui-media-list">
+			<li id="111111111" class="aui-list-item aui-list-item-middle">
+				<div class="aui-media-list-item-inner">
+					<div class="aui-list-item-media" style="width: 3rem;">
+						<img src="../image/demo5.png" class="aui-img-round aui-list-img-sm">
+					</div>
+					<div class="aui-list-item-inner" onclick="detail(1)">
+						<div class="aui-list-item-text">
+							<div class="aui-list-item-title aui-font-size-14">AUI</div>
+							<div class="aui-list-item-right">08:00</div>
+						</div>
+						<div class="aui-list-item-text">
+							www.auicss.com
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item aui-list-item-middle">
+				<div class="aui-media-list-item-inner">
+					<div class="aui-list-item-media" style="width: 3rem;">
+						<img src="../image/demo5.png" class="aui-img-round aui-list-img-sm">
+					</div>
+					<div class="aui-list-item-inner" onclick="detail(2)">
+						<div class="aui-list-item-text">
+							<div class="aui-list-item-title aui-font-size-14">AUI</div>
+							<div class="aui-list-item-right">08:00</div>
+						</div>
+						<div class="aui-list-item-text">
+							www.auicss
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="aui-list-item aui-list-item-middle">
+				<div class="aui-media-list-item-inner">
+					<div class="aui-list-item-media" style="width: 3rem;">
+						<img src="../image/demo5.png" class="aui-img-round aui-list-img-sm">
+					</div>
+					<div class="aui-list-item-inner" onclick="detail(3)">
+						<div class="aui-list-item-text">
+							<div class="aui-list-item-title aui-font-size-14">AUI</div>
+							<div class="aui-list-item-right">08:00</div>
+						</div>
+						<div class="aui-list-item-text">
+							www
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<footer class="aui-bar aui-bar-tab" id="footer">
+			<div class="aui-bar-tab-item" tapmode>
+				<i class="aui-iconfont aui-icon-home"></i>
+				<div class="aui-bar-tab-label">首页</div>
+			</div>
+			<div class="aui-bar-tab-item" tapmode>
+				<i class="aui-iconfont aui-icon-edit"></i>
+				<div class="aui-bar-tab-label">发布</div>
+			</div>
+			<div class="aui-bar-tab-item" tapmode>
+				<div id="xiaoxi_tip" class="aui-badge"></div>
+				<i class="aui-iconfont aui-icon-comment"></i>
+				<div class="aui-bar-tab-label">消息</div>
+			</div>
+			<div class="aui-bar-tab-item" tapmode>
+				<i class="aui-iconfont aui-icon-my"></i>
+				<div class="aui-bar-tab-label">我的</div>
+		</footer>
+	</body>
+
+	<script type="text/javascript">
+		apiready = function() {
+			api.parseTapmode();
+		}
+
+		var timeout;
+		var dialog = new auiDialog();
+		var obj_list = document.getElementById("xiaoxi_list").getElementsByTagName("li");
+		for(var i = 0; i < obj_list.length; i++) {
+			obj_list[i].onmousedown = function() {
+				var that = this;
+				timeout = setTimeout(function() {
+					dialog.alert({
+						title: "提示",
+						msg: '删除此条消息？',
+						buttons: ['取消', '确定']
+					}, function(ret) {
+						if(ret.buttonIndex == 2) {
+							that.parentNode.removeChild(that)
+						}
+					})
+				}, 500);
+			};
+		};
+		$('.aui-list-item').mouseup(function() {
+			clearTimeout(timeout);
+		});
+
+		function detail(id) {
+			console.log(id)
+		}
+
+		$('#xiaoxi_tip').hide();
+		var tab = new auiTab({
+				element: document.getElementById("footer"),
+				index: 3
+			},
+			function(ret) {
+				switch(ret.index) {
+					case 1:
+                        window.location.replace("home.html")
+                        break;
+					case 2:
+						window.location.replace("fabu.html")
+						break;
+					case 3:
+						break;
+					case 4:
+						window.location.replace("wode.html")
+						break;
+				}
+			});
+	</script>
+
+</html>

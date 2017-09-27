@@ -1,0 +1,158 @@
+@charset "utf-8";
+body{
+	background: #F5F5F5;
+}
+.show-pic{
+    
+    background: #fff;
+}
+.show-pic ul li{
+	margin-left: 10px;
+	height: 90px;	
+	width: 90px;
+}
+
+.zhanshi{
+	height: 75px;
+	width: 75px;
+	
+}
+.zhanshi img{
+	width: 100%;
+	height: 100%;
+}
+.delet-pic{
+	width: 23px;
+	height: 23px;
+	position: absolute;
+	right: 7px;
+	top: -13px;
+	z-index: 100;
+	height:25px;
+	width: 25px;
+	border-radius:50%;
+	border: 1px solid red;
+	
+}
+.delet-pic img{
+	width: 100%;
+	height: 100%;
+	background-size:cover ;
+}
+.shli{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#2c2c2c;
+	padding: 10px 10px;
+}
+
+.zp-next input{
+	
+}
+
+
+.renzheng-pic{
+	height: 75px;
+	width: 75px;
+	margin: 0 10px;
+	margin-bottom: 15px;
+}
+.renzheng-pic img{
+	width: 100%;
+	height: 100%;
+}
+.shili-show{
+	background: #FFFFFF;
+	padding-bottom: 10px;
+}
+.sure-cotent{
+	background: #FFFFFF;
+}
+
+
+.province,.job{
+	width: 43%;
+	background:#ededed;;
+}
+.province li,.job li{
+	/*background:#ffffff;*/
+	box-shadow:inset -1px -1px 0 0 #dedede;
+	width:100%;
+	height:44px;
+	line-height: 44px;
+	font-family:NotoSansHans-Regular;
+	font-size:1.6rem;
+	color:#717171;
+	padding-left: 20px;
+}
+.city,.job-list {
+	width: 57%;
+}
+.city ul li,.job-list ul li{
+	height:44px;
+	line-height: 44px;
+	font-family:NotoSansHans-Regular;
+	font-size:1.6rem;
+	color:#717171;
+	padding-left: 20px;
+}
+.money li{
+    padding: 10px;
+    line-height: 30px;
+    color: #4d4545;
+    font-size:1.6rem;
+    border-bottom: 1px solid #e5dfdf;
+}
+.tab-panl{
+	overflow: hidden;		
+   z-index: 9999;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background: #fff;
+}
+.tab-panl .fu{
+	overflow: hidden;
+	padding: 10px;
+}
+.tab-panl .fu li{
+	float: left;
+	border:1px solid #3095e3;
+	margin-left: 15px;
+	margin-top: 10px;
+	border-radius:4px;
+	
+}
+.tab-panl .fu li span{
+	padding: 7px;
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#717171;
+}
+.background{
+	background: white;
+}
+
+    
+.fix{
+	position: fixed;
+    display: block;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+    
+}
+.zp-input input{
+	text-align: left!important;
+}
+.text-no{
+	border: none!important;
+	margin-top: 0px!important;
+	border-radius: 0!important;
+}
+.girl{
+	margin-left:20px;
+}

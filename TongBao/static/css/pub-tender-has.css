@@ -1,0 +1,130 @@
+@charset "utf-8";
+body{
+	background: #f8f8f8;
+}
+.tender-top,.tender-mid,.tender-bottom,.tender-detail-body{
+	font-size: 1.6rem;
+}
+.tender-common{
+	height: 50px;
+	line-height: 50px;
+	background: #fff;
+	padding: 0 1rem;
+	border-bottom: 0.1rem solid #dedede;
+	overflow: hidden;
+	color: #2C2C2C;
+}
+.common-right{
+	color: #717171;
+}
+.tender-common input{
+	border: none;
+	width: 12rem;
+	height: 50px;
+	line-height: 50px;
+	text-align: right;
+	font-size: 1.6rem;
+}
+.tender-common input.address-info{
+	text-align: left;
+}
+.tender-common input.single-price{
+	width: 20%;
+	height: 36px;
+	line-height: 36px;
+	border: 1px solid #DEDEDE;
+	margin-left: 7%;
+	margin-right: 7%;
+}
+.tender-common input.unit{
+	width: 20%;
+	height: 36px;
+	line-height: 36px;
+	border: 1px solid #DEDEDE;
+	margin-left: 26px;
+}
+.bottom-title{
+	height: 50px;
+	line-height: 50px;
+	padding-left: 1rem;
+	border-bottom: 0.1rem solid #DEDEDE;
+}
+.tender-bottom .tender-common .c-17{
+	color: #717171;
+}
+.detail-title{
+	height: 50px;
+	line-height: 50px;
+	padding-left: 1rem;
+	border-bottom: 1px solid #DEDEDE;
+}
+.tender-con textarea{
+	width: 100%;
+	height: 103px;
+	border: none;
+	padding: 10px 0 0 10px;
+	color: #717171;
+	font-size: 1.6rem;
+	resize: none;
+}
+.change-style-file{
+	height: 46px;
+	line-height: 46px;
+	width: 90%;
+	position: absolute;
+	left: 5%;
+	border: 1px solid #DEDEDE;
+	text-align: center;
+	color: #717171;
+	top: 0;
+	border-radius: 4px;
+}
+.insert-img-body{
+	height: 46px;
+}
+.up-img{
+	position: absolute;
+    right: 10%;
+    top: 0;
+    opacity: 0;
+    width: 80%;
+    height: 46px;
+}
+.ico-up-img{
+	width: 15px;
+	height: 15px;
+	background: url(../img/ico-up-img.png)no-repeat;
+	background-size: cover;
+	vertical-align: middle;
+}
+.public-sure-btn{
+	clear: both;
+	overflow: hidden;
+	background:#097ed8;
+	border-radius:4px;
+	width: 90%;
+	margin: 16px auto;7px
+	height:46px;
+	line-height: 46px;
+	color: #fff;
+	font-size: 1.6rem;
+	text-align: center;
+}
+
+.tunder-head{
+	padding:20px 0 20px 10px ;
+}
+ input{
+	width: 35%;
+	height: 40px;
+	border: none;
+}
+.tunder-head span{
+	margin-right: 7px;
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+}
+.tunder-head span:nth-child(2){
+	margin-left:10px ;
+}

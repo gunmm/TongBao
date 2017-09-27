@@ -1,0 +1,83 @@
+/*搜索区域*/
+.w-serach{
+	overflow: hidden;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	position: relative;
+	background:#3095e3;
+	top:0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+	position: fixed;
+	height: 60px;
+	
+}
+.w-serach span{
+	font-family:HiraginoSansGB-W3;
+	font-size:16px;
+	color:#ffffff!important;
+	margin-right: 10px;
+	
+	
+}
+.m-serah{
+	width: 87%;
+	float: left;
+	
+	
+	
+}
+.m-search-input{
+	height: 40px;
+	border: none;
+	display: block;
+	font-size: 14px;
+	width: 100%;
+	padding: 5px 0 5px 40px;
+	text-align: left;
+	
+}
+.ico-bottom{
+	background: url(../../img/ico-bot.png)no-repeat;
+	background-size:cover ;
+	position: relative;
+	left: 3px;
+	width: 12px;
+	height: 7px;
+}
+.ico-bottom2{
+	background: url(../../img/ico-top.png)no-repeat;
+	background-size:cover ;
+	position: relative;
+	left: 3px;
+	width: 12px;
+	height: 7px;
+}
+.ico-shouye{
+	background:url(../../img/nav-head.png)no-repeat;
+	background-size:cover ;
+	position: relative;
+	
+	width: 21px;
+	height: 21px;
+}
+.ico-search-one{
+	background:url(../../img/ico-search.png)no-repeat;
+	background-size:cover ;
+	position: absolute;
+	left: 12px;
+	top: 13px;
+	
+	
+	
+
+.search-text p{
+	font-family:NotoSansHans-Regular;
+	font-size:1.2rem;
+	
+	margin-top: -3px;
+}
+.search-text{
+	padding-left: 10px;
+}

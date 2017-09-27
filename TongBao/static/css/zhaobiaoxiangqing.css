@@ -1,0 +1,141 @@
+.job-head{
+	padding: 15px 0 15px 10px;
+	width: 100%;
+}
+.job-name h3{
+	font-family:NotoSansHans-Bold;
+	font-size:16px;
+	color:#2c2c2c;
+	font-weight: 600;
+}
+.number{
+	margin-top: 7px;
+}
+.number p{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+}
+.number p span{
+	color:#ec9d1d;
+}
+.number p:nth-child(2){
+	margin-left: 20px;
+}
+.require{
+	margin-top: 7px;
+}
+.require li{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#2c2c2c;
+}
+.require li:nth-child(2){
+	margin-right: 10px;
+}
+.valid{
+	margin-top: 7px;
+}
+.valid p{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#717171;
+}
+
+.collec ul{
+	padding: 15px 5px 15px 10px;
+}
+.collec ul li{
+	float: left;
+	font-family:NotoSansHans-Regular;
+	
+	color:#717171;
+}
+.collec ul li:first-child{
+	width: 37%;
+}
+.collec ul li:nth-child(2){
+	margin-left: 19px;
+	width: 24%;
+}
+.collec ul li:nth-child(3){
+	margin-left: 18px;
+}
+
+.div1{
+    height: 10px;
+    width: 100%;
+    background: #F5F5F5;
+}
+
+
+.job-address h3{
+	padding: 15px 5px 15px 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#2c2c2c;
+	font-weight: 600;
+}
+.job-address p{
+	padding: 15px 5px 15px 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:15px;
+	color:#2c2c2c;
+	font-weight: 600;
+}
+.ico-right{
+	background: url(../img/ico-right1.png)no-repeat;
+	background-size:cover ;
+	width: 8px;
+    height: 15px;
+    position: relative;
+    top: 4px;
+    margin-right: 10px;
+    
+}
+.param{
+	padding-bottom: 15px;
+}
+.param h3{
+	padding: 15px 5px 15px 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#2c2c2c;
+	font-weight: 600;
+}
+.param div{
+	padding: 10px 0 0 10px;
+}
+.param p{
+	
+	font-family:NotoSansHans-Regular;
+	font-size:15px;
+	color:#717171;
+}
+
+
+.invite h3{
+	padding: 15px 5px 15px 10px;
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#2c2c2c;
+	font-weight: 600;
+}
+.invite .content {
+	padding: 5px 10px 5px 10px;
+}
+.invite .content p{
+	font-family:NotoSansHans-Regular;
+	font-size:16px;
+	color:#4a4a4a;
+	line-height:2.4rem;
+	text-align:justify;
+}
+
+.invite .content img{
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	
+	
+}
