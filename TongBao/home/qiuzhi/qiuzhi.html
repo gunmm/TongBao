@@ -4,139 +4,39 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
-    <script src="../static/lib/js/axios.min.js"></script>
+    <script src="../../static/lib/js/axios.min.js"></script>
 
 
-    <link rel="stylesheet" type="text/css" href="../static/lib/css/mkui.css">
-    <link rel="stylesheet" href="../static/lib/css/ydui.rem.css">
-    <script src="../static/lib/js/jquery-1.11.1.min.js"></script>
-    <script src="../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../static/lib/js/vue.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
+    <link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
+    <script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
+    <script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/lib/js/vue.js" type="text/javascript" charset="utf-8"></script>
 
-    <script src="../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/qiuzhi.css">
-    <link rel="stylesheet" type="text/css" href="../static/lib/js/jquery-1.11.1.min.js">
+    <script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/qiuzhi.css">
+    <link rel="stylesheet" type="text/css" href="../../static/lib/js/jquery-1.11.1.min.js">
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 
-    <style type="text/css">
-        *, :after, :before {
-            box-sizing: border-box;
-            outline: none
-        }
 
-        body, html {
-            height: 100%
-        }
-
-        body {
-            background-color: #f5f5f5;
-            font-size: 12px;
-            -webkit-font-smoothing: antialiased;
-            font-family: arial, sans-serif
-        }
-
-        blockquote, body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr, iframe, input, legend, li, ol, p, pre, td, textarea, th, ul {
-            margin: 0;
-            padding: 0
-        }
-
-        article, aside, audio, details, figcaption, figure, footer, header, img, mark, menu, nav, section, summary, time, video {
-            display: block;
-            margin: 0;
-            padding: 0
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-size: 100%
-        }
-
-        fieldset, img {
-            border: 0
-        }
-
-        address, caption, cite, dfn, em, i, th, var {
-            font-style: normal;
-            font-weight: 400
-        }
-
-        ol, ul {
-            list-style: none
-        }
-
-        a {
-            color: inherit
-        }
-
-        a, a:hover {
-            text-decoration: none
-        }
-
-        a, button, input, label, select {
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-        }
-
-        button, input, select {
-            font: 100% tahoma, \5b8b\4f53, arial;
-            vertical-align: baseline;
-            border-radius: 0;
-            background-color: transparent;
-            -webkit-appearance: none;
-            -moz-appearance: none
-        }
-
-        button::-moz-focus-inner, input[type=button]::-moz-focus-inner, input[type=file] > input[type=button]::-moz-focus-inner, input[type=reset]::-moz-focus-inner, input[type=submit]::-moz-focus-inner {
-            border: none
-        }
-
-        input[type=checkbox], input[type=radio] {
-            vertical-align: middle
-        }
-
-        input::-webkit-inner-spin-button, input::-webkit-outer-spin-button {
-            -webkit-appearance: none !important;
-            -moz-appearance: none !important;
-            margin: 0
-        }
-
-        input:-webkit-autofill {
-            -webkit-box-shadow: 0 0 0 1000px #fff inset
-        }
-
-        textarea {
-            outline: none;
-            border-radius: 0;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            overflow: auto;
-            resize: none;
-            font: 100% tahoma, \5b8b\4f53, arial
-        }
-
-        @font-face {
-            font-family: YDUI-INLAY;
-        }
-
-        .g-fix-ios-overflow-scrolling-bug {
-            -webkit-overflow-scrolling: auto !important
-        }</style>
 </head>
-<body class="bg-fff">
-<div id="app" class=" no-select-two">
+<body>
+<div id="app" class="no-select-two none">
     <div class="both-all">
         <!--搜索区域-->
         <section class="w-serach pos-f  pl-10 pr-10 bg-ff5252 overflow-h">
 					<span class="search-text fl">
 						<i class="ico ico-shouye"></i>
-						<p><a href="../home.html">首页</a></p>
+						<p><a href="../../home.html">首页</a></p>
 					</span>
             <form action="">
                 <div class="m-serah pos-r">
                     <i class="ico ico-search-one left" @click="search()"></i>
                     <input id="keyword" type="search" class="m-search-input text-c pl-20 pr-10 radius" v-model="title"
-                           placeholder="点击搜索招聘"/>
+                           placeholder="点击搜索简历"/>
                 </div>
             </form>
         </section>
@@ -174,11 +74,10 @@
     <!--职位-->
     <div class="tab-panl none">
         <div class="overflow-h h-100">
-            <ul class="fl job h-100">
+            <ul class=" fl job h-100">
                 <li @click="buxian('gangwei')">不限</li>
                 <li v-for="item in job">{{item.name}}</li>
             </ul>
-
             <div class="job-list fl none">
                 <ul>
                     <li class="ret"></li>
@@ -186,7 +85,8 @@
 
                 </ul>
             </div>
-            <div class="job-list fl none " v-for="item in joblist">
+            <div class="job-list fl none" v-for="item in joblist">
+
                 <ul>
                     <li v-for="j in item" @click="selectgangwei(j.id)">{{j.name}}</li>
                 </ul>
@@ -248,10 +148,10 @@
         <div class="button" @click="filter()">确定筛选</div>
     </div>
 
-
     <section class="content-list  lh-24 ">
-        <article class="m-list list-theme4" id="box">
+        <article class="m-list list-theme4" id="boxx">
             <div v-for="todoo in datalist">
+
                 <a class="list-item" :href='todoo.url'>
                     <div class="list-img"></div>
                     <div class="list-mes">
@@ -261,38 +161,35 @@
                                 <span class="fr c-ec9d1d">{{todoo.xinzi}}</span>
                             </p>
                         </div>
-
                         <div class="list-other">
-                            <h4 class="mt-10 f-14 overflow-h">
-                                <span class="fl">{{todoo.companyname}}</span>
+                            <h4 class="mt-10 f-14 ">
+                                <span class="fl">{{todoo.name}}</span>
+                                <span class="ml-15">{{todoo.gender}}性</span>
+                                <span class="ml-10">{{todoo.age}}</span>
                                 <span class="fr time mr-8 ">{{todoo.created_at}}</span>
                             </h4>
                             <p class="recruit-pos f-14 mt-5 pos-name">
                                 <span>{{todoo.city}}</span>
                                 <span class="ml-10">{{todoo.jingyan}}</span>
-                                <span class="ml-10">{{todoo.xueli}}</span>
-                            </p>
-                        </div>
+                                <span class="ml-10">{{todoo.xueli}}</span></p></div>
                     </div>
                 </a>
             </div>
 
         </article>
     </section>
-
-
 </div>
 
 
 <script>
     $(document).ready(function () {
+        var items = window.history.state;
+        if(!items){
+            vm.loadList();
+        }
         $(window).on("load", function () {
             window.onscroll = function () {
-
-
-
                 if (scrollSide()) {
-//                    alert("11111122222");
                     vm.loadList();
                 }
             }
@@ -301,12 +198,9 @@
     });
 
 
-
     function scrollSide() {
-        var box = $("#box");
-
+        var box = $("#boxx");
         var lastBoxHeight = box.height() + box.position().top;
-
 
         var documentHeight = $(window).height();
         var scrollHeight = $(window).scrollTop();
@@ -318,45 +212,19 @@
     }
 
 
-    var items;
+    var items = window.history.state;
+    if(!items){
+        items = new Array();
+    }
+
+    console.log(items);
+
     var vm = new Vue({
         el: "#app",
         data: {
             page: 2,
             pageSize: 10,
-            datalist: [
-                {
-                    "title": "122323232232",
-                    "xinzi": "2",
-                    "companyname": "3",
-                    "created_at": "4",
-                    "city": "5",
-                    "jingyan": "6",
-                    "xueli": "7",
-                    "url": "http://www.baidu.com"
-                },
-                {
-                    "title": "12 cdfdfdfd",
-                    "xinzi": "2",
-                    "companyname": "3",
-                    "created_at": "4",
-                    "city": "5",
-                    "jingyan": "6",
-                    "xueli": "7",
-                    "url": "www.baidu.com"
-                },
-                {
-                    "title": "1dfdfdfdfd",
-                    "xinzi": "2",
-                    "companyname": "3",
-                    "created_at": "4",
-                    "city": "5",
-                    "jingyan": "6",
-                    "xueli": "7",
-                    "url": "www.baidu.com"
-                },
-
-            ],
+            datalist: items,
             textarr: {jingyan: '请选择', xueli: '请选择', nianling: '请选择', xingbie: '请选择', zhicheng: '请选择'},
             job: [{"id": 2000, "name": "销售"}, {"id": 2100, "name": "综合\/人事\/行政"}, {
                 "id": 2200,
@@ -731,24 +599,43 @@
             loadList() {
                 _list = [
                     {
-                        "title": "122323232232",
-                        "xinzi": "2",
-                        "companyname": "3",
-                        "created_at": "4",
-                        "city": "5",
-                        "jingyan": "6",
-                        "xueli": "7",
-                        "url": "http://www.baidu.com"
+                        "title": "北京城建集团有限责任公司",
+                        "xinzi": "面议",
+                        "companyname": "平台",
+                        "created_at": "今天11：23",
+                        "city": "北京市",
+                        "jingyan": "五年",
+                        "xueli": "本科",
+                        "name": "闵哲",
+                        "gender": "男",
+                        "age": "15",
+                        "url": "qiuzhidetail.html"
                     },
                     {
-                        "title": "12 cdfdfdfd",
-                        "xinzi": "2",
-                        "companyname": "3",
-                        "created_at": "4",
-                        "city": "5",
-                        "jingyan": "6",
-                        "xueli": "7",
-                        "url": "www.baidu.com"
+                        "title": "财务主管",
+                        "xinzi": "8000",
+                        "companyname": "平台",
+                        "created_at": "今天12：23",
+                        "city": "北京市",
+                        "jingyan": "2年",
+                        "xueli": "研究生",
+                        "name": "闵哲",
+                        "gender": "男",
+                        "age": "15",
+                        "url": "qiuzhidetail.html"
+                    },
+                    {
+                        "title": "投资主管",
+                        "xinzi": "1000",
+                        "companyname": "平台",
+                        "created_at": "今天13：23",
+                        "city": "北京市",
+                        "jingyan": "三年",
+                        "name": "闵哲",
+                        "gender": "男",
+                        "age": "15",
+                        "xueli": "专科",
+                        "url": "qiuzhidetail.html"
                     },
                     {
                         "title": "1dfdfdfdfd",
@@ -756,25 +643,20 @@
                         "companyname": "3",
                         "created_at": "4",
                         "city": "5",
+                        "name": "闵哲",
+                        "gender": "男",
+                        "age": "15",
                         "jingyan": "6",
                         "xueli": "7",
-                        "url": "www.baidu.com"
-                    },
-                    {
-                        "title": "1dfdfdfdfd",
-                        "xinzi": "2",
-                        "companyname": "3",
-                        "created_at": "4",
-                        "city": "5",
-                        "jingyan": "6",
-                        "xueli": "7",
-                        "url": "www.baidu.com"
+                        "url": "qiuzhidetail.html"
                     }
 
 
                 ];
-//                alert("loaddata")
-                vm.datalist = [...vm.datalist,..._list]
+                vm.datalist = [...vm.datalist,..._list];
+                items = vm.datalist;
+                console.log(items);
+                window.history.pushState(items,"","qiuzhi.html");
 //                    if (vm.page > 1 && _list.length < vm.pageSize) {
 //                        window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
 //                        return;
@@ -983,7 +865,6 @@
             }
         });
     });
-
 
 </script>
 </body>
