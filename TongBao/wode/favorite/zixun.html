@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>仝仝资讯</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
+		<script type="text/javascript" src="../../js/aui-tab.js"></script>
+
+		<link rel="stylesheet" href="../../css/mkui.css" />
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../../static/css/common.css" />
+		<link rel="stylesheet" href="../../static/css/zixun.css" />
+		<link rel="stylesheet" href="../../css/aui.css" />
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="aui-tab" id="tab">
+				<div id="gongying" class="aui-tab-item aui-active">供应信息</div>
+				<div id="zhaobiao" class="aui-tab-item">招标信息</div>
+				<div id="zhaopin" class="aui-tab-item" v-if="type">招聘信息</div>
+				<div id="qiuzhi" class="aui-tab-item" v-else>求职信息</div>
+				<div id="zixun" class="aui-tab-item">仝仝资讯</div>
+			</div>
+			<div style="background-color: lightgray; height: 1px;"></div>
+			<article class="m-list list-theme4">
+				<a v-for="item in items" :href="item.url" class="list-item">
+					<div class="list-img"><img :src="item.cover"></div>
+					<div class="list-mes">
+						<div class="list-title"><span>{{item.title}}</span></div>
+						<div class="list-other">
+							<p class="overflow-h">
+								{{item.category}}
+							</p>
+							<div>{{item.created_at}}</div>
+						</div>
+					</div>
+				</a>
+			</article>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				type: true,
+				items: [{
+						cover: "http://www.tongtongww.com/storage/upload/2d9b4f38f7144173591f56a9146757fb.jpg",
+						title: '73人死亡！涉案混凝土商严重违规,董事长,生产厂长,"保护伞"全被逮捕！',
+						category: '热点新闻',
+						created_at: '2017-10-08',
+					},
+					{
+						cover: "http://www.tongtongww.com/storage/upload/2d9b4f38f7144173591f56a9146757fb.jpg",
+						title: '73人死亡！涉案混凝土商严重违规,董事长,生产厂长,"保护伞"全被逮捕！',
+						category: '热点新闻',
+						created_at: '2017-10-08',
+					},
+					{
+						cover: "http://www.tongtongww.com/storage/upload/2d9b4f38f7144173591f56a9146757fb.jpg",
+						title: '73人死亡！涉案混凝土商严重违规,董事长,生产厂长,"保护伞"全被逮捕！',
+						category: '热点新闻',
+						created_at: '2017-10-08',
+					}
+				]
+			},
+			methods: {}
+		})
+
+		var tab = new auiTab({
+			element: document.getElementById("tab"),
+			index: 4
+		}, function(ret) {
+			window.location.replace("../favorite/" + ret.dom.id + ".html")
+		});
+	</script>
+
+</html>

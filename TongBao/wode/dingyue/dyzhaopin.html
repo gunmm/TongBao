@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>新增招聘订阅</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
+		<link rel="stylesheet" href="../../css/mkui.css" />
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css" />
+
+		<link rel="stylesheet" href="../../static/css/common.css" />
+		<link rel="stylesheet" href="../../static/css/zhaopin-index.css" />
+	</head>
+
+	<body>
+		<div id="app">
+			<section class="zp-body">
+				<div class="zp-list overflow-h">
+					<span class="fl">职位</span>
+					<span class="fr" @click="choosegangwei()"><span id="gangwei">请选择</span><i class="ico-right1"></i></span>
+				</div>
+				<input type="hidden" id="choosedgangwei" />
+				<div class="tab-panl none" id="gangweilist">
+					<div class=" overflow-h">
+						<ul class=" fl job">
+							<li v-for="item in job">{{item.name}}</li>
+						</ul>
+						<div class="job-list fl none" v-for="item in joblist">
+							<ul>
+								<li v-for="j in item" @click="selectgangwei(j.id,j.name)">{{j.name}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">公司性质</span>
+					<span class="fr zp-next select-btn">
+					<select  v-model="companytype" class="info-select1" >
+		                <option value="">不限</option>
+		                <option v-for="item in companytypes" :value="item.k">{{item.v}}</option>
+		            </select></span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">工作地址</span>
+					<span class="fr zp-next select-btn" @click="chooseaddress()"><span id="city">请选择</span><i class="ico ico-right1"></i></span>
+					<input type="hidden" id="choosedprovince" />
+					<input type="hidden" id="choosedprovincename" />
+					<input type="hidden" id="choosedcity" />
+				</div>
+				<div class="tab-panl none" id="sl-dizhi">
+					<div class=" overflow-h">
+						<ul class=" province fl">
+							<li v-for="item in province" @click="selectprovince(item.id,item.name)">{{item.name}}</li>
+						</ul>
+						<div class="city fl none" v-for="item in city">
+							<ul>
+								<li v-for="c in item" @click="selectcity(c.id,c.name)">{{c.name}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">福利待遇</span>
+					<span class="fr zp-next select-btn fuli-btn">
+					<select multiple  v-model="fuli" id="fulidaiyu">
+		                <option v-for="item in fulis" :value="item.k">{{item.v}}</option>
+		            </select></span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">经验要求</span>
+					<span class="fr zp-next select-btn">
+					<select   v-model="jingyan" >
+		                <option value="">不限</option>
+		                <option v-for="item in jingyans" :value="item.k">{{item.v}}</option>
+		            </select></span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">学历要求</span>
+					<span class="fr zp-next select-btn">
+					<select   v-model="xueli" >
+		                <option value="">不限</option>
+		                <option v-for="item in xuelis" :value="item.k">{{item.v}}</option>
+		            </select></span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">职称要求</span>
+					<span class="fr zp-next select-btn">
+					<select   v-model="zhicheng" >
+		                <option value="">不限</option>
+		                <option v-for="item in zhichengs" :value="item.k">{{item.v}}</option>
+		            </select></span>
+				</div>
+			</section>
+			<div class="h-20"></div>
+			<div class="sure-btn" @click="save()">保存</div>
+			<div class="h-20"></div>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var province;
+		$.ajax({
+			type: "get",
+			url: "../../js/province.json",
+			async: false,
+			success: function(data) {
+				province = data;
+			}
+		});
+
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				companytype: '',
+				companytypes: [{
+						k: '2',
+						v: '111'
+					},
+					{
+						k: '2',
+						v: '111'
+					},
+					{
+						k: '2',
+						v: '111'
+					},
+				],
+				fuli: '',
+				fulis: [{
+						k: '2',
+						v: '111'
+					},
+					{
+						k: '2',
+						v: '111'
+					},
+					{
+						k: '2',
+						v: '111'
+					},
+				],
+				jingyan: '',
+				jingyans: [{
+						k: '2',
+						v: '111'
+					},
+					{
+						k: '2',
+						v: '111'
+					},
+					{
+						k: '2',
+						v: '111'
+					},
+				],
+				xueli: '',
+				xuelis: [{
+						k: '2',
+						v: '111'
+					},
+					{
+						k: '2',
+						v: '111'
+					},
+					{
+						k: '2',
+						v: '111'
+					},
+				],
+				zhicheng: '',
+				zhichengs: [{
+						k: '2',
+						v: '111'
+					},
+					{
+						k: '2',
+						v: '111'
+					},
+					{
+						k: '2',
+						v: '111'
+					},
+				],
+				province: province,
+				city: '',
+				job: '',
+				joblist: '',
+			},
+			methods: {
+				selectgangwei: function(id, name) {
+					$("#choosedgangwei").val(id);
+					$("#gangwei").text(name);
+					$("#gangweilist").addClass('none');
+				},
+				choosegangwei: function() {
+					$("#gangweilist").removeClass('none');
+				},
+				chooseaddress: function() {
+					$("#sl-dizhi").show();
+				},
+				selectcity: function(id, name) {
+					$("#city").html($("#choosedprovincename").val() + ' ' + name);
+					$("#choosedcity").val(id);
+					$("#sl-dizhi").hide();
+				},
+				selectprovince: function(id, name) {
+					$("#choosedprovincename").val(name);
+					$("#choosedprovince").val(id);
+					$("#choosedcity").val('');
+				},
+				save: function() {
+					if($('#gangwei').text() == '请选择') {
+						alert('请选择职位')
+						return
+					}
+					if($('.info-select1').val() == "") {
+						alert('请选择公司性质')
+						return
+					}
+					if($('#city').text() == '请选择') {
+						alert('请选择工作地址')
+						return
+					}
+				},
+			},
+		});
+
+		$(function() {
+			$('.province li').click(function() {
+				$('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
+				$(this).css('background', '#FFFFFF').siblings('.province li').css('background', '#ededed');
+			});
+			$('.city li').click(function() {
+				$('.address span').text($(this).text())
+				$(this).addClass('on-blue').siblings('.job-list li').removeClass('on-blue');
+				$('.tab-panl').addClass('none')
+			});
+			/*职位*/
+			$('.job li').click(function() {
+				$('.job-list').eq($(this).index()).removeClass('none').siblings('.job-list').addClass('none');
+				$(this).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
+			});
+		});
+	</script>
+
+</html>

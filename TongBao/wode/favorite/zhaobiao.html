@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>招标信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
+		<script type="text/javascript" src="../../js/aui-tab.js"></script>
+
+		<link rel="stylesheet" href="../../css/mkui.css" />
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../../static/css/common.css" />
+		<link rel="stylesheet" href="../../css/aui.css" />
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="aui-tab" id="tab">
+				<div id="gongying" class="aui-tab-item aui-active">供应信息</div>
+				<div id="zhaobiao" class="aui-tab-item">招标信息</div>
+				<div id="zhaopin" class="aui-tab-item" v-if="type">招聘信息</div>
+				<div id="qiuzhi" class="aui-tab-item" v-else>求职信息</div>
+				<div id="zixun" class="aui-tab-item">仝仝资讯</div>
+			</div>
+			<div style="background-color: lightgray; height: 1px;"></div>
+			<article class="m-list list-theme4">
+				<a v-for="item in items" :href="item.url" class="list-item">
+					<div class="list-img"></div>
+					<div class="list-mes">
+						<div class="list-title">
+							<p class="f-16 "><span>{{item.title}}</span><span class="fr c-ec9d1d">{{item.price}}/{{item.unit}}</span></p>
+						</div>
+						<div class="list-other">
+							<h4 class="f-14 overflow-h"><span class="fl">{{item.city}}</span><span class="ml-15">{{item.quantity}}{{item.unit}}</span><span class="fr time mr-8 ">{{item.created_at}}</span></h4>
+							<p class="recruit-pos f-14 mt-5 pos-name">{{item.provider}}</p>
+						</div>
+					</div>
+				</a>
+			</article>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				type: true,
+				items: [{
+						title: "111111",
+						price: "1000元",
+						unit: "吨",
+						city: "北京",
+						quantity: "800",
+						created_at: "2017-10-02",
+						provider: "北京市海淀区"
+					},
+					{
+						title: "111111",
+						price: "1000元",
+						unit: "吨",
+						city: "北京",
+						quantity: "800",
+						created_at: "2017-10-02",
+						provider: "北京市海淀区"
+					}
+				]
+			},
+			methods: {}
+		})
+
+		var tab = new auiTab({
+			element: document.getElementById("tab"),
+			index: 2
+		}, function(ret) {
+			window.location.replace("../favorite/" + ret.dom.id + ".html")
+		});
+	</script>
+
+</html>

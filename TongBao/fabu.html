@@ -198,7 +198,7 @@
 				<div>
 					<!---->
 					<div class="m-grids-2">
-						<router-link to="/member/jianli" class="grids-item">
+						<router-link to="publish/jianli/jianli.html" class="grids-item">
 							<div class="grids-icon"><img src="static/img/qiuzhi.png"></div>
 							<div class="grids-txt"><span>求职信息</span></div>
 						</router-link>
@@ -243,19 +243,25 @@
 	</body>
 
 	<script type="text/javascript">
-		$('router-link').click(function() {
-			$.post("192.168.84.1:8080/index/index/index", {
-					
-				},
-				function(data, status) {
-					console.log('data==>>'+data);
-				})
+		$(function() {
+			$('#xiaoxi_tip').hide();
+
+			$('router-link').click(function() {
+//				window.location.href = $(this).attr('to');
+
+				$.post("192.168.1.120:8080/index/index/index", {
+
+					},
+					function(data, status) {
+						console.log('data==>>' + data);
+					})
+			})
 		})
 
 		apiready = function() {
 			api.parseTapmode();
 		}
-		$('#xiaoxi_tip').hide();
+
 		var tab = new auiTab({
 				element: document.getElementById("footer"),
 				index: 2
@@ -263,8 +269,8 @@
 			function(ret) {
 				switch(ret.index) {
 					case 1:
-                        window.location.replace("home.html")
-                        break;
+						window.location.replace("home.html")
+						break;
 					case 2:
 						break;
 					case 3:

@@ -43,7 +43,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body onload="window.scrollTo(0,document.body.scrollHeight);">
 		<section id="chat" class="aui-chat">
 			<div class="aui-chat-header">2016年7月13日</div>
 			<div class="aui-chat-item aui-chat-left">
@@ -253,7 +253,7 @@
 				<div class="aui-chat-media"><img src="../img/touxiang.png" /></div>
 				<div class="aui-chat-inner">
 					<div class="aui-chat-content">
-						<div class="aui-chat-arrow"></div>123</div>
+						<div class="aui-chat-arrow"></div>底部</div>
 					<div class="aui-chat-status"></div>
 				</div>
 			</div>
@@ -273,12 +273,19 @@
 		var loc = location.href;
 		var id = loc.split("=")[1];
 
+		function scrollToEnd() { //滚动到底部
+			var h = $('#chat').height() - $(window).height();
+			$('#chat').scrollTop(h);
+		}
+
 		$('#send').click(function() {
 			var v = $('#in').val();
 
 			$('#chat').append('<div class="aui-chat-item aui-chat-right"><div class = "aui-chat-media"><img src = "../img/touxiang.png" /></div><div class = "aui-chat-inner"><div class = "aui-chat-content"><div class = "aui-chat-arrow"></div>' + v + '</div><div class = "aui-chat-status"></div></div></div>');
 
 			$('#in').val("");
+
+			window.scroll(0, document.body.scrollHeight);
 		});
 	</script>
 

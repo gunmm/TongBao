@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>编辑订阅</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
+		<link rel="stylesheet" href="../../css/mkui.css" />
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css" />
+
+		<link rel="stylesheet" href="../../static/css/common.css" />
+	</head>
+
+	<body>
+		<div id="app">
+			<section v-for="item in dyzp" class="editor-head">
+				<p class="recruit-pos overflow-h"><span id="gongsi">招聘信息</span> <span class="delet fr" style="color: rgb(48, 149, 227);"><a href="/dingyue/zhaopin?id=0">编辑</a></span> <span class="fr shanchu" style="color: rgb(236, 157, 29);"><a href="#" onclick="del('zhaopin',0)">删除</a></span></p>
+				<div class="recruit-header overflow-h">
+					<h3 class="fl">销售</h3>
+					<p class="fr">五险一金,包住,水果零食,包吃,周末双休</p>
+				</div>
+				<p class="recruit-pos">公司性质：<span>国企</span></p>
+				<p class="recruit-pos overflow-h"><span>北京市/3-5年/博士生/会计</span></p>
+			</section>
+			<p class="zbxx">
+				<a href="dyzhaopin.html">+招聘信息</a>
+			</p>
+			<section v-for="item in dyqz" class="editor-head">
+				<p class="recruit-pos overflow-h"><span id="gongsi">求职信息</span> <span class="delet fr" style="color: rgb(48, 149, 227);"><a href="/dingyue/qiuzhi?id=0">编辑</a></span> <span class="fr shanchu" style="color: rgb(236, 157, 29);"><a href="#" onclick="del('qiuzhi',0)">删除</a></span></p>
+				<div class="recruit-header overflow-h">
+					<h3 class="fl">销售</h3></div>
+				<p class="recruit-pos overflow-h"><span>北京市/1-3年/初中/中级工程师</span></p>
+			</section>
+			<p class="zbxx">
+				<a href="dyqiuzhi.html">+求职信息</a>
+			</p>
+			<section v-for="item in dyzb" class="editor-head">
+				<p class="recruit-pos overflow-h"><span id="gongsi">招标信息</span> <span class="delet fr" style="color: rgb(48, 149, 227);"><a href="/dingyue/zhaobiao?id=0">编辑</a></span> <span class="fr shanchu" style="color: rgb(236, 157, 29);"><a href="#" onclick="del('zhaobiao',0)">删除</a></span></p>
+				<div class="recruit-header overflow-h">
+					<h3 class="fl">建材</h3>
+					<p class="fr">北京市</p>
+				</div>
+			</section>
+			<p class="zbxx">
+				<a href="dyzhaobiao.html">+招标信息</a>
+			</p>
+			<section v-for="item in dygy" class="editor-head">
+				<p class="recruit-pos overflow-h"><span id="gongsi">供应信息</span> <span class="delet fr" style="color: rgb(48, 149, 227);"><a href="/dingyue/gongying?id=0">编辑</a></span> <span class="fr shanchu" style="color: rgb(236, 157, 29);"><a href="#" onclick="del('gongying',0)">删除</a></span></p>
+				<div class="recruit-header overflow-h">
+					<h3 class="fl">建材</h3>
+					<p class="fr">天津市</p>
+				</div>
+			</section>
+			<p class="zbxx">
+				<a href="dygongying.html">+供应信息</a>
+			</p>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				dyzp: [{}, ],
+				dyzb: [{}, ],
+				dyqz: [{}, ],
+				dygy: [{}, ]
+			}
+		})
+
+		function del(type, id) {
+			vm.$dialog.confirm({
+				title: '',
+				mes: '确定删除吗?',
+				opts: function() {
+					vm.$dialog.toast({
+						mes: '你点了确定',
+						timeout: 1000
+					});
+				}
+			});
+		}
+	</script>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>求职信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
+		<script type="text/javascript" src="../../js/aui-tab.js"></script>
+
+		<link rel="stylesheet" href="../../css/mkui.css" />
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../../static/css/common.css" />
+		<link rel="stylesheet" href="../../css/aui.css" />
+	</head>
+
+	<body>
+		<div id="app">
+			<div style="display: inline-flex; width: 100%; background: white; align-items: center;">
+				<div class="aui-tab" id="tab" style="width: 80%;">
+					<div id="gongying" class="aui-tab-item aui-active">供应信息</div>
+					<div id="zhaobiao" class="aui-tab-item">招标信息</div>
+					<div id="zhaopin" class="aui-tab-item" v-if="type">招聘信息</div>
+					<div id="qiuzhi" class="aui-tab-item" v-else>求职信息</div>
+				</div>
+				<a href="editdingyue.html" class="aui-btn aui-btn-info" style="margin: auto;">编辑</a>
+			</div>
+			<div style="background-color: lightgray; height: 1px;"></div>
+			<article class="m-list list-theme4">
+				<a v-for="item in items" :href="item.url" class="list-item">
+					<div class="list-img"></div>
+					<div class="list-mes">
+						<div class="list-title">
+							<p class="f-16 "><span>{{item.title}}</span><span class="fr c-ec9d1d">{{item.xinzi}}</span></p>
+						</div>
+						<div class="list-other">
+							<h4 class="f-14 overflow-h "><span class="fl">{{item.name}}</span><span class="ml-15">{{item.gender}}   {{item.age}}</span><span class="fr time mr-8 ">{{item.created_at}}</span></h4>
+							<p class="recruit-pos f-14 mt-5 pos-name">{{item.city}} {{item.jingyan}} {{item.xueli}}</p>
+						</div>
+					</div>
+				</a>
+			</article>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				type: false,
+				items: [{
+						title: "工程师",
+						xinzi: "1000元",
+						name: "李有鬼",
+						gender: "男",
+						age: "23岁",
+						created_at: "2017-10-02",
+						city: "北京",
+						jingyan: "3年以上",
+						xueli: "本科"
+					},
+					{
+						title: "会计",
+						xinzi: "1000元",
+						name: "李有鬼",
+						gender: "男",
+						age: "23岁",
+						created_at: "2017-10-02",
+						city: "北京",
+						jingyan: "3年以上",
+						xueli: "本科"
+					}
+				]
+			},
+			methods: {}
+		})
+
+		var tab = new auiTab({
+			element: document.getElementById("tab"),
+			index: 3
+		}, function(ret) {
+			window.location.replace("../dingyue/" + ret.dom.id + ".html")
+		});
+	</script>
+
+</html>
