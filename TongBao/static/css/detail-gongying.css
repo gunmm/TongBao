@@ -144,6 +144,13 @@
 footer{
 	width: 100%;
 }
+footer li img{
+	width: 22px;
+	height: 19px;
+	margin: 0 auto;
+	display: block;
+
+}
 footer li{
 	float: left;
 	text-align: center;
@@ -178,4 +185,3 @@ footer .last span{
 	font-size:14px;
 	color:#717171;
 }
-.

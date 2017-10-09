@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简历详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="renderer" content="webkit">
+    <!--UC 浏览器-->
+    <meta name="screen-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <!--QQ x5内核-->
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
+    <link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
+    <script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
+    <script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/lib/js/axios.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="../../static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/detail-jianlj.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/mbox.css">  <!--背景样式 弹框样式-->
+    <script type="text/javascript" src="../../static/lib/js/jquery-1.11.1.min.js"></script><!--jquery库-->
+    <script type="text/javascript" src="../../static/lib/js/jm-qi.js"></script><!--自定义弹框大小，提示信息，样式，icon。。。。-->
+</head>
+<body class="bg-fff">
+
+<div id="app">
+    <!--<section class="detail-head overflow-h border-b">
+        <div class="head-pic fl">
+            <img src="<?=$model['avatar']; ?>"/>
+        </div>
+        <div class="head-main fl">
+            <div class="head-name overflow-h">
+                <p class="fl"><?=$model['name'] ?> <i class="ico ico-<?=$model['gender']==1?'boy':'girl' ?>"></i></p>
+                <span class="years fl"><?=$model['age'] ?></span>
+            </div>
+            <div class="head-quali overflow-h">
+                <ul class="overflow-h">
+                    <li><?=$model['xueli']; ?></li>
+                    <li><?=$model['jingyan']; ?></li>
+                    <li class="ov-h"><?=$model['city']; ?></li>
+                    <li><?=$model['zhicheng']; ?></li>
+                </ul>
+            </div>
+            <div class="call overflow-h">
+                <span class="fl"><?=$model['phone']; ?></span>
+                <span class="fl email"><?=$model['email']; ?></span>
+            </div>
+        </div>
+    </section>-->
+    <section class="detail-head overflow-h border-b">
+        <div class="head-pic ">
+            <img :src='avatar'/>
+        </div>
+
+        <p class="text-c mingzi mt-10">
+            {{name}}
+            <i :class='gender'></i>
+        </p>
+    </section>
+    <section class="collec ">
+        <ul class="overflow-h">
+            <li class="border-r ml-10">更新：<span>{{updated_at}}</span></li>
+            <li class="border-r">收藏：<span>{{favourite}}次</span></li>
+            <li class="">浏览：<span>{{view}}人</span></li>
+        </ul>
+    </section>
+    <div class="div1"></div>
+    <div class="head-main pb-14">
+        <section class="hope-job">
+            <h3 class="border-b ">基本信息</h3>
+        </section>
+        <div class="head-quali overflow-h">
+            <ul class="overflow-h">
+                <li>手机号码：{{phone}}</li>
+                <li>电子邮箱：{{email}}</li>
+                <li>真实年龄：{{age}}</li>
+
+                <li>最高学历：{{xueli}}</li>
+                <li>工作经验：{{jingyan}}</li>
+                <li>所在城市：{{city}}</li>
+                <li>工作职称：{{zhicheng}}</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!--</section>-->
+
+    <div class="div1"></div>
+    <!--期望工作-->
+    <section class="hope-job">
+        <h3 class="border-b ">期望工作</h3>
+        <div class="name-job">
+            <p class="job-name">{{gangwei}}</p>
+            <p class="job-money">{{gongzuofangshi}}
+                /{{targetprovince}}{{targetcity}}
+                /{{targetxinzi}}</p>
+            <p class="job-money">目前状态: {{onduty}}/{{jointime}}</p>
+        </div>
+    </section>
+    <div class="div1"></div>
+    <!--工作经历-->
+    <section class="job-exp">
+        <h3 class="border-b mb-10">工作经历</h3>
+
+        <div v-for="work in worklist">
+            <div class="job-time-2">
+                <i class="ico ico-round"></i>
+                <span>{{work.startdate}}至 {{work.enddate}}</span>
+            </div>
+            <div class="job-content border-l">
+                <p>{{work.companyname}}
+                </p>
+                <p>{{work.brief}}</p>
+            </div>
+        </div>
+
+    </section>
+    <div class="div1"></div>
+    <!--教育经历-->
+    <section class="hope-job educa-exp">
+        <h3 class="border-b mb-10">教育经历</h3>
+        <div v-for="study in studylist">
+            <div class="job-time-2">
+                <i class="ico ico-round"></i>
+                <span>{{study.graduationyear}}年毕业</span>
+            </div>
+            <div class="job-content border-l school">
+                <p>{{study.schoolname}}</p>
+                <p>{{study.xueli}}.{{study.major}}</p>
+            </div>
+        </div>
+    </section>
+    <div class="div1"></div>
+    <!--自我评价-->
+    <section class="hope-job evaluation">
+        <h3 class="border-b ">自我评价</h3>
+        <div class="name-job self-narrative">
+            <p class="job-name">{{evaluation}}</p>
+        </div>
+    </section>
+    <!--投诉-->
+    <div class="tousu pos-r">
+        <a href="../zhaopin/tousu.html?name=qwqwqwqwqwqw">
+            <div class="tousu-main pos-a">
+                <i class="ico ico-tousu"></i>
+                <span>投诉</span>
+            </div>
+        </a>
+    </div>
+    <!--<?php if(!empty($items)){?>-->
+    <!--&lt;!&ndash;相似职位&ndash;&gt;-->
+    <!--<section class="hope-job like-job">-->
+        <!--<h3 class="border-b ">相似求职</h3>-->
+        <!--<div class="m-list">-->
+            <!--<ul>-->
+                <!--<?php foreach ($items as $k=>$v){?>-->
+                <!--<li class="overflow-h  border-b padd">-->
+                    <!--<a href="<?=$v['url']?>">-->
+                        <!--<div class="recruit-list fl ml-10 ">-->
+                            <!--<div class="recruit-header overflow-h">-->
+                                <!--<h4 class="fl"><?=$v['title']?></h3>-->
+                                    <!--<p class="fr"><?=$v['xinzi']?></p>-->
+                            <!--</div>-->
+                            <!--<div class="recruit-header overflow-h">-->
+                                <!--<ul class="name-list overflow-h fl">-->
+                                    <!--<li>-->
+                                        <!--<?=$v['name']?>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<?=$v['gender']?>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<?=$v['age']?>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                                <!--<span class="fr time"><?=$v['created_at']?></span>-->
+                            <!--</div>-->
+                            <!--<p class="recruit-pos"><span><?=$v['city']?></span> <span-->
+                                    <!--class="ml-10"><?=$v['jingyan']?></span> <span class="ml-10"><?=$v['xueli']?></span>-->
+                            <!--</p>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<?php }?>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</section>-->
+    <!--<?php }?>-->
+    <!--<div style="height: 57px;"></div>-->
+    <!--<?php if(empty(Yii::$app->user->identity->profile->type)||Yii::$app->user->identity->profile->type==2){?>-->
+    <!--<footer>-->
+        <!--<ul class="overflow-h">-->
+            <!--<li>-->
+                <!--<a href="tel:<?=$model['phone']; ?>">-->
+                    <!--<img src="/static/img/ico-phone.png" alt=""/>-->
+                    <!--<span>电话</span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li class="second">-->
+                <!--<a href="/tongzhi/chat?id=<?=$model[" userid"]; ?>">-->
+                <!--<img src="/static/img/xiaoxi.png" alt=""/>-->
+                <!--<span>消息</span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li class="third sc" @click="favourite()">-->
+                <!--<img id="scimage" src="" alt=""/>-->
+                <!--<span class="on">收藏</span>-->
+            <!--</li>-->
+            <!--<li class="last">-->
+                <!--<?php if($model['istoudi']){?>-->
+                <!--<span class="todi">已邀请面试</span>-->
+                <!--<?php }else{?>-->
+                <!--<span class="todi" @click="toudi()">邀请面试</span>-->
+                <!--<?php }?>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</footer>-->
+    <!--<?php }?>-->
+</div>
+
+
+
+<!--<script type="text/javascript" charset="utf-8">-->
+<!--//    wx.config(<?php echo Yii::$app->wechat->js->config(array('checkJsApi','onMenuShareTimeline','onMenuShareAppMessage'), false) ?>);-->
+    <!--var title='【仝仝生态】<?=$model['name'] ?>';-->
+    <!--wx.ready(function () {-->
+        <!--var shareData = {-->
+            <!--title: title, // 分享标题-->
+            <!--desc: '<?=$model['description']; ?>', // 分享描述-->
+            <!--link: window.location.href, // 分享链接-->
+            <!--imgUrl: ''-->
+        <!--};-->
+        <!--wx.onMenuShareAppMessage(shareData);-->
+        <!--wx.onMenuShareTimeline(shareData);-->
+    <!--});-->
+<!--</script>-->
+<script type="text/javascript">
+//    var id='<?=$model["id"]?>';
+    var vm=new Vue({
+        el: '#app',
+        data:{
+            avatar:'../../img/touxiang.png',
+            name: '闵哲',
+            gender: 'ico ico-boy',<!--<?=$model['gender']==1?'boy':'girl' ?>-->
+            updated_at: '2017-7-19',
+            favourite: '100',
+            view: '70',
+            phone: '17621236608',
+            email: '924744097@qq.com',
+            age: '22',
+            xueli: '本科',
+            jingyan: '两年',
+            city: '北京',
+            zhicheng: '中级工程师',
+            gangwei:'iOS开发工程师',
+            gongzuofangshi: '全职',
+            targetprovince: '陕西',
+            targetcity: '渭南',
+            targetxinzi: '8000-10000元',
+            onduty: '正在找工作',
+            jointime: '一周内到岗',
+            worklist:[
+                {
+                    "startdate":"2015-9-1",
+                    "enddate":"2017-8-17",
+                    "companyname":"上海岂能软件",
+                    "brief":"项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作无法认定。"
+                },
+                {
+                    "startdate":"2016-9-1",
+                    "enddate":"2018-8-17",
+                    "companyname":"辽宁省路桥一公司",
+                    "brief":"项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作发的。"
+                },
+                {
+                    "startdate":"2017-9-1",
+                    "enddate":"2019-8-17",
+                    "companyname":"辽宁省路桥2公司",
+                    "brief":"项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。"
+                },
+
+            ],
+            studylist: [
+                {
+                    "graduationyear":"2016-07",
+                    "schoolname":"青岛科技大学1",
+                    "xueli":"本科",
+                    "major":"电子信息工程",
+                },
+                {
+                    "graduationyear":"2016-07",
+                    "schoolname":"青岛科技大学2",
+                    "xueli":"本科",
+                    "major":"电子信息工程",
+                },
+                {
+                    "graduationyear":"2016-07",
+                    "schoolname":"青岛科技大学3",
+                    "xueli":"本科",
+                    "major":"电子信息工程",
+                },
+            ],
+            evaluation:"乐观，上进，开朗，比较吊会计师空间打开手机打开就是空间打开手机打开就是看的就是空间打开手机打开就是空间",
+        },
+        methods: {
+            favourite(){
+//                axios.post('/favourite/index', {
+//                    id:id
+//                }).then(function (response) {
+//                    action=response.data.action;
+//                    mes="收藏成功!";
+//                    if(action=="cancel"){
+//                        mes="取消"+mes;
+//                        $('#scimage').attr('src','/static/img/shoucang1.png');
+//                        $('.on').css('color','#717171');
+//                        $('.on').html('收藏');
+//                    }else{
+//                        $('#scimage').attr('src','/static/img/shoucang2.png');
+//                        $('.on').css('color','#ec9d1d');
+//                        $('.on').html('取消');
+//                    }
+//                    vm.$dialog.toast({
+//                        mes: mes,
+//                        icon: 'success',
+//                        timeout: 1500,
+//                    });
+//                });
+            },
+            toudi(){
+//                axios.post('/toudi/index', {
+//                    id:id
+//                }).then(function (response) {
+//                    action=response.data.action;
+//                    mes="邀请成功!";
+//                    $(".todi").html("已邀请面试");
+//                    if(action=="cancel"){
+//                        mes="取消"+mes;
+//                        $(".todi").html("邀请面试");
+//                    }
+//                    vm.$dialog.toast({
+//                        mes: mes,
+//                        icon: 'success',
+//                        timeout: 1500,
+//                    });
+//                });
+            }
+        },
+    })
+</script>
+<!--<script type="text/javascript">-->
+    <!--<?php if(!empty(Yii::$app->user->identity->profile)&&Yii::$app->user->identity->profile->type==2){?>-->
+        <!--$(function(){-->
+            <!--if (<?=$model['isfavourite']; ?>) {-->
+                <!--$("#scimage").attr('src','/static/img/shoucang2.png');-->
+                <!--$('.on').css('color','#ec9d1d');-->
+            <!--} else{-->
+                <!--$("#scimage").attr('src','/static/img/shoucang1.png');-->
+                <!--$('.on').css('color','#717171');-->
+            <!--}-->
+        <!--});-->
+    <!--<?php }?>-->
+<!--</script>-->
+</body>
+</html>
