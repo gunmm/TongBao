@@ -19,6 +19,7 @@
 		<link rel="stylesheet" href="css/aui.css" />
 		<script type="text/javascript" src="js/api.js"></script>
 		<script type="text/javascript" src="js/aui-tab.js"></script>
+		<script type="text/javascript" src="js/aui-dialog.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 		<style type="text/css">
 			*,
@@ -199,11 +200,44 @@
 				<img src="img/touxiang.png" class="img-rounded">
 			</div>
 			<p class="name">平台</p>
-			<a href="">
+			<a id="edit">
 				<span class="bj pos-a">编辑</span>
 			</a>
 		</section>
-		<section class="zp-body">
+
+		<section id="my_geren" class="zp-body">
+			<div class="zp-list overflow-h"><span class="fl"><i class="ico ico-jianli"></i>简历 </span> <span class="fr  sx">刷新</span> <span class="fr  bianji"><a href="publish/jianli/jianli.html">编辑</a></span></div>
+			<div class="div1"></div>
+			<div class="zp-list overflow-h">
+				<a href="wode/favorite/gongying.html"><span class="fl"><i class=" ico ico-shoucang4"></i>收藏</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+			</div>
+			<div class="zp-list overflow-h">
+				<a href="wode/dingyue/gongying.html"><span class="fl"><i class="ico ico-xxdy"></i>信息订阅</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+			</div>
+			<div class="div1"></div>
+			<div class="zp-list overflow-h">
+				<a href="wode/fabu/zhaobiao.html"><span class="fl"><i class="ico ico-fabu"></i>我的发布</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+			</div>
+			<div class="zp-list overflow-h">
+				<a href="/member/toubiao"><span class="fl"><i class="ico ico-my-toubiao"></i>我的投标</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+			</div>
+			<div class="zp-list overflow-h">
+				<a href="/member/intention"><span class="fl"><i class="ico ico-yxgs"></i>我的意向公司</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+			</div>
+			<div class="div1"></div>
+			<div class="zp-list overflow-h">
+				<a href="/member/feedback"><span class="fl"><i class="ico ico-yjfk"></i>意见反馈</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+			</div>
+			<div class="zp-list overflow-h">
+				<a href="/page/slug?slug=guide"><span class="fl"><i class="ico ico-yhzn"></i>用户指南</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+			</div>
+			<div class="zp-list overflow-h">
+				<a href="tel:400-888-8888"><span class="fl"><i class="ico ico-lxkf"></i>联系客服</span> <span class="fr c-3095e3">010-88432617</span></a>
+			</div>
+			<div class="div" style="height: 56px;"></div>
+		</section>
+
+		<section id="my_qiye" class="zp-body">
 			<div class="zp-list overflow-h">
 				<a href="/member/companyprofile"><span class="fl"><i class=" ico ico-yxgs"></i>企业信息</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
 			</div>
@@ -216,7 +250,7 @@
 			</div>
 			<div class="div1"></div>
 			<div class="zp-list overflow-h">
-				<a href="/managefabu/zhaobiao"><span class="fl"><i class="ico ico-fabu"></i>我的发布</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+				<a href="/member/toubiao"><span class="fl"><i class="ico ico-fabu"></i>我的发布</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
 			</div>
 			<div class="zp-list overflow-h">
 				<a href="/member/toubiao"><span class="fl"><i class="ico ico-my-toubiao"></i>我的投标</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
@@ -236,6 +270,7 @@
 			</div>
 			<div class="div" style="height: 56px;"></div>
 		</section>
+
 		<footer class="aui-bar aui-bar-tab" id="footer">
 			<div class="aui-bar-tab-item" tapmode>
 				<i class="aui-iconfont aui-icon-home"></i>
@@ -267,8 +302,8 @@
 		}, function(ret) {
 			switch(ret.index) {
 				case 1:
-                    window.location.replace("home.html")
-                    break;
+					window.location.replace("home.html")
+					break;
 				case 2:
 					window.location.replace("fabu.html")
 					break;
@@ -278,6 +313,22 @@
 				case 4:
 					break;
 			}
+		});
+
+		$('#edit').click(function() {
+			new auiDialog().alert({
+				title: "提示",
+				msg: '个人or企业？',
+				buttons: ['个人', '企业']
+			}, function(ret) {
+				if(ret.buttonIndex == 1) {
+					$('#my_qiye').hide();
+					$('#my_geren').show();
+				} else {
+					$('#my_qiye').show();
+					$('#my_geren').hide();
+				}
+			});
 		});
 	</script>
 

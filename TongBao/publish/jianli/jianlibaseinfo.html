@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>简历基本信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
+
+		<link rel="stylesheet" href="../../css/mkui.css" />
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../../static/css/common.css" />
+		<link rel="stylesheet" href="../../static/css/zhaopin-index.css" />
+
+		<style type="text/css">
+			*,
+			:after,
+			:before {
+				box-sizing: border-box;
+				outline: none
+			}
+			
+			body,
+			html {
+				height: 100%
+			}
+			
+			body {
+				background-color: #f5f5f5;
+				font-size: 12px;
+				-webkit-font-smoothing: antialiased;
+				font-family: arial, sans-serif
+			}
+			
+			blockquote,
+			body,
+			button,
+			dd,
+			dl,
+			dt,
+			fieldset,
+			form,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6,
+			hr,
+			iframe,
+			input,
+			legend,
+			li,
+			ol,
+			p,
+			pre,
+			td,
+			textarea,
+			th,
+			ul {
+				margin: 0;
+				padding: 0
+			}
+			
+			article,
+			aside,
+			audio,
+			details,
+			figcaption,
+			figure,
+			footer,
+			header,
+			img,
+			mark,
+			menu,
+			nav,
+			section,
+			summary,
+			time,
+			video {
+				display: block;
+				margin: 0;
+				padding: 0
+			}
+			
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				font-size: 100%
+			}
+			
+			fieldset,
+			img {
+				border: 0
+			}
+			
+			address,
+			caption,
+			cite,
+			dfn,
+			em,
+			i,
+			th,
+			var {
+				font-style: normal;
+				font-weight: 400
+			}
+			
+			ol,
+			ul {
+				list-style: none
+			}
+			
+			a {
+				color: inherit
+			}
+			
+			a,
+			a:hover {
+				text-decoration: none
+			}
+			
+			a,
+			button,
+			input,
+			label,
+			select {
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+			}
+			
+			button,
+			input,
+			select {
+				font: 100% tahoma, \5b8b\4f53, arial;
+				vertical-align: baseline;
+				border-radius: 0;
+				background-color: transparent;
+				-webkit-appearance: none;
+				-moz-appearance: none
+			}
+			
+			button::-moz-focus-inner,
+			input[type=button]::-moz-focus-inner,
+			input[type=file]>input[type=button]::-moz-focus-inner,
+			input[type=reset]::-moz-focus-inner,
+			input[type=submit]::-moz-focus-inner {
+				border: none
+			}
+			
+			input[type=checkbox],
+			input[type=radio] {
+				vertical-align: middle
+			}
+			
+			input::-webkit-inner-spin-button,
+			input::-webkit-outer-spin-button {
+				-webkit-appearance: none!important;
+				-moz-appearance: none!important;
+				margin: 0
+			}
+			
+			input:-webkit-autofill {
+				-webkit-box-shadow: 0 0 0 1000px #fff inset
+			}
+			
+			textarea {
+				outline: none;
+				border-radius: 0;
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				overflow: auto;
+				resize: none;
+				font: 100% tahoma, \5b8b\4f53, arial
+			}
+			
+			@font-face {
+				font-family: YDUI-INLAY;
+				src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAAQAQAABAAARkZUTXYH6JQAAAEMAAAAHEdERUYAQAAGAAABKAAAACBPUy8yV1RZQgAAAUgAAABWY21hcMzw07IAAAGgAAABemN2dCANZf70AAAUCAAAACRmcGdtMPeelQAAFCwAAAmWZ2FzcAAAABAAABQAAAAACGdseWauZXkfAAADHAAADMJoZWFkDOmJwQAAD+AAAAA2aGhlYQe2A4YAABAYAAAAJGhtdHgPsQM5AAAQPAAAADBsb2NhH7AiXwAAEGwAAAAobWF4cAE1CisAABCUAAAAIG5hbWUcj1e3AAAQtAAAAihwb3N0hK0nNwAAEtwAAAEkcHJlcKW5vmYAAB3EAAAAlQAAAAEAAAAAzD2izwAAAADU5SLiAAAAANTlIuIAAQAAAA4AAAAYAAAAAAACAAEAAwASAAEABAAAAAIAAAABA/4B9AAFAAgCmQLMAAAAjwKZAswAAAHrADMBCQAAAgAGAwAAAAAAAAAAAAEQAAAAAAAAAAAAAABQZkVkAEAAeOYxA4D/gABcA4AAgAAAAAEAAAAAAAAAAAADAAAAAwAAABwAAQAAAAAAdAADAAEAAAAcAAQAWAAAAAwACAACAAQAAAB45gvmDeYx//8AAAAAAHjmAOYN5jD//wAA/4sAABn/GdkAAQAAAAAACAAAAAAAAAAIAAsAEQAEAAUABgAHAA0ADgAPABAAEgAAAQYAAAEAAAAAAAAAAQIAAAACAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFACz/4QO8AxgAFgAwADoAUgBeAXdLsBNQWEBKAgEADQ4NAA5mAAMOAQ4DXgABCAgBXBABCQgKBgleEQEMBgQGDF4ACwQLaQ8BCAAGDAgGWAAKBwUCBAsKBFkSAQ4ODVEADQ0KDkIbS7AXUFhASwIBAA0ODQAOZgADDgEOA14AAQgIAVwQAQkICggJCmYRAQwGBAYMXgALBAtpDwEIAAYMCAZYAAoHBQIECwoEWRIBDg4NUQANDQoOQhtLsBhQWEBMAgEADQ4NAA5mAAMOAQ4DXgABCAgBXBABCQgKCAkKZhEBDAYEBgwEZgALBAtpDwEIAAYMCAZYAAoHBQIECwoEWRIBDg4NUQANDQoOQhtATgIBAA0ODQAOZgADDgEOAwFmAAEIDgEIZBABCQgKCAkKZhEBDAYEBgwEZgALBAtpDwEIAAYMCAZYAAoHBQIECwoEWRIBDg4NUQANDQoOQllZWUAoU1M7OzIxFxdTXlNeW1g7UjtSS0M3NTE6MjoXMBcwURExGBEoFUATFisBBisBIg4CHQEhNTQmNTQuAisBFSEFFRQWFA4CIwYmKwEnIQcrASInIi4CPQEXIgYUFjMyNjQmFwYHDgMeATsGMjYnLgEnJicBNTQ+AjsBMhYdAQEZGxpTEiUcEgOQAQoYJx6F/koCogEVHyMODh8OIC3+SSwdIhQZGSATCHcMEhIMDRISjAgGBQsEAgQPDiVDUVBAJBcWCQUJBQUG/qQFDxoVvB8pAh8BDBknGkwpEBwEDSAbEmGINBc6OiUXCQEBgIABExsgDqc/ERoRERoRfBoWEyQOEA0IGBoNIxETFAF35AsYEwwdJuMAAAUAQP/BA74DQAARABIAOQBIAEkApkAQNxQTEhEABgABAUBJAQYBP0uwFlBYQCAEAwICBwJoAAUGBWkAAQAABgEAWgAHBwpBCAEGBgsGQhtLsCBQWEAiBAMCAgcCaAgBBgAFAAYFZgAFBWcAAQAABgEAWgAHBwoHQhtAKQQDAgIHAmgABwEHaAgBBgAFAAYFZgAFBWcAAQAAAU0AAQEAUgAAAQBGWVlAEkhHQkE7OjIwJCMhIB8eFxQJECsBFB4CMj4CNC4CIg4CFTEHNTYxNjc2NzY3NjcyNzMWMRYXFhcWFxYHBgcGBwYnJicmJyYnNCcBMj4BNTQuASIOARQeATMxASAiP1JaUj8iIj9SWlI/IuABCAEVRElrQUUBFRkHPjp8U1gMBg0PJkBtcYFDOrtLGQUCAcBrtWhptNW1aWm1agGALVI/IiI/UlpSPyIiP1ItDxwGRANpVVosGwUCAQMTKGVrikA/SkFsOz0IBBdHuDxEARX+h2m0a2u0aWm01rRpAAADAED/wQO+A0AAJgA1ADYANUAyJAEAAwQFAUA2AQQBPwIBAgAABQQABVkGAQQDAwRNBgEEBANRAAMEA0UVFhgsEhEbBxUrEzU2MTY3Njc2NzY3MjczFjEWFxYXFhcWBwYHBgcGJyYnJicmJzQnATI+ATU0LgEiDgEUHgEzMUABCAEVRElrQUUBFRkHPjp8U1gMBg0PJkBtcYFDOrpMGQUCAcBrtWhptNW1aWm1agFxHAZEA2lVWiwbBQIBAxMpZGuKQD9KQWw7PQgEF0e4PEQBFf6HabRra7RpabTWtGkAAAIAQP/AA8ADQAAPACIANkAzHgECABcWFRQEAQICQAACAAEAAgFmAwEAAgEATQMBAAABUQABAAFFAgAgHwoHAA8CDwQOKwEhIgYVERQWMyEyNjURNCYDDgIVAzcXPgQ/ARciDgEDQP2ANEtLNAKANEtL7jBmNvpAmggfXltwISEUATddAz9LNP2ANEtLNAKANEv+W0euYwIBGkaTDjF9YWMZGkA+cgAAAAMAQP/AA8ADQAAPACEAIgAyQC8iIQICPgQBAgUBAAECAFkAAQMDAU0AAQEDUQADAQNFAQAgHxoXEhAJBgAPAQ4GDisBMhYVERQGIyEiJjURNDYzJSEiBhURFBYzITI2NRE0JiM5AQNAHCMjHP2AHCMjHAKA/YA0S0s0AoA0S0s0Av8jHP2AHCMjHAKAHCNASzT9gDRLSzQCgDRLAAIAQAAZA8AC5wAGAAcACLUHBwUBAiYrCQI3FwEXMQO//br+x3PGAe1ZAoz9jgGTYs8BploAAAAAAwA2/8EDygM/ACYAOgA7ACVAIjs6ODQyMC4sKigmIhoSDgEAAUAAAAEAaAIBAQFfJC4XAxErAS4BLwIuASIGDwIOAQcGHwEHBhcWMzI/ARcWMzI3Ni8BNzYnMQ8BHwEvAQ8BPwEvASUTHwMHOQEDygYdEvBpCCEmIQhp8BIdBg0dsCkHIhEWEQ/R0Q8RFRIiBymwHAzjHgcp0yYm0ykHHq4BH3ZpEyrvrgHyERcDJNgSFBQS2CQDFxEmHLDzKBgMCHFxCAwYKPOwHCbDHijzcRQUcvQoHq4qAQDaJwYjrgACADb/wQPKAz8AJgAnABxAGScmIhoSBQEAAUAAAAEAaAIBAQFfJC4XAxErAS4BLwIuASIGDwIOAQcGHwEHBhcWMzI/ARcWMzI3Ni8BNzYnMQcDygYdEvBpCCEmIQhp8BIdBg0dsCkHIhEWEQ/R0Q8RFRIiBymwHAzjAfIRFwMk2BIUFBLYJAMXESYcsPMoGAwIcXEIDBgo87AcJsMAAAAAAwBA/8ADwANAABEAJwAoADZAMygBAwQhGQIBAwJAAAQAAwAEA2YAAwEAAwFkAgEABAEATQIBAAABUQABAAFFFB0XFxAFEysBIg4CFB4CMj4CNC4CIwkBMQ4BJyYnMScmNDYyHwEBNjIWFAcxAgBbpnhHR3imtqZ4R0d4plsBAf7eChsMBASnDBgiC4sBBQsiGAwDQEd4prameEdHeKa2pnhH/rT+3woEBwMEpgwiFwuKAQQMFyIMAAQAsv/FA0wDOQAxADIASgBLAG5AHERDOjkrIx0XFg4KAAMNAQIBAAJASwECPjIBAT1LsBdQWEAZBAECAwJoAAADAQMAAWYAAQEDUQADAwoBQhtAHgQBAgMCaAAAAwEDAAFmAAMAAQNNAAMDAU8AAQMBQ1lAC0pJPz40MzEwFwUPKwUDPAE+AxYXHgEfARM+BB4BFxM+AxYXPgMWFz4EHgEXERQOAQchMRMiBhUUFhc1JjU0NjIWFRQHFT4BNTQmIzEBj9wBBQwSIBQZJwcGAgIEDg8VFRcLAQIKHh8sFQMIHB4sFwEEDg4WFBkMBBkU/nQCXII9MjhhiWE2MzyCWzoBEgIHFBARCAIJCygODgGhAgYPCgcDExL++AMLFAUTGgQLFgYUHAIIEgwIBhsY/rQDCh0NA3OCXDxmHUUySUVhYUVIMkYeZTxcggAAAgD9/8ADAwNAAAYABwAItQcHBQMCJislCQE3CQEnMQL2/qwBVA39+gIGDVkBJwEnmf5A/kGYAAACAP3/wAMDA0AABgAHAAi1BwcDAQImKyUHCQEXCQExAQoNAgb9+g0BVP6sWZgBvwHAmf7Z/tkAAAIAQAByA8ACjgAgAFgASEBFCwEGAFhVVFBNRkQ9PDQqKCEUEA8DBgJAAQEACAcCBgMABlkFBAIDAgIDTQUEAgMDAlIAAgMCRklIQkFAPyYRF08hFQkUKyURLgMjJyEiBg8CDgEHFRQWHwIeATsBIT4EJQ4BIwciJi8CBwYjIicmNTQ/AScuAT0BNDY/AT4BMzcyFh8CNzYzFhcWFRYPARceARUXFAYHA8ABFRwcCQr92QYJAwLdAwMBBAIC2gQJAwMCKhwoEgoB/usECgQDBwwCAkhIBxAMCQoKR0gFBAUCAgQLAwMHDAIDSEgJDwsKCAMMR0cEBQEFA9QBVhspEgwBAwIC9AMJAwIGCgID8gQDARYZIQs7AwQBBQICSEgJCAoNEAhHSAULBAMGCwICBAUBBQMCSEgKAQkHDgwLSEcEDAQEBgsDAAACACj/gAPYA4AAGgAgACFAHiAfHh0cGxoHAQABQAYAAgA+AAABAGgAAQFfGRsCECsBBi4CLwEOBCMUHgczJBM2JwEnNxcTFwPWOo53Zh0dJn10eTcIIDVGTE5EOB0BAUFvOAj9+b4mhfg5AswGITc5FBUvSCMWBG/HlYNbSy0fDKkBUqqd/gCYOXIBHSYAAAABAED/wAPAA0AACwAlQCIAAQAEAUsCAQAFAQMEAANXAAEBBE8ABAEEQxEREREREAYUKwEhESMRIRUhETMRIQPA/n9+/n8BgX4BgQG/AYH+f37+fwGBAAAAAQBAAUEDwAG/AAcAI0AgBAMCAAEBAEsEAwIAAAFPAgEBAAFDAAAABwAHERERBRErATEhFSExITUCP/4BAf8BgQG/fn4AAAAAAQAAAAEAAE9THUxfDzz1AAsEAAAAAADU5SLiAAAAANTlIuIAKP+AA9gDgAAAAAgAAgAAAAAAAAABAAADgP+AAFwEAAAAAAAD2AABAAAAAAAAAAAAAAAAAAAABQQAAAAAAAAAAVUAAAPpACwEAABAAEAAQABAAEAANgA2AEAAsgD9AP0AQAAoAEAAQAAAAAAAAAAAATwB/gJuAsIDEAMsA5wD7ARIBO4FCgUmBcoGEgY+BmEAAQAAABMAXwAFAAAAAAACACYANABsAAAAigmWAAAAAAAAAAwAlgABAAAAAAABAAgAAAABAAAAAAACAAYACAABAAAAAAADACMADgABAAAAAAAEAAgAMQABAAAAAAAFAEUAOQABAAAAAAAGAAgAfgADAAEECQABABAAhgADAAEECQACAAwAlgADAAEECQADAEYAogADAAEECQAEABAA6AADAAEECQAFAIoA+AADAAEECQAGABABgmljb25mb250TWVkaXVtRm9udEZvcmdlIDIuMCA6IGljb25mb250IDogOC0zLTIwMTdpY29uZm9udFZlcnNpb24gMS4wOyB0dGZhdXRvaGludCAodjAuOTQpIC1sIDggLXIgNTAgLUcgMjAwIC14IDE0IC13ICJHIiAtZiAtc2ljb25mb250AGkAYwBvAG4AZgBvAG4AdABNAGUAZABpAHUAbQBGAG8AbgB0AEYAbwByAGcAZQAgADIALgAwACAAOgAgAGkAYwBvAG4AZgBvAG4AdAAgADoAIAA4AC0AMwAtADIAMAAxADcAaQBjAG8AbgBmAG8AbgB0AFYAZQByAHMAaQBvAG4AIAAxAC4AMAA7ACAAdAB0AGYAYQB1AHQAbwBoAGkAbgB0ACAAKAB2ADAALgA5ADQAKQAgAC0AbAAgADgAIAAtAHIAIAA1ADAAIAAtAEcAIAAyADAAMAAgAC0AeAAgADEANAAgAC0AdwAgACIARwAiACAALQBmACAALQBzAGkAYwBvAG4AZgBvAG4AdAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMAAAABAAIAWwECAQMBBAEFAQYBBwEIAQkBCgELAQwBDQEOAQ8BEBl5ZHVpZGFueHVhbmt1YW5neHVhbnpob25nEHlkdWlkYW54dWFua3VhbmcYeWR1aWZ1eHVhbmt1YW5neHVhbnpob25nD3lkdWlmdXh1YW5rdWFuZwt5ZHVpZ291eHVhbhN5ZHVpeGluZ3hpbmdrb25neGluEnlkdWl4aW5neGluZ3NoaXhpbhJ5ZHVpemhlbmdxdWVzaGl4aW4Hc2hvdXpoaQp5ZHVpZmFuaHVpC3lkdWlxaWFuamluCXlkdWl0dWlnZQd5ZHVpZHVuB3lkdWlqaWEIeWR1aWppYW4AAQAB//8ADwAAAAAAAAAAAAAAAAAAAAAAMgAyAxj/4QOA/4ADGP/hA4D/gLAALLAgYGYtsAEsIGQgsMBQsAQmWrAERVtYISMhG4pYILBQUFghsEBZGyCwOFBYIbA4WVkgsApFYWSwKFBYIbAKRSCwMFBYIbAwWRsgsMBQWCBmIIqKYSCwClBYYBsgsCBQWCGwCmAbILA2UFghsDZgG2BZWVkbsAArWVkjsABQWGVZWS2wAiwgRSCwBCVhZCCwBUNQWLAFI0KwBiNCGyEhWbABYC2wAywjISMhIGSxBWJCILAGI0KyCgACKiEgsAZDIIogirAAK7EwBSWKUVhgUBthUllYI1khILBAU1iwACsbIbBAWSOwAFBYZVktsAQssAgjQrAHI0KwACNCsABDsAdDUViwCEMrsgABAENgQrAWZRxZLbAFLLAAQyBFILACRWOwAUViYEQtsAYssABDIEUgsAArI7EEBCVgIEWKI2EgZCCwIFBYIbAAG7AwUFiwIBuwQFlZI7AAUFhlWbADJSNhREQtsAcssQUFRbABYUQtsAgssAFgICCwCkNKsABQWCCwCiNCWbALQ0qwAFJYILALI0JZLbAJLCC4BABiILgEAGOKI2GwDENgIIpgILAMI0IjLbAKLEtUWLEHAURZJLANZSN4LbALLEtRWEtTWLEHAURZGyFZJLATZSN4LbAMLLEADUNVWLENDUOwAWFCsAkrWbAAQ7ACJUKyAAEAQ2BCsQoCJUKxCwIlQrABFiMgsAMlUFiwAEOwBCVCioogiiNhsAgqISOwAWEgiiNhsAgqIRuwAEOwAiVCsAIlYbAIKiFZsApDR7ALQ0dgsIBiILACRWOwAUViYLEAABMjRLABQ7AAPrIBAQFDYEItsA0ssQAFRVRYALANI0IgYLABYbUODgEADABCQopgsQwEK7BrKxsiWS2wDiyxAA0rLbAPLLEBDSstsBAssQINKy2wESyxAw0rLbASLLEEDSstsBMssQUNKy2wFCyxBg0rLbAVLLEHDSstsBYssQgNKy2wFyyxCQ0rLbAYLLAHK7EABUVUWACwDSNCIGCwAWG1Dg4BAAwAQkKKYLEMBCuwaysbIlktsBkssQAYKy2wGiyxARgrLbAbLLECGCstsBwssQMYKy2wHSyxBBgrLbAeLLEFGCstsB8ssQYYKy2wICyxBxgrLbAhLLEIGCstsCIssQkYKy2wIywgYLAOYCBDI7ABYEOwAiWwAiVRWCMgPLABYCOwEmUcGyEhWS2wJCywIyuwIyotsCUsICBHICCwAkVjsAFFYmAjYTgjIIpVWCBHICCwAkVjsAFFYmAjYTgbIVktsCYssQAFRVRYALABFrAlKrABFTAbIlktsCcssAcrsQAFRVRYALABFrAlKrABFTAbIlktsCgsIDWwAWAtsCksALADRWOwAUVisAArsAJFY7ABRWKwACuwABa0AAAAAABEPiM4sSgBFSotsCosIDwgRyCwAkVjsAFFYmCwAENhOC2wKywuFzwtsCwsIDwgRyCwAkVjsAFFYmCwAENhsAFDYzgtsC0ssQIAFiUgLiBHsAAjQrACJUmKikcjRyNhIFhiGyFZsAEjQrIsAQEVFCotsC4ssAAWsAQlsAQlRyNHI2GwBkUrZYouIyAgPIo4LbAvLLAAFrAEJbAEJSAuRyNHI2EgsAQjQrAGRSsgsGBQWCCwQFFYswIgAyAbswImAxpZQkIjILAJQyCKI0cjRyNhI0ZgsARDsIBiYCCwACsgiophILACQ2BkI7ADQ2FkUFiwAkNhG7ADQ2BZsAMlsIBiYSMgILAEJiNGYTgbI7AJQ0awAiWwCUNHI0cjYWAgsARDsIBiYCMgsAArI7AEQ2CwACuwBSVhsAUlsIBisAQmYSCwBCVgZCOwAyVgZFBYIRsjIVkjICCwBCYjRmE4WS2wMCywABYgICCwBSYgLkcjRyNhIzw4LbAxLLAAFiCwCSNCICAgRiNHsAArI2E4LbAyLLAAFrADJbACJUcjRyNhsABUWC4gPCMhG7ACJbACJUcjRyNhILAFJbAEJUcjRyNhsAYlsAUlSbACJWGwAUVjIyBYYhshWWOwAUViYCMuIyAgPIo4IyFZLbAzLLAAFiCwCUMgLkcjRyNhIGCwIGBmsIBiIyAgPIo4LbA0LCMgLkawAiVGUlggPFkusSQBFCstsDUsIyAuRrACJUZQWCA8WS6xJAEUKy2wNiwjIC5GsAIlRlJYIDxZIyAuRrACJUZQWCA8WS6xJAEUKy2wNyywLisjIC5GsAIlRlJYIDxZLrEkARQrLbA4LLAvK4ogIDywBCNCijgjIC5GsAIlRlJYIDxZLrEkARQrsARDLrAkKy2wOSywABawBCWwBCYgLkcjRyNhsAZFKyMgPCAuIzixJAEUKy2wOiyxCQQlQrAAFrAEJbAEJSAuRyNHI2EgsAQjQrAGRSsgsGBQWCCwQFFYswIgAyAbswImAxpZQkIjIEewBEOwgGJgILAAKyCKimEgsAJDYGQjsANDYWRQWLACQ2EbsANDYFmwAyWwgGJhsAIlRmE4IyA8IzgbISAgRiNHsAArI2E4IVmxJAEUKy2wOyywLisusSQBFCstsDwssC8rISMgIDywBCNCIzixJAEUK7AEQy6wJCstsD0ssAAVIEewACNCsgABARUUEy6wKiotsD4ssAAVIEewACNCsgABARUUEy6wKiotsD8ssQABFBOwKyotsEAssC0qLbBBLLAAFkUjIC4gRoojYTixJAEUKy2wQiywCSNCsEErLbBDLLIAADorLbBELLIAATorLbBFLLIBADorLbBGLLIBATorLbBHLLIAADsrLbBILLIAATsrLbBJLLIBADsrLbBKLLIBATsrLbBLLLIAADcrLbBMLLIAATcrLbBNLLIBADcrLbBOLLIBATcrLbBPLLIAADkrLbBQLLIAATkrLbBRLLIBADkrLbBSLLIBATkrLbBTLLIAADwrLbBULLIAATwrLbBVLLIBADwrLbBWLLIBATwrLbBXLLIAADgrLbBYLLIAATgrLbBZLLIBADgrLbBaLLIBATgrLbBbLLAwKy6xJAEUKy2wXCywMCuwNCstsF0ssDArsDUrLbBeLLAAFrAwK7A2Ky2wXyywMSsusSQBFCstsGAssDErsDQrLbBhLLAxK7A1Ky2wYiywMSuwNistsGMssDIrLrEkARQrLbBkLLAyK7A0Ky2wZSywMiuwNSstsGYssDIrsDYrLbBnLLAzKy6xJAEUKy2waCywMyuwNCstsGkssDMrsDUrLbBqLLAzK7A2Ky2waywrsAhlsAMkUHiwARUwLQAAS7gAyFJYsQEBjlm5CAAIAGMgsAEjRCCwAyNwsA5FICBLuAAOUUuwBlNaWLA0G7AoWWBmIIpVWLACJWGwAUVjI2KwAiNEswoJBQQrswoLBQQrsw4PBQQrWbIEKAlFUkSzCg0GBCuxBgFEsSQBiFFYsECIWLEGA0SxJgGIUVi4BACIWLEGAURZWVlZuAH/hbAEjbEFAEQAAAA=) format("truetype")
+			}
+			
+			.g-fix-ios-overflow-scrolling-bug {
+				-webkit-overflow-scrolling: auto!important
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<div id="app">
+			<section class="zp-body zhaobiao">
+				<div class="zp-list overflow-h">
+					<span class="fl">姓名</span>
+					<span class="fr zp-next">
+					<input type="text" placeholder="请填写姓名" v-model="name"/>
+					</span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">性别</span>
+					<span data-value="2" class="fr  sex-js"><i class="orsex" v-bind:class="{orcolor:!isboy}"></i>女</span>
+					<span data-value="1" class="fr  sex-js orboy"><i class="orsex" v-bind:class="{orcolor:isboy}"></i>男</span>
+					<input type="hidden" id="gender">
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">出生日期</span>
+					<span class="fr no-flex select-btn ">
+						<input type="date" onchange="checkBirth()" v-model="birth" id="beginTime" class="kbtn" placeholder="请选择  "/>
+						<i class="ico ico-right6"></i>
+					</span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">工作经验</span>
+					<span class="fr zp-next select-btn">
+						<select v-model="jingyan">
+							<option value="">不限</option>
+	                		<option v-for="item in gzjy" :value="item.k">{{item.v}}</option>
+	            		</select>
+						<i class="ico ico-right1"></i>
+					</span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">工作职称</span>
+					<span class="fr zp-next select-btn">
+				<select   v-model="zhicheng" class="gzzc">
+	                <option value="">请选择</option>
+	                <option v-for="item in gzzc" :value="item.k">{{item.v}}</option>
+	            </select><i class="ico ico-right1"></i></span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">联系电话</span>
+					<span class="fr zp-next">
+					<input type="number" placeholder="请填写联系电话"  v-model="phone" onchange="checkTel()"/>
+				</span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">电子邮箱</span>
+					<span class="fr zp-next">
+					<input type="email" placeholder="请填写电子邮箱" onchange="checkEmail()"  v-model="email" />
+				</span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">所在城市</span>
+					<span class="fr zp-next select-btn" @click="chooseaddress()">
+						<span id="city">请选择</span>
+					<i class="ico ico-right1"></i>
+					</span>
+				</div>
+				<input type="hidden" id="choosedprovince" />
+				<input type="hidden" id="choosedprovincename" />
+				<input type="hidden" id="choosedcity" />
+				<div class="tab-panl none" id="sl-dizhi">
+					<div class="overflow-h">
+						<ul class="province fl">
+							<li v-for="item in province" @click="selectprovince(item.id,item.name)">{{item.name}}</li>
+						</ul>
+						<div class="city fl none" v-for="item in city">
+							<ul>
+								<li v-for="c in item" @click="selectcity(c.id,c.name)">{{c.name}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="overflow-h">
+					<yd-cell-group title="">
+						<yd-cell-item>
+							<yd-textarea slot="right" v-model="evaluation" placeholder="请填写自我评价" maxlength="500"></yd-textarea>
+						</yd-cell-item>
+					</yd-cell-group>
+				</div>
+			</section>
+			<div class="h-20"></div>
+			<div class="sure-btn" @click="update()">保存</div>
+			<div class="h-20"></div>
+		</div>
+
+	</body>
+
+	<script type="text/javascript">
+		var province;
+		$.ajax({
+			type: "get",
+			url: "../../js/province.json",
+			async: false,
+			success: function(data) {
+				province = data;
+			}
+		});
+
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				name: '老王',
+				isboy: false,
+				birth: '2017-09-02',
+				jingyan: '',
+				gzjy: [{
+						k: '2',
+						v: '一年以下'
+					},
+					{
+						k: '3',
+						v: '1-3年'
+					},
+					{
+						k: '4',
+						v: '3-5年'
+					},
+					{
+						k: '5',
+						v: '5-8年'
+					},
+					{
+						k: '6',
+						v: '8-10年'
+					},
+					{
+						k: '7',
+						v: '10年以上'
+					}
+				],
+				zhicheng: '',
+				gzzc: [{
+						k: '2',
+						v: '工程师1'
+					},
+					{
+						k: '3',
+						v: '工程师2'
+					},
+					{
+						k: '4',
+						v: '工程师3'
+					},
+				],
+				phone: '',
+				email: '',
+				province: province,
+				city: {
+					"1": [{
+						"id": 1,
+						"name": "全北京市"
+					}, {
+						"id": 37,
+						"name": "东城区"
+					}, {
+						"id": 38,
+						"name": "西城区"
+					}, {
+						"id": 41,
+						"name": "朝阳区"
+					}, {
+						"id": 42,
+						"name": "丰台区"
+					}, {
+						"id": 43,
+						"name": "石景山区"
+					}, {
+						"id": 44,
+						"name": "海淀区"
+					}, {
+						"id": 45,
+						"name": "门头沟区"
+					}, {
+						"id": 46,
+						"name": "房山区"
+					}, {
+						"id": 47,
+						"name": "通州区"
+					}, {
+						"id": 48,
+						"name": "顺义区"
+					}, {
+						"id": 49,
+						"name": "昌平区"
+					}, {
+						"id": 50,
+						"name": "大兴区"
+					}, {
+						"id": 51,
+						"name": "怀柔区"
+					}, {
+						"id": 52,
+						"name": "平谷区"
+					}, {
+						"id": 53,
+						"name": "密云县"
+					}, {
+						"id": 54,
+						"name": "延庆县"
+					}],
+					"2": [{
+						"id": 2,
+						"name": "全天津市"
+					}, {
+						"id": 55,
+						"name": "和平区"
+					}, {
+						"id": 56,
+						"name": "河东区"
+					}, {
+						"id": 57,
+						"name": "河西区"
+					}, {
+						"id": 58,
+						"name": "南开区"
+					}, {
+						"id": 59,
+						"name": "河北区"
+					}, {
+						"id": 60,
+						"name": "红桥区"
+					}, {
+						"id": 61,
+						"name": "塘沽区"
+					}, {
+						"id": 64,
+						"name": "东丽区"
+					}, {
+						"id": 65,
+						"name": "西青区"
+					}, {
+						"id": 66,
+						"name": "津南区"
+					}, {
+						"id": 67,
+						"name": "北辰区"
+					}, {
+						"id": 68,
+						"name": "武清区"
+					}, {
+						"id": 69,
+						"name": "宝坻区"
+					}, {
+						"id": 70,
+						"name": "宁河县"
+					}, {
+						"id": 71,
+						"name": "静海县"
+					}, {
+						"id": 72,
+						"name": "蓟县"
+					}],
+					"3": [{
+						"id": 73,
+						"name": "石家庄市"
+					}, {
+						"id": 74,
+						"name": "唐山市"
+					}, {
+						"id": 75,
+						"name": "秦皇岛市"
+					}, {
+						"id": 76,
+						"name": "邯郸市"
+					}, {
+						"id": 77,
+						"name": "邢台市"
+					}, {
+						"id": 78,
+						"name": "保定市"
+					}, {
+						"id": 79,
+						"name": "张家口市"
+					}, {
+						"id": 80,
+						"name": "承德市"
+					}, {
+						"id": 81,
+						"name": "衡水市"
+					}, {
+						"id": 82,
+						"name": "廊坊市"
+					}, {
+						"id": 83,
+						"name": "沧州市"
+					}],
+				},
+				evaluation: '',
+			},
+			methods: {
+				chooseaddress: function() {
+					$("#sl-dizhi").show();
+				},
+				selectprovince: function(id, name) {
+					$("#choosedprovincename").val(name);
+					$("#choosedprovince").val(id);
+					$("#choosedcity").val('');
+				},
+				selectcity: function(id, name) {
+					$("#city").html($("#choosedprovincename").val() + ' ' + name);
+					$("#choosedcity").val(id);
+					$("#sl-dizhi").hide();
+				},
+				update: function() {
+					if(vm.name == "") {
+						alert('请填写姓名')
+						return
+					}
+					if($('.kbtn') == "") {
+						alert('请填写出生日期')
+						return
+					}
+					if($('.gzzc') == "") {
+						alert('请填写出生日期')
+						return
+					}
+					if($('#city').text() == "请选择") {
+						alert('请填写所在城市')
+						return
+					}
+					if(!checkBirth() || !checkEmail() || !checkTel()) {
+						return false;
+					}
+					console.log("保存 ==>>" + vm.name)
+					console.log("保存 ==>>" + $('#gender').val())
+					console.log("保存 ==>>" + vm.birth)
+					console.log("保存 ==>>" + vm.jingyan)
+					console.log("保存 ==>>" + vm.zhicheng)
+					console.log("保存 ==>>" + vm.phone)
+					console.log("保存 ==>>" + vm.email)
+					console.log("保存 ==>>" + $("#choosedprovince").val())
+					console.log("保存 ==>>" + $("#choosedcity").val())
+					console.log("保存 ==>>" + vm.evaluation)
+				}
+			}
+		})
+
+		//选择出生日期
+		var birth = vm.birth;
+
+		function checkBirth() {
+			var endTime = vm.birth;
+			var end = new Date(endTime.replace("-", "/").replace("-", "/"));
+			var current = new Date();
+			if(end > current) {
+				vm.$dialog.alert({
+					mes: '出生日期必须在今天之前!'
+				});
+				vm.birth = birth;
+				return false;
+			}
+			return true;
+		}
+
+		//检查电话格式
+		function checkTel() {
+			if(!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.phone))) {
+				vm.$dialog.alert({
+					mes: '电话格式不正确!'
+				});
+				return false;
+			}
+			return true;
+		}
+
+		//检查邮箱格式
+		function checkEmail() {
+			var email = vm.email;
+			if(!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+				vm.$dialog.alert({
+					mes: 'email格式不正确！请重新输入!'
+				});
+				return false;
+			}
+			return true;
+		}
+
+		$(function() {
+			//选择性别
+			$('.orsex').click(function() {
+				$(this).addClass('orcolor');
+				$(this).parent('span').siblings('span').children('i').removeClass('orcolor');
+				var gender = $(this).parent().data('value');
+				$('#gender').val(gender);
+			})
+
+			//选择省份
+			$('.province li').click(function() {
+				$('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
+				$(this).css('background', '#FFFFFF').siblings('.province li').css('background', '#ededed');
+
+			});
+
+			//选择城市
+			$('.city li').click(function() {
+				$('.address span').text($(this).text())
+				$('.zhiwei').text($(this).text())
+				//					$(this).addClass('on-blue').siblings('.job-list li').removeClass('on-blue');
+				$('.city li ').removeClass('on-blue');
+				$(this).addClass('on-blue');
+				$('.tab-panl').addClass('none')
+			});
+		})
+	</script>
+
+</html>

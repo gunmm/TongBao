@@ -2547,7 +2547,7 @@ button {
 }
 
 .m-alert .confirm-bd {
-	padding: 10px 20px 0!important;
+	padding: 10px 20px!important;
 }
 
 .m-alert .confirm-ft {
