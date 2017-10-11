@@ -21,32 +21,32 @@
 		<link rel="stylesheet" type="text/css" href="static/css/index.css">
 		<link rel="stylesheet" type="text/css" href="css/aui-slide.css" />
 		<script type="text/javascript" src="js/api.js"></script>
+		<script src="static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/aui-tab.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
-		<script type="text/javascript" src="js/aui-slide.js"></script>
+		<script src="static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="static/css/index.css">
+		<link rel="stylesheet" type="text/css" href="static/css/common.css">
 
 	</head>
 
 	<body>
 		<div id="app" class="shouye">
-			<div id="aui-slide3">
-				<div class="aui-slide-wrap">
-					<div class="aui-slide-node bg-dark">
+			<yd-slider autoplay="3000000">
+				<yd-slider-item>
+					<a href="http://www.baidu.com">
 						<img src="http://www.tongtongww.com/storage/upload/1f1deb0d0a241576301fad9a4af2b045.jpg" />
-					</div>
-					<div class="aui-slide-node bg-dark">
-						<img src="http://www.tongtongww.com/storage/upload/a0c300f0a8865a472d94390a866d9027.jpg" />
-					</div>
+					</a>
+				</yd-slider-item>
+				<yd-slider-item>
+					<img src="http://www.tongtongww.com/storage/upload/a0c300f0a8865a472d94390a866d9027.jpg" />
+				</yd-slider-item>
+			</yd-slider>
 
-				</div>
-				<div class="aui-slide-page-wrap">
-					<!--分页容器-->
-				</div>
-			</div>
 			<div>
-				<!---->
 				<div class="m-grids-4">
-
 					<a href="home/zhaopin/employment.html" class="grids-item">
 						<div class="grids-icon"><img src="static/img/xinxi1.png"></div>
 						<div class="grids-txt"><span>招聘信息</span></div>
@@ -64,21 +64,23 @@
 						<div class="grids-txt"><span>供应信息</span></div>
 					</a>
 				</div>
+
 			</div>
 			<div class="div1"></div>
 			<div class="tongzhi overflow-h">
 				<div class="tongzhi_wenzi clearfix pos">
 					<ul class="tongzhi_lunbo">
 						<li class="clearfix overflow-h">
-							<a href="/article/viewmobile?id=372" class="huojiang overflow-h">
+							<a href="home/zixun/zixundetail.html" class="huojiang overflow-h">
 								<i class="ico ico-tongzhi fl"></i>
 								<p class="fl">
 									<nobr>73人死亡！涉案混凝土商严重违规,董</nobr>
 								</p>
 							</a>
 							<span class="fr more">
-								<a href="/site/zixun">更多<i class="ico ico-right"></i></a>
-							</span>
+                        <a href="home/zixun/zixun.html">更多<i class="ico ico-right"></i></a>
+
+                    </span>
 						</li>
 					</ul>
 				</div>
@@ -86,12 +88,12 @@
 			<div class="div1"></div>
 			<section>
 				<h2 class="module-title pd-10 overflow-h border-b">
-					<i class="ico ico-zhaopin fl"></i>
-					<span class="fl more-main">最新招聘</span> 
-					<span class="fr more">
-						<a href="/list/zhaopin">更多<i class="ico ico-right"></i></a>
+            <i class="ico ico-zhaopin fl"></i>
+            <span class="fl more-main">最新招聘</span>
+            <span class="fr more">
+						<a href="home/zhaopin/employment.html">更多<i class="ico ico-right"></i></a>
 					</span>
-				</h2>
+        </h2>
 				<div class="m-list">
 					<ul id="zhaopinul">
 						<li class="overflow-h  border-b padd">
@@ -125,8 +127,9 @@
 			</section>
 			<div class="div1"></div>
 			<section>
-				<h2 class="module-title  overflow-h border-b"><i class="ico ico-qiuzhi fl"></i> <span class="fl more-main">最新求职</span>
-        <span class="fr more"><a href="/list/qiuzhi">更多<i class="ico ico-right"></i></a></span></h2>
+				<h2 class="module-title  overflow-h border-b"><i class="ico ico-qiuzhi fl"></i> <span
+                class="fl more-main">最新求职</span>
+            <span class="fr more"><a href="home/qiuzhi/qiuzhi.html">更多<i class="ico ico-right"></i></a></span></h2>
 				<div class="m-list">
 					<ul>
 						<li class="overflow-h  border-b padd">
@@ -183,8 +186,8 @@
 			<div class="div1"></div>
 			<section>
 				<h2 class="module-title  overflow-h border-b"><i class="ico ico-zhaobiao fl"></i> <span
-            class="fl more-main">最新招标</span> <span class="fr more"><a href="/list/zhaobiao">更多<i
-            class="ico ico-right"></i></a></span></h2>
+                class="fl more-main">最新招标</span> <span class="fr more"><a href="home/zhaobiao/zhaobiao.html">更多<i
+                class="ico ico-right"></i></a></span></h2>
 				<div class="m-list">
 					<ul>
 						<li class="overflow-h  border-b padd">
@@ -195,7 +198,8 @@
 										<p class="fr">面议/吨</p>
 									</div>
 									<div class="recruit-header overflow-h">
-										<h4 class="fl">北京市<span>以招标文件为主</span></h4> <span class="fr time">2017-09-25</span></div>
+										<h4 class="fl">北京市<span>以招标文件为主</span></h4> <span class="fr time">2017-09-25</span>
+									</div>
 									<p class="recruit-pos">平台</p>
 								</div>
 							</a>
@@ -208,7 +212,8 @@
 										<p class="fr">面议/批</p>
 									</div>
 									<div class="recruit-header overflow-h">
-										<h4 class="fl">北京市<span>以招标文件为主</span></h4> <span class="fr time">2017-09-25</span></div>
+										<h4 class="fl">北京市<span>以招标文件为主</span></h4> <span class="fr time">2017-09-25</span>
+									</div>
 									<p class="recruit-pos">平台</p>
 								</div>
 							</a>
@@ -219,8 +224,8 @@
 			<div class="div1"></div>
 			<section>
 				<h2 class="module-title pd-10 overflow-h border-b"><i class="ico ico-gongying fl"></i> <span
-            class="fl more-main">最新供应</span> <span class="fr more"><a href="/list/gongying">更多<i
-            class="ico ico-right"></i></a></span></h2>
+                class="fl more-main">最新供应</span> <span class="fr more"><a href="home/gongying/gongying.html">更多<i
+                class="ico ico-right"></i></a></span></h2>
 				<div class="m-list">
 					<ul>
 						<li class="overflow-h  border-b padd">
@@ -231,7 +236,8 @@
 										<p class="fr">65元/吨</p>
 									</div>
 									<div class="recruit-header overflow-h">
-										<h4 class="fl">保定市<span>300000吨</span></h4> <span class="fr time">2017-08-19</span></div>
+										<h4 class="fl">保定市<span>300000吨</span></h4> <span class="fr time">2017-08-19</span>
+									</div>
 									<p class="recruit-pos">熊爸</p>
 								</div>
 							</a>
@@ -278,6 +284,19 @@
 	</body>
 
 	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: {},
+			methods: {},
+		});
+		$(function() {
+			$('router-link').click(function() {
+				window.location.href = $(this).attr("to");
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
 		apiready = function() {
 			api.parseTapmode();
 		}
@@ -300,18 +319,6 @@
 					break;
 			}
 		});
-
-		var slide3 = new auiSlide({
-			container: document.getElementById("aui-slide3"),
-			// "width":300,
-			"height": 180,
-			"speed": 500,
-			"autoPlay": 3000, //自动播放
-			"loop": true,
-			"pageShow": true,
-			"pageStyle": 'dot',
-			'dotPosition': 'center'
-		})
 	</script>
 
 </html>

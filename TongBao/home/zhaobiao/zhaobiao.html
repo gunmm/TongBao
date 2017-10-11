@@ -114,34 +114,60 @@
     </section>
 
 
+    <!--<section class="content-list  lh-24 ">-->
+        <!--<div>-->
+            <!--<article class="m-list list-theme4" id="boxx">-->
+                <!--<div v-for="item in datalist">-->
+                    <!--<a :href='item.url' class="list-item">-->
+                        <!--<div class="list-img"></div>-->
+                        <!--<div class="list-mes">-->
+                            <!--<div class="list-title"><p class="f-16 ">-->
+                                <!--<span>{{item.title}}</span>-->
+                                <!--<span class="fr c-ec9d1d">{{item.price}}/{{item.unit}}</span></p>-->
+                            <!--</div>-->
+                            <!--<div class="list-other">-->
+                                <!--<h4 class="mt-10 f-14 ">-->
+                                    <!--<span class="fl">{{item.city}}</span>-->
+                                    <!--<span class="ml-15">{{item.quantity}}  单位:{{item.unit}}</span>-->
+                                    <!--<span class="fr time mr-8 ">{{item.created_at}}</span>-->
+                                <!--</h4>-->
+                                <!--<p class="recruit-pos f-14 mt-5 pos-name">{{item.provider}}</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                <!--</div>-->
+            <!--</article>-->
+            <!--<div></div>-->
+            <!--<div class="list-donetip" style="display: none;"><span class="text-c mt-5 f-14">全部数据已加载完成</span></div>-->
+            <!--<div class="list-loading" style="display: none;"><img src="/static/img/loading10.svg"></div>-->
+        <!--</div>-->
+    <!--</section>-->
+
     <section class="content-list  lh-24 ">
-        <div>
-            <article class="m-list list-theme4" id="boxx">
-                <div v-for="item in datalist">
-                    <a :href='item.url' class="list-item">
-                        <div class="list-img"></div>
-                        <div class="list-mes">
-                            <div class="list-title"><p class="f-16 ">
-                                <span>{{item.title}}</span>
-                                <span class="fr c-ec9d1d">{{item.price}}/{{item.unit}}</span></p>
-                            </div>
-                            <div class="list-other">
-                                <h4 class="mt-10 f-14 ">
-                                    <span class="fl">{{item.city}}</span>
-                                    <span class="ml-15">{{item.quantity}}  单位:{{item.unit}}</span>
-                                    <span class="fr time mr-8 ">{{item.created_at}}</span>
-                                </h4>
-                                <p class="recruit-pos f-14 mt-5 pos-name">{{item.provider}}</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </article>
-            <div></div>
-            <div class="list-donetip" style="display: none;"><span class="text-c mt-5 f-14">全部数据已加载完成</span></div>
-            <div class="list-loading" style="display: none;"><img src="/static/img/loading10.svg"></div>
-        </div>
+        <yd-infinitescroll :on-infinite="loadList">
+            <yd-list theme="4" slot="list">
+                <yd-list-item v-for="item in datalist" :href='item.url' >
+                    <p slot="title" class="f-16 ">
+                        <span>{{item.title}}</span>
+                        <span class="fr c-ec9d1d">{{item.price}}/{{item.unit}}</span>
+                    </p>
+                    <yd-list-other slot="other">
+                        <h4 class="mt-10 f-14 ">
+                            <span class="fl">{{item.city}}</span>
+                            <span class="ml-15">{{item.quantity}}{{item.unit}}</span>
+                            <span class="fr time mr-8 ">{{item.created_at}}</span>
+                        </h4>
+                        <p class="recruit-pos f-14 mt-5 pos-name">{{item.provider}}</p>
+                    </yd-list-other>
+                </yd-list-item>
+            </yd-list>
+            <!-- 数据全部加载完毕显示 -->
+            <span slot="doneTip"  class="text-c mt-5 f-14">全部数据已加载完成</span>
+            <!-- 加载中提示 -->
+            <img slot="loadingTip" src="../../static/img/loading10.svg" style="width: 1.5rem;height: 1.5rem;margin: .5rem"/>
+        </yd-infinitescroll>
     </section>
+
 </div>
 
 
@@ -151,37 +177,12 @@
         if(!items){
             vm.loadList();
         }
-        $(window).on("load", function () {
-            window.onscroll = function () {
-                if (scrollSide()) {
-                    vm.loadList();
-                }
-            }
-        });
-
     });
-
-
-    function scrollSide() {
-        var box = $("#boxx");
-        var lastBoxHeight = box.height() + box.position().top;
-
-        var documentHeight = $(window).height();
-        var scrollHeight = $(window).scrollTop();
-
-
-        console.log("lastBoxHeight" + lastBoxHeight + "documentHeight" + documentHeight + "scrollHeight" + scrollHeight);
-        return (lastBoxHeight-2 < documentHeight + scrollHeight) ? true : false;
-
-    }
 
     var items = window.history.state;
     if (!items) {
         items = new Array();
     }
-
-    console.log(items);
-
     var vm = new Vue({
         el: "#app",
         data: {
@@ -600,6 +601,9 @@
                 items = vm.datalist;
                 console.log(items);
                 window.history.pushState(items, "", "zhaobiao.html");
+                window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
+
+//                window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
 
             },
             selectcity: function (id) {
@@ -675,7 +679,8 @@
                 $(this).children('i').removeClass('ico-bottom2').addClass('ico-bottom');
                 $(this).children('i').removeClass('ico-bottom2').addClass('ico-bottom');
                 $(this).find('span').removeClass('current')
-            }
+            }            window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
+
             //$(this).children('i').removeClass('ico-bottom2').addClass('ico-bottom1');
         });
         $('.province li').click(function () {
