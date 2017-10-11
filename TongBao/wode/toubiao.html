@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的投标</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
+		<link rel="stylesheet" href="../css/mkui.css" />
+		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../static/css/common.css" />
+	</head>
+
+	<body>
+		<div id="app">
+			<section>
+				<div class="m-list">
+					<ul v-for="item in datalist" class="bg-fff mb-10" :id='"ul_"+item.id'>
+						<li class="overflow-h  border-b padd">
+							<div class="recruit-list fl ml-10 ">
+								<div class="recruit-header overflow-h">
+									<a href="item.url">
+										<h3 class="fl">{{item.title}}</h3></a>
+									<p class="fr">
+										{{item.price}}/{{item.unit}}
+									</p>
+								</div>
+								<div class="recruit-header overflow-h">
+									<h4 class="fl"><span>{{item.city}}</span>   <span class="num-pro">{{item.quantity}}</span></h4>
+									<span class="fr time">{{item.created_at}}</span>
+								</div>
+								<p class="recruit-pos overflow-h">
+									<span class="fl">{{item.provider}}</span>
+									<span class="delet fr" @click="deleteToubiao(item.id)">删除</span>
+								</p>
+							</div>
+						</li>
+						<li class="overflow-h  border-b padd">
+							<a href="">
+								<div class="recruit-list fl ml-10 ">
+									<div class="recruit-header overflow-h">
+										<h3 class="fl product-num">{{item.toubiaoprice}}元/{{item.unit}}</h3>
+									</div>
+									<div class="recruit-header overflow-h">
+										<h4 class="fl information">{{item.content}}</h4>
+									</div>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				datalist: [{
+					id: '111'
+				}]
+			},
+			methods: {
+				deleteToubiao: function(id) {
+					$("#ul_" + id).remove();
+				},
+			}
+		});
+	</script>
+
+</html>

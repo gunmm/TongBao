@@ -201,13 +201,7 @@
 
 	<body>
 		<div id="app">
-			<div class="aui-tab" id="tab">
-				<div id="zhaobiao" class="aui-tab-item aui-active">招标信息</div>
-				<div id="gongying" class="aui-tab-item">供应信息</div>
-				<div id="zhaopin" class="aui-tab-item" v-if="type">招聘信息</div>
-			</div>
-			<div style="background-color: lightgray; height: 1px;"></div>
-			<section class="content-list  lh-24 ">
+			<section class="content-list lh-24" style="margin-top: 2.25rem;">
 				<yd-infinitescroll :on-infinite="loadList">
 					<yd-list theme="4" slot="list">
 						<yd-list-item v-for="item in datalist" type="link">
@@ -229,8 +223,16 @@
 					<!-- 数据全部加载完毕显示 -->
 					<span slot="doneTip" class="text-c mt-5 f-14">全部数据已加载完成</span>
 					<!-- 加载中提示 -->
-					<img slot="loadingTip" src="../../static/img/loading10.svg" />
+					<img slot="loadingTip" src="../../static/img/loading10.svg" style="width: 1.5rem; height: 1.5rem; margin: 0.5rem;" />
 				</yd-infinitescroll>
+			</section>
+			<section style="position: fixed; left: 0px; top: 0px; width: 100%;">
+				<div class="aui-tab" id="tab">
+					<div id="zhaobiao" class="aui-tab-item aui-active">招标信息</div>
+					<div id="gongying" class="aui-tab-item">供应信息</div>
+					<div id="zhaopin" class="aui-tab-item" v-if="type">招聘信息</div>
+				</div>
+				<div style="height: 1px; background: #03A9F4;"></div>
 			</section>
 		</div>
 	</body>
@@ -238,7 +240,32 @@
 	<script type="text/javascript">
 		var items = [{
 				title: '111111',
-				toubiaourl: '../fabu/zhaobiaodetail.html'
+				toubiaourl: '../fabu/zhaobiaodetail.html',
+				provider: '大开杀戒代课教师'
+			},
+			{
+				title: '1111111'
+			},
+			{
+				title: '1111111'
+			},
+			{
+				title: '1111111'
+			},
+			{
+				title: '1111111'
+			},
+			{
+				title: '1111111'
+			},
+			{
+				title: '1111111'
+			},
+			{
+				title: '1111111'
+			},
+			{
+				title: '1111111'
 			},
 			{
 				title: '1111111'
@@ -255,7 +282,10 @@
 			},
 			methods: {
 				loadList: function() {
-
+					//					vm.datalist = vm.datalist.concat(items);
+					//					window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
+					//					window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
+					//					vm.page++;
 				}
 			}
 		})

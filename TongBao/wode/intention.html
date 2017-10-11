@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的意向公司</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
+		<link rel="stylesheet" href="../css/mkui.css" />
+		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../static/css/common.css" />
+	</head>
+
+	<body>
+		<div id="app">
+			<section class="content-list  lh-24 ">
+				<yd-infinitescroll :on-infinite="loadList">
+					<yd-list theme="4" slot="list">
+						<yd-list-item v-for="item in datalist">
+							<p slot="title" class="f-16 "><span onclick="detail(this)">{{item.title}}</span><span style="display:none">{{item.id}}</span><span class="fr c-ec9d1d">{{item.xinzi}}</span></p>
+							<yd-list-other slot="other">
+								<h4 class="mt-10 f-14 overflow-h"><span class="fl">{{item.companyname}}</span><span class="fr time mr-8 ">{{item.created_at}}</span></h4>
+								<p class="recruit-pos f-14 mt-5">{{item.city}} {{item.jingyan}} {{item.xueli}}<span class="delet fr" onclick=deleteIntetion(this)>删除</span><span style="display:none">{{item.id}}</span></p>
+							</yd-list-other>
+						</yd-list-item>
+					</yd-list>
+					<!-- 数据全部加载完毕显示 -->
+					<span slot="doneTip" class="text-c mt-5 f-14">全部数据已加载完成</span>
+					<!-- 加载中提示 -->
+					<img slot="loadingTip" src="../static/img/loading10.svg" style="width: 1.5rem; height: 1.5rem; margin: 0.5rem;" />
+				</yd-infinitescroll>
+			</section>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var items = [{
+			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
+			xinzi: '1000元',
+			companyname: '232',
+			created_at: '2017-10-09',
+		}, {
+			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
+			xinzi: '1000元',
+			companyname: '232',
+			created_at: '2017-10-09',
+		}, {
+			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
+			xinzi: '1000元',
+			companyname: '232',
+			created_at: '2017-10-09',
+		}, {
+			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
+			xinzi: '1000元',
+			companyname: '232',
+			created_at: '2017-10-09',
+		}, {
+			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
+			xinzi: '1000元',
+			companyname: '232',
+			created_at: '2017-10-09',
+		}, {
+			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
+			xinzi: '1000元',
+			companyname: '232',
+			created_at: '2017-10-09',
+		}, {
+			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
+			xinzi: '1000元',
+			companyname: '232',
+			created_at: '2017-10-09',
+		}];
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				page: 2,
+				pageSize: 10,
+				datalist: items,
+			},
+			methods: {
+				loadList: function() {
+					//					window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
+					//					window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
+				},
+			}
+		});
+
+		function deleteIntetion(obj) {
+			id = $(obj).next("span").text();
+			vm.$dialog.confirm({
+				title: '删除',
+				mes: '确定删除吗?',
+				opts: function() {
+					vm.$dialog.toast({
+						mes: '删除成功',
+						timeout: 6000
+					});
+					window.location.href = "/member/deletetoudi?id=" + id;
+				}
+			});
+		}
+
+		function detail(obj) {
+			id = $(obj).next("span").text();
+			window.location.href = "/list/detailzhaopin?id=" + id;
+		}
+	</script>
+
+</html>
