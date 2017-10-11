@@ -3,16 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7c3ce519-15ad-4a61-8796-eb13d5524729" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/fabu.html" afterPath="$PROJECT_DIR$/TongBao/fabu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home.html" afterPath="$PROJECT_DIR$/TongBao/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/gongying/gongying.html" afterPath="$PROJECT_DIR$/TongBao/home/gongying/gongying.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhi.html" afterPath="$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhi.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiao.html" afterPath="$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiao.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/zhaopin/employment.html" afterPath="$PROJECT_DIR$/TongBao/home/zhaopin/employment.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/zhaopin/tousu.html" afterPath="$PROJECT_DIR$/TongBao/home/zhaopin/tousu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/zixun/zixun.html" afterPath="$PROJECT_DIR$/TongBao/home/zixun/zixun.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/static/css/common.css" afterPath="$PROJECT_DIR$/TongBao/static/css/common.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/static/css/zixun.css" afterPath="$PROJECT_DIR$/TongBao/static/css/zixun.css" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,8 +19,8 @@
       <file leaf-file-name="home.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TongBao/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="280" column="51" lean-forward="true" selection-start-line="280" selection-start-column="51" selection-end-line="280" selection-end-column="51" />
+            <state relative-caret-position="538">
+              <caret line="36" column="29" lean-forward="true" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -118,12 +108,12 @@
         <option value="$PROJECT_DIR$/TongBao/home/zhaopin/feed.html" />
         <option value="$PROJECT_DIR$/TongBao/css/mkui.css" />
         <option value="$PROJECT_DIR$/TongBao/home/zhaopin/feedback.html" />
-        <option value="$PROJECT_DIR$/TongBao/home.html" />
         <option value="$PROJECT_DIR$/TongBao/fabu/fabuzhaobiao.html" />
         <option value="$PROJECT_DIR$/TongBao/static/css/common.css" />
         <option value="$PROJECT_DIR$/TongBao/fabu/fabugongying.html" />
         <option value="$PROJECT_DIR$/TongBao/fabu/fabuzhaopin.html" />
         <option value="$PROJECT_DIR$/TongBao/fabu.html" />
+        <option value="$PROJECT_DIR$/TongBao/home.html" />
       </list>
     </option>
   </component>
@@ -140,7 +130,7 @@
     </treeState>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="250" />
     <option name="y" value="26" />
     <option name="width" value="1603" />
@@ -328,15 +318,15 @@
       <workItem from="1507544426282" duration="160000" />
       <workItem from="1507598579445" duration="13959000" />
       <workItem from="1507617427939" duration="11154000" />
-      <workItem from="1507683650611" duration="3285000" />
+      <workItem from="1507683650611" duration="3873000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76700000" />
+    <option name="totallyTimeSpent" value="77288000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="250" y="26" width="1603" height="917" extended-state="1" />
+    <frame x="250" y="26" width="1603" height="917" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -730,8 +720,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TongBao/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="280" column="51" lean-forward="true" selection-start-line="280" selection-start-column="51" selection-end-line="280" selection-end-column="51" />
+        <state relative-caret-position="538">
+          <caret line="36" column="29" lean-forward="true" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
           <folding />
         </state>
       </provider>
