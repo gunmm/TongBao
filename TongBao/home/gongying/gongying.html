@@ -134,13 +134,18 @@
 		</div>
 
 		<script>
+            $(function() {
+                window.addEventListener("popstate", function(e) {
+                    window.location.replace('../../home.html');
+                }, false);
+            });
 			$(document).ready(function() {
 				var items = window.history.state;
 				if(!items) {
 					vm.loadList();
 				}
 
-			});
+            });
 
 			var items = window.history.state;
 			if(!items) {
@@ -320,7 +325,8 @@
 					}, {
 						"id": 31,
 						"name": "新疆"
-					}],
+					}
+					],
 					city: {
 						"1": [{
 							"id": 1,

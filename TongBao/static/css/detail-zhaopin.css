@@ -327,6 +327,7 @@ footer li{
 	float: left;
 	text-align: center;
 	padding-top: 12px;
+	background: red;
 }
 footer li img{
 	width: 22px;
@@ -335,6 +336,7 @@ footer li img{
 	display: block;
 	
 }
+
 footer li span{
 	font-family:NotoSansHans-Regular;
 	font-size:14px;
@@ -344,11 +346,13 @@ footer li span{
 footer li:first-child{
 	width: 21.3%;
 	background:#097ed8;
+	height: 56px;
 	
 }
 footer .second{
 	width: 21.3%;
 	background:#3095e3;
+	height: 56px;
 
 }
 .third{
@@ -361,7 +365,7 @@ footer .second{
 	color:#717171;
 }
 footer .last{
-	width: 36%;
+	width: 36.1%;
 	padding-top: 12px;
 	background:#ec9d1d;
 	height: 100%;

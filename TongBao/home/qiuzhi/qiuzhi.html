@@ -177,12 +177,17 @@
 		</div>
 
 		<script>
+
+            $(function() {
+                window.addEventListener("popstate", function(e) {
+                    window.location.replace('../../home.html');
+                }, false);
+            });
 			$(document).ready(function() {
 				var items = window.history.state;
 				if(!items) {
 					vm.loadList();
 				}
-
 			});
 
 			var items = window.history.state;
@@ -380,7 +385,8 @@
 					}, {
 						"id": 31,
 						"name": "新疆"
-					}],
+					}
+					],
 					city: {
 						"1": [{
 							"id": 1,
@@ -1728,7 +1734,8 @@
 						vm.datalist = vm.datalist.concat(_list);
 						items = vm.datalist;
 						console.log(items);
-						window.history.pushState(items, "", "qiuzhi.html");
+//						window.history.pushState(items, "", "qiuzhi.html");
+                        window.history.replaceState(items, "", "qiuzhi.html");
 						window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
 
 						//                window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');

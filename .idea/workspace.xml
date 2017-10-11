@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7c3ce519-15ad-4a61-8796-eb13d5524729" name="Default" comment="" />
+    <list default="true" id="7c3ce519-15ad-4a61-8796-eb13d5524729" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/gongying/gongying.html" afterPath="$PROJECT_DIR$/TongBao/home/gongying/gongying.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhi.html" afterPath="$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhi.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhidetail.html" afterPath="$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhidetail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiao.html" afterPath="$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiao.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/zhaopin/employment.html" afterPath="$PROJECT_DIR$/TongBao/home/zhaopin/employment.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/zhaopin/zhaopindetail.html" afterPath="$PROJECT_DIR$/TongBao/home/zhaopin/zhaopindetail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/publish/fabuzhaopin.html" afterPath="$PROJECT_DIR$/TongBao/publish/fabuzhaopin.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/static/css/detail-gongying.css" afterPath="$PROJECT_DIR$/TongBao/static/css/detail-gongying.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/static/css/detail-jianlj.css" afterPath="$PROJECT_DIR$/TongBao/static/css/detail-jianlj.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/static/css/detail-zhaopin.css" afterPath="$PROJECT_DIR$/TongBao/static/css/detail-zhaopin.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/static/css/zhaobiaoxiangqing.css" afterPath="$PROJECT_DIR$/TongBao/static/css/zhaobiaoxiangqing.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/static/css/zixunxiangqing.css" afterPath="$PROJECT_DIR$/TongBao/static/css/zixunxiangqing.css" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,25 +28,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="home.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TongBao/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="34" column="10" lean-forward="true" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
+            <state relative-caret-position="318">
+              <caret line="57" column="20" lean-forward="false" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
               <folding>
                 <element signature="n#style#0;n#div#8;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gongying.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TongBao/home/gongying/gongying.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="141" column="9" lean-forward="true" selection-start-line="138" selection-start-column="8" selection-end-line="141" selection-end-column="9" />
-              <folding>
-                <element signature="e#8221#25320#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -76,6 +78,7 @@
       <find>chooseMultipleImage</find>
       <find>productimages</find>
       <find>xinzi</find>
+      <find>province</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -99,33 +102,37 @@
         <option value="$PROJECT_DIR$/TongBao/home/tousu.html" />
         <option value="$PROJECT_DIR$/TongBao/home/employment.html" />
         <option value="$PROJECT_DIR$/TongBao/home/qiuzhi.html" />
-        <option value="$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhidetail.html" />
-        <option value="$PROJECT_DIR$/TongBao/static/css/zhaobiaoxiangqing.css" />
         <option value="$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiaodetail.html" />
         <option value="$PROJECT_DIR$/TongBao/home/zhaobiao/mid.html" />
         <option value="$PROJECT_DIR$/TongBao/home/gongying/mid.html" />
-        <option value="$PROJECT_DIR$/TongBao/static/css/detail-gongying.css" />
-        <option value="$PROJECT_DIR$/TongBao/home/gongying/gongyingdetail.html" />
         <option value="$PROJECT_DIR$/TongBao/static/lib/css/ydui.rem.css" />
         <option value="$PROJECT_DIR$/TongBao/static/css/zixun.css" />
-        <option value="$PROJECT_DIR$/TongBao/static/css/zixunxiangqing.css" />
-        <option value="$PROJECT_DIR$/TongBao/home/zixun/zixundetail.html" />
         <option value="$PROJECT_DIR$/TongBao/home/zixun/zixun.html" />
-        <option value="$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiao.html" />
-        <option value="$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhi.html" />
-        <option value="$PROJECT_DIR$/TongBao/home/zhaopin/employment.html" />
         <option value="$PROJECT_DIR$/TongBao/home/gongying/Test.html" />
         <option value="$PROJECT_DIR$/TongBao/home/zhaopin/tousu.html" />
         <option value="$PROJECT_DIR$/TongBao/home/zhaopin/feed.html" />
         <option value="$PROJECT_DIR$/TongBao/css/mkui.css" />
         <option value="$PROJECT_DIR$/TongBao/home/zhaopin/feedback.html" />
         <option value="$PROJECT_DIR$/TongBao/fabu/fabuzhaobiao.html" />
-        <option value="$PROJECT_DIR$/TongBao/static/css/common.css" />
         <option value="$PROJECT_DIR$/TongBao/fabu/fabugongying.html" />
         <option value="$PROJECT_DIR$/TongBao/fabu/fabuzhaopin.html" />
+        <option value="$PROJECT_DIR$/TongBao/home/zixun/zixundetail.html" />
+        <option value="$PROJECT_DIR$/TongBao/static/css/common.css" />
         <option value="$PROJECT_DIR$/TongBao/fabu.html" />
         <option value="$PROJECT_DIR$/TongBao/home.html" />
+        <option value="$PROJECT_DIR$/TongBao/home/gongying/gongyingdetail.html" />
+        <option value="$PROJECT_DIR$/TongBao/home/zhaopin/zhaopindetail.html" />
+        <option value="$PROJECT_DIR$/TongBao/static/css/detail-zhaopin.css" />
+        <option value="$PROJECT_DIR$/TongBao/static/css/zixunxiangqing.css" />
+        <option value="$PROJECT_DIR$/TongBao/static/css/zhaobiaoxiangqing.css" />
+        <option value="$PROJECT_DIR$/TongBao/static/css/detail-gongying.css" />
+        <option value="$PROJECT_DIR$/TongBao/static/css/detail-jianlj.css" />
+        <option value="$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhidetail.html" />
+        <option value="$PROJECT_DIR$/TongBao/publish/fabuzhaopin.html" />
+        <option value="$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhi.html" />
+        <option value="$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiao.html" />
         <option value="$PROJECT_DIR$/TongBao/home/gongying/gongying.html" />
+        <option value="$PROJECT_DIR$/TongBao/home/zhaopin/employment.html" />
       </list>
     </option>
   </component>
@@ -143,10 +150,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="250" />
-    <option name="y" value="26" />
+    <option name="x" value="163" />
+    <option name="y" value="78" />
     <option name="width" value="1603" />
-    <option name="height" value="917" />
+    <option name="height" value="972" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -166,6 +173,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -178,20 +187,12 @@
               <item name="TongBao" type="462c0819:PsiDirectoryNode" />
               <item name="TongBao" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="TongBao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TongBao" type="462c0819:PsiDirectoryNode" />
-              <item name="TongBao" type="462c0819:PsiDirectoryNode" />
-              <item name="home" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -336,16 +337,18 @@
       <workItem from="1507544426282" duration="160000" />
       <workItem from="1507598579445" duration="13959000" />
       <workItem from="1507617427939" duration="11154000" />
-      <workItem from="1507683650611" duration="5109000" />
+      <workItem from="1507683650611" duration="5479000" />
+      <workItem from="1507689634587" duration="3404000" />
+      <workItem from="1507693820717" duration="27000" />
+      <workItem from="1507695086390" duration="10572000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78524000" />
+    <option name="totallyTimeSpent" value="92897000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="250" y="26" width="1603" height="917" extended-state="0" />
-    <editor active="true" />
+    <frame x="163" y="78" width="1603" height="972" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -354,25 +357,25 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297491" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23318386" sideWeight="0.49513382" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24151185" sideWeight="0.49513382" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32846716" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23318386" sideWeight="0.5048662" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23318386" sideWeight="0.5048662" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32846716" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -411,41 +414,19 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiao.html</url>
+          <line>1589</line>
+          <properties />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TongBao/static/img/xiaoxi(1).png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/img/xiaoxi1.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/img/shoucang1.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/img/shoucang2.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/img/touxiang.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/img/wode2.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TongBao/static/img/wode1.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -456,81 +437,13 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/img/ico-phone.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TongBao/static/img/xiaoxi.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/home/zhaopin/zhaopindetail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/css/detail-zhaopin.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="376" column="6" lean-forward="true" selection-start-line="312" selection-start-column="0" selection-end-line="376" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TongBao/home/zhaobiao/mid.html" />
     <entry file="file://$PROJECT_DIR$/TongBao/home/gongying/mid.html" />
-    <entry file="file://$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhidetail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="143" column="15" lean-forward="true" selection-start-line="143" selection-start-column="15" selection-end-line="143" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/css/detail-gongying.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="138" column="21" lean-forward="true" selection-start-line="138" selection-start-column="21" selection-end-line="138" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiaodetail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="72" lean-forward="false" selection-start-line="25" selection-start-column="72" selection-end-line="25" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/css/zhaobiaoxiangqing.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="166" column="1" lean-forward="true" selection-start-line="160" selection-start-column="0" selection-end-line="166" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/home/gongying/gongyingdetail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="119" column="84" lean-forward="false" selection-start-line="119" selection-start-column="54" selection-end-line="119" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/message/chat_datail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TongBao/static/lib/css/ydui.rem.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="292">
@@ -542,27 +455,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="20" lean-forward="true" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/css/zixunxiangqing.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="35" column="23" lean-forward="true" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/home/zixun/zixun.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="135" column="56" lean-forward="false" selection-start-line="135" selection-start-column="56" selection-end-line="135" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/home/zixun/zixundetail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="55" column="27" lean-forward="true" selection-start-line="55" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -586,36 +478,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/wode.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="290" column="17" lean-forward="true" selection-start-line="290" selection-start-column="17" selection-end-line="290" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/home/zhaopin/employment.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7680">
-          <caret line="813" column="14" lean-forward="true" selection-start-line="813" selection-start-column="14" selection-end-line="813" selection-end-column="14" />
-          <folding>
-            <element signature="e#27383#44482#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiao.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="545" column="13" lean-forward="false" selection-start-line="535" selection-start-column="21" selection-end-line="545" selection-end-column="13" />
-          <folding>
-            <element signature="n#style#0;n#img#0;n#yd-infinitescroll#0;n#section#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#10125#27224#0" expanded="false" />
-            <marker date="1507605388000" expanded="false" signature="6126:6140" ph="..." />
-            <marker date="1507605388000" expanded="false" signature="6248:6262" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TongBao/home/zhaopin/tousu.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -630,74 +492,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/lib/css/mkui.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="387" column="1" lean-forward="false" selection-start-line="387" selection-start-column="1" selection-end-line="387" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/static/css/common.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="2044" column="1" lean-forward="false" selection-start-line="2044" selection-start-column="1" selection-end-line="2044" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/css/mkui.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="387" column="1" lean-forward="false" selection-start-line="387" selection-start-column="1" selection-end-line="387" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TongBao/fabu/feedback.html" />
     <entry file="file://$PROJECT_DIR$/TongBao/publish/fabuzhaobiao.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="953">
           <caret line="656" column="0" lean-forward="true" selection-start-line="656" selection-start-column="0" selection-end-line="656" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/img/touxiang.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/img/QQ.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhi.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="791">
-          <caret line="101" column="36" lean-forward="false" selection-start-line="101" selection-start-column="31" selection-end-line="101" selection-end-column="36" />
-          <folding>
-            <element signature="e#11173#28272#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/img/touxiang.png" />
+    <entry file="file://$PROJECT_DIR$/TongBao/img/QQ.png" />
     <entry file="file://$PROJECT_DIR$/TongBao/publish/fabugongying.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="359">
           <caret line="682" column="212" lean-forward="true" selection-start-line="681" selection-start-column="12" selection-end-line="682" selection-end-column="212" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#section#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#9726#26825#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/publish/fabuzhaopin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="249" column="8" lean-forward="false" selection-start-line="249" selection-start-column="8" selection-end-line="249" selection-end-column="8" />
-          <folding>
-            <element signature="e#12284#30591#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -705,7 +513,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2766">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -713,34 +520,261 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/css/aui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/static/lib/js/rem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="29" lean-forward="false" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/home/zixun/zixun.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="39" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/wode.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="24" lean-forward="true" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/static/css/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="81" column="1" lean-forward="false" selection-start-line="81" selection-start-column="1" selection-end-line="81" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/css/mkui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="2272" column="1" lean-forward="false" selection-start-line="2272" selection-start-column="1" selection-end-line="2272" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TongBao/fabu.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="28" column="39" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state relative-caret-position="330">
+          <caret line="22" column="85" lean-forward="true" selection-start-line="22" selection-start-column="85" selection-end-line="22" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/static/img/ico-phone.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/static/lib/css/mkui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4683">
+          <caret line="1719" column="1" lean-forward="false" selection-start-line="1719" selection-start-column="1" selection-end-line="1719" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TongBao/home.html">
+    <entry file="file://$PROJECT_DIR$/TongBao/static/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="34" column="10" lean-forward="true" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
+        <state relative-caret-position="-29652">
+          <caret line="153" column="21" lean-forward="true" selection-start-line="147" selection-start-column="4" selection-end-line="153" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/static/css/zixunxiangqing.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="52" column="33" lean-forward="true" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/home/zixun/zixundetail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="35" lean-forward="false" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/static/css/zhaobiaoxiangqing.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="183" column="0" lean-forward="true" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiaodetail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="74" lean-forward="false" selection-start-line="25" selection-start-column="74" selection-end-line="25" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/static/css/detail-gongying.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="166" column="22" lean-forward="true" selection-start-line="166" selection-start-column="22" selection-end-line="166" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/home/gongying/gongyingdetail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/static/css/detail-jianlj.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1173">
+          <caret line="365" column="6" lean-forward="false" selection-start-line="365" selection-start-column="6" selection-end-line="365" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/home/zhaopin/zhaopindetail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="564">
+          <caret line="158" column="33" lean-forward="false" selection-start-line="158" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
           <folding>
-            <element signature="n#style#0;n#div#8;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#0;n#ul#0;n#footer#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/static/css/detail-zhaopin.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="717">
+          <caret line="380" column="6" lean-forward="true" selection-start-line="312" selection-start-column="0" selection-end-line="380" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/publish/fabuzhaopin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="48" column="0" lean-forward="true" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/xiaoxi.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/message/chat_datail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="265" column="33" lean-forward="false" selection-start-line="265" selection-start-column="29" selection-end-line="265" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/message/msg_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="33" lean-forward="true" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhidetail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="189" column="39" lean-forward="true" selection-start-line="189" selection-start-column="39" selection-end-line="189" selection-end-column="39" />
+          <folding>
+            <element signature="n#style#0;n#div#7;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/home/qiuzhi/qiuzhi.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="184" column="15" lean-forward="true" selection-start-line="180" selection-start-column="12" selection-end-line="184" selection-end-column="15" />
+          <folding>
+            <element signature="e#8652#9317#0" expanded="false" />
+            <element signature="e#9334#10754#0" expanded="false" />
+            <element signature="e#10767#31085#0" expanded="false" />
+            <element signature="e#31028#31077#0" expanded="false" />
+            <element signature="e#31101#31990#0" expanded="false" />
+            <element signature="e#32155#33367#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/home/zhaobiao/zhaobiao.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="176" column="15" lean-forward="true" selection-start-line="172" selection-start-column="12" selection-end-line="176" selection-end-column="15" />
+          <folding>
+            <element signature="e#8054#9478#0" expanded="false" />
+            <element signature="e#9491#29809#0" expanded="false" />
+            <element signature="e#29825#30475#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TongBao/home/gongying/gongying.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="141" column="9" lean-forward="true" selection-start-line="138" selection-start-column="8" selection-end-line="141" selection-end-column="9" />
+        <state relative-caret-position="287">
+          <caret line="1650" column="0" lean-forward="true" selection-start-line="1650" selection-start-column="0" selection-end-line="1650" selection-end-column="0" />
           <folding>
-            <element signature="e#8221#25320#0" expanded="false" />
+            <element signature="e#5875#6446#0" expanded="false" />
+            <element signature="e#6460#6720#0" expanded="false" />
+            <element signature="e#6737#8157#0" expanded="false" />
+            <element signature="e#8170#28488#0" expanded="false" />
+            <element signature="e#28504#29154#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/home/zhaopin/employment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="474">
+          <caret line="375" column="59" lean-forward="true" selection-start-line="375" selection-start-column="59" selection-end-line="375" selection-end-column="59" />
+          <folding>
+            <element signature="e#25146#26570#0" expanded="false" />
+            <element signature="e#26583#46901#0" expanded="false" />
+            <element signature="e#46917#47806#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TongBao/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="57" column="20" lean-forward="false" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
+          <folding>
+            <element signature="n#style#0;n#div#8;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

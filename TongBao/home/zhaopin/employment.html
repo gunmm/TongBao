@@ -399,6 +399,11 @@
 		</div>
 
 		<script>
+            $(function() {
+                window.addEventListener("popstate", function(e) {
+                    window.location.replace('../../home.html');
+                }, false);
+            });
 			$(document).ready(function() {
 				var items = window.history.state;
 				if(!items) {
@@ -533,7 +538,8 @@
 							"name": "50000元以上"
 						}
 					},
-					province: [{
+					province: [
+					    {
 						"id": 1,
 						"name": "北京市"
 					}, {
@@ -1918,48 +1924,50 @@
 				methods: {
 
 					loadList: function() {
-						_list = [{
-								"title": "北京城建集团有限责任公司",
-								"xinzi": "面议",
-								"companyname": "平台",
-								"created_at": "今天11：23",
-								"city": "北京市",
-								"jingyan": "五年",
-								"xueli": "本科",
-								"url": "zhaopindetail.html"
-							},
-							{
-								"title": "财务主管",
-								"xinzi": "8000",
-								"companyname": "平台",
-								"created_at": "今天12：23",
-								"city": "北京市",
-								"jingyan": "2年",
-								"xueli": "研究生",
-								"url": "zhaopindetail.html"
-							},
-							{
-								"title": "投资主管",
-								"xinzi": "1000",
-								"companyname": "平台",
-								"created_at": "今天13：23",
-								"city": "北京市",
-								"jingyan": "三年",
-								"xueli": "专科",
-								"url": "zhaopindetail.html"
-							},
-							{
-								"title": "1dfdfdfdfd",
-								"xinzi": "2",
-								"companyname": "3",
-								"created_at": "4",
-								"city": "5",
-								"jingyan": "6",
-								"xueli": "7",
-								"url": "zhaopindetail.html"
-							}
-
-						];
+                        _list = [];
+//						_list = [
+//						    {
+//								"title": "北京城建集团有限责任公司",
+//								"xinzi": "面议",
+//								"companyname": "平台",
+//								"created_at": "今天11：23",
+//								"city": "北京市",
+//								"jingyan": "五年",
+//								"xueli": "本科",
+//								"url": "zhaopindetail.html"
+//							},
+//							{
+//								"title": "财务主管",
+//								"xinzi": "8000",
+//								"companyname": "平台",
+//								"created_at": "今天12：23",
+//								"city": "北京市",
+//								"jingyan": "2年",
+//								"xueli": "研究生",
+//								"url": "zhaopindetail.html"
+//							},
+//							{
+//								"title": "投资主管",
+//								"xinzi": "1000",
+//								"companyname": "平台",
+//								"created_at": "今天13：23",
+//								"city": "北京市",
+//								"jingyan": "三年",
+//								"xueli": "专科",
+//								"url": "zhaopindetail.html"
+//							},
+//							{
+//								"title": "1dfdfdfdfd",
+//								"xinzi": "2",
+//								"companyname": "3",
+//								"created_at": "4",
+//								"city": "5",
+//								"jingyan": "6",
+//								"xueli": "7",
+//								"url": "zhaopindetail.html"
+//							}
+//
+//						];
 						vm.datalist = vm.datalist.concat(_list);
 						items = vm.datalist;
 						console.log(items);

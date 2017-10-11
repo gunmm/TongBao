@@ -295,16 +295,75 @@
 .module-title {
 	padding: 10px 10px 10px 15px;
 }
-/*相似职业结束*/
+/*尾部*/
 footer{
 	position: fixed;
 	left:0;
 	bottom: 0;
 	width: 100%;
 	height: 56px;
-	
-	
+
+
 }
+footer{
+	width: 100%;
+}
+footer li{
+	float: left;
+	text-align: center;
+	padding-top: 12px;
+	background: red;
+}
+footer li img{
+	width: 22px;
+	height: 19px;
+	margin: 0 auto;
+	display: block;
+
+}
+
+footer li span{
+	font-family:NotoSansHans-Regular;
+	font-size:14px;
+	color:#ffffff;
+	margin-top: 3px;
+}
+footer li:first-child{
+	width: 21.3%;
+	background:#097ed8;
+	height: 56px;
+
+}
+footer .second{
+	width: 21.3%;
+	background:#3095e3;
+	height: 56px;
+
+}
+.third{
+	width: 21.3%;
+	background: #FFFFFF;
+}
+.third span{
+	font-family:NotoSansHans-Regular;
+
+	color:#717171;
+}
+footer .last{
+	width: 36.1%;
+	padding-top: 12px;
+	background:#ec9d1d;
+	height: 100%;
+	height: 56px;
+	line-height: 30px;
+
+}
+footer .last span{
+	font-size:16px;
+
+
+}
+/*尾部*/
 
 .ico-shoucang{
 	
