@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>求职信息</title>
+    <title>发布供应信息</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -14,221 +15,195 @@
     <meta name="x5-orientation" content="portrait">
     <meta name="x5-fullscreen" content="true">
     <meta name="format-detection" content="telephone=no, email=no">
-    <link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
-    <link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
-    <script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
-    <script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/css/mkui.css">
+    <link rel="stylesheet" href="../static/lib/css/ydui.rem.css">
+    <script src="../static/lib/js/jquery-1.11.1.min.js"></script>
+    <script src="../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
 
-    <link rel="stylesheet" type="text/css" href="../../static/css/common.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/qiuzhi.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/zhaopin-index.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/date.css">
+    <style type="text/css">
+        .show-pic ul li {
+            margin-left: 0px;
+            height: 90px;
+            width: 33.33%;
+        }
+
+        .show-pic ul li div {
+            margin: auto;
+        }
+    </style>
+    <script type="text/javascript" charset="utf-8">
+        if ('') {
+            if ('' > 0) {
+                alert("您的注册申请正在审核中,审核通过后会有消息提醒");
+            }
+            if ('' > 0) {
+                alert("您的账户已被封禁!如有问题请联系管理员");
+            }
+            window.location.href = "/site/fabu";
+        }
+    </script>
 </head>
-<body>
-<div id="app" class="no-select-two none">
-    <div class="both-all">
-        <!--搜索区域-->
-        <section class="w-serach pos-f  pl-10 pr-10 bg-ff5252 overflow-h">
-					<span class="search-text fl">
-						<i class="ico ico-shouye"></i>
-						<p><a href="../../home.html">首页</a></p>
-					</span>
-            <form action="">
-                <div class="m-serah pos-r">
-                    <i class="ico ico-search-one left" @click="search()"></i>
-                    <input id="keyword" type="search" class="m-search-input text-c pl-20 pr-10 radius" v-model="title"
-                           placeholder="点击搜索简历"/>
+<body class="bg-f8f8f8">
+
+<div id="app">
+    <section class="tender-top mb-10">
+        <div class="tender-common">
+            <span class="fl">供应类别</span>
+            <span class="fr" @click="choosegangwei()"><span id="gangwei">请选择</span><i class="ico-right1"></i></span>
+        </div>
+        <input type="hidden" id="choosedgangwei" />
+        <div class="tab-panl none" id="gangweilist">
+            <div class=" overflow-h h-100">
+                <ul class=" fl job h-100">
+                    <li v-for="item in job">{{item.name}}</li>
+                </ul>
+                <div class="job-list fl none" v-for="item in joblist">
+                    <ul>
+                        <li v-for="j in item"  @click="selectgangwei(j.id,j.name)">{{j.name}}</li>
+                    </ul>
                 </div>
-            </form>
-        </section>
-        <section class="term ">
-            <ul class="tab-nav  overflow-h ">
-                <li class="border-r  address"><span class="">城市</span><i class="ico ico-bottom"></i></li>
-                <li class="border-r zhiwei"><span>职位</span><i class="ico ico-bottom"></i></li>
-                <li class="border-r xinzi"><span>薪资</span><i class="ico ico-bottom"></i></li>
-                <li class="border-r quanbu"><span>更多</span><i class="ico ico-bottom"></i></li>
-            </ul>
-        </section>
-        <input type="hidden" id="choosedcity"/>
-        <input type="hidden" id="choosedgangwei"/>
-        <input type="hidden" id="choosedxinzi"/>
-    </div>
-    <div class="div1"></div>
-    <div class="tab-panl none">
-        <div class=" overflow-h">
-            <ul class=" province fl">
-                <li @click="buxian('city')">不限</li>
-                <li v-for="item in province">{{item.name}}</li>
-            </ul>
-            <div class="city fl none">
-                <ul>
-                    <li class="ret"></li>
-                </ul>
-            </div>
-            <div class="city fl none" v-for="item in city">
-                <ul>
-                    <li v-for="c in item" @click="selectcity(c.id)">{{c.name}}</li>
-                </ul>
             </div>
         </div>
-    </div>
-    <!--职位-->
-    <div class="tab-panl none">
-        <div class="overflow-h h-100">
-            <ul class=" fl job h-100">
-                <li @click="buxian('gangwei')">不限</li>
-                <li v-for="item in job">{{item.name}}</li>
-            </ul>
-            <div class="job-list fl none">
-                <ul>
-                    <li class="ret"></li>
-
-
-                </ul>
-            </div>
-            <div class="job-list fl none" v-for="item in joblist">
-
-                <ul>
-                    <li v-for="j in item" @click="selectgangwei(j.id)">{{j.name}}</li>
-                </ul>
-            </div>
+        <div class="tender-common">
+            <span class="fl">供应标题</span>
+            <span class="fr common-right">
+					<input type="text" placeholder="供应标题" class="tender-title" v-model="title" id="title" />
+				</span>
         </div>
-    </div>
-    <!--薪资-->
-    <div class="tab-panl none">
-        <ul class="money gongzi">
-            <li @click="selectxinzi('')">不限</li>
-            <li v-for="item in xinzi" @click="selectxinzi(item.id)">{{item.name}}</li>
-        </ul>
-    </div>
-    <!--更多-->
-    <div class="tab-panl none" id="genduo">
-        <ul class="choice">
-            <li>
-                <span class="fl">工作经验</span>
-                <i class="ico ico-right fr"></i>
-                <span
-                        class="choice-text choice-jy select-btn fr">
-                    <select>
-                        <option value="">不限</option>
-                        <option value="2">一年以下</option>
-                        <option value="3">1-3年</option><option value="4">3-5年</option><option value="5">5-8年</option><option
-                            value="6">8-10年</option><option value="7">10年以上</option>
-                    </select>
-                </span>
-            </li>
-            <li>
-                <span class="fl">学历</span>
-                <i class="ico ico-right fr"></i> <span
-                    class="choice-text choice-xlselect-btn fr"><select><option value="">不限</option> <option
-                    value="2">初中</option><option value="3">高中</option><option value="4">大专</option><option
-                    value="5">本科</option><option value="6">研究生</option><option value="7">博士生</option></select>
-                 </span>
-            </li>
-            <li>
-                <span class="fl">性别</span> <i class="ico ico-right fr"></i> <span
-                    class="choice-text choice-nl select-btn fr"><select><option value="">不限</option> <option
-                    value="1">男</option><option value="2">女</option></select>
-                </span>
-            </li>
-            <li>
-                <span class="fl">年龄</span> <i class="ico ico-right fr"></i> <span
-                    class="choice-text choice-nl select-btn fr"><select><option value="">不限</option> <option value="1">18-25岁</option><option
-                    value="2">26-35岁</option><option value="3">36-45岁</option><option value="4">46-55岁</option><option
-                    value="5">56岁以上</option></select>
-                </span>
-            </li>
-            <li>
-                <span class="fl">职称</span> <i class="ico ico-right fr"></i> <span
-                    class="choice-text choice-zc select-btn fr"><select><option value="">不限</option> <option value="2">中级工程师</option><option
-                    value="3">二级建造师</option><option value="4">高级工程师</option><option
-                    value="5">会计</option></select>
-                </span>
-            </li>
-        </ul>
-        <div class="button" @click="filter()">确定筛选</div>
-    </div>
-
-    <section class="content-list  lh-24 ">
-        <yd-infinitescroll :on-infinite="loadList">
-            <yd-list theme="4" slot="list">
-                <yd-list-item v-for="item in datalist" :href='item.url' >
-                    <p slot="title" class="f-16 ">
-                        <span>{{item.title}}</span>
-                        <span class="fr c-ec9d1d">{{item.xinzi}}</span>
-                    </p>
-                    <yd-list-other slot="other">
-                        <h4 class="mt-10 f-14 ">
-                            <span class="fl">{{item.name}}</span>
-                            <span class="ml-15">{{item.gender}}性</span>
-                            <span class="ml-10">{{item.age}}</span >
-                            <span class="fr time mr-8 ">{{item.created_at}}</span>
-                        </h4>
-                        <p class="recruit-pos f-14 mt-5 pos-name">
-                            <span>{{item.city}}</span>
-                            <span class="ml-10">{{item.jingyan}}</span>
-                            <span class="ml-10">{{item.xueli}}</span>
-                        </p>
-                    </yd-list-other>
-                </yd-list-item>
-            </yd-list>
-            <!-- 数据全部加载完毕显示 -->
-            <span slot="doneTip"  class="text-c mt-5 f-14">全部数据已加载完成</span>
-            <!-- 加载中提示 -->
-            <img slot="loadingTip" src="../../static/img/loading10.svg" style="width: 1.5rem;height: 1.5rem;margin: .5rem"/>
-        </yd-infinitescroll>
+        <div class="tender-common">
+            <span class="fl">供应数量</span>
+            <span class="fr common-right">
+					<input type="number" placeholder="请填写所需物品数量数量" class="tender-title" v-model="quantity" />
+				</span>
+        </div>
+        <div class="tender-common">
+            <span class="fl">单价:</span>
+            <input type="number" class="single-price"  v-model="price"  onkeyup="checkfushu()" min="0"/>
+            <span class="mr-15">元</span>
+            <span>单位:</span>
+            <input type="text" class="unit"  v-model="unit"  onchange="checkint()"/>
+        </div>
+        <div class="tender-common overflow-h no-flex">
+            <span class="fl">有效期至</span>
+            <span class="fr no-flex select-btn yang"><input type="date" onblur="checkEndAt()" class="kbtn" value="<?php echo date('Y-m-d',time()+86400);?>"  placeholder="请选择"  v-model="end_at" /><i class="ico ico-right1"></i></span>
+        </div>
     </section>
+    <section class="tender-mid mb-10">
+        <div class="tender-common">
+            <span class="fl">供应地址</span>
+            <span class="fr common-right" @click="chooseaddress()" >
+						<span id="city">请选择</span>
+						<i class="ico-right1"></i>
+					</span>
+            <input type="hidden" id="choosedprovince"/>
+            <input type="hidden" id="choosedprovincename"/>
+            <input type="hidden" id="choosedcity"/>
+        </div>
+        <div class="tab-panl none" id="sl-dizhi" >
+            <div class=" overflow-h">
+                <ul class=" province fl">
+                    <li v-for="item in province"  @click="selectprovince(item.id,item.name)">{{item.name}}</li>
+                </ul>
+                <div class="city fl none" v-for="item in city">
+                    <ul>
+                        <li v-for="c in item" @click="selectcity(c.id,c.name)">{{c.name}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tender-common">
+            <input type="text" placeholder="请填写详细地址" class="address-info"  v-model="address"/>
+        </div>
+
+        <div class="tender-common">
+            <span class="fl">联系人</span>
+            <span class="fr common-right">
+					<input type="text" placeholder="请填写联系人" v-model="contact"/>
+				</span>
+        </div>
+        <div class="tender-common">
+            <span class="fl">联系电话</span>
+            <span class="fr common-right">
+					<input type="tel" placeholder="请填写联系电话" onchange="checkTel()" v-model="phone"/>
+				</span>
+        </div>
+    </section>
+
+    <section class="tender-bottom" id="guigecanshu">
+
+    </section>
+
+    <section class="tender-product mt-10 pb-10 bg-fff  overflow-h">
+        <div class="detail-title bg-fff product-pic mb-20">
+            产品图片
+        </div>
+        <div class="show-pic fl" style="width: 100%">
+            <ul class="" id="showul" >
+                <li id="xz" class='pos-r fl'>
+                    <div class='zhanshi2 pos-r'>
+                        <img src="../static/img/zhaoxiang.png" onclick="chooseMultipleImage()" />
+                        <input id="img_input" class="fr compile-pic" type="file" accept="image/*" multiple hidden="true" onchange="imagePreview(this)">
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="tender-detail-body mt-10 bg-fff pb-10">
+        <div class="detail-title bg-fff">
+            供应详情
+        </div>
+        <div class="tender-con">
+            <textarea name="" rows="" cols="" placeholder="请填写供应详细描述" v-model="content"></textarea>
+        </div>
+    </section>
+    <div class="h-20"></div>
+    <div class="public-sure-btn" @click="fabu()">
+        确认发布
+        <!--<?=empty($id)?'确认发布':'确认修改' ?>-->
+    </div>
+    <div class="h-20"></div>
 </div>
 
 
+<script src="../static/lib/js/axios.min.js"></script>
 <script>
-    $(document).ready(function () {
-        var items = window.history.state;
-        if (!items) {
-            vm.loadList();
-        }
-
-    });
-
-
-    var items = window.history.state;
-    if (!items) {
-        items = new Array();
-    }
-
-    console.log(items);
-
+//    var id='<?=$id?>';
+//    function init(){
+//        $("#city").html('<?php if(empty($moduleModel)||empty($moduleModel->province)||empty($moduleModel->city)){echo '请选择';}else{echo City::getDisplayName($moduleModel->province,$moduleModel->city);}?>');
+//        $("#choosedprovince").val('<?php if(!empty($moduleModel)){echo $moduleModel->province;}?>');
+//        $("#choosedcity").val('<?php if(!empty($moduleModel)){echo $moduleModel->city;}?>');
+//        $("#choosedgangwei").val('<?php if(empty($model)){echo '';}else{echo $model->category_id;}?>');
+//        $("#gangwei").text('<?php if(!empty($model)&&!empty($model->category_id)){ echo Category::getTitles()[$model->category_id];}else{echo "请选择";}?>');
+//    }
+//    init();
+    var items=new Array();
+    var isfabu=false;
     var vm = new Vue({
         el: "#app",
         data: {
-            page: 2,
-            pageSize: 10,
-            datalist: items,
-            textarr: {jingyan: '请选择', xueli: '请选择', nianling: '请选择', xingbie: '请选择', zhicheng: '请选择'},
-            job: [{"id": 2000, "name": "销售"}, {"id": 2100, "name": "综合\/人事\/行政"}, {
-                "id": 2200,
-                "name": "财务"
-            }, {"id": 2300, "name": "生产管理"}, {"id": 2400, "name": "技术质量"}, {"id": 2500, "name": "采购管理"}, {
-                "id": 2600,
-                "name": "商务合约"
-            }, {"id": 2700, "name": "司机"}, {"id": 2800, "name": "造价预算"}, {"id": 2900, "name": "法律"}, {
-                "id": 3000,
-                "name": "工程师"
-            }, {"id": 3100, "name": "技工／普工"}, {"id": 3200, "name": "高级管理"}],
-            xinzi: {
-                "1": {"id": 1, "name": "面议"},
-                "2": {"id": 2, "name": "3000元以下"},
-                "3": {"id": 3, "name": "3000-5000元"},
-                "4": {"id": 4, "name": "5000-8000元"},
-                "5": {"id": 5, "name": "8000-10000元"},
-                "6": {"id": 6, "name": "10000-15000元"},
-                "7": {"id": 7, "name": "15000-20000元"},
-                "8": {"id": 8, "name": "20000-30000元"},
-                "9": {"id": 9, "name": "30000-50000元"},
-                "10": {"id": 10, "name": "50000元以上"}
-            },
-            province: [{"id": 1, "name": "北京市"}, {"id": 2, "name": "天津市"}, {"id": 3, "name": "河北省"}, {
+            title:""
+//                '<?php if(empty($model)){echo '';}else{echo $model->title;}?>'
+            ,
+            quantity:""
+//                '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->quantity;}?>'
+            ,
+            price:""
+//                '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->price;}?>'
+            ,
+            unit:""
+//                '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->unit;}?>'
+            ,
+            end_at:""
+//                '<?php if(empty($moduleModel)){echo date('Y-m-d',time()+86400);}else{echo $moduleModel->end_at;}?>'
+            ,
+            province:[{"id": 1, "name": "北京市"}, {"id": 2, "name": "天津市"}, {"id": 3, "name": "河北省"}, {
                 "id": 4,
                 "name": "山西省"
             }, {"id": 5, "name": "内蒙古"}, {"id": 6, "name": "辽宁省"}, {"id": 7, "name": "吉林省"}, {
@@ -250,7 +225,7 @@
                 "id": 28,
                 "name": "甘肃省"
             }, {"id": 29, "name": "青海省"}, {"id": 30, "name": "宁夏"}, {"id": 31, "name": "新疆"}],
-            city: {
+            city:{
                 "1": [{"id": 1, "name": "全北京市"}, {"id": 37, "name": "东城区"}, {"id": 38, "name": "西城区"}, {
                     "id": 41,
                     "name": "朝阳区"
@@ -553,216 +528,361 @@
                     "name": "石河子市"
                 }, {"id": 490, "name": "阿拉尔市"}, {"id": 491, "name": "图木舒克市"}, {"id": 492, "name": "五家渠市"}]
             },
-            joblist: {
-                "2000": [{"id": 2001, "name": "销售"}],
-                "2100": [{"id": 2101, "name": "综合\/人事\/行政"}],
-                "2200": [{"id": 2201, "name": "财务"}],
-                "2300": [{"id": 2301, "name": "生产管理"}],
-                "2400": [{"id": 2401, "name": "技术质量"}],
-                "2500": [{"id": 2501, "name": "采购管理"}],
-                "2600": [{"id": 2601, "name": "商务合约"}],
-                "2700": [{"id": 2701, "name": "司机"}],
-                "2800": [{"id": 2801, "name": "造价预算"}],
-                "2900": [{"id": 2901, "name": "法律"}],
-                "3000": [{"id": 3001, "name": "工程师"}],
-                "3100": [{"id": 3101, "name": "技工／普工"}],
-                "3200": [{"id": 3201, "name": "高级管理"}]
+            address:""
+//                '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->address;}?>'
+            ,
+            contact:""
+//                '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->contact;}?>'
+            ,
+            phone:""
+//                '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->phone;}?>'
+            ,
+            content:""
+//                '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->content;}?>'
+            ,
+            job:{
+                "0": {"id": "7", "name": "建材"},
+                "1": {"id": "8", "name": "其他"},
+                "2": {"id": "9", "name": "混凝土"},
+                "5": {"id": "45", "name": "设备"},
+                "6": {"id": "46", "name": "工具\/仪器"},
+                "7": {"id": "47", "name": "专项工程承包"},
+                "8": {"id": "48", "name": "服务\/劳务"},
+                "9": {"id": "50", "name": "配件\/五金"},
+                "10": {"id": "51", "name": "油料"}
             },
-            jingyan: '',
-            xueli: '',
-            zhicheng: '',
-            age: '',
-            gender: '',
-            title: ''
-        },
-        methods: {
-            loadList() {
-                _list = [
-                    {
-                        "title": "北京城建集团有限责任公司",
-                        "xinzi": "面议",
-                        "companyname": "平台",
-                        "created_at": "今天11：23",
-                        "city": "北京市",
-                        "jingyan": "五年",
-                        "xueli": "本科",
-                        "name": "闵哲",
-                        "gender": "男",
-                        "age": "15",
-                        "url": "qiuzhidetail.html"
-                    },
-                    {
-                        "title": "财务主管",
-                        "xinzi": "8000",
-                        "companyname": "平台",
-                        "created_at": "今天12：23",
-                        "city": "北京市",
-                        "jingyan": "2年",
-                        "xueli": "研究生",
-                        "name": "闵哲",
-                        "gender": "男",
-                        "age": "15",
-                        "url": "qiuzhidetail.html"
-                    },
-                    {
-                        "title": "投资主管",
-                        "xinzi": "1000",
-                        "companyname": "平台",
-                        "created_at": "今天13：23",
-                        "city": "北京市",
-                        "jingyan": "三年",
-                        "name": "闵哲",
-                        "gender": "男",
-                        "age": "15",
-                        "xueli": "专科",
-                        "url": "qiuzhidetail.html"
-                    },
-                    {
-                        "title": "1dfdfdfdfd",
-                        "xinzi": "2",
-                        "companyname": "3",
-                        "created_at": "4",
-                        "city": "5",
-                        "name": "闵哲",
-                        "gender": "男",
-                        "age": "15",
-                        "jingyan": "6",
-                        "xueli": "7",
-                        "url": "qiuzhidetail.html"
-                    }
-
-
-                ];
-                vm.datalist = [...vm.datalist,
-            ...
-                _list
-            ]
-                ;
-                items = vm.datalist;
-                console.log(items);
-                window.history.pushState(items, "", "qiuzhi.html");
-                window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
-
-//                window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
+            joblist:{
+                "7": [{"id": "7", "name": "建材"}],
+                "8": [{"id": "8", "name": "其他"}],
+                "9": [{"id": "12", "name": "特殊混凝土"}, {"id": "39", "name": "普通混凝土"}],
+                "45": [{"id": "45", "name": "设备"}],
+                "46": [{"id": "46", "name": "工具\/仪器"}],
+                "47": [{"id": "47", "name": "专项工程承包"}],
+                "48": [{"id": "48", "name": "服务\/劳务"}],
+                "50": [{"id": "50", "name": "配件\/五金"}],
+                "51": [{"id": "51", "name": "油料"}]
             },
-            selectcity: function (id) {
-                $("#choosedcity").val(id);
-                vm.page = 1;
-                $('.address').children('i').removeClass('ico-bottom2').addClass('ico-bottom');
-                vm.loadList();
-            },
-            selectgangwei: function (id) {
-                $("#choosedgangwei").val(id);
-                vm.page = 1;
-                $('.zhiwei').children('i').removeClass('ico-bottom2').addClass('ico-bottom');
-                vm.loadList();
-            },
-            selectxinzi: function (id) {
-                $("#choosedxinzi").val(id);
-                vm.page = 1;
-                $('.xinzi').children('i').removeClass('ico-bottom2').addClass('ico-bottom');
-                vm.loadList();
-            },
-            filter: function () {
-                vm.page = 1;
-                $('.tab-panl').addClass('none');
-                $('.quanbu').children('i').removeClass('ico-bottom2').addClass('ico-bottom');
-                vm.loadList();
-            },
-            search: function () {
-                vm.page = 1;
-                vm.loadList();
-            },
-            buxian: function (t) {
-                if (t == 'gangwei') {
-                    $(".tab-nav>.zhiwei>span").html('职位');
-                    $(".tab-nav>.zhiwei>span").removeClass('current');
-                    $(".tab-nav>.zhiwei>i").removeClass('ico-bottom2').addClass('ico-bottom');
-                    ;
-                    $("#choosedgangwei").val('')
-                }
-                if (t == 'city') {
-                    $(".tab-nav>.address>span").html('城市');
-                    $(".tab-nav>.address>span").removeClass('current');
-                    $(".tab-nav>.address>i").removeClass('ico-bottom2').addClass('ico-bottom');
-                    $("#choosedcity").val('')
-                }
-                $('.tab-panl').addClass('none');
-                vm.page = 1;
-                vm.loadList();
+    },
+    methods: {
+        selectgangwei: function(id,name){
+            $("#choosedgangwei").val(id);
+            $("#gangwei").text(name);
+            $("#gangweilist").addClass('none');
+            if(id==''){
+                $("#guigecanshu").html('');
+                return true;
             }
+//            if(items[id]!=''){
+//                strs=items[id].split(",");
+//                if(strs.length>0){
+//                    $("#guigecanshu").html('');
+//                    $("#guigecanshu").append('<div class="bottom-title bg-fff">规格参数</div>');
+//                    for (i=0;i<strs.length ;i++ )
+//                    {
+//                        $("#guigecanshu").append('<div class="tender-common"><span class="fl c-17">'+strs[i]+'</span><span class="fr common-right"><input type="text" placeholder="请填写'+strs[i]+'" name="specification" class="inp"/></span></div>');
+//                    }
+//                }
+//            }
         },
-        mounted: function () {
-            $("#app").show();
-        }
+        choosegangwei:function(){
+            $("#gangweilist").removeClass('none');
+        },
+        chooseaddress: function() {
+            $("#sl-dizhi" ).show();
+        },
+        selectcity: function(id,name){
+            $("#city").html($("#choosedprovincename").val()+' '+name);
+            $("#choosedcity").val(id);
+            $("#sl-dizhi").hide();
+        },
+        selectprovince: function(id,name){
+            $("#choosedprovincename").val(name);
+            $("#choosedprovince").val(id);
+            $("#choosedcity").val('');
+        },
+        fabu(){
+            var shilizhanshi = '';
+            $("input[name='shilizhanshi']").each(function(index){
+                shilizhanshi+=this.value+",";
+            });
+            if(shilizhanshi.length>1){
+                $("#productimages").val(shilizhanshi.substring(0,shilizhanshi.length-1));
+            }
 
+//            var guigecanshu = '';
+//            $("input[name='specification']").each(function(index){
+//                guigecanshu+=this.value+",";
+//            });
+//            if(guigecanshu.length>1){
+//                guigecanshu=guigecanshu.substring(0,guigecanshu.length-1);
+//            }
+            if(!checkEndAt()||!checkTel()||!checkint()||!checkfushu()){
+                return false;
+            }
+
+
+
+
+            if ($('#gangwei').text()=='请选择') {
+                alert('请选择供应类别')
+                return
+            }
+            if (vm.title=="") {
+                alert('请填写供应标题')
+                return
+            }
+            if (vm.quantity=="") {
+                alert('请填写供应数量')
+                return
+            }
+            if (vm.unit=="") {
+                alert('请填写单位')
+                return
+            }
+            if ($('.kbtn').val()=='') {
+                alert('请选择有效日期')
+                return
+            }
+            if ($('#city').text()=='请选择') {
+                alert('请选择工作城市')
+                return
+            }
+            if (vm.address=="") {
+                alert('请填写详细地址')
+                return
+            }
+
+
+
+            if (vm.contact=="") {
+                alert('请填写联系人姓名')
+                return
+            }
+
+
+            if (vm.content=="") {
+                alert('请填写供应详细描述')
+                return
+            }
+
+
+            var yes=1;
+            $(".inp").each(function(){
+                if($(this).val()==''){
+
+                    yes=0;
+                    return;
+                }
+            })
+            if(yes==0){
+                alert('参数规格填写不完整!');
+                return;
+            }
+
+            console.log("title:"+$("#title").val()+"category_id:"+$("#choosedgangwei").val()+"quantity:"+vm.quantity+"price:"+vm.price+"unit："+vm.unit+"end_at:"+vm.end_at+
+                "province:"+$("#choosedprovince").val()+"city:"+$("#choosedcity").val()+"address:"+vm.address+"contact:"+vm.contact+"phone:"+vm.phone+"content:"+vm.content+"productimages："+$("#img_input").val());
+
+
+
+//            if(!isfabu){
+//                isfabu=true;
+//                axios.post('/fabu/gongying?id='+id, {
+//                    productimages:$("#productimages").val(),
+//                    category_id:$("#choosedgangwei").val(),
+//                    specifications:guigecanshu,
+//                    title:$("#title").val(),
+//                    quantity:vm.quantity,
+//                    price:vm.price,
+//                    unit:vm.unit,
+//                    end_at:vm.end_at,
+//                    province:$("#choosedprovince").val(),
+//                    city:$("#choosedcity").val(),
+//                    address:vm.address,
+//                    contact:vm.contact,
+//                    phone:vm.phone,
+//                    content:vm.content
+//                })
+//                    .then(function (response) {
+//                        mes=response.data.message;
+//                        //icon='error';
+//                        // if(mes=='ok'){
+//                        mes="发布成功!";
+//                        icon="success";
+//                        // }
+//                        vm.$dialog.toast({
+//                            mes: mes,
+//                            icon: icon,
+//                            timeout: 1500,
+//                            callback: () => {
+//                            if(mes=='发布成功!'){
+//                            if(id!=''){
+//                                window.location.href= '/managefabu/gongying';
+//                            }else{
+//                                if(response.data.id!=''){
+//                                    window.location.href= '/list/detailgongying?id='+response.data.id+'&type=1';
+//                                }else{
+//                                    window.location.href= '/site/fabu';
+//                                }
+//                            }
+//                        }
+//                    }
+//                    });
+//                    })
+//            }
+        },
+    },
     });
 
-
-    $(function () {
-        $('.tab-nav li').on("click", function () {
-            $('.tab-nav li span').removeClass('current');
-            $(this).find('span').addClass('current');
-            if ($('.tab-panl').eq($(this).index()).hasClass('none')) {
-                $('.tab-panl').eq($(this).index()).removeClass('none').siblings('.tab-panl').addClass('none');
-                $(this).children('i').removeClass('ico-bottom').addClass('ico-bottom2');
-                $(this).siblings().children('i').removeClass('ico-bottom2').addClass('ico-bottom')
-            } else {
-                $('.tab-panl').eq($(this).index()).addClass('none').siblings('.tab-panl').addClass('none');
-
-                $(this).children('i').removeClass('ico-bottom2').addClass('ico-bottom');
-                $(this).find('span').removeClass('current')
-            }
-            //$(this).children('i').removeClass('ico-bottom2').addClass('ico-bottom1');
-        });
-        $('.province li').click(function () {
-            $('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
-            $(this).css('background', '#FFFFFF').siblings('.province li').css('background', '#ededed');
-        });
-        $('.city li').click(function () {
-            $('.address span').text($(this).text())
-            $('.city li ').removeClass('current');
-            $(this).addClass('current')
-            $('.tab-panl').addClass('none')
-            $('.address span').removeClass('current');
+    function removeLi(obj){
+        $(obj).parent().parent().remove();
+    }
+    function removeOld(obj,url){
+        var aid=url.split('=')[1];
+        axios.post('/fabu/removeattachment?aid='+aid+'&type=Gongying', {
+            id:id,
         })
+            .then(function (response) {
+            })
+        $(obj).parent().parent().remove();
+    }
+
+    function checkEndAt(){
+
+        var endTime=vm.end_at;
+        if(endTime==''){
+            return true;
+        }
+        var end=Date.parse(new Date(endTime.replace("-", "/").replace("-", "/")));
+        var current=Date.parse(new Date());
+        if(end<current){
+            vm.$dialog.alert({mes: '有效日期必须在今天之后!'});
+            return false;
+        }
+        return true;
+    }
+
+    function checkTel(){
+        if(!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.phone))){
+            vm.$dialog.alert({mes: '电话格式不正确!'});
+            return false;
+        }
+        return true;
+    }
+
+    function checkint(){
+        if(!(/^[A-Z|a-z\u4e00-\u9fa5]*$/.test(vm.unit))){
+            vm.$dialog.alert({mes: '单位只能输入中文或英文'});
+            return false;
+        }
+        return true;
+    }
+    function checkfushu(){
+//				var v=vm.price;//$(t).val();//parseInt(string, radix);
+//				v=parseInt(v);
+//				alert(v);
+//				if(isNaN(v)){
+//					vm.$dialog.alert({mes: '请输入数字'});
+//					return;
+//				}
+        if(vm.price!=''&&!(/^\d+(\.\d{2})?$/.test(vm.price))){
+            vm.$dialog.alert({mes: '请输入数字'});
+            return false;
+        }
+        return true;
+    }
+
+    $(function() {
+
+        $('.province li').click(function(){
+            $('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
+            $(this).css('background','#FFFFFF').siblings('.province li').css('background','#ededed');
+        });
+        $('.city li').click(function(){
+            $('.address span').text($(this).text())
+//					$(this).addClass('on-blue').siblings('.job-list li').removeClass('on-blue');
+            $('.city li ').removeClass('on-blue');
+            $(this).addClass('on-blue');
+            $('.tab-panl').addClass('none')
+        })
+
         /*职位*/
-        $('.job li').click(function () {
+        $('.job li').click(function() {
             $('.job-list').eq($(this).index()).removeClass('none').siblings('.job-list').addClass('none');
             $(this).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
         });
-        $('.job-list li').click(function () {
-            $('.zhiwei span').text($(this).text());
-            $('.tab-panl').addClass('none');
-            $('.zhiwei span').removeClass('current');
-            $('.job-list li ').removeClass('current');
-            $(this).addClass('current')
-        });
-        $('.gongzi li').click(function () {
-            $('.xinzi span').text($(this).text());
-            $('.tab-panl').addClass('none');
-            $('.xinzi span').removeClass('current');
-        });
-        $('.xingzhi li').click(function () {
-            $('.quanbu span').text($(this).text());
-            $('.tab-panl').addClass('none')
-        });
-        $('.button').click(function () {
-            $('.quanbu span').removeClass('current');
-        });
-
-        $("#keyword").on('keypress', function (e) {
-            var keycode = e.keyCode;
-            var searchName = $(this).val();
-            if (keycode == '13') {
-                e.preventDefault();
-                //请求搜索接口
-                vm.page = 1;
-                vm.loadList();
-            }
-        });
-    });
-
+    })
 </script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    function chooseMultipleImage() {
+        $('#img_input').click();
+    }
+
+    function imagePreview(input) {
+        var files = input.files;
+        for(var i = 0; i < files.length; i++) { //预览新添加的图片
+            var file = files[i];
+            var imageType = /^image\//;
+            if(!imageType.test(file.type)) {
+                //					alert("请选择图片类型上传");
+                new auiToast().fail({
+                    title: "请选择图片类型",
+                    duration: 2000
+                });
+                continue;
+            }
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                $("#xz").before("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='" + e.target.result + "'/><input type='hidden' name='shilizhanshi' value='" + e.target.result + "'/><div class='delet-pic' onclick='removeLi(this)'><img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
+            };
+        }
+    }
+//    wx.config(<?php echo $js->config(array('chooseImage', 'previewImage','uploadImage'), false) ?>);
+//    var images = {
+//        localId: [],
+//        serverId: []
+//    };
+//
+//    function chooseMultipleImage() {
+//        wx.chooseImage({
+//            sizeType: ['compressed'],
+//            sourceType: ['album', 'camera'],
+//            success: function (res) {
+//                images.localId = res.localIds;
+//                uploadImages();
+//            }
+//        });
+//    };
+//
+//    function uploadImages() {
+//        if (images.localId.length == 0) {
+//            alert('请先使用 chooseImage 接口选择图片');
+//            return;
+//        }
+//        var i = 0, length = images.localId.length;
+//        images.serverId = [];
+//        function upload() {
+//            wx.uploadImage({
+//                localId: images.localId[i],
+//                isShowProgressTips: 1,
+//                success: function (res) {
+//                    $("#showul").append("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='"+images.localId[i]+"'/><input type='hidden' name='shilizhanshi' value='"+res.serverId+"'/><div class='delet-pic' onclick='removeLi(this)'><img src='/static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
+//                    i++;
+//                    images.serverId.push(res.serverId);
+//                    if (i < length) {
+//                        upload();
+//                    }
+//                },
+//                fail: function (res) {
+//                    alert(JSON.stringify(res));
+//                }
+//            });
+//        }
+//        upload();
+//
+//    };
+</script>
+
 </body>
 </html>
