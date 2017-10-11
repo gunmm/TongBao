@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>意见反馈</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
+		<link rel="stylesheet" href="../css/mkui.css" />
+		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../static/css/common.css" />
+
+		<style type="text/css">
+			.show-pic ul li {
+				margin-left: 0px;
+				height: 90px;
+				width: 33.33%;
+			}
+			
+			.show-pic ul li div {
+				margin: auto;
+			}
+		</style>
+
+	</head>
+
+	<body class="bg-fff">
+		<div id="app">
+			<section class="">
+				<textarea name="" rows="" cols="" placeholder="请填写意见反馈内容" v-model="content" class="tousu-comtent"></textarea>
+				<section class="shili-show  mt-20">
+					<div class="show-pic fl" style="width: 100%;">
+						<ul class="" id="showul">
+							<li id="xz" class='pos-r fl'>
+								<div class='zhanshi2 pos-r'>
+									<img src="../static/img/zhaoxiang.png" onclick="chooseMultipleImage()" />
+									<input id="img_input" class="fr compile-pic" type="file" accept="image/*" multiple hidden="true" onchange="imagePreview(this)">
+								</div>
+							</li>
+						</ul>
+					</div>
+					<input type="hidden" id="photos" />
+				</section>
+				<p class="queding" @click="feedback()">确定反馈</p>
+			</section>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				content: null
+			},
+			methods: {
+				feedback: function() {
+					var shilizhanshi = '';
+					$("input[name='shilizhanshi']").each(function(index) {
+						shilizhanshi += this.value + ",";
+					});
+					if(shilizhanshi.length > 1) {
+						$("#photos").val(shilizhanshi.substring(0, shilizhanshi.length - 1));
+					}
+
+					if($('.tousu-comtent').val() == '') {
+						alert('请填写意见反馈内容')
+						return
+					}
+					vm.$dialog.toast({
+						mes: "感谢您的支持和理解我们会尽快对信息进行核实与处理。",
+						icon: 'success',
+						timeout: 1500,
+						callback: function() {
+							window.location.href = '/member/index';
+						}
+					});
+				},
+			}
+		})
+
+		function chooseMultipleImage() {
+			$('#img_input').click();
+		}
+
+		function imagePreview(input) {
+			var files = input.files;
+			for(var i = 0; i < files.length; i++) { //预览新添加的图片
+				var file = files[i];
+				var imageType = /^image\//;
+				if(!imageType.test(file.type)) {
+					alert("请选择图片类型上传");
+					continue;
+				}
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function(e) {
+					$("#xz").before("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='" + e.target.result + "'/><input type='hidden' name='shilizhanshi' value='" + e.target.result + "'/><div class='delet-pic' onclick='removeLi(this)'><img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
+				};
+			}
+		}
+
+		function removeLi(obj) {
+			$(obj).parent().parent().remove();
+		}
+	</script>
+
+</html>

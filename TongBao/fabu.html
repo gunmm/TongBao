@@ -79,13 +79,13 @@
 			$('#xiaoxi_tip').hide();
 
 			$('router-link').click(function() {
-//				window.location.href = $(this).attr('to');
+				//				window.location.href = $(this).attr('to');
 
-				$.post("192.168.1.120:8080/index/index/index", {
+				$.post("http://192.168.1.120:8080/index/index/index", {
 
 					},
 					function(data, status) {
-						console.log('data==>>' + data);
+						console.log(data);
 					})
 			})
 		})
