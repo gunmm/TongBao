@@ -13,34 +13,81 @@
 		<meta name="x5-orientation" content="portrait">
 		<meta name="x5-fullscreen" content="true">
 		<meta name="format-detection" content="telephone=no, email=no">
-		<link rel="stylesheet" href="css/aui.css" />
-		<script type="text/javascript" src="js/api.js"></script>
-		<script type="text/javascript" src="js/aui-tab.js"></script>
-		<script type="text/javascript" src="js/aui-dialog.js"></script>
+
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 		<script type="text/javascript" src="static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="static/lib/js/ydui.js"></script>
+		<link rel="stylesheet" href="css/mkui.css" />
+		<link rel="stylesheet" href="static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="static/css/common.css" />
 
+		<link rel="stylesheet" href="css/aui.css" />
+		<script type="text/javascript" src="js/aui-tab.js"></script>
+		<script type="text/javascript" src="js/aui-dialog.js"></script>
+
+		<style>
+			.msg-right p span:nth-child(2) {
+				font-family: NotoSansHans-Regular;
+				font-size: 0.7rem;
+				color: #cccccc;
+			}
+			
+			.msg-right p span:nth-child(3) {
+				font-family: NotoSansHans-Regular;
+				font-size: 0.7rem;
+				color: #717171;
+				margin-right: 10px;
+			}
+			
+			.msg-news {
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		</style>
 	</head>
 
 	<body>
-		<ul id="xiaoxi_list" class="aui-list aui-media-list">
-			<li v-for="item in items" :id="item.id" class="aui-list-item aui-list-item-middle">
-				<div class="aui-media-list-item-inner">
-					<div class="aui-list-item-media" style="width: 3rem;">
-						<img :src="item.img" class="aui-img-round aui-list-img-sm">
+		<div id="app" hidden>
+			<section v-if="msg_empty">
+				<div class="fail">
+					<div class="fail-pic">
+						<img src="static/img/fabu-fail.png" alt="" />
 					</div>
-					<div class="aui-list-item-inner" onclick="detail(1)">
-						<div class="aui-list-item-text">
-							<div class="aui-list-item-title aui-font-size-14">AUI</div>
-							<div class="aui-list-item-right">08:00</div>
-						</div>
-						<div class="aui-list-item-text">
-							{{item.a}}
-						</div>
-					</div>
+					<p>现在还没有收到消息哦</p>
 				</div>
-			</li>
-		</ul>
+			</section>
+			<section v-for="item in systemMessage" class="mesg overflow-h border-b">
+				<div class="pic">
+					<a href=""><img src="static/img/Group@2x.png" /></a>
+				</div>
+				<div class="msg-right">
+					<p class="overflow-h">
+						<span class="fl" onclick="detail(1)">系统通知</span>
+						<span class="fr mr-8" onclick="deleteMessage(this)">删除</span>
+						<span class="fr">{{item.created_at}}</span>
+					</p>
+					<p class="msg-news" onclick="detail(1)">
+						{{item.content}}
+					</p>
+				</div>
+			</section>
+			<section v-for="item in chatMessage" class="mesg overflow-h border-b">
+				<div class="pic pos-r">
+					<a href=""><img :src="item.avatar" /></a>
+					<i v-if="item.read==0" class="red"></i>
+				</div>
+				<div class="msg-right">
+					<p class="overflow-h">
+						<span class="fl" @click="chat(item.from_uid)">{{item.nickname}}</span>
+						<span class="fr mr-8" onclick="deleteMessage(this)">删除</span>
+						<span class="fr">{{item.created_at}}</span>
+					</p>
+					<p class="msg-news" @click="chat(item.from_uid)">
+						{{item.content}}
+					</p>
+				</div>
+			</section>
+		</div>
 		<div style="height: 2.55rem;"></div>
 		<footer class="aui-bar aui-bar-tab" id="footer">
 			<div class="aui-bar-tab-item" tapmode>
@@ -63,99 +110,42 @@
 	</body>
 
 	<script type="text/javascript">
-		apiready = function() {
-			api.parseTapmode();
-		}
-
 		new Vue({
-			el: '#xiaoxi_list',
+			el: '#app',
 			data: {
-				items: [{
-						img: 'img/touxiang.png',
-						a: '11111111111',
-						id: '1'
-					},
-					{
-						img: 'img/touxiang.png',
-						a: '22222222222',
-						id: '2'
-					},
-					{
-						img: 'img/touxiang.png',
-						a: '22222222222',
-						id: '2'
-					},
-					{
-						img: 'img/touxiang.png',
-						a: '22222222222',
-						id: '2'
-					},
-					{
-						img: 'img/touxiang.png',
-						a: '22222222222',
-						id: '2'
-					},
-					{
-						img: 'img/touxiang.png',
-						a: '22222222222',
-						id: '2'
-					},
-					{
-						img: 'img/touxiang.png',
-						a: '22222222222',
-						id: '2'
-					},
-					{
-						img: 'img/touxiang.png',
-						a: '22222222222',
-						id: '2'
-					},
-					{
-						img: 'img/touxiang.png',
-						a: '33333333333',
-						id: '3'
-					},
-					{
-						img: 'img/touxiang.png',
-						a: '44444444444'
-					},
-					{
-						img: 'img/touxiang.png',
-						a: '55555555555'
-					},
-				]
+				msg_empty: false,
+				systemMessage: [{}],
+				chatMessage: [{
+					avatar: 'static/img/touxiang.png',
+					read: 0,
+					nickname: '王爷',
+					content: 'ad看风景阿卡丽附近开了多少放声大哭减肥开始',
+					from_uid: '1122',
+				}]
+			},
+			mounted: function() {
+				$("#app").show();
 			}
 		})
 
-		var timeout;
-		var dialog = new auiDialog();
-		var obj_list = document.getElementById("xiaoxi_list").getElementsByTagName("li");
-		for(var i = 0; i < obj_list.length; i++) {
-			obj_list[i].onmousedown = function() {
-				var that = this;
-				timeout = setTimeout(function() {
-					dialog.alert({
-						title: "提示",
-						msg: '删除此条消息？',
-						buttons: ['取消', '确定']
-					}, function(ret) {
-						if(ret.buttonIndex == 2) {
-							that.parentNode.removeChild(that)
-						}
-						console.log(that.id)
-					})
-				}, 500);
-			};
-		};
-		$('.aui-list-item').mouseup(function() {
-			clearTimeout(timeout);
-		});
+		$(function() {
+			$('#xiaoxi_tip').hide();
+		})
 
 		function detail(id) {
-			window.location.href = "message/chat_datail.html?id=" + id;
+			window.location.href = "message/msg_detail.html?id=" + id;
 		}
 
-		$('#xiaoxi_tip').hide();
+		function deleteMessage(obj) {
+			if(confirm("确定要删除吗?")) {
+				$(obj).parent().parent().parent().remove();
+			}
+		}
+
+		function chat(id) {
+			window.location.href = "message/chat_detail.html?id=" + id;
+		}
+
 		var tab = new auiTab({
 				element: document.getElementById("footer"),
 				index: 3
