@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>企业信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
+		<link rel="stylesheet" href="../css/mkui.css" />
+		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../static/css/common.css" />
+
+		<style type="text/css">
+			.show-pic ul li {
+				margin-left: 0px;
+				height: 90px;
+				width: 33.33%;
+			}
+			
+			.show-pic ul li div {
+				margin: auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app" class="zhece-2">
+			<section class="zp-body  tousu-com">
+				<div class="zp-list overflow-h buness">
+					<span class="fl">公司LOGO</span>
+					<span class="fr"><i class="ico ico-right1"></i></span>
+					<span class="fr panl-logo">
+						<img id="logocompany" class="img-rounded" style="border-radius: 10%;" src="../static/img/3.jpg" onclick="chooseImg(1)" />
+						<input id="ip_logo" class="fr compile-pic" type="file" accept="image/*" hidden="true" onchange="uploadLogo(this)">
+						<span class="fr g-right"><i class="ico ico-right1 right-posi"></i></span>
+					</span>
+				</div>
+				<div class="zp-list overflow-h mt-10">
+					<span class="fl ">企业名称</span>
+					<span class="fr ">
+						<input type="text" placeholder="请填写企业名称"  v-model="companyname" class="qiye"/>
+					</span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">座机电话</span>
+					<span class="fr zp-next">
+						<input type="number" placeholder="请填写企业座机电话"  v-model="companyphone" onchange="checkTel()"/>
+					</span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">企业邮箱</span>
+					<span class="fr zp-next">
+						<input type="email" placeholder="请填写企业邮箱"  v-model="companyemail"  onchange="checkEmail()"/>
+					</span>
+				</div>
+
+				<div class="zp-list overflow-h mt-10">
+					<span class="fl">企业规模</span>
+					<span class="fr  zp-next mt-15">
+						<select   v-model="companyscale"  class="fr info-select1" >
+					        <option value="">请选择</option>
+					        <option v-for="item in companyscales" :value='item.k'>{{item.v}}</option>
+					    </select>
+					</span>
+				</div>
+
+				<div class="zp-list overflow-h mt-10">
+					<span class="fl">公司性质</span>
+					<span class="fr  zp-next mt-15">
+						<select   v-model="companytype"  class="fr info-select2" >
+	                		<option value="">请选择</option>
+	                		<option v-for="item in companytypes" :value='item.k'>{{item.v}}</option>
+	            		</select>
+					</span>
+				</div>
+
+				<div class="zp-list overflow-h mt-10">
+					<span class="fl">所在城市</span>
+					<span class="fr  select-btn" @click="chooseaddress()">
+						<span id="city" class="city-choice">
+							请选择
+						</span>
+					<i class="ico ico-right1"></i>
+					</span>
+				</div>
+				<input type="hidden" id="choosedprovince" />
+				<input type="hidden" id="choosedprovincename" />
+				<input type="hidden" id="choosedcity" />
+				<div class="tab-panl none" id="sl-dizhi">
+					<div class=" overflow-h">
+						<ul class=" province fl">
+							<li v-for="item in province" @click="selectprovince(item.id,item.name)">{{item.name}}</li>
+						</ul>
+						<div class="city fl none" v-for="item in city">
+							<ul>
+								<li v-for="c in item" @click="selectcity(c.id,c.name)">{{c.name}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="tender-common">
+					<input type="text" placeholder="请填写详细地址" class="address-info" v-model="companyaddress" />
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">公司简介</span>
+				</div>
+
+			</section>
+			<section class="company-jieshao ">
+				<div class="tender-con">
+					<textarea name="" rows="" cols="" placeholder="请填写企业介绍" v-model="companybrief" class="jishao-com"></textarea>
+				</div>
+			</section>
+
+			<section class="shili-show overflow-h">
+				<div class="zp-list overflow-h">
+					<span class="fl shli">实力展示</span>
+				</div>
+				<div class="show-pic fl" style="width: 100%;">
+					<ul class="" id="showul">
+						<li v-for="item in companyshows" class='pos-r fl'>
+							<div class='zhanshi2 pos-r'>
+								<img :src='item.show' />
+								<div class='delet-pic' onclick='removeOld(this,item.show)'>
+									<img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' />
+								</div>
+							</div>
+						</li>
+						<li id="xz" class='pos-r fl'>
+							<div class='zhanshi2 pos-r'>
+								<img src="../static/img/zhaoxiang.png" onclick="chooseImg(2)" />
+								<input id="ip_shili" class="fr compile-pic" type="file" accept="image/*" multiple hidden="true" onchange="uploadShiLi(this)">
+							</div>
+						</li>
+					</ul>
+				</div>
+				<input type="hidden" id="companyshow" />
+			</section>
+			<div class="div-one"></div>
+			<section class=" pb-10 bg-fff pos-r">
+				<div class="zp-list overflow-h">
+					<span class="fl shli ">认证资料</span>
+				</div>
+				<div id="insert" class="insert-pic  regis ml-10">
+					<span class="fr buness-pic">
+					<img id="ziliao" src="../img/touxiang.png"  onclick="chooseImg(3)" />
+					<input id="ip_ziliao" class="fr compile-pic" type="file" accept="image/*" multiple hidden="true" onchange="uploadZiLiao(this)">
+				</span>
+				</div>
+				<span class="fl pos-a upload">上传营业执照副本照片</span>
+			</section>
+			<div class="h-20"></div>
+			<div class="sure-btn" v-on:click="zhuce()">保存修改</div>
+			<div class="h-20"></div>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		$(function() {
+			pushHistory();
+			window.addEventListener("popstate", function(e) {
+				window.location.replace('../home.html');
+			}, false);
+
+			function pushHistory() {
+				var state = {};
+				window.history.pushState(state, "首页", "");
+			}
+		});
+
+		function Trim(str, is_global) {
+			var result;
+			result = str.replace(/(^\s+)|(\s+$)/g, "");
+			if(is_global.toLowerCase() == "g") {
+				result = result.replace(/\s/g, "");
+			}
+			return result;
+		}
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				companyname: '<?=$model->companyname; ?>',
+				companyphone: '<?=$model->companyphone; ?>',
+				companyemail: '<?=$model->companyemail; ?>',
+				companyscale: '<?=$model->companyscale; ?>',
+				companyscales: [],
+				companytype: '<?=$model->companytype; ?>',
+				companytypes: [],
+				companyaddress: '<?=$model->companyaddress; ?>',
+				companybrief: '<?=$model->companybrief; ?>',
+				companyshows: [],
+				province: [],
+				city: []
+			},
+			methods: {
+				chooseaddress: function() {
+					$("#sl-dizhi").show();
+				},
+				selectcity: function(id, name) {
+					$("#city").html($("#choosedprovincename").val() + ' ' + name);
+					$("#choosedcity").val(id);
+					$("#sl-dizhi").hide();
+				},
+				selectprovince: function(id, name) {
+					$("#choosedprovincename").val(name);
+					$("#choosedprovince").val(id);
+					$("#choosedcity").val('');
+				},
+				zhuce: function() {
+					var shilizhanshi = '';
+					$("input[name='shilizhanshi']").each(function(index) {
+						shilizhanshi += this.value + ",";
+					});
+					if(shilizhanshi.length > 1) {
+						$("#companyshow").val(shilizhanshi.substring(0, shilizhanshi.length - 1));
+					}
+					if(!checkEmail() || !checkTel()) {
+						return false;
+					}
+					vm.companyname = Trim(vm.companyname, 'g');
+
+					if(vm.companyname == "") {
+						alert('请填写企业名称')
+						return
+					}
+
+					if($('.info-select1').val() == "") {
+						alert('请选择企业规模')
+						return
+					}
+
+					if($('.info-select2').val() == "") {
+						alert('请选择企业性质')
+						return
+					}
+					if($('.city-choice').text() == '请选择') {
+						alert('请选择城市所在地')
+						return
+					}
+					if($('.address-info').val() == "") {
+						alert('请填写详细地址')
+						return
+					}
+					if($('.jishao-com').val() == "") {
+						alert('请填写企业介绍')
+						return
+					}
+
+				}
+			}
+		});
+
+		function removeLi(obj) {
+			$(obj).parent().parent().remove();
+		}
+
+		function removeOld(obj, url) {
+			$(obj).parent().parent().remove();
+		}
+
+		function checkEmail() {
+			var email = vm.companyemail;
+			if(!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+				vm.$dialog.alert({
+					mes: 'email格式不正确！请重新输入!'
+				});
+				return false;
+			}
+			return true;
+		}
+
+		function checkTel() {
+			if(!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.companyphone))) {
+				vm.$dialog.alert({
+					mes: '电话格式不正确!固定电话请在区号后和分机号前加-,如:010-6501345-123'
+				});
+				return false;
+			}
+			return true;
+		}
+
+		$(function() {
+			$('.province li').click(function() {
+				$('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
+				$(this).css('background', '#FFFFFF').siblings('.province li').css('background', '#ededed');
+			});
+			$('.city li').click(function() {
+				$('.address span').text($(this).text())
+				$('.zhiwei').text($(this).text())
+				$('.city li ').removeClass('on-blue');
+				$(this).addClass('on-blue');
+				$('.tab-panl').addClass('none')
+			})
+		})
+
+		function chooseImg(e) {
+			switch(e) {
+				case 1:
+					$('#ip_logo').click();
+					break;
+				case 2:
+					$('#ip_shili').click();
+					break;
+				case 3:
+					$('#ip_ziliao').click();
+					break;
+			}
+		};
+
+		function uploadLogo(input) {
+			var files = input.files;
+			var file = files[0];
+			var imageType = /^image\//;
+			if(!imageType.test(file.type)) {
+				alert("请选择图片类型上传");
+				return;
+			}
+			var reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = function(e) {
+				$('#logocompany').attr('src', e.target.result);
+			};
+		}
+
+		function uploadShiLi(input) {
+			var files = input.files;
+			for(var i = 0; i < files.length; i++) { //预览新添加的图片
+				var file = files[i];
+				var imageType = /^image\//;
+				if(!imageType.test(file.type)) {
+					alert("请选择图片类型上传");
+					continue;
+				}
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function(e) {
+					$("#xz").before("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='" + e.target.result + "'/><input type='hidden' name='shilizhanshi' value='" + e.target.result + "'/><div class='delet-pic' onclick='removeLi(this)'><img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
+				};
+			}
+		}
+
+		function uploadZiLiao(input) {
+			var files = input.files;
+			for(var i = 0; i < files.length; i++) { //预览新添加的图片
+				var file = files[i];
+				var imageType = /^image\//;
+				if(!imageType.test(file.type)) {
+					alert("请选择图片类型上传");
+					continue;
+				}
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function(e) {
+					$('#ziliao').attr('src', e.target.result);
+				};
+			}
+		}
+	</script>
+
+</html>
