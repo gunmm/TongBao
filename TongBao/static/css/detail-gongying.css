@@ -141,6 +141,16 @@
 	
 	
 }
+
+footer{
+	position: fixed;
+	left:0;
+	bottom: 0;
+	width: 100%;
+	height: 56px;
+
+
+}
 footer{
 	width: 100%;
 }
@@ -166,12 +176,12 @@ footer li span{
 footer li:first-child{
 	width: 30%;
 	background:#097ed8;
-	
+	height: 56px;
 }
 footer .second{
 	width: 30%;
 	background:#3095e3;
-
+	height: 56px;
 }
 footer .last{
 	width: 40%;

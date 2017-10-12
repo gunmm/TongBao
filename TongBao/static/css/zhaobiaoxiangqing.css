@@ -174,11 +174,13 @@ footer li span{
 footer li:first-child{
 	width: 21.3%;
 	background:#097ed8;
+	height: 56px;
 
 }
 footer .second{
 	width: 21.3%;
 	background:#3095e3;
+	height: 56px;
 
 }
 .third{

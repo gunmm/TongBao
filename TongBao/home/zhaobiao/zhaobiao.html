@@ -170,6 +170,11 @@
 		</div>
 
 		<script>
+            $(function() {
+                window.addEventListener("popstate", function(e) {
+                    window.location.replace('../../home.html');
+                }, false);
+            });
 			$(document).ready(function() {
 				var items = window.history.state;
 				if(!items) {
@@ -260,7 +265,8 @@
 							"name": "1001以上"
 						}
 					},
-					province: [{
+					province: [
+					    {
 						"id": 1,
 						"name": "北京市"
 					}, {

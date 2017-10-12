@@ -196,36 +196,36 @@
         <!--</div>-->
     <!--</section>-->
     <!--<?php }?>-->
-    <!--<div style="height: 57px;"></div>-->
-    <!--<?php if(empty(Yii::$app->user->identity->profile->type)||Yii::$app->user->identity->profile->type==2){?>-->
-    <!--<footer>-->
-        <!--<ul class="overflow-h">-->
-            <!--<li>-->
-                <!--<a href="tel:<?=$model['phone']; ?>">-->
-                    <!--<img src="/static/img/ico-phone.png" alt=""/>-->
-                    <!--<span>电话</span>-->
-                <!--</a>-->
-            <!--</li>-->
-            <!--<li class="second">-->
-                <!--<a href="/tongzhi/chat?id=<?=$model[" userid"]; ?>">-->
-                <!--<img src="/static/img/xiaoxi.png" alt=""/>-->
-                <!--<span>消息</span>-->
-                <!--</a>-->
-            <!--</li>-->
-            <!--<li class="third sc" @click="favourite()">-->
-                <!--<img id="scimage" src="" alt=""/>-->
-                <!--<span class="on">收藏</span>-->
-            <!--</li>-->
-            <!--<li class="last">-->
+    <div style="height: 57px;"></div>
+    <footer v-if="iscompany">
+        <ul class="overflow-h">
+            <li>
+                <a href="tel:<?=$model['phone']; ?>">
+                    <img src="../../static/img/ico-phone.png" alt=""/>
+                    <span>电话</span>
+                </a>
+            </li>
+            <li class="second">
+                <a href="/tongzhi/cha">
+                <img src="../../static/img/xiaoxi.png" alt=""/>
+                <span>消息</span>
+                </a>
+            </li>
+            <li class="third sc" @click="favourite()">
+                <img id="scimage" src="../../static/img/shoucang1.png" alt=""/>
+                <span class="on">收藏</span>
+            </li>
+            <li class="last">
+                <span class="todi"  @click="toudi()">邀请面试</span>
+
                 <!--<?php if($model['istoudi']){?>-->
                 <!--<span class="todi">已邀请面试</span>-->
                 <!--<?php }else{?>-->
                 <!--<span class="todi" @click="toudi()">邀请面试</span>-->
                 <!--<?php }?>-->
-            <!--</li>-->
-        <!--</ul>-->
-    <!--</footer>-->
-    <!--<?php }?>-->
+            </li>
+        </ul>
+    </footer>
 </div>
 
 
@@ -311,6 +311,7 @@
                 },
             ],
             evaluation:"乐观，上进，开朗，比较吊会计师空间打开手机打开就是空间打开手机打开就是看的就是空间打开手机打开就是空间",
+            iscompany:false,
         },
         methods: {
             favourite(){
