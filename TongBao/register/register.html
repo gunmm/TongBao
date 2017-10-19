@@ -17,6 +17,7 @@
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 		<script type="text/javascript" src="../static/lib/js/vue.min.js"></script>
 		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
+		<script type="text/javascript" src="../js/md5.js"></script>
 		<link rel="stylesheet" href="../css/mkui.css" />
 		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
 		<link rel="stylesheet" href="../static/css/common.css" />
@@ -275,14 +276,10 @@
 							phone: vm.phone
 						},
 						function(data) {
-							console.log(data);
+							vm.yanzhengmare = data.result.messageCode
 						})
 				},
 				zhuce: function(type) {
-					if(type == 2) {
-						window.location.replace('../register/company.html');
-						return;
-					}
 
 					if(!vm.isA) {
 						vm.$dialog.toast({
@@ -308,7 +305,7 @@
 						});
 						return false;
 					}
-					if(vm.yanzhenma == vm.yanzhengmare) {
+					if(vm.yanzhenma != vm.yanzhengmare) {
 						this.$dialog.toast({
 							mes: '验证码不正确',
 							icon: 'error',
@@ -338,7 +335,12 @@
 						telPhone: vm.phone,
 						pwdHash: hexMD5(vm.password)
 					}, function(data) {
-						console.log(data)
+						localStorage.userId = data.result.token;
+						if(type == 1) {
+							window.location.replace('../home.html');
+						} else {
+							window.location.replace('../register/company.html');
+						}
 					})
 				},
 				toggleA: function() {
