@@ -21,6 +21,8 @@
 		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
 		<link rel="stylesheet" href="../static/css/common.css" />
 
+		<script src="../js/config.js" type="text/javascript" charset="utf-8"></script>
+
 		<style type="text/css">
 			.show-pic ul li {
 				margin-left: 0px;
@@ -162,13 +164,17 @@
 				<span class="fl pos-a upload">上传营业执照副本照片</span>
 			</section>
 			<div class="h-20"></div>
-			<div class="sure-btn" v-on:click="zhuce()">保存修改</div>
+			<div class="sure-btn" v-on:click="zhuce()">保存</div>
 			<div class="h-20"></div>
 		</div>
 	</body>
 
 	<script type="text/javascript">
 		$(function() {
+
+            var Request=new QueryString();
+            var name = Request["name"];
+            if(name == 'register')
 			pushHistory();
 			window.addEventListener("popstate", function(e) {
 				window.location.replace('../home.html');
@@ -191,15 +197,15 @@
 		var vm = new Vue({
 			el: '#app',
 			data: {
-				companyname: '<?=$model->companyname; ?>',
-				companyphone: '<?=$model->companyphone; ?>',
-				companyemail: '<?=$model->companyemail; ?>',
-				companyscale: '<?=$model->companyscale; ?>',
+				companyname: '',
+				companyphone: '',
+				companyemail: '',
+				companyscale: '',
 				companyscales: [],
-				companytype: '<?=$model->companytype; ?>',
+				companytype: '',
 				companytypes: [],
-				companyaddress: '<?=$model->companyaddress; ?>',
-				companybrief: '<?=$model->companybrief; ?>',
+				companyaddress: '',
+				companybrief: '',
 				companyshows: [],
 				province: [],
 				city: []
@@ -257,6 +263,19 @@
 						alert('请填写企业介绍')
 						return
 					}
+
+					post('/web/userRegist',{
+                        "orgName":vm.companyname,
+                        "communicationPhone":vm.companyphone,
+                        "orgEmail":vm.companyemail,
+                        "orgScale":vm.companyscale,
+
+                    },function (data) {
+						console.log(data);
+                    },function () {
+
+                    })
+
 
 				}
 			}
@@ -334,9 +353,13 @@
 			};
 		}
 
+
+
 		function uploadShiLi(input) {
 			var files = input.files;
-			for(var i = 0; i < files.length; i++) { //预览新添加的图片
+            var array = new Array();
+
+            for(var i = 0; i < files.length; i++) { //预览新添加的图片
 				var file = files[i];
 				var imageType = /^image\//;
 				if(!imageType.test(file.type)) {
@@ -347,7 +370,10 @@
 				reader.readAsDataURL(file);
 				reader.onload = function(e) {
 					$("#xz").before("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='" + e.target.result + "'/><input type='hidden' name='shilizhanshi' value='" + e.target.result + "'/><div class='delet-pic' onclick='removeLi(this)'><img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
-				};
+					console.log(e.target.result);
+                    array.push(e.target.result);
+
+                };
 			}
 		}
 

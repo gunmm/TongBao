@@ -28,23 +28,23 @@
 <body class="bg-fff">
 
 <script type="text/javascript" charset="utf-8">
-    //    if('<?=Yii::$app->user->identity->profile->type==2&&(!Yii::$app->user->identity->isConfirmed||Yii::$app->user->identity->isBlocked)?>'){
-    //        if('<?=!Yii::$app->user->identity->isConfirmed?>'>0){
-    //            alert("您的注册申请正在审核中,审核通过后会有消息提醒");
-    //        }
-    //        if('<?=Yii::$app->user->identity->isBlocked?>'>0){
-    //            alert("您的账户已被封禁!如有问题请联系管理员");
-    //        }
-    //        window.location.href="/site/fabu";
-    //    }
-    //
-    //    function checkType(){
-    //        if('<?=$type==1?>'){
-    //            alert("个人用户不能发布招聘信息!");
-    //            window.location.href="/site/fabu";
-    //        }
-    //    }
-    //    checkType();
+        if('<?=Yii::$app->user->identity->profile->type==2&&(!Yii::$app->user->identity->isConfirmed||Yii::$app->user->identity->isBlocked)?>'){
+            if('<?=!Yii::$app->user->identity->isConfirmed?>'>0){
+                alert("您的注册申请正在审核中,审核通过后会有消息提醒");
+            }
+            if('<?=:Yii:$app->user->identity->isBlocked?>'>0){
+                alert("您的账户已被封禁!如有问题请联系管理员");
+            }
+            window.location.href="/site/fabu";
+        }
+
+        function checkType(){
+            if('<?=$type==1?>'){
+                alert("个人用户不能发布招聘信息!");
+                window.location.href="/site/fabu";
+            }
+        }
+        checkType();
 </script>
 
 <div id="app" class="overflow-h">
@@ -248,8 +248,7 @@
     //    init();
     var vm = new Vue({
         el: "#app",
-        data() {
-            return {
+        data: {
                 title: ""
 //                    '<?php if(empty($model)){echo '';}else{echo $model->title;}?>'
                 ,
@@ -694,7 +693,6 @@
                     "3100": [{"id": 3101, "name": "技工／普工"}],
                     "3200": [{"id": 3201, "name": "高级管理"}]
                 },
-            }
         },
         methods: {
             selectgangwei: function (id, name) {
