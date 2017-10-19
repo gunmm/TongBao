@@ -20,6 +20,8 @@
 		<link rel="stylesheet" href="../css/mkui.css" />
 		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
 		<link rel="stylesheet" href="../static/css/common.css" />
+		<script type="text/javascript" src="../js/config.js"></script>
+		<script type="text/javascript" src="../js/config.js"></script>
 
 		<style type="text/css">
 			.show-pic ul li {
@@ -38,14 +40,14 @@
 	<body class="bg-fff">
 		<div id="app">
 			<section class="">
-				<textarea name="" rows="" cols="" placeholder="请填写意见反馈内容" v-model="content" class="tousu-comtent"></textarea>
+				<textarea name="" rows="" cols="" placeholder="请填写意见反馈内容" v-model="content" class="tousu-comtent" onchange="aa(this)"></textarea>
 				<section class="shili-show  mt-20">
 					<div class="show-pic fl" style="width: 100%;">
 						<ul class="" id="showul">
 							<li id="xz" class='pos-r fl'>
 								<div class='zhanshi2 pos-r'>
 									<img src="../static/img/zhaoxiang.png" onclick="chooseMultipleImage()" />
-									<input id="img_input" class="fr compile-pic" type="file" accept="image/*" multiple hidden="true" onchange="imagePreview(this)">
+									<input name="pic" id="img_input" class="fr compile-pic" type="file" accept="image/*" multiple hidden="true" onchange="imagePreview(this)">
 								</div>
 							</li>
 						</ul>
@@ -61,7 +63,8 @@
 		var vm = new Vue({
 			el: "#app",
 			data: {
-				content: null
+				content: null,
+				imgs: []
 			},
 			methods: {
 				feedback: function() {
@@ -85,12 +88,22 @@
 							window.location.href = '/member/index';
 						}
 					});
+
+					post('/web/upload', {
+						pic: JSON.stringify(vm.imgs)
+					}, function(data) {
+						console.log(data);
+					})
 				},
 			}
 		})
 
 		function chooseMultipleImage() {
 			$('#img_input').click();
+		}
+
+		function aa(obj) {
+			console.log(obj.value)
 		}
 
 		function imagePreview(input) {
@@ -105,13 +118,17 @@
 				var reader = new FileReader();
 				reader.readAsDataURL(file);
 				reader.onload = function(e) {
-					$("#xz").before("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='" + e.target.result + "'/><input type='hidden' name='shilizhanshi' value='" + e.target.result + "'/><div class='delet-pic' onclick='removeLi(this)'><img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
+					var value = e.target.result;
+					vm.imgs.push(value);
+					$("#xz").before("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='" + value + "'/><input type='hidden' name='shilizhanshi' value=''/><div id='" + value + "' class='delet-pic' onclick='removeLi(this)'><img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
 				};
 			}
+			input.value = "";
 		}
 
 		function removeLi(obj) {
 			$(obj).parent().parent().remove();
+			vm.imgs.remove(obj.id);
 		}
 	</script>
 
