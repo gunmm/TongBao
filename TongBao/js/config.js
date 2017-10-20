@@ -14,7 +14,7 @@ function post(url, data, callback, callback1) {
 	$.ajax({
 		type: "post",
 		url: ip + url,
-		async: true,
+		async: false,
 		data: data,
 		success: function(data) {
 			vm.$dialog.loading.close();

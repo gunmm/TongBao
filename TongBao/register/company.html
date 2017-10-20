@@ -72,7 +72,7 @@
 					<span class="fr  zp-next mt-15">
 						<select   v-model="companyscale"  class="fr info-select1" >
 					        <option value="">请选择</option>
-					        <option v-for="item in companyscales" :value='item.k'>{{item.v}}</option>
+					        <option v-for="item in companyscales" :value='item.itemCode'>{{item.itemName}}</option>
 					    </select>
 					</span>
 				</div>
@@ -82,7 +82,7 @@
 					<span class="fr  zp-next mt-15">
 						<select   v-model="companytype"  class="fr info-select2" >
 	                		<option value="">请选择</option>
-	                		<option v-for="item in companytypes" :value='item.k'>{{item.v}}</option>
+	                		<option v-for="item in companytypes" :value='item.itemCode'>{{item.itemName}}</option>
 	            		</select>
 					</span>
 				</div>
@@ -173,16 +173,29 @@
 		$(function() {
 			var Request = new QueryString();
 			var name = Request["name"];
-			if(name == 'register')
+			if(name == 'register') {
 				pushHistory();
-			window.addEventListener("popstate", function(e) {
-				window.location.replace('../home.html');
-			}, false);
+				window.addEventListener("popstate", function(e) {
+					window.location.replace('../home.html');
+				}, false);
 
-			function pushHistory() {
-				var state = {};
-				window.history.pushState(state, "首页", "");
+				function pushHistory() {
+					var state = {};
+					window.history.pushState(state, "首页", "");
+				}
 			}
+
+			post('/web/ItemData', {
+				classId: "009"
+			}, function(data) {
+				vm.companyscales = data.result.resultList;
+			})
+
+			post('/web/ItemData', {
+				classId: "010"
+			}, function(data) {
+				vm.companytypes = data.result.resultList;
+			})
 		});
 
 		function Trim(str, is_global) {
@@ -205,6 +218,7 @@
 		var vm = new Vue({
 			el: '#app',
 			data: {
+				logostr: '',
 				companyname: '',
 				companyphone: '',
 				companyemail: '',
@@ -216,7 +230,9 @@
 				companybrief: '',
 				companyshows: [],
 				province: province,
-				city: city
+				city: city,
+				shilipic: [],
+				renzhengpic: ''
 			},
 			methods: {
 				chooseaddress: function() {
@@ -277,7 +293,12 @@
 						"communicationPhone": vm.companyphone,
 						"orgEmail": vm.companyemail,
 						"orgScale": vm.companyscale,
-
+						"orgType": vm.companytype,
+						"province": $("#choosedprovincename").val(),
+						"city": $("#choosedcity").val(id),
+						"orgAddress": vm.companyaddress,
+						"orgBrief": vm.companybrief,
+						//                        vm.logostr
 					}, function(data) {
 						console.log(data);
 					}, function() {
@@ -290,6 +311,7 @@
 
 		function removeLi(obj) {
 			$(obj).parent().parent().remove();
+			vm.shilipic.remove(obj.id);
 		}
 
 		function removeOld(obj, url) {
@@ -357,13 +379,12 @@
 			reader.readAsDataURL(file);
 			reader.onload = function(e) {
 				$('#logocompany').attr('src', e.target.result);
+				vm.logostr = e.target.result;
 			};
 		}
 
 		function uploadShiLi(input) {
 			var files = input.files;
-			var array = new Array();
-
 			for(var i = 0; i < files.length; i++) { //预览新添加的图片
 				var file = files[i];
 				var imageType = /^image\//;
@@ -374,10 +395,9 @@
 				var reader = new FileReader();
 				reader.readAsDataURL(file);
 				reader.onload = function(e) {
-					$("#xz").before("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='" + e.target.result + "'/><input type='hidden' name='shilizhanshi' value='" + e.target.result + "'/><div class='delet-pic' onclick='removeLi(this)'><img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
+					$("#xz").before("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='" + e.target.result + "'/><input type='hidden' name='shilizhanshi' value=''/><div id='" + e.target.result + "' class='delet-pic' onclick='removeLi(this)'><img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
 					console.log(e.target.result);
-					array.push(e.target.result);
-
+					vm.shilipic.push(e.target.result);
 				};
 			}
 		}
@@ -395,6 +415,7 @@
 				reader.readAsDataURL(file);
 				reader.onload = function(e) {
 					$('#ziliao').attr('src', e.target.result);
+					vm.renzhengpic = e.target.result;
 				};
 			}
 		}
