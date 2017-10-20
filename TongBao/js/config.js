@@ -14,7 +14,7 @@ function post(url, data, callback, callback1) {
 	$.ajax({
 		type: "post",
 		url: ip + url,
-		async: true,
+		async: false,
 		data: data,
 		success: function(data) {
 			vm.$dialog.loading.close();
@@ -76,3 +76,48 @@ Array.prototype.remove = function(val) {
 		this.splice(index, 1);
 	}
 };
+
+
+/*自定义容器Map*/
+function Map(){
+    /*创建构造器，有key和value*/
+    var struct = function(key , value){
+        this.key = key;
+        this.value = value ;
+    }
+    /*在容器中放入值*/
+    var put = function(key , value){
+        for(var x=0;x<this.arr.length;x++){
+            if(this.arr[x].key == key){
+                this.arr[x].value=value;
+                return;
+            }
+        }
+        this.arr[this.arr.length] = new struct(key , value);
+    }
+    /*根据容器获取容器中的值*/
+    var get = function(key){
+        // for(var x=0;x<this.arr.length;x++){
+        //     if(this.arr[x].key == key){
+        //         return this.arr[x].value;
+        //     }
+        // }
+        // return null;
+		return "1111";
+    }
+
+    var na = function (key) {
+        for(var x=0;x<this.arr.length;x++){
+            if(this.arr[x].key == key){
+                return this.arr[x].value;
+            }
+        }
+        return null;
+    }
+    /*构建数组*/
+    this.arr = new Array();
+    this.get = get;
+    this.na = na;
+
+    this.put = put;
+}
