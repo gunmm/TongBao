@@ -171,11 +171,10 @@
 
 	<script type="text/javascript">
 		$(function() {
-
-            var Request=new QueryString();
-            var name = Request["name"];
-            if(name == 'register')
-			pushHistory();
+			var Request = new QueryString();
+			var name = Request["name"];
+			if(name == 'register')
+				pushHistory();
 			window.addEventListener("popstate", function(e) {
 				window.location.replace('../home.html');
 			}, false);
@@ -194,6 +193,15 @@
 			}
 			return result;
 		}
+
+		var province;
+		var city;
+
+		getCity(function(p, c) {
+			province = p;
+			city = c;
+		});
+
 		var vm = new Vue({
 			el: '#app',
 			data: {
@@ -207,8 +215,8 @@
 				companyaddress: '',
 				companybrief: '',
 				companyshows: [],
-				province: [],
-				city: []
+				province: province,
+				city: city
 			},
 			methods: {
 				chooseaddress: function() {
@@ -264,18 +272,17 @@
 						return
 					}
 
-					post('/web/userRegist',{
-                        "orgName":vm.companyname,
-                        "communicationPhone":vm.companyphone,
-                        "orgEmail":vm.companyemail,
-                        "orgScale":vm.companyscale,
+					post('/web/userRegist', {
+						"orgName": vm.companyname,
+						"communicationPhone": vm.companyphone,
+						"orgEmail": vm.companyemail,
+						"orgScale": vm.companyscale,
 
-                    },function (data) {
+					}, function(data) {
 						console.log(data);
-                    },function () {
+					}, function() {
 
-                    })
-
+					})
 
 				}
 			}
@@ -353,13 +360,11 @@
 			};
 		}
 
-
-
 		function uploadShiLi(input) {
 			var files = input.files;
-            var array = new Array();
+			var array = new Array();
 
-            for(var i = 0; i < files.length; i++) { //预览新添加的图片
+			for(var i = 0; i < files.length; i++) { //预览新添加的图片
 				var file = files[i];
 				var imageType = /^image\//;
 				if(!imageType.test(file.type)) {
@@ -371,9 +376,9 @@
 				reader.onload = function(e) {
 					$("#xz").before("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='" + e.target.result + "'/><input type='hidden' name='shilizhanshi' value='" + e.target.result + "'/><div class='delet-pic' onclick='removeLi(this)'><img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
 					console.log(e.target.result);
-                    array.push(e.target.result);
+					array.push(e.target.result);
 
-                };
+				};
 			}
 		}
 

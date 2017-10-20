@@ -38,21 +38,20 @@ function post(url, data, callback, callback1) {
 	});
 }
 
-function QueryString()
-{
-    var name,value,i;
-    var str=location.href;
-    var num=str.indexOf("?")
-    str=str.substr(num+1);
-    var arrtmp=str.split("&");
-    for(i=0;i < arrtmp.length;i++){
-        num=arrtmp[i].indexOf("=");
-        if(num>0){
-            name=arrtmp[i].substring(0,num);
-            value=arrtmp[i].substr(num+1);
-            this[name]=value;
-        }
-    }
+function QueryString() {
+	var name, value, i;
+	var str = location.href;
+	var num = str.indexOf("?")
+	str = str.substr(num + 1);
+	var arrtmp = str.split("&");
+	for(i = 0; i < arrtmp.length; i++) {
+		num = arrtmp[i].indexOf("=");
+		if(num > 0) {
+			name = arrtmp[i].substring(0, num);
+			value = arrtmp[i].substr(num + 1);
+			this[name] = value;
+		}
+	}
 }
 
 /**
@@ -76,3 +75,53 @@ Array.prototype.remove = function(val) {
 		this.splice(index, 1);
 	}
 };
+
+function getCity(callback) {
+	vm.$dialog.loading.open('');
+	$.ajax({
+		type: "post",
+		url: ip + '/web/allCity',
+		async: false,
+		data: {},
+		success: function(data) {
+			vm.$dialog.loading.close();
+			if(data.result_code != 1) {
+				new Vue().$dialog.alert({
+					mes: data.reason
+				});
+				return;
+			}
+			var list = data.result.resultList;
+			var province = [];
+			var city = [];
+			var cityM = {};
+			for(var i = 0; i < list.length; i++) {
+				var obj = list[i];
+				if(obj.deep == 1) {
+					province.push(obj);
+				} else if(obj.deep == 2) {
+					city.push(obj);
+				}
+			}
+			for(var i = 0; i < province.length; i++) {
+				var array = [];
+				for(var j = 0; j < city.length; j++) {
+					if(city[j].parentId == i + 1) {
+						array.push(city[j]);
+						cityM['' + (i + 1)] = array;
+					}
+				}
+			}
+			callback(province, cityM);
+		},
+		error: function() {
+			vm.$dialog.loading.close();
+			vm.$dialog.alert({
+				mes: '服务器连接失败!'
+			});
+			if(callback1 != null) {
+				callback1();
+			}
+		}
+	});
+}
