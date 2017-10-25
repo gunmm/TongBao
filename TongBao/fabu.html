@@ -21,6 +21,13 @@
 		<script type="text/javascript" src="js/api.js"></script>
 		<script type="text/javascript" src="js/aui-tab.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script src="static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+
+
+
+
 	</head>
 
 	<body>
@@ -34,15 +41,15 @@
 							<div class="grids-icon"><img src="static/img/qiuzhi.png"></div>
 							<div class="grids-txt"><span>求职信息</span></div>
 						</a>
-						<a href="publish/fabuzhaopin.html" class="grids-item">
+						<a id="fabuzhaopin"  class="grids-item">
 							<div class="grids-icon"><img src="static/img/zhaopin.png"></div>
 							<div class="grids-txt"><span>发布招聘</span></div>
 						</a>
-						<a href="publish/fabuzhaobiao.html" class="grids-item">
+						<a id="fabuzhaobiao" class="grids-item">
 							<div class="grids-icon"><img src="static/img/zhaobiao.png"></div>
 							<div class="grids-txt"><span>招标信息</span></div>
 						</a>
-						<a href="publish/fabugongying.html" class="grids-item">
+						<a id="fabugongying" class="grids-item">
 							<div class="grids-icon"><img src="static/img/gongying.png"></div>
 							<div class="grids-txt"><span>供应信息</span></div>
 						</a>
@@ -80,13 +87,6 @@
 
 			$('router-link').click(function() {
 				//				window.location.href = $(this).attr('to');
-
-				$.post("http://192.168.1.120:8080/index/index/index", {
-
-					},
-					function(data, status) {
-						console.log(data);
-					})
 			})
 		})
 
@@ -113,6 +113,45 @@
 						break;
 				}
 			});
+
+		$('#fabuzhaopin').click(function () {
+            if(!localStorage.userId){
+                window.location.href="register/login.html";
+            }else{
+                post('/webUser/findUserMessage', {
+                    userId: localStorage.userId
+                }, function(data) {
+                    if(data.result.resultMap.type == 1){
+                        alert("个人用户不能发布招聘信息!");
+                    }else {
+                        if(data.result.resultMap.regist == 0){
+                            window.location.href="register/company.html";
+                        }else {
+                            if(data.result.resultMap.expire == 0){
+                                alert("您的注册申请正在审核中,审核通过后会有消息提醒");
+                            }else {
+                                window.location.href="publish/fabuzhaopin.html";
+                            }
+                        }
+                    }
+                })
+            }
+        })
+        $('#fabuzhaobiao').click(function () {
+            if(!localStorage.userId){
+                window.location.href="register/login.html";
+            }else{
+                window.location.href="publish/fabuzhaobiao.html";
+            }
+        })
+        $('#fabugongying').click(function () {
+            if(!localStorage.userId){
+                window.location.href="register/login.html";
+            }else{
+                window.location.href="publish/fabugongying.html";
+            }
+        })
 	</script>
+
 
 </html>

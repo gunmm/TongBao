@@ -1,4 +1,4 @@
-var ip = 'http://192.168.1.120:8080';
+var ip = 'http://192.168.0.90:8080';
 
 var vm = new Vue();
 
@@ -14,7 +14,8 @@ function post(url, data, callback, callback1) {
 	$.ajax({
 		type: "post",
 		url: ip + url,
-		async: false,
+		async: true,
+        traditional:true,
 		data: data,
 		success: function(data) {
 			vm.$dialog.loading.close();
@@ -80,7 +81,7 @@ function getCity(callback) {
 	vm.$dialog.loading.open('');
 	$.ajax({
 		type: "post",
-		url: ip + '/web/allCity',
+		url: ip + '/webItem/allCity',
 		async: false,
 		data: {},
 		success: function(data) {
@@ -125,3 +126,61 @@ function getCity(callback) {
 		}
 	});
 }
+
+function getDicTable(async, classId, callback) {
+    vm.$dialog.loading.open('');
+    $.ajax({
+        type: "post",
+        url: ip + '/webItem/ItemData',
+        async: async,
+        data: {
+            classId: classId
+        },
+        success: function(data) {
+            vm.$dialog.loading.close();
+            if(data.result_code != 1) {
+                new Vue().$dialog.alert({
+                    mes: data.reason
+                });
+                return;
+            }
+            callback(data);
+        },
+        error: function() {
+            vm.$dialog.loading.close();
+            vm.$dialog.alert({
+                mes: '服务器连接失败!'
+            });
+        }
+    });
+}
+
+//设备分类
+function getClassifyTable(async, classType, callback) {
+    vm.$dialog.loading.open('');
+    $.ajax({
+        type: "post",
+        url: ip + '/webItem/getCategoryList',
+        async: async,
+        data: {
+            type: classType
+        },
+        success: function(data) {
+            vm.$dialog.loading.close();
+            if(data.result_code != 1) {
+                new Vue().$dialog.alert({
+                    mes: data.reason
+                });
+                return;
+            }
+            callback(data);
+        },
+        error: function() {
+            vm.$dialog.loading.close();
+            vm.$dialog.alert({
+                mes: '服务器连接失败!'
+            });
+        }
+    });
+}
+

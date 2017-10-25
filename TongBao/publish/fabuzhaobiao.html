@@ -25,15 +25,27 @@
 
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
     <link rel="stylesheet" type="text/css" href="../static/css/zhaopin-index.css">
+    <script src="../js/config.js" type="text/javascript" charset="utf-8"></script>
+
+
     <script type="text/javascript" charset="utf-8">
-        if ('') {
-            if ('1' > 0) {
-                alert("您的注册申请正在审核中,审核通过后会有消息提醒");
-            }
-            if ('' > 0) {
-                alert("您的账户已被封禁!如有问题请联系管理员");
-            }
-            window.location.href = "/site/fabu";
+        if(!localStorage.userId){
+            window.location.href="../register/login.html";
+        }else{
+            post('/webUser/findUserMessage', {
+                userId: localStorage.userId
+            }, function(data) {
+                if(data.result.resultMap.type == 2){
+                    if(data.result.resultMap.regist == 0){
+                        window.location.href="../register/company.html";
+                    }else {
+                        if(data.result.resultMap.expire == 0){
+                            alert("您的注册申请正在审核中,审核通过后会有消息提醒");
+                            window.location.href="../fabu.html";
+                        }
+                    }
+                }
+            })
         }
     </script>
 </head>
@@ -52,11 +64,11 @@
         <div class="tab-panl none" id="gangweilist">
             <div class=" overflow-h h-100">
                 <ul class=" fl job h-100">
-                    <li v-for="item in job">{{item.name}}</li>
+                    <li v-for="item in job" :value='item.id'>{{item.title}}</li>
                 </ul>
                 <div class="job-list fl none" v-for="item in joblist">
                     <ul>
-                        <li v-for="j in item" @click="selectgangwei(j.id,j.name)">{{j.name}}</li>
+                        <li v-for="j in item" @click="selectgangwei(j.id,j.title,j.descriptions)">{{j.title}}</li>
                     </ul>
                 </div>
             </div>
@@ -153,411 +165,79 @@
 
 <script src="../static/lib/js/axios.min.js"></script>
 <script>
-//    var id = '<?=$id?>';
 
-//    function init() {
-//        $("#city").html('<?php if(empty($moduleModel)||empty($moduleModel->province)||empty($moduleModel->city)){echo '
-//        请选择
-//        ';}else{echo City::getDisplayName($moduleModel->province,$moduleModel->city);}?>'
-//    )
-//        ;
-//        $("#choosedprovince").val('<?php if(!empty($moduleModel)){echo $moduleModel->province;}?>');
-//        $("#choosedcity").val('<?php if(!empty($moduleModel)){echo $moduleModel->city;}?>');
-//        $("#choosedgangwei").val('<?php if(empty($model)){echo '
-//        ';}else{echo $model->category_id;}?>'
-//    )
-//        ;
-//        $("#gangwei").text('<?php if(!empty($model)&&!empty($model->category_id)){ echo Category::getTitles()[$model->category_id];}else{echo "请选择";}?>');
-//    }
+    //类别
+    var job;
+    var jobList;
 
-//    init();
+    getClassifyTable(false,"zhaobiao",function (data) {
+        var list = data.result;
+        var job = [];
+        var jobList = [];
+        var jobM = {};
+        for(var i = 0; i < list.length; i++) {
+            var obj = list[i];
+            if(obj.pid==0) {
+                job.push(obj);
+            } else {
+                jobList.push(obj);
+            }
+        }
+        for(var i = 0; i < job.length; i++) {
+            var array = [];
+            for(var j = 0; j < jobList.length; j++) {
+                if(job[i].id == jobList[j].pid) {
+                    array.push(jobList[j]);
+                    jobM['' + job[i].id] = array;
+                }
+            }
+        }
+        for(var i = 0; i < job.length-1; i++) {
+            for (var j = 0;j<job.length-1-i;j++){
+                if (job[j].id > job[j+1].id)
+                {
+                    var temp = job[j];
+                    job[j] = job[j+1];
+                    job[j+1] = temp;
+                }
+            }
+        }
+        this.job = job;
+        this.jobList = jobM;
+    })
+
+
+
+
+
+    var province;
+    var city;
+
+    getCity(function(p, c) {
+        province = p;
+        city = c;
+    });
     var items = new Array();
     var isfabu = false;
     var vm = new Vue({
         el: "#app",
         data: {
-            title: ""
-//                '<?php if(empty($model)){echo '';}else{echo $model->title;}?>'
-            ,
-            quantity: ""
-//                '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->quantity;}?>'
-            ,
-            price:""
-//                '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->price;}?>'
-            ,
-            unit: ""
-//                '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->unit;}?>'
-            ,
-            end_at: ""
-//                '<?php if(empty($moduleModel)){echo date('Y-m - d',time()+86400);}else{echo $moduleModel->end_at;}?>'
-            ,
-            province:[{"id": 1, "name": "北京市"}, {"id": 2, "name": "天津市"}, {"id": 3, "name": "河北省"}, {
-                "id": 4,
-                "name": "山西省"
-            }, {"id": 5, "name": "内蒙古"}, {"id": 6, "name": "辽宁省"}, {"id": 7, "name": "吉林省"}, {
-                "id": 8,
-                "name": "黑龙江省"
-            }, {"id": 9, "name": "上海市"}, {"id": 10, "name": "江苏省"}, {"id": 11, "name": "浙江省"}, {
-                "id": 12,
-                "name": "安徽省"
-            }, {"id": 13, "name": "福建省"}, {"id": 14, "name": "江西省"}, {"id": 15, "name": "山东省"}, {
-                "id": 16,
-                "name": "河南省"
-            }, {"id": 17, "name": "湖北省"}, {"id": 18, "name": "湖南省"}, {"id": 19, "name": "广东省"}, {
-                "id": 20,
-                "name": "广西"
-            }, {"id": 21, "name": "海南省"}, {"id": 22, "name": "重庆市"}, {"id": 23, "name": "四川省"}, {
-                "id": 24,
-                "name": "贵州省"
-            }, {"id": 25, "name": "云南省"}, {"id": 26, "name": "西藏"}, {"id": 27, "name": "陕西省"}, {
-                "id": 28,
-                "name": "甘肃省"
-            }, {"id": 29, "name": "青海省"}, {"id": 30, "name": "宁夏"}, {"id": 31, "name": "新疆"}]
-            ,
-            city:{
-                "1": [{"id": 1, "name": "全北京市"}, {"id": 37, "name": "东城区"}, {"id": 38, "name": "西城区"}, {
-                    "id": 41,
-                    "name": "朝阳区"
-                }, {"id": 42, "name": "丰台区"}, {"id": 43, "name": "石景山区"}, {"id": 44, "name": "海淀区"}, {
-                    "id": 45,
-                    "name": "门头沟区"
-                }, {"id": 46, "name": "房山区"}, {"id": 47, "name": "通州区"}, {"id": 48, "name": "顺义区"}, {
-                    "id": 49,
-                    "name": "昌平区"
-                }, {"id": 50, "name": "大兴区"}, {"id": 51, "name": "怀柔区"}, {"id": 52, "name": "平谷区"}, {
-                    "id": 53,
-                    "name": "密云县"
-                }, {"id": 54, "name": "延庆县"}],
-                "2": [{"id": 2, "name": "全天津市"}, {"id": 55, "name": "和平区"}, {"id": 56, "name": "河东区"}, {
-                    "id": 57,
-                    "name": "河西区"
-                }, {"id": 58, "name": "南开区"}, {"id": 59, "name": "河北区"}, {"id": 60, "name": "红桥区"}, {
-                    "id": 61,
-                    "name": "塘沽区"
-                }, {"id": 64, "name": "东丽区"}, {"id": 65, "name": "西青区"}, {"id": 66, "name": "津南区"}, {
-                    "id": 67,
-                    "name": "北辰区"
-                }, {"id": 68, "name": "武清区"}, {"id": 69, "name": "宝坻区"}, {"id": 70, "name": "宁河县"}, {
-                    "id": 71,
-                    "name": "静海县"
-                }, {"id": 72, "name": "蓟县"}],
-                "3": [{"id": 73, "name": "石家庄市"}, {"id": 74, "name": "唐山市"}, {"id": 75, "name": "秦皇岛市"}, {
-                    "id": 76,
-                    "name": "邯郸市"
-                }, {"id": 77, "name": "邢台市"}, {"id": 78, "name": "保定市"}, {"id": 79, "name": "张家口市"}, {
-                    "id": 80,
-                    "name": "承德市"
-                }, {"id": 81, "name": "衡水市"}, {"id": 82, "name": "廊坊市"}, {"id": 83, "name": "沧州市"}],
-                "4": [{"id": 84, "name": "太原市"}, {"id": 85, "name": "大同市"}, {"id": 86, "name": "阳泉市"}, {
-                    "id": 87,
-                    "name": "长治市"
-                }, {"id": 88, "name": "晋城市"}, {"id": 89, "name": "朔州市"}, {"id": 90, "name": "晋中市"}, {
-                    "id": 91,
-                    "name": "运城市"
-                }, {"id": 92, "name": "忻州市"}, {"id": 93, "name": "临汾市"}, {"id": 94, "name": "吕梁市"}],
-                "5": [{"id": 95, "name": "呼和浩特市"}, {"id": 96, "name": "包头市"}, {"id": 97, "name": "乌海市"}, {
-                    "id": 98,
-                    "name": "赤峰市"
-                }, {"id": 99, "name": "通辽市"}, {"id": 100, "name": "鄂尔多斯市"}, {"id": 101, "name": "呼伦贝尔市"}, {
-                    "id": 102,
-                    "name": "巴彦淖尔市"
-                }, {"id": 103, "name": "乌兰察布市"}, {"id": 104, "name": "兴安盟"}, {"id": 105, "name": "锡林郭勒盟"}, {
-                    "id": 106,
-                    "name": "阿拉善盟"
-                }],
-                "6": [{"id": 107, "name": "沈阳市"}, {"id": 108, "name": "大连市"}, {"id": 109, "name": "鞍山市"}, {
-                    "id": 110,
-                    "name": "抚顺市"
-                }, {"id": 111, "name": "本溪市"}, {"id": 112, "name": "丹东市"}, {"id": 113, "name": "锦州市"}, {
-                    "id": 114,
-                    "name": "营口市"
-                }, {"id": 115, "name": "阜新市"}, {"id": 116, "name": "辽阳市"}, {"id": 117, "name": "盘锦市"}, {
-                    "id": 118,
-                    "name": "铁岭市"
-                }, {"id": 119, "name": "朝阳市"}, {"id": 120, "name": "葫芦岛市"}],
-                "7": [{"id": 121, "name": "长春市"}, {"id": 122, "name": "吉林市"}, {"id": 123, "name": "四平市"}, {
-                    "id": 124,
-                    "name": "辽源市"
-                }, {"id": 125, "name": "通化市"}, {"id": 126, "name": "白山市"}, {"id": 127, "name": "松原市"}, {
-                    "id": 128,
-                    "name": "白城市"
-                }, {"id": 129, "name": "延边"}],
-                "8": [{"id": 130, "name": "哈尔滨市"}, {"id": 131, "name": "齐齐哈尔市"}, {"id": 132, "name": "鸡西市"}, {
-                    "id": 133,
-                    "name": "鹤岗市"
-                }, {"id": 134, "name": "双鸭山市"}, {"id": 135, "name": "大庆市"}, {"id": 136, "name": "伊春市"}, {
-                    "id": 137,
-                    "name": "佳木斯市"
-                }, {"id": 138, "name": "七台河市"}, {"id": 139, "name": "牡丹江市"}, {"id": 140, "name": "黑河市"}, {
-                    "id": 141,
-                    "name": "绥化市"
-                }, {"id": 142, "name": "大兴安岭"}],
-                "9": [{"id": 9, "name": "全上海市"}, {"id": 143, "name": "黄浦区"}, {"id": 144, "name": "卢湾区"}, {
-                    "id": 145,
-                    "name": "徐汇区"
-                }, {"id": 146, "name": "长宁区"}, {"id": 147, "name": "静安区"}, {"id": 148, "name": "普陀区"}, {
-                    "id": 149,
-                    "name": "闸北区"
-                }, {"id": 150, "name": "虹口区"}, {"id": 151, "name": "杨浦区"}, {"id": 152, "name": "闵行区"}, {
-                    "id": 153,
-                    "name": "宝山区"
-                }, {"id": 154, "name": "嘉定区"}, {"id": 155, "name": "浦东新区"}, {"id": 156, "name": "金山区"}, {
-                    "id": 157,
-                    "name": "松江区"
-                }, {"id": 158, "name": "青浦区"}, {"id": 159, "name": "南汇区"}, {"id": 160, "name": "奉贤区"}, {
-                    "id": 161,
-                    "name": "崇明县"
-                }],
-                "10": [{"id": 162, "name": "南京市"}, {"id": 163, "name": "无锡市"}, {"id": 164, "name": "徐州市"}, {
-                    "id": 165,
-                    "name": "常州市"
-                }, {"id": 166, "name": "苏州市"}, {"id": 167, "name": "南通市"}, {"id": 168, "name": "连云港市"}, {
-                    "id": 169,
-                    "name": "淮安市"
-                }, {"id": 170, "name": "盐城市"}, {"id": 171, "name": "扬州市"}, {"id": 172, "name": "镇江市"}, {
-                    "id": 173,
-                    "name": "泰州市"
-                }, {"id": 174, "name": "宿迁市"}],
-                "11": [{"id": 175, "name": "杭州市"}, {"id": 176, "name": "宁波市"}, {"id": 177, "name": "温州市"}, {
-                    "id": 178,
-                    "name": "嘉兴市"
-                }, {"id": 179, "name": "湖州市"}, {"id": 180, "name": "绍兴市"}, {"id": 181, "name": "舟山市"}, {
-                    "id": 182,
-                    "name": "衢州市"
-                }, {"id": 183, "name": "金华市"}, {"id": 184, "name": "台州市"}, {"id": 185, "name": "丽水市"}],
-                "12": [{"id": 186, "name": "合肥市"}, {"id": 187, "name": "芜湖市"}, {"id": 188, "name": "蚌埠市"}, {
-                    "id": 189,
-                    "name": "淮南市"
-                }, {"id": 190, "name": "马鞍山市"}, {"id": 191, "name": "淮北市"}, {"id": 192, "name": "铜陵市"}, {
-                    "id": 193,
-                    "name": "安庆市"
-                }, {"id": 194, "name": "黄山市"}, {"id": 195, "name": "滁州市"}, {"id": 196, "name": "阜阳市"}, {
-                    "id": 197,
-                    "name": "宿州市"
-                }, {"id": 198, "name": "巢湖市"}, {"id": 199, "name": "六安市"}, {"id": 200, "name": "亳州市"}, {
-                    "id": 201,
-                    "name": "池州市"
-                }, {"id": 202, "name": "宣城市"}],
-                "13": [{"id": 203, "name": "福州市"}, {"id": 204, "name": "厦门市"}, {"id": 205, "name": "莆田市"}, {
-                    "id": 206,
-                    "name": "三明市"
-                }, {"id": 207, "name": "泉州市"}, {"id": 208, "name": "漳州市"}, {"id": 209, "name": "南平市"}, {
-                    "id": 210,
-                    "name": "龙岩市"
-                }, {"id": 211, "name": "宁德市"}],
-                "14": [{"id": 212, "name": "南昌市"}, {"id": 213, "name": "景德镇市"}, {"id": 214, "name": "萍乡市"}, {
-                    "id": 215,
-                    "name": "九江市"
-                }, {"id": 216, "name": "新余市"}, {"id": 217, "name": "鹰潭市"}, {"id": 218, "name": "赣州市"}, {
-                    "id": 219,
-                    "name": "吉安市"
-                }, {"id": 220, "name": "宜春市"}, {"id": 221, "name": "抚州市"}, {"id": 222, "name": "上饶市"}],
-                "15": [{"id": 223, "name": "济南市"}, {"id": 224, "name": "青岛市"}, {"id": 225, "name": "淄博市"}, {
-                    "id": 226,
-                    "name": "枣庄市"
-                }, {"id": 227, "name": "东营市"}, {"id": 228, "name": "烟台市"}, {"id": 229, "name": "潍坊市"}, {
-                    "id": 230,
-                    "name": "济宁市"
-                }, {"id": 231, "name": "泰安市"}, {"id": 232, "name": "威海市"}, {"id": 233, "name": "日照市"}, {
-                    "id": 234,
-                    "name": "莱芜市"
-                }, {"id": 235, "name": "临沂市"}, {"id": 236, "name": "德州市"}, {"id": 237, "name": "聊城市"}, {
-                    "id": 238,
-                    "name": "滨州市"
-                }, {"id": 239, "name": "菏泽市"}],
-                "16": [{"id": 240, "name": "郑州市"}, {"id": 241, "name": "开封市"}, {"id": 242, "name": "洛阳市"}, {
-                    "id": 243,
-                    "name": "平顶山市"
-                }, {"id": 244, "name": "安阳市"}, {"id": 245, "name": "鹤壁市"}, {"id": 246, "name": "新乡市"}, {
-                    "id": 247,
-                    "name": "焦作市"
-                }, {"id": 248, "name": "濮阳市"}, {"id": 249, "name": "许昌市"}, {"id": 250, "name": "漯河市"}, {
-                    "id": 251,
-                    "name": "三门峡市"
-                }, {"id": 252, "name": "南阳市"}, {"id": 253, "name": "商丘市"}, {"id": 254, "name": "信阳市"}, {
-                    "id": 255,
-                    "name": "周口市"
-                }, {"id": 256, "name": "驻马店市"}, {"id": 257, "name": "济源市"}],
-                "17": [{"id": 258, "name": "武汉市"}, {"id": 259, "name": "黄石市"}, {"id": 260, "name": "十堰市"}, {
-                    "id": 261,
-                    "name": "宜昌市"
-                }, {"id": 262, "name": "襄樊市"}, {"id": 263, "name": "鄂州市"}, {"id": 264, "name": "荆门市"}, {
-                    "id": 265,
-                    "name": "孝感市"
-                }, {"id": 266, "name": "荆州市"}, {"id": 267, "name": "黄冈市"}, {"id": 268, "name": "咸宁市"}, {
-                    "id": 269,
-                    "name": "随州市"
-                }, {"id": 270, "name": "恩施"}, {"id": 271, "name": "仙桃市"}, {"id": 272, "name": "潜江市"}, {
-                    "id": 273,
-                    "name": "天门市"
-                }],
-                "18": [{"id": 275, "name": "长沙市"}, {"id": 276, "name": "株洲市"}, {"id": 277, "name": "湘潭市"}, {
-                    "id": 278,
-                    "name": "衡阳市"
-                }, {"id": 279, "name": "邵阳市"}, {"id": 280, "name": "岳阳市"}, {"id": 281, "name": "常德市"}, {
-                    "id": 282,
-                    "name": "张家界市"
-                }, {"id": 283, "name": "益阳市"}, {"id": 284, "name": "郴州市"}, {"id": 285, "name": "永州市"}, {
-                    "id": 286,
-                    "name": "怀化市"
-                }, {"id": 287, "name": "娄底市"}],
-                "19": [{"id": 289, "name": "广州市"}, {"id": 290, "name": "韶关市"}, {"id": 291, "name": "深圳市"}, {
-                    "id": 292,
-                    "name": "珠海市"
-                }, {"id": 293, "name": "汕头市"}, {"id": 294, "name": "佛山市"}, {"id": 295, "name": "江门市"}, {
-                    "id": 296,
-                    "name": "湛江市"
-                }, {"id": 297, "name": "茂名市"}, {"id": 298, "name": "肇庆市"}, {"id": 299, "name": "惠州市"}, {
-                    "id": 300,
-                    "name": "梅州市"
-                }, {"id": 301, "name": "汕尾市"}, {"id": 302, "name": "河源市"}, {"id": 303, "name": "阳江市"}, {
-                    "id": 304,
-                    "name": "清远市"
-                }, {"id": 305, "name": "东莞市"}, {"id": 306, "name": "中山市"}, {"id": 307, "name": "潮州市"}, {
-                    "id": 308,
-                    "name": "揭阳市"
-                }, {"id": 309, "name": "云浮市"}],
-                "20": [{"id": 310, "name": "南宁市"}, {"id": 311, "name": "柳州市"}, {"id": 312, "name": "桂林市"}, {
-                    "id": 313,
-                    "name": "梧州市"
-                }, {"id": 314, "name": "北海市"}, {"id": 315, "name": "防城港市"}, {"id": 316, "name": "钦州市"}, {
-                    "id": 317,
-                    "name": "贵港市"
-                }, {"id": 318, "name": "玉林市"}, {"id": 319, "name": "百色市"}, {"id": 320, "name": "贺州市"}, {
-                    "id": 321,
-                    "name": "河池市"
-                }, {"id": 322, "name": "来宾市"}, {"id": 323, "name": "崇左市"}],
-                "21": [{"id": 324, "name": "海口市"}, {"id": 325, "name": "三亚市"}, {"id": 326, "name": "五指山市"}, {
-                    "id": 327,
-                    "name": "琼海市"
-                }, {"id": 328, "name": "儋州市"}, {"id": 329, "name": "文昌市"}, {"id": 330, "name": "万宁市"}, {
-                    "id": 331,
-                    "name": "东方市"
-                }, {"id": 332, "name": "定安县"}, {"id": 333, "name": "屯昌县"}, {"id": 334, "name": "澄迈县"}, {
-                    "id": 335,
-                    "name": "临高县"
-                }],
-                "22": [{"id": 22, "name": "全重庆市"}, {"id": 345, "name": "万州区"}, {"id": 346, "name": "涪陵区"}, {
-                    "id": 347,
-                    "name": "渝中区"
-                }, {"id": 348, "name": "大渡口区"}, {"id": 349, "name": "江北区"}, {"id": 350, "name": "沙坪坝区"}, {
-                    "id": 351,
-                    "name": "九龙坡区"
-                }, {"id": 352, "name": "南岸区"}, {"id": 353, "name": "北碚区"}, {"id": 354, "name": "双桥区"}, {
-                    "id": 355,
-                    "name": "万盛区"
-                }, {"id": 356, "name": "渝北区"}, {"id": 357, "name": "巴南区"}, {"id": 358, "name": "黔江区"}, {
-                    "id": 359,
-                    "name": "长寿区"
-                }, {"id": 360, "name": "綦江县"}, {"id": 361, "name": "潼南县"}, {"id": 362, "name": "铜梁县"}, {
-                    "id": 363,
-                    "name": "大足县"
-                }, {"id": 364, "name": "荣昌县"}, {"id": 365, "name": "璧山县"}, {"id": 366, "name": "梁平县"}, {
-                    "id": 367,
-                    "name": "城口县"
-                }, {"id": 368, "name": "丰都县"}, {"id": 369, "name": "垫江县"}, {"id": 370, "name": "武隆县"}, {
-                    "id": 371,
-                    "name": "忠县"
-                }, {"id": 372, "name": "开县"}, {"id": 373, "name": "云阳县"}, {"id": 374, "name": "奉节县"}, {
-                    "id": 375,
-                    "name": "巫山县"
-                }, {"id": 376, "name": "巫溪县"}, {"id": 381, "name": "江津市"}, {"id": 382, "name": "合川市"}, {
-                    "id": 383,
-                    "name": "永川市"
-                }, {"id": 384, "name": "南川市"}],
-                "23": [{"id": 385, "name": "成都市"}, {"id": 386, "name": "自贡市"}, {"id": 387, "name": "攀枝花市"}, {
-                    "id": 388,
-                    "name": "泸州市"
-                }, {"id": 389, "name": "德阳市"}, {"id": 390, "name": "绵阳市"}, {"id": 391, "name": "广元市"}, {
-                    "id": 392,
-                    "name": "遂宁市"
-                }, {"id": 393, "name": "内江市"}, {"id": 394, "name": "乐山市"}, {"id": 395, "name": "南充市"}, {
-                    "id": 396,
-                    "name": "眉山市"
-                }, {"id": 397, "name": "宜宾市"}, {"id": 398, "name": "广安市"}, {"id": 399, "name": "达州市"}, {
-                    "id": 400,
-                    "name": "雅安市"
-                }, {"id": 401, "name": "巴中市"}, {"id": 402, "name": "资阳市"}],
-                "24": [{"id": 406, "name": "贵阳市"}, {"id": 407, "name": "六盘水市"}, {"id": 408, "name": "遵义市"}, {
-                    "id": 409,
-                    "name": "安顺市"
-                }],
-                "25": [{"id": 415, "name": "昆明市"}, {"id": 416, "name": "曲靖市"}, {"id": 417, "name": "玉溪市"}, {
-                    "id": 418,
-                    "name": "保山市"
-                }, {"id": 419, "name": "昭通市"}, {"id": 420, "name": "丽江市"}, {"id": 421, "name": "思茅市"}, {
-                    "id": 422,
-                    "name": "临沧市"
-                }],
-                "26": [{"id": 431, "name": "拉萨市"}],
-                "27": [{"id": 438, "name": "西安市"}, {"id": 439, "name": "铜川市"}, {"id": 440, "name": "宝鸡市"}, {
-                    "id": 441,
-                    "name": "咸阳市"
-                }, {"id": 442, "name": "渭南市"}, {"id": 443, "name": "延安市"}, {"id": 444, "name": "汉中市"}, {
-                    "id": 445,
-                    "name": "榆林市"
-                }, {"id": 446, "name": "安康市"}, {"id": 447, "name": "商洛市"}],
-                "28": [{"id": 448, "name": "兰州市"}, {"id": 449, "name": "嘉峪关市"}, {"id": 450, "name": "金昌市"}, {
-                    "id": 451,
-                    "name": "白银市"
-                }, {"id": 452, "name": "天水市"}, {"id": 453, "name": "武威市"}, {"id": 454, "name": "张掖市"}, {
-                    "id": 455,
-                    "name": "平凉市"
-                }, {"id": 456, "name": "酒泉市"}, {"id": 457, "name": "庆阳市"}, {"id": 458, "name": "定西市"}, {
-                    "id": 459,
-                    "name": "陇南市"
-                }],
-                "29": [{"id": 462, "name": "西宁市"}],
-                "30": [{"id": 470, "name": "银川市"}, {"id": 471, "name": "石嘴山市"}, {"id": 472, "name": "吴忠市"}, {
-                    "id": 473,
-                    "name": "固原市"
-                }, {"id": 474, "name": "中卫市"}],
-                "31": [{"id": 475, "name": "乌鲁木齐市"}, {"id": 476, "name": "克拉玛依市"}, {
-                    "id": 489,
-                    "name": "石河子市"
-                }, {"id": 490, "name": "阿拉尔市"}, {"id": 491, "name": "图木舒克市"}, {"id": 492, "name": "五家渠市"}]
-            },
-            address:""
-//                '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->address;}?>'
-            ,
-            contact:""
-//    '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->contact;}?>'
-            ,
-            phone:""
-//    '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->phone;}?>'
-            ,
-            content:""
-//    '<?php if(empty($moduleModel)){echo '';}else{echo $moduleModel->content;}?>'
-            ,
-            job:{
-                "0": {"id": "7", "name": "建材"},
-                "1": {"id": "8", "name": "其他"},
-                "2": {"id": "9", "name": "混凝土"},
-                "5": {"id": "45", "name": "设备"},
-                "6": {"id": "46", "name": "工具\/仪器"},
-                "7": {"id": "47", "name": "专项工程承包"},
-                "8": {"id": "48", "name": "服务\/劳务"},
-                "9": {"id": "50", "name": "配件\/五金"},
-                "10": {"id": "51", "name": "油料"}
-            }
-//        < ? = $job;?>
-            ,
-            joblist:{
-                "7": [{"id": "7", "name": "建材"}],
-                "8": [{"id": "8", "name": "其他"}],
-                "9": [{"id": "12", "name": "特殊混凝土"}, {"id": "39", "name": "普通混凝土"}],
-                "45": [{"id": "45", "name": "设备"}],
-                "46": [{"id": "46", "name": "工具\/仪器"}],
-                "47": [{"id": "47", "name": "专项工程承包"}],
-                "48": [{"id": "48", "name": "服务\/劳务"}],
-                "50": [{"id": "50", "name": "配件\/五金"}],
-                "51": [{"id": "51", "name": "油料"}]
-            }
-//        < ? = $joblist;?>
-            ,
+            title: "",
+            quantity: "",
+            price:"",
+            unit: "",
+            end_at: "",
+            province:province,
+            city:city,
+            address:"",
+            contact:"",
+            phone:"",
+            content:"",
+            job:this.job,
+            joblist:this.jobList,
         },
     methods: {
-        selectgangwei: function (id, name) {
+        selectgangwei: function (id, name,descriptions) {
 
             $("#choosedgangwei").val(id);
             $("#gangwei").text(name);
@@ -567,20 +247,20 @@
                 $("#guigecanshu").html('');
                 return true;
             }
-//            if (items[id] != '') {
-//
-//                strs = items[id].split(",");
-//                if (strs.length > 0) {
-//
-//                    $("#guigecanshu").html('');
-//                    $("#guigecanshu").append('<div class="bottom-title bg-fff">规格参数</div>');
-//                    for (i = 0; i < strs.length; i++) {
-//                        $("#guigecanshu").append('<div class="tender-common"><span class="fl c-17">' + strs[i] + '</span><span class="fr common-right"><input type="text" placeholder="请填写' + strs[i] + '" name="specification" class="inp"/></span></div>');
-//                    }
-//                }
-//            }
+            $("#guigecanshu").html('');
+            if (descriptions.length > 0){
+                $("#guigecanshu").append('<div class="bottom-title bg-fff">规格参数</div>');
+            }
+            for (i = 0; i < descriptions.length; i++) {
 
-
+                $("#guigecanshu").append(
+                    '<div class="tender-common">' +
+                    '<span class="fl c-17">' + descriptions[i] + '</span>' +
+                    '<span class="fr common-right">' +
+                    '<input type="text" placeholder="请填写' + descriptions[i] + '" name="specification" class="inp"/>' +
+                    '</span>' +
+                    '</div>');
+            }
         }
     ,
         choosegangwei:function () {
@@ -605,13 +285,11 @@
     ,
         fabu()
         {
-//            var guigecanshu = '';
-//            $("input[name='specification']").each(function (index) {
-//                guigecanshu += this.value + ",";
-//            });
-//            if (guigecanshu.length > 1) {
-//                guigecanshu = guigecanshu.substring(0, guigecanshu.length - 1);
-//            }
+            var guigecanshu = new Array();
+            $("input[name='specification']").each(function (index) {
+                guigecanshu.push(this.value);
+            });
+
             if (!checkEndAt() || !checkTel() || !checkint || !checkfushu()) {
                 return false;
             }
@@ -669,55 +347,29 @@
             }
 
 
-            console.log("title:"+$("#title").val()+"category_id:"+$("#choosedgangwei").val()+"quantity:"+vm.quantity+"price:"+vm.price+"unit："+vm.unit+"end_at:"+vm.end_at+
-                "province:"+$("#choosedprovince").val()+"city:"+$("#choosedcity").val()+"address:"+vm.address+"contact:"+vm.contact+"phone:"+vm.phone+"content:"+vm.content);
-//            if (!isfabu) {
-//                isfabu = true;
-//
-//                axios.post('/fabu/zhaobiao?id=' + id, {
-//                    title: $("#title").val(),
-//                    category_id: $("#choosedgangwei").val(),
-//                    specifications: guigecanshu,
-//                    quantity: vm.quantity,
-//                    price: vm.price,
-//                    unit: vm.unit,
-//                    end_at: vm.end_at,
-//                    province: $("#choosedprovince").val(),
-//                    city: $("#choosedcity").val(),
-//                    address: vm.address,
-//                    contact: vm.contact,
-//                    phone: vm.phone,
-//                    content: vm.content
-//                })
-//                    .then(function (response) {
-//                        mes = response.data.message;
-//                        icon = 'error';
-//                        if (mes == 'ok') {
-//                            mes = "发布成功!";
-//                            icon = "success";
-//                        }
-//                        vm.$dialog.toast({
-//                            mes: mes,
-//                            icon: icon,
-//                            timeout: 1500,
-//                            callback: () = > {
-//                            if(mes == '发布成功!')
-//                        {
-//                            if (id != '') {
-//                                window.location.href = '/managefabu/zhaobiao';
-//                            } else {
-//                                if (response.data.id != '') {
-//                                    window.location.href = '/list/detailzhaobiao?id=' + response.data.id + '&type=1';
-//                                } else {
-//                                    window.location.href = '/site/fabu';
-//                                }
-//                            }
-//                        }
-//                    }
-//                    })
-//                        ;
-//                    })
-//            }
+            post('/webZb/addZhaobiao', {
+                "userId":localStorage.userId,
+                "tenderTitel":vm.title,
+                "categoryId":$("#choosedgangwei").val(),
+                "quantity":vm.quantity,
+                "price":vm.price,
+                "unit":vm.unit,
+                "endAt":vm.end_at,
+                "province":$("#choosedprovince").val(),
+                "city":$("#choosedcity").val(),
+                "address":vm.address,
+                "contact":vm.contact,
+                "phone":vm.phone,
+                "content":vm.contact,
+                "specificationArray":guigecanshu
+            }, function(data) {
+                if (data.result_code == 1){
+                    alert("发布成功！");
+                    window.location.href="../home/zhaobiao/zhaobiaodetail.html?id="+data.result.publishId+"&iszb=iszb";
+                }else {
+                    alert("发布失败，请重试！");
+                }
+            })
         }
     ,
     }
@@ -729,8 +381,6 @@
         var endTime = vm.end_at;
         var end = Date.parse(new Date(endTime.replace(/\-/g, "/").replace(/\-/g, "/")));
         var current = Date.parse(new Date());
-        console.log(end)
-        console.log(current)
         if (end < current) {
             vm.$dialog.alert({mes: '有效日期必须在今天之后!'});
             return false;
