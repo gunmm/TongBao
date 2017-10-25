@@ -14,7 +14,7 @@ function post(url, data, callback, callback1) {
 	$.ajax({
 		type: "post",
 		url: ip + url,
-		async: false,
+		async: true,
 		data: data,
 		success: function(data) {
 			vm.$dialog.loading.close();
@@ -34,6 +34,32 @@ function post(url, data, callback, callback1) {
 			if(callback1 != null) {
 				callback1();
 			}
+		}
+	});
+}
+
+function post1(url, async, data, callback) {
+	vm.$dialog.loading.open('');
+	$.ajax({
+		type: "post",
+		url: ip + url,
+		async: async,
+		data: data,
+		success: function(data) {
+			vm.$dialog.loading.close();
+			if(data.result_code != 1) {
+				new Vue().$dialog.alert({
+					mes: data.reason
+				});
+				return;
+			}
+			callback(data);
+		},
+		error: function() {
+			vm.$dialog.loading.close();
+			vm.$dialog.alert({
+				mes: '服务器连接失败!'
+			});
 		}
 	});
 }
@@ -59,7 +85,25 @@ function QueryString() {
  * @param {Object} str
  */
 function strReplace(str) {
-	return str.replace(/\ /g, "&nbsp;").replace(/\n/g, "<br/>");
+	if(str) {
+		return str.replace(/\ /g, "&nbsp;").replace(/\n/g, "<br/>");
+	}
+}
+
+/**
+ * 隐藏第一位之后的文字
+ * @param {Object} str
+ */
+function hideStr(str) {
+	if(str) {
+		var s = str[0];
+		for(var i = 0; i < str.length; i++) {
+			if(i > 0) {
+				s += '*';
+			}
+		}
+		return s;
+	}
 }
 
 Array.prototype.indexOf = function(val) {
@@ -76,11 +120,15 @@ Array.prototype.remove = function(val) {
 	}
 };
 
+/**
+ * 获取城市列表
+ * @param {Object} callback
+ */
 function getCity(callback) {
 	vm.$dialog.loading.open('');
 	$.ajax({
 		type: "post",
-		url: ip + '/web/allCity',
+		url: ip + '/webItem/allCity',
 		async: false,
 		data: {},
 		success: function(data) {
@@ -91,7 +139,7 @@ function getCity(callback) {
 				});
 				return;
 			}
-			var list = data.result.resultList;
+			var list = data.result;
 			var province = [];
 			var city = [];
 			var cityM = {};
@@ -119,9 +167,50 @@ function getCity(callback) {
 			vm.$dialog.alert({
 				mes: '服务器连接失败!'
 			});
-			if(callback1 != null) {
-				callback1();
-			}
 		}
 	});
 }
+
+function getDicTable(async, classId, callback) {
+	vm.$dialog.loading.open('');
+	$.ajax({
+		type: "post",
+		url: ip + '/webItem/ItemData',
+		async: async,
+		data: {
+			classId: classId
+		},
+		success: function(data) {
+			vm.$dialog.loading.close();
+			if(data.result_code != 1) {
+				new Vue().$dialog.alert({
+					mes: data.reason
+				});
+				return;
+			}
+			callback(data);
+		},
+		error: function() {
+			vm.$dialog.loading.close();
+			vm.$dialog.alert({
+				mes: '服务器连接失败!'
+			});
+		}
+	});
+}
+
+$(function() {
+	if(localStorage.userId) {
+
+	}
+	post('/webUser/findUserMessage', {
+		userId: 837
+	}, function(data) {
+		//1:个人 	2:企业
+		localStorage.type = data.result.type;
+		//0:未填写企业资料	1:已提交企业资料
+		localStorage.registerState = data.result.regist;
+		//0:企业待审核	1:企业已审核
+		localStorage.expireState = data.result.expire;
+	})
+})

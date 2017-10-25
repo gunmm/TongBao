@@ -335,7 +335,7 @@
 						telPhone: vm.phone,
 						pwdHash: hexMD5(vm.password)
 					}, function(data) {
-						localStorage.userId = data.result.token;
+						localStorage.userId = data.result.userId;
 						if(type == 1) {
 							window.location.replace('../home.html');
 						} else {

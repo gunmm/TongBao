@@ -1,336 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>招聘详情</title>
 
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="renderer" content="webkit">
-    <!--UC 浏览器-->
-    <meta name="screen-orientation" content="portrait">
-    <meta name="full-screen" content="yes">
-    <!--QQ x5内核-->
-    <meta name="x5-orientation" content="portrait">
-    <meta name="x5-fullscreen" content="true">
-    <meta name="format-detection" content="telephone=no, email=no">
-    <link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
-    <link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
-    <script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
-    <script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+	<head>
+		<meta charset="UTF-8">
+		<title>招聘详情</title>
 
-    <link rel="stylesheet" type="text/css" href="../../static/css/common.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/detail-zhaopin.css">
-    <link rel="stylesheet" type="text/css" href="../../static/lib/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" type="text/css" href="../../static/lib/css/zoomify.min.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/mbox.css">  <!--背景样式 弹框样式-->
-    <script type="text/javascript" src="../../static/lib/js/jquery-1.11.1.min.js"></script><!--jquery库-->
-    <script type="text/javascript" src="../static/lib/js/jm-qi.js"></script><!--自定义弹框大小，提示信息，样式，icon。。。。-->
-    <script src="../../static/lib/js/zoomify.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<!--UC 浏览器-->
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<!--QQ x5内核-->
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+		<link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
+		<script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
+		<script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
 
-</head>
-<body>
-<div id="app">
-    <section class="job-head border-b">
-        <div class="job-name overflow-h">
-            <span class="fl">{{name}}</span>
-            <span class="fr">{{xinzi}}</span>
-        </div>
-        <p class="zhiwei">职位 : <span>{{job}}</span></p>
-        <div class="require overflow-h">
-            <span class="fl yaoqiu">
-            要求 : <span></span>
-            </span>
-            <ul class="overflow-h">
-                <li class="fl" v-for="yaoqiu in yaoqius"><span>{{yaoqiu.text}}</span><i></i></li>
-            </ul>
-        </div>
-        <div class="fuli overflow-h"><span class="fl">福利：</span>
-            <ul class="fl">
-                <li class="fl" v-for="fuli in fulis">{{fuli.text}}</li>
-            </ul>
-        </div>
-    </section>
-    <section class="collec border-b">
-        <ul class="overflow-h">
-            <li>更新：<span>{{gengxin}}</span></li>
-            <li>收藏：<span>{{liulan}}次</span></li>
-            <li>浏览：<span>{{shoucang}}人</span></li>
-        </ul>
-    </section>
-    <div class="div1"></div>
-    <section class="job-address"><h3 class="border-b">工作地址</h3>
-        <p class="border-b">{{dizhi}}
-            <a :href='daohang' class="fr"><i class="ico ico-right fr"></i></a>
-        </p>
-    </section>
-    <div class="div1"></div>
-    <section class="job-deions "><h3 class="border-b">职位描述</h3>
-        <div class="content">
-            <p>岗位职责：</p>
-            <p><br></p>
-            <p v-for="gangwei1 in gangwei1s">{{gangwei1.text}}</p>
-            <p><br></p>
-            <p v-for="gangwei2 in gangwei2s">{{gangwei2.text}}</p>
+		<link rel="stylesheet" type="text/css" href="../../static/css/common.css">
+		<link rel="stylesheet" type="text/css" href="../../static/css/detail-zhaopin.css">
+		<link rel="stylesheet" type="text/css" href="../../static/lib/css/bootstrap-grid.min.css">
+		<link rel="stylesheet" type="text/css" href="../../static/lib/css/zoomify.min.css">
+		<!--背景样式 弹框样式-->
+		<script type="text/javascript" src="../../static/lib/js/jquery-1.11.1.min.js"></script>
+		<!--jquery库-->
+		<!--自定义弹框大小，提示信息，样式，icon。。。。-->
+		<script src="../../static/lib/js/zoomify.min.js"></script>
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../../js/config.js"></script>
 
-        </div>
-    </section>
-    <div class="div1"></div>
-    <section class="job-deions company-name">
-        <h3 class="border-b">公司信息</h3>
-        <div class="conten-maint">
-            <div class="company-intro border-b">
-                <p>{{pingtai}}</p>
-                <p>规模：{{guimo}}</p>
-                <p>性质：{{xingzhi}}</p></div>
-            <div class="company-content"><p>企业简介</p>
-                <p>{{qiyejianjie}}</p>
-                <div class="container">
-                    <ul class="image-row"></ul>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div class="tousu pos-r">
-        <a href="tousu.html?name=qwqwqwqwqwqw" charset="utf-8">
-            <div class="tousu-main pos-a">
-                <i class="ico ico-tousu"></i>
-                <span>投诉</span>
-            </div>
-        </a>
-    </div>
-    <section>
-        <h2 class="module-title pd-10 overflow-h border-b">
-            <span class="fl more-main">最新招聘</span>
-        </h2>
-        <div class="m-list">
-            <ul>
-                <li class="overflow-h  border-b padd" v-for="zuixinzhaopin in zuixinzhaopins">
-                    <a :href='zuixinzhaopin.url'>
-                        <div class="recruit-list fl ml-10 ">
-                            <div class="recruit-header overflow-h">
-                                <h3 class="fl">{{zuixinzhaopin.name}}</h3>
-                                <p class="fr">{{zuixinzhaopin.xinzi}}</p>
-                            </div>
-                            <div class="recruit-header overflow-h">
-                                <h4 class="fl">{{zuixinzhaopin.pingtai}}</h4>
-                                <span class="fr time">{{zuixinzhaopin.time}}</span>
-                            </div>
-                            <p class="recruit-pos">
-                                <span>{{zuixinzhaopin.city}}</span>
-                                <span class="ml-10"></span>
-                                <span class="ml-10"></span>
-                            </p>
-                        </div>
-                    </a>
-                </li>
+		<style type="text/css">
+			.fabuDetail {
+				font-size: 11px;
+				margin: 0 auto;
+				width: 21px;
+				line-height: 14px;
+				color: white;
+				position: fixed;
+				top: 84px;
+				right: 5px;
+				border-radius: 3px;
+				padding-top: 0.5rem;
+				background-color: #F91605;
+				opacity: 0.5;
+				filter: alpha(Opacity=40);
+				-moz-opacity: 0.4;
+				height: 75px;
+				text-align: center;
+				zoom: 1.6;
+			}
+			
+			.understandMore {
+				font-weight: 600;
+				text-align: center;
+				display: none;
+				font-family: NotoSansHans-Regular;
+				font-size: 15px;
+				color: #03A9F4;
+			}
+		</style>
+	</head>
 
-            </ul>
-        </div>
-    </section>
-    <div style="height: 57px;"></div>
-    <footer>
-        <ul class="overflow-h">
-            <li style="height: 100px">
-                <a href="tel:<?=$model['phone'] ?>">
-                    <img src="../../static/img/ico-phone.png" alt="" />
-                    <span>电话</span>
-                </a>
-            </li>
-            <li class="second">
-                <a href="/tongzhi/chat?id=<?=$model['userid']; ?>">
-                    <img src="../../static/img/xiaoxi.png" alt="" />
-                    <span>消息</span>
-                </a>
-            </li>
-            <li class="third sc" @click="favourite()">
-                <img id="scimage" src="../../static/img/shoucang1.png" alt="" />
-                <span  class="on">收藏</span>
-            </li>
-            <li class="last">
-                <!--<?php if($model['istoudi']){?>-->
-                <!--<span class="todi" id="asd">已投递简历</span>-->
-                <!--<?php }else{?>-->
-                <span class="todi"  @click="toudi()">投递简历</span>
-                <!--<?php }?>-->
-            </li>
-        </ul>
-    </footer>
-    <section id="m-publsh" class="m-mask bg-opcity-black none">
-        <div class="text-main h-200"><p class="border-b">提示</p>
-            <p>您还未创建简历，发布简历后才可以投递</p>
-            <p class="overflow-h"><span class="fl quxiao">取消</span> <span class="fl sure"><a
-                    href="/member/jianli">发布简历</a></span></p></div>
-    </section>
-    <div class="fabuDetail" style="display: none;">我也要发布</div>
-    <div class="understandMore">
-        了解更多请关注“仝仝生态”<br> <img src="../static/img/weixinttst.jpg" width="225px" height="225px;" style="margin: 0px auto;">
-        <span style="color: rgb(32, 28, 28); font-size: 13px;">长按识别二维码即可关注</span>
-        <div style="height: 64px;"></div>
-    </div>
-</div>
+	<body class="bg-fff">
+		<div id="app">
+			<section class="job-head border-b">
+				<div class="job-name overflow-h">
+					<span class="fl">{{name}}</span>
+					<span class="fr">{{xinzi}}</span>
+				</div>
+				<p class="zhiwei mt-10">职位 : <span>{{job}}</span></p>
+				<div class="require overflow-h" v-if="jingyanyaoqiu&&xueliyaoqiu&&zhichengyaoqiu&&ageyaoqiu&&sexyaoqiu">
+					<span class="fl yaoqiu">要求 : <span></span></span>
+					<ul class="overflow-h">
+						<li class="fl" v-if="jingyanyaoqiu"><span>{{jingyanyaoqiu}}</span><i></i></li>
+						<li class="fl" v-if="xueliyaoqiu"><span>{{xueliyaoqiu}}</span><i></i></li>
+						<li class="fl" v-if="zhichengyaoqiu"><span>{{zhichengyaoqiu}}</span><i></i></li>
+						<li class="fl" v-if="ageyaoqiu"><span>{{ageyaoqiu}}</span><i></i></li>
+						<li class="fl" v-if="sexyaoqiu"><span>{{sexyaoqiu}}</span><i></i></li>
+					</ul>
+				</div>
+				<div class="fuli overflow-h" v-if="fulis"><span class="fl">福利：</span>
+					<ul class="fl">
+						<li class="fl pl-5 pr-5" style="height: auto;">{{fulis}}</li>
+					</ul>
+				</div>
+			</section>
+			<section class="collec border-b">
+				<ul class="overflow-h mb-1">
+					<li>更新：<span>{{gengxin}}</span></li>
+					<li>收藏：<span>{{liulan}}次</span></li>
+					<li>浏览：<span>{{shoucang}}人</span></li>
+				</ul>
+			</section>
+			<div class="div1"></div>
+			<section class="job-address">
+				<h3 class="border-b mt-1 mb-1">工作地址</h3>
+				<p class="border-b mb-1">{{dizhi}}
+					<a :href='daohang' class="fr"><i class="ico ico-right fr"></i></a>
+				</p>
+			</section>
+			<div class="div1"></div>
+			<section class="job-deions">
+				<h3 class="border-b mt-15">职位描述</h3>
+				<div class="content">
+					<!--<p>岗位职责：</p>-->
+					<p>
+						{{zhiweimiaoshu}}
+					</p>
+				</div>
+			</section>
+			<div class="div1"></div>
+			<section class="job-deions company-name">
+				<h3 class="border-b mt-15">公司信息</h3>
+				<div class="conten-maint">
+					<div class="company-intro border-b">
+						<p>{{pingtai}}</p>
+						<p>规模：{{guimo}}</p>
+						<p>性质：{{xingzhi}}</p>
+					</div>
+					<div class="company-content">
+						<p>企业简介</p>
+						<p>{{qiyejianjie}}</p>
+						<div class="container">
+							<ul class="image-row">
+								<li v-for="item in qiyetupian" class="example"><img :src="ip+item" class="img-rounded" /></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+			<div class="tousu pos-r">
+				<a href="tousu.html?name=qwqwqwqwqwqw" charset="utf-8">
+					<div class="tousu-main pos-a">
+						<i class="ico ico-tousu"></i>
+						<span>投诉</span>
+					</div>
+				</a>
+			</div>
+			<section>
+				<h2 class="module-title pd-10 overflow-h border-b mt-1">
+            		<span class="fl more-main">最新招聘</span>
+        		</h2>
+				<section class="content-list  lh-24 ">
+					<div>
+						<article class="m-list list-theme4">
+							<a v-for="item in zuixinzhaopins" :href='"zhaopindetail.html?id="+item.id' class="list-item">
+								<div class="list-img"></div>
+								<div class="list-mes">
+									<div class="list-title">
+										<p class="f-16 ">
+											<span>{{item.title}}</span>
+											<span class="fr c-ec9d1d">{{item.experience}}</span>
+										</p>
+									</div>
+									<div class="list-other">
+										<h4 class="mt-10 f-14 overflow-h">
+											<span class="fl">{{item.orgName}}</span>
+											<span class="fr time mr-8 ">{{item.createdAt}}</span>
+										</h4>
+										<p class="recruit-pos f-14 mt-5 pos-name">
+											<span>{{item.city}}</span>
+											<span class="ml-10">{{item.experience}}</span>
+											<span class="ml-10">{{item.salary}}</span>
+										</p>
+									</div>
+								</div>
+							</a>
+						</article>
+						<div></div>
+					</div>
+				</section>
+			</section>
+			<div style="height: 57px;"></div>
+			<footer v-if="type==1">
+				<ul class="overflow-h">
+					<li style="height: 100px">
+						<a :href='"tel:"+phone'>
+							<img src="../../static/img/ico-phone.png" alt="" />
+							<span>电话</span>
+						</a>
+					</li>
+					<li class="second">
+						<a :href='"../../message/chat_detail.html?id="+userId'>
+							<img src="../../static/img/xiaoxi.png" alt="" />
+							<span>消息</span>
+						</a>
+					</li>
+					<li class="third sc" @click="favourite()">
+						<img v-if="isShoucang" src="../../static/img/shoucang2.png" alt="" />
+						<img v-else src="../../static/img/shoucang1.png" alt="" />
+						<span class="on">收藏</span>
+					</li>
+					<li class="last">
+						<span v-if="isToudi" class="todi" id="asd">已投递简历</span>
+						<span v-else class="todi" @click="toudi()">投递简历</span>
+					</li>
+				</ul>
+			</footer>
+			<section id="m-publsh" class="m-mask bg-opcity-black none">
+				<div class="text-main h-200">
+					<p class="border-b">提示</p>
+					<p>您还未创建简历，发布简历后才可以投递</p>
+					<p class="overflow-h"><span class="fl quxiao">取消</span> <span class="fl sure"><a
+                    href="/member/jianli">发布简历</a></span></p>
+				</div>
+			</section>
+			<div class="fabuDetail" style="display: none;">我也要发布</div>
+			<div class="understandMore">
+				<p class="ml-10">了解更多请关注“仝仝生态”</p>
+				<img src="../../static/img/wx_gzhewm.png" width="225px" height="225px;" style="margin: 0px auto;">
+				<p class="ml-10 f-13 mt-5">长按识别二维码即可关注</p>
+				<div style="height: 64px;"></div>
+			</div>
+		</div>
+	</body>
 
-<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" charset="utf-8">
-    wx.config({
-        "debug": false,
-        "beta": false,
-        "appId": "wxefda176107cb06b8",
-        "nonceStr": "fs5XXqrmld",
-        "timestamp": 1506671042,
-        "url": "http:\/\/www.tongtongww.com\/list\/detailzhaopin?id=437",
-        "signature": "791a183888a51b3d7f0b1e45ed893a037f507661",
-        "jsApiList": ["checkJsApi", "onMenuShareTimeline", "onMenuShareAppMessage"]
-    });
-    var title = '【招聘】1';
-    wx.ready(function () {
-        var shareData = {
-            title: title, // 分享标题
-            desc: '1', // 分享描述
-            link: window.location.href, // 分享链接
-            imgUrl: ''
-        };
-        wx.onMenuShareAppMessage(shareData);
-        wx.onMenuShareTimeline(shareData);
-    });
-</script>
-<script src="../../static/lib/js/axios.min.js"></script>
-<script type="text/javascript">
-    var id = 437;
-    var vm = new Vue({
-        el: '#app',
-        data: {
-            message: 'sdsdsd',
-            yaoqius: [
-                {text: '第1个要求'},
-                {text: '第2个要求'},
-                {text: '第3个要求'}
-            ],
-            fulis: [
-                {text: '第1个福利'},
-                {text: '第2个福利'},
-                {text: '第3个福利'}
-            ],
-            gangwei1s: [
-                {text: '北京城建六建设集团有限公司'},
-                {text: '专业：土木工程、工程管理、测绘工程、建筑环境与设备工程、电气、安全工程、财务管理、会计、人力资源管理、行政管理、法学'},
-                {text: '联系人：冯斌  '},
-                {text: '电话：010-61086730  '},
-                {text: '邮箱：job@bucg6.com'}
-            ],
-            gangwei2s: [
-                {text: '北京城建集团是以城建工程、城建地产、城建设计、城建园林、城建置业、城建资本为六大支柱产业的大型综合性建筑企业集团，致力于打造成为国内领先的城市建设综合服务商。'},
-                {text: '* 中国企业500强'},
-                {text: '* ENR250全球及国际工程大承包商'},
-                {text: '* 中国最具影响力企业'},
-                {text: '* 全国优秀施工企业'},
-                {text: '* 全国优秀施工企业'}
-            ],
-            zuixinzhaopins: [
-                {
-                    url: "http://www.baidu.com",
-                    name: "青岛科技大学",
-                    xinzi: "10k-100k",
-                    pingtai: "平台",
-                    time: "1937--03-09",
-                    city: "青岛"
-                },
-                {
-                    url: "http://www.baidu.com",
-                    name: "青岛大学",
-                    xinzi: "1k-10k",
-                    pingtai: "平台",
-                    time: "1938--03-09",
-                    city: "青岛"
-                }
-            ],
-            name: '北京城建设计发展集团有限公司',
-            xinzi: '8000-10000',
-            job: 'iOS开发工程师',
-            gengxin: '2018-01-01',
-            liulan: '100',
-            shoucang: '99',
-            dizhi: '山西渭南',
-            daohang: 'http://www.baidu.com',
-            pingtai: '平台',
-            guimo: '5000人以上',
-            xingzhi: '国企',
-            qiyejianjie: '我市企业简介我是企业简介'
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+		wx.config({
+			"debug": false,
+			"beta": false,
+			"appId": "wxefda176107cb06b8",
+			"nonceStr": "fs5XXqrmld",
+			"timestamp": 1506671042,
+			"url": "http:\/\/www.tongtongww.com\/list\/detailzhaopin?id=437",
+			"signature": "791a183888a51b3d7f0b1e45ed893a037f507661",
+			"jsApiList": ["checkJsApi", "onMenuShareTimeline", "onMenuShareAppMessage"]
+		});
+		var title = '【招聘】1';
+		wx.ready(function() {
+			var shareData = {
+				title: title, // 分享标题
+				desc: '1', // 分享描述
+				link: window.location.href, // 分享链接
+				imgUrl: ''
+			};
+			wx.onMenuShareAppMessage(shareData);
+			wx.onMenuShareTimeline(shareData);
+		});
+	</script>
+	<script type="text/javascript">
+		/* 如果是分享跳转的链接显示我要发布按钮*/
+		var urlStr = window.location.href;
+		if((urlStr.indexOf('from=singlemessage')) > 0 ||
+			(urlStr.indexOf('from=timeline')) > 0 ||
+			(urlStr.indexOf('from=groupmessage')) > 0) {
+			$('.fabuDetail').css('display', 'block');
+			$('.understandMore').css('display', 'block');
+		}
 
-        },
-        methods: {
-            favourite() {
-                var action = "cancelds";
-                if (action == "cancel") {
-                    mes = "取消" + mes;
-                    $('#scimage').attr('src', '../static/img/shoucang1.png');
-                    $('.on').css('color', '#717171');
-                    $('.on').html('收藏');
-                } else {
-                    $('#scimage').attr('src', '../static/img/shoucang2.png');
-                    $('.on').css('color', '#ec9d1d');
-                    $('.on').html('取消');
+		var qs = new QueryString();
+		var id = parseInt(qs['id']);
 
-                }
-//                axios.post('/favourite/index', {
-//                    id: id
-//                }).then(function (response) {
-//                    action = response.data.action;
-//                    mes = "收藏成功!";
-//                    if (action == "cancel") {
-//                        mes = "取消" + mes;
-//                        $('#scimage').attr('src', '/static/img/shoucang1.png');
-//                        $('.on').css('color', '#717171');
-//                        $('.on').html('收藏');
-//                    } else {
-//                        $('#scimage').attr('src', '/static/img/shoucang2.png');
-//                        $('.on').css('color', '#ec9d1d');
-//                        $('.on').html('取消');
-//                    }
-//                    vm.$dialog.toast({
-//                        mes: mes,
-//                        icon: 'success',
-//                        timeout: 1500,
-//                    });
-//                });
-            },
-            toudi() {
-                var action = "cancelfg";
-                mes = "投递成功!";
-                if (action == "cancel") {
-                    mes = "取消" + mes;
-                }
-                vm.$dialog.toast({
-                    mes: mes,
-                    icon: 'success',
-                    timeout: 1500,
-                });
-//                if ('0' != 1) {
-//                    $('#m-publsh').removeClass('none');
-//                    return false;
-//                }
-//                axios.post('/toudi/index', {
-//                    id: id
-//                }).then(function (response) {
-//                    action = response.data.action;
-//                    mes = "投递成功!";
-//                    if (action == "cancel") {
-//                        mes = "取消" + mes;
-//                    }
-//                    vm.$dialog.toast({
-//                        mes: mes,
-//                        icon: 'success',
-//                        timeout: 1500,
-//                    });
-//                });
-            }
-        },
-    })
-</script>
-</body>
+		if(qs['isfb']) {
+			window.history.pushState({}, "首页", "");
+			window.addEventListener("popstate", function(e) {
+				window.location.replace('employment.html');
+			}, false);
+		}
+
+		post('/webZp/ZhaopinById', {
+			id: 382
+		}, function(data) {
+			console.log(data)
+			var d = data.result;
+			vm.name = d.name;
+			vm.xinzi = d.xinzi;
+			vm.job = d.job;
+			vm.jingyanyaoqiu = d.jingyanyaoqiu;
+			vm.xueliyaoqiu = d.xueliyaoqiu;
+			vm.zhichengyaoqiu = d.zhichengyaoqiu;
+			vm.ageyaoqiu = d.ageyaoqiu;
+			vm.sexyaoqiu = d.sexyaoqiu;
+			vm.fulis = d.fulis;
+			vm.gengxin = d.gengxin;
+			vm.shoucang = d.shoucang;
+			vm.liulan = d.liulan;
+			vm.dizhi = d.dizhi;
+			vm.daohang = d.daohang;
+			vm.zhiweimiaoshu = strReplace(d.zhiweimiaoshu);
+			vm.pingtai = d.qiye;
+			vm.guimo = d.guimo;
+			vm.xingzhi = d.xingzhi;
+			vm.qiyejianjie = d.qiyejianjie;
+			vm.phone = d.phone;
+			vm.userId = d.userId;
+			vm.qiyetupian = d.jianjieUrl;
+		})
+
+		post('/webSc/isFavorite', {
+			id: 382,
+			userId: 101
+		}, function(data) {
+			vm.isShoucang = data.result;
+			if(data.result) {
+				$('#scimage').attr('src', '../../static/img/shoucang2.png');
+				$('.on').css('color', '#ec9d1d');
+				$('.on').html('取消');
+			}
+		})
+
+		post('/webZp/isToudi', {
+			id: 382,
+			userId: 101
+		}, function(data) {
+			vm.isToudi = data.result;
+		})
+
+		post('/webZp/Zhaopin', {
+			pageNo: 1,
+			pageSize: 2
+		}, function(data) {
+			vm.zuixinzhaopins = data.result;
+		})
+
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				message: '',
+				fulis: '',
+				zhiweimiaoshu: '',
+				zuixinzhaopins: [],
+				name: '',
+				xinzi: '',
+				job: '',
+				gengxin: '',
+				liulan: '',
+				shoucang: '',
+				dizhi: '',
+				daohang: '',
+				pingtai: '',
+				guimo: '',
+				xingzhi: '',
+				qiyejianjie: '',
+				jingyanyaoqiu: '',
+				xueliyaoqiu: '',
+				zhichengyaoqiu: '',
+				ageyaoqiu: '',
+				sexyaoqiu: '',
+				type: 1,
+				phone: '',
+				userId: '',
+				qiyetupian: [],
+				isShoucang: false,
+				isToudi: false
+			},
+			methods: {
+				favourite: function() {
+					post('/webSc/favorite', {
+						userId: 101,
+						id: 382,
+						shoucang: !vm.isShoucang
+					}, function(data) {
+						vm.isShoucang = !vm.isShoucang;
+						if(vm.isShoucang) {
+							$('.on').css('color', '#ec9d1d');
+							$('.on').html('取消');
+						} else {
+							$('.on').css('color', '#717171');
+							$('.on').html('收藏');
+						}
+						vm.$dialog.toast({
+							mes: data.reason,
+							icon: 'success',
+							timeout: 1500,
+						});
+					})
+				},
+				toudi: function() {
+					post('/webZp/toudi', {
+						userId: 101,
+						id: 382
+					}, function(data) {
+						vm.isToudi = !vm.isToudi;
+						vm.$dialog.toast({
+							mes: data.reason,
+							icon: 'success',
+							timeout: 1500,
+						});
+					})
+				}
+			},
+		})
+
+		$(function() {
+			/** 发布链接页面跳转*/
+			$(".fabuDetail").on('click', function() {
+				vm.$dialog.confirm({
+					mes: '<div style="text-align: center;">发布信息之前需关注<font color="red">“仝仝生态”</font></br>是否确认关注?</div>',
+					opts: [{
+							txt: '关注',
+							color: false,
+							callback: function() {
+								window.location.href = 'http://dwz.cn/6fbbCU';
+							}
+						},
+						{
+							txt: '我已关注',
+							color: false,
+							callback: function() {
+								window.location.href = '../../publish/fabuzhaopin.html';
+							}
+						}
+					]
+				});
+			});
+		})
+	</script>
+
 </html>
