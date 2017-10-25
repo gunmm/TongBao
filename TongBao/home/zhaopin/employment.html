@@ -399,22 +399,27 @@
 
 			getDicTable(false, "001", function(data) {
 				this.xinzi = data.result;
+				console.log(data)
 			})
 
 			getDicTable(true, "004", function(data) {
 				vm.jingyans = data.result;
+				console.log(data)
 			})
 
 			getDicTable(true, "003", function(data) {
 				vm.xuelis = data.result;
+				console.log(data)
 			})
 
 			getDicTable(true, "012", function(data) {
 				vm.ages = data.result;
+				console.log(data)
 			})
 
 			getDicTable(true, "005", function(data) {
 				vm.zhichengs = data.result;
+				console.log(data)
 			})
 
 			var items = window.history.state;

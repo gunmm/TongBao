@@ -2,9 +2,24 @@ var ip = 'http://192.168.1.120:8080';
 
 var vm = new Vue();
 
+$(function() {
+	if(localStorage.userId) {
+
+	}
+	post('/webUser/findUserMessage', {
+		userId: 837
+	}, function(data) {
+		//1:个人 	2:企业
+		localStorage.type = data.result.type;
+		//0:未填写企业资料	1:已提交企业资料
+		localStorage.registerState = data.result.regist;
+		//0:企业待审核	1:企业已审核
+		localStorage.expireState = data.result.expire;
+	})
+})
+
 /**
- * 网络请求
- * @param {Object} url	链接
+ * 网络请求 * @param {Object} url	链接
  * @param {Object} data	 请求参数
  * @param {Object} callback  请求成功回调
  * @param {Object} callback1  请求失败回调
@@ -15,6 +30,7 @@ function post(url, data, callback, callback1) {
 		type: "post",
 		url: ip + url,
 		async: true,
+		traditional: true,
 		data: data,
 		success: function(data) {
 			vm.$dialog.loading.close();
@@ -199,18 +215,31 @@ function getDicTable(async, classId, callback) {
 	});
 }
 
-$(function() {
-	if(localStorage.userId) {
-
-	}
-	post('/webUser/findUserMessage', {
-		userId: 837
-	}, function(data) {
-		//1:个人 	2:企业
-		localStorage.type = data.result.type;
-		//0:未填写企业资料	1:已提交企业资料
-		localStorage.registerState = data.result.regist;
-		//0:企业待审核	1:企业已审核
-		localStorage.expireState = data.result.expire;
-	})
-})
+//设备分类
+function getClassifyTable(async, classType, callback) {
+	vm.$dialog.loading.open('');
+	$.ajax({
+		type: "post",
+		url: ip + '/webItem/getCategoryList',
+		async: async,
+		data: {
+			type: classType
+		},
+		success: function(data) {
+			vm.$dialog.loading.close();
+			if(data.result_code != 1) {
+				new Vue().$dialog.alert({
+					mes: data.reason
+				});
+				return;
+			}
+			callback(data);
+		},
+		error: function() {
+			vm.$dialog.loading.close();
+			vm.$dialog.alert({
+				mes: '服务器连接失败!'
+			});
+		}
+	});
+}

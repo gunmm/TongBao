@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简历预览</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="renderer" content="webkit">
+    <!--UC 浏览器-->
+    <meta name="screen-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <!--QQ x5内核-->
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
+    <link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
+    <script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
+    <script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/lib/js/axios.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="../../static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/detail-jianlj.css">
+    <script type="text/javascript" src="../../static/lib/js/jquery-1.11.1.min.js"></script><!--jquery库-->
+</head>
+<body class="bg-fff">
+<div id="app">
+    <section class="detail-head overflow-h border-b">
+        <div class="head-pic ">
+            <img src="../../static/img/touxiang.png"/>
+        </div>
+
+        <p class="text-c mingzi mt-10"><?=$model['name'] ?> <i class="ico ico-<?=$model['gender']==1?'boy':'girl' ?>"></i></p>
+    </section>
+    <section class="collec ">
+        <ul class="overflow-h">
+            <li class="border-r ml-10">更新：<span>{{updated_at}}</span></li>
+            <li class="border-r">收藏：<span>{{favourite}}次</span></li>
+            <li class="">浏览：<span>{{view}}人</span></li>
+        </ul>
+    </section>
+    <div class="div1"></div>
+    <div class="head-main pb-14">
+        <section class="hope-job">
+            <h3 class="border-b ">基本信息</h3>
+
+        </section>
+        <div class="head-quali overflow-h">
+            <ul class="overflow-h">
+                <li>手机号码：{{phone}}</li>
+                <li>电子邮箱：{{email}}</li>
+                <li>真实年龄：{{age}}</li>
+
+                <li>最高学历：{{xueli}}</li>
+                <li>工作经验：{{jingyan}}</li>
+                <li>所在城市：{{city}}</li>
+                <li>工作职称：{{zhicheng}}</li>
+            </ul>
+        </div>
+
+    </div>
+
+
+
+
+    </section>
+
+
+
+
+    <div class="div1"></div>
+    <!--期望工作-->
+    <section class="hope-job">
+        <h3 class="border-b ">期望工作</h3>
+        <div class="name-job">
+            <p class="job-name">{{gangwei}}</p>
+            <p class="job-money">{{gongzuofangshi}}/{{targetprovince}}{{targetcity}}/{{targetxinzi}}</p>
+            <p class="job-money">目前状态: {{onduty}}/{{jointime}}</p>
+        </div>
+    </section>
+    <div class="div1"></div>
+    <!--工作经历-->
+    <section class="job-exp">
+        <h3 class="border-b mb-10">工作经历</h3>
+
+        <div v-for="work in worklist">
+            <div class="job-time-2">
+                <i class="ico ico-round"></i>
+                <span>{{work.startdate}}至 {{work.enddate}}</span>
+            </div>
+            <div class="job-content border-l">
+                <p>{{work.companyname}}
+                </p>
+                <p>{{work.brief}}</p>
+            </div>
+        </div>
+
+    </section>
+    <div class="div1"></div>
+    <!--教育经历-->
+    <section class="hope-job educa-exp">
+        <h3 class="border-b mb-10">教育经历</h3>
+        <div v-for="study in studylist">
+            <div class="job-time-2">
+                <i class="ico ico-round"></i>
+                <span>{{study.graduationyear}}年毕业</span>
+            </div>
+            <div class="job-content border-l school">
+                <p>{{study.schoolname}}</p>
+                <p>{{study.xueli}}.{{study.major}}</p>
+            </div>
+        </div>
+    </section>
+    <div class="div1"></div>
+    <!--自我评价-->
+    <section class="hope-job evaluation">
+        <h3 class="border-b ">自我评价</h3>
+        <div class="name-job self-narrative">
+            <p class="job-name">{{evaluation}}</p>
+        </div>
+    </section>
+    <div style="height: 57px;"></div>
+</div>
+
+<script type="text/javascript">
+    var vm=new Vue({
+        el: '#app',
+        data:{
+            avatar:'../../static/img/touxiang.png',
+            name: '闵哲',
+            gender: 'ico ico-boy',<!--<?=$model['gender']==1?'boy':'girl' ?>-->
+            updated_at: '2017-7-19',
+            favourite: '100',
+            view: '70',
+            phone: '17621236608',
+            email: '924744097@qq.com',
+            age: '22',
+            xueli: '本科',
+            jingyan: '两年',
+            city: '北京',
+            zhicheng: '中级工程师',
+            gangwei:'iOS开发工程师',
+            gongzuofangshi: '全职',
+            targetprovince: '陕西',
+            targetcity: '渭南',
+            targetxinzi: '8000-10000元',
+            onduty: '正在找工作',
+            jointime: '一周内到岗',
+            worklist:[
+                {
+                    "startdate":"2015-9-1",
+                    "enddate":"2017-8-17",
+                    "companyname":"上海岂能软件",
+                    "brief":"项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作无法认定。"
+                },
+                {
+                    "startdate":"2016-9-1",
+                    "enddate":"2018-8-17",
+                    "companyname":"辽宁省路桥一公司",
+                    "brief":"项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作发的。"
+                },
+                {
+                    "startdate":"2017-9-1",
+                    "enddate":"2019-8-17",
+                    "companyname":"辽宁省路桥2公司",
+                    "brief":"项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。项目：沪蓉西高速公路7-1标，负责所在区域梁场、路基、防护等工程的质量、进度、安全、结算等工作地方。"
+                },
+
+            ],
+            studylist: [
+                {
+                    "graduationyear":"2016-07",
+                    "schoolname":"青岛科技大学1",
+                    "xueli":"本科",
+                    "major":"电子信息工程",
+                },
+                {
+                    "graduationyear":"2016-07",
+                    "schoolname":"青岛科技大学2",
+                    "xueli":"本科",
+                    "major":"电子信息工程",
+                },
+                {
+                    "graduationyear":"2016-07",
+                    "schoolname":"青岛科技大学3",
+                    "xueli":"本科",
+                    "major":"电子信息工程",
+                },
+            ],
+            evaluation:"乐观，上进，开朗，比较吊会计师空间打开手机打开就是空间打开手机打开就是看的就是空间打开手机打开就是空间",
+            iscompany:false,
+        }
+    })
+</script>
+</body>
+</html>
