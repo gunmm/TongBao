@@ -22,11 +22,29 @@
 		<link rel="stylesheet" href="../../static/css/common.css" />
 		<script type="text/javascript" src="../../js/config.js"></script>
 
-
-
 	</head>
 
 	<body>
+		<script type="text/javascript" charset="utf-8">
+			var Request = new QueryString();
+			var itemid = Request["id"];
+			var schoolname,major,graduationyear,xueli;
+			if (itemid) {
+				post1('/webQz/QiuzhiById',false, {
+					"userId": localStorage.userId,
+				}, function(data) {
+					console.log(data);
+					var workDic = JSON.parse(data.result.education);
+					console.log(workDic);
+					var obj = workDic[itemid];
+					console.log(obj);
+					this.schoolname = obj.schoolname;
+					this.major = obj.major;
+					this.graduationyear = obj.graduationyear;
+					this.xueli = obj.xueli;
+				})
+			}
+		</script>
 		<div id="app">
 			<section class="zp-body">
 				<div class="zp-list overflow-h">
@@ -64,65 +82,85 @@
 	</body>
 
 	<script type="text/javascript">
-
-        //学历要求
-        var xuelidic;
-        getDicTable(false,"003",function (data) {
-            this.xuelidic = data.result.resultList;
-        })
-
+		var Request = new QueryString();
+		var itemid = Request["id"];
+		 //学历要求
+		var xuelidic;
+		getDicTable(false, "003", function(data) {
+			this.xuelidic = data.result;
+		})
 		var vm = new Vue({
 			el: '#app',
 			data: {
-                schoolname: '',
-                major: '',
-                graduationyear: '',
-                xueli: '',
-                xuelis: xuelidic
-            },
+				schoolname: this.schoolname,
+				major: this.major,
+				graduationyear: this.graduationyear,
+				xueli: this.xueli,
+				xuelis: xuelidic
+			},
 			methods: {
-                update(){
-
-                    if (vm.schoolname=="") {
-                        alert('请填写学校名称')
-                        return
-                    }
-                    if (vm.major=="") {
-                        alert('请填写专业')
-                        return
-                    }
-                    if ($('.kbtn').val()=="") {
-                        alert('请选择毕业时间')
-                        return
-                    }
-                    if ($('.select-xueli').val()=='') {
-                        alert('请选择学历')
-                        return
-                    }
-
-                    post('/webQz/editPersonalBasicInfo', {
-                        "userId":localStorage.userId,
-                        "id":"",
-                        "publishId":"",
-                        "schoolname":vm.schoolname,
-                        "major":vm.major,
-                        "graduationyear":vm.graduationyear,
-                        "xueli":vm.xueli
-					}, function(data) {
-                        console.log(data);
-                        if (data.result_code == '1'){
-                            alert("保存成功!");
-                            window.location.href="jianli.html";
-                        }else {
-                            alert("发布失败，请重试！");
-                        }
-                    })
-
-                }
-
+				update() {
+					if (vm.schoolname == "") {
+						alert('请填写学校名称')
+						return
+					}
+					if (vm.major == "") {
+						alert('请填写专业')
+						return
+					}
+					if ($('.kbtn').val() == "") {
+						alert('请选择毕业时间')
+						return
+					}
+					if ($('.select-xueli').val() == '') {
+						alert('请选择学历')
+						return
+					}
+					var id = "";
+					var publishId = "";
+					if (localStorage.jobWanId) {
+						id = localStorage.jobWanId;
+					}
+					if (localStorage.publishId) {
+						publishId = localStorage.publishId;
+					}
+					var dataa;
+					if(itemid){
+						dataa = {
+						"userId": localStorage.userId,
+						"id": id,
+						"publishId": publishId,
+						"schoolname": vm.schoolname,
+						"major": vm.major,
+						"graduationyear": vm.graduationyear,
+						"xueli": vm.xueli,
+						"operationType":1,
+						"educationIndex":itemid
+						}
+					}else{
+						dataa = {
+						"userId": localStorage.userId,
+						"id": id,
+						"publishId": publishId,
+						"schoolname": vm.schoolname,
+						"major": vm.major,
+						"graduationyear": vm.graduationyear,
+						"xueli": vm.xueli,
+						}
+					}
+					post('/webQz/editPersonalBasicInfo', dataa, 
+					function(data) {
+						console.log(data);
+						if (data.result_code == '1') {
+							alert("保存成功!");
+							window.location.href = "jianli.html";
+						} else {
+							alert("发布失败，请重试！");
+						}
+					})
+				}
 			}
-		}
-		)
+		})
 	</script>
 
 </html>

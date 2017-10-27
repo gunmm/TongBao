@@ -17,6 +17,7 @@
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
 		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
+		<script type="text/javascript" src="../../js/config.js"></script>
 		<link rel="stylesheet" href="../../css/mkui.css" />
 		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css" />
 
@@ -35,11 +36,11 @@
 				<div class="tab-panl none" id="gangweilist">
 					<div class=" overflow-h">
 						<ul class=" fl job">
-							<li v-for="item in job">{{item.name}}</li>
+							<li v-for="item in job">{{item.title}}</li>
 						</ul>
 						<div class="job-list fl none" v-for="item in joblist">
 							<ul>
-								<li v-for="j in item" @click="selectgangwei(j.id,j.name)">{{j.name}}</li>
+								<li v-for="j in item" @click="selectgangwei(j.id,j.title)">{{j.title}}</li>
 							</ul>
 						</div>
 					</div>
@@ -70,23 +71,60 @@
 	</body>
 
 	<script type="text/javascript">
+		//地址
 		var province;
-		$.ajax({
-			type: "get",
-			url: "../../js/province.json",
-			async: false,
-			success: function(data) {
-				province = data;
-			}
+		var city;
+		getCity(function(p, c) {
+			province = p;
+			city = c; //			if (this.bigdata.cityId) {
+			//				selectProvinceAndCity();
+			//			}
 		});
+		 //类别
+		var job;
+		var jobList;
+		getClassifyTable(false, "zhaobiao", function(data) {
+			var list = data.result;
+			var job = [];
+			var jobList = [];
+			var jobM = {};
+			for (var i = 0; i < list.length; i++) {
+				var obj = list[i];
+				if (obj.pid == 0) {
+					job.push(obj);
+				} else {
+					jobList.push(obj);
+				}
+			}
+			for (var i = 0; i < job.length; i++) {
+				var array = [];
+				for (var j = 0; j < jobList.length; j++) {
+					if (job[i].id == jobList[j].pid) {
+						array.push(jobList[j]);
+						jobM['' + job[i].id] = array;
+					}
+				}
+			}
+			for (var i = 0; i < job.length - 1; i++) {
+				for (var j = 0; j < job.length - 1 - i; j++) {
+					if (job[j].id > job[j + 1].id) {
+						var temp = job[j];
+						job[j] = job[j + 1];
+						job[j + 1] = temp;
+					}
+				}
+			}
+			this.job = job;
+			this.jobList = jobM;
+		})
 
 		var vm = new Vue({
 			el: "#app",
 			data: {
 				province: province,
-				city: '',
-				job: '',
-				joblist: '',
+				city: city,
+				job: this.job,
+				joblist: this.jobList,
 			},
 			methods: {
 				selectgangwei: function(id, name) {
@@ -111,14 +149,53 @@
 					$("#choosedcity").val('');
 				},
 				save: function() {
-					if($('#gangwei').text() == '请选择') {
-						alert('请选择供应类别')
+					if ($('#gangwei').text() == '请选择') {
+						alert('请选择招标类别')
 						return
 					}
-					if($('#city').text() == '请选择') {
-						alert('请选择城市地址')
+					if ($('#city').text() == '请选择') {
+						alert('请选择工作地址')
 						return
 					}
+					var dataa = {
+						"userId":localStorage.userId,
+						"province":$("#choosedprovince").val(),
+						"city":$("#choosedcity").val(),
+						"category_id":$("#choosedgangwei").val(),
+						"subscribeType":"5",
+					}
+					
+					post('/webUser/subscribePersonal', dataa,
+						function(data) {
+							console.log(data);
+//							if (data.result_code == '1') {
+//								alert("订阅成功!");
+//								window.location.href = "jianli.html";
+//							} else {
+//								alert("订阅失败，请重试！");
+//							}
+						})
+//					axios.post('/dingyue/zhaobiao?id=<?=$id;?>', {
+//							category_id: $("#choosedgangwei").val(),
+//							province: $("#choosedprovince").val(),
+//							city: $("#choosedcity").val(),
+//						})
+//						.then(function(response) {
+//							mes = response.data.message;
+//							icon = 'error';
+//							if (mes == 'ok') {
+//								mes = "订阅成功!";
+//								icon = "success";
+//							}
+//							vm.$dialog.toast({
+//								mes: mes,
+//								icon: icon,
+//								timeout: 1500,
+//								callback: () => {
+//									window.location.href = '/dingyue/editdingyue';
+//								}
+//							});
+//						})
 				},
 			},
 		});

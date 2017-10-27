@@ -1,4 +1,4 @@
-var ip = 'http://192.168.1.120:8080';
+var ip = 'http://192.168.0.90:8080';
 
 var vm = new Vue();
 
@@ -6,8 +6,9 @@ $(function() {
 	if(localStorage.userId) {
 
 	}
+	localStorage.userId = 814;
 	post('/webUser/findUserMessage', {
-		userId: 837
+		userId: localStorage.userId
 	}, function(data) {
 		//1:个人 	2:企业
 		localStorage.type = data.result.type;
@@ -15,6 +16,8 @@ $(function() {
 		localStorage.registerState = data.result.regist;
 		//0:企业待审核	1:企业已审核
 		localStorage.expireState = data.result.expire;
+		//企业名称
+		localStorage.companyname = data.result.orgName;
 	})
 })
 
@@ -33,6 +36,7 @@ function post(url, data, callback, callback1) {
 		traditional: true,
 		data: data,
 		success: function(data) {
+			console.log(data);
 			vm.$dialog.loading.close();
 			if(data.result_code != 1) {
 				new Vue().$dialog.alert({

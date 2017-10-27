@@ -22,12 +22,29 @@
 		<link rel="stylesheet" href="../../static/css/common.css" />
 		<script src="../../js/config.js" type="text/javascript" charset="utf-8"></script>
 
-
-
-
 	</head>
 
 	<body>
+		
+		<script type="text/javascript" charset="utf-8">
+			var Request = new QueryString();
+			var itemid = Request["id"];
+			var brief,companyname,gangwei,startdate,enddate;
+			if (itemid) {
+				post1('/webQz/QiuzhiById',false, {
+					"userId": localStorage.userId,
+				}, function(data) {
+					console.log(data);
+					var workDic = JSON.parse(data.result.experience);
+					var obj = workDic[itemid];
+					this.companyname = obj.companyname;
+					this.gangwei = obj.gangwei;
+					this.startdate = obj.startdate;
+					this.enddate = obj.enddate;
+					this.brief = obj.brief;
+				})
+			}
+		</script>
 		<div id="app">
 			<section class="zp-body">
 				<div class="zp-list overflow-h">
@@ -74,71 +91,92 @@
 		var vm = new Vue({
 			el: '#app',
 			data: {
-				companyname: '',
-				gangwei: '',
-				startdate: '',
-				enddate: '',
-				brief: ''
+				companyname: this.companyname,
+				gangwei: this.gangwei,
+				startdate: this.startdate,
+				enddate: this.enddate,
+				brief: this.brief
 			},
 			methods: {
-
-                update(){
-                    if(!start()){
-                        return false;
-                    }
-                    if(vm.enddate!=''&&!end()){
-                        return false;
-                    }
-                    vm.companyname=Trim(vm.companyname,'g');
-                    vm.gangwei=Trim(vm.gangwei,'g');
-                    if (vm.companyname=="") {
-                        alert('请填写公司名称')
-                        return
-                    }
-                    if (vm.gangwei=="") {
-                        alert('请填写你的职位')
-                        return
-                    }
-
-                    if ($('.start-time').val()=="") {
-                        alert('请选择入职时间')
-                        return
-                    }
-                    if (vm.brief=="") {
-                        alert('请填写工作内容')
-                        return
-                    }
-
-                    post('/webQz/editPersonalBasicInfo', {
-                        "userId":localStorage.userId,
-                        "id":"",
-                        "publishId":"",
-                        "companyname":vm.companyname,
-                        "gangwei":vm.gangwei,
-                        "startdate":vm.startdate,
-                        "enddate":vm.enddate,
-                        "brief":vm.brief
-                    }, function(data) {
-                        console.log(data);
-                        if (data.result_code == '1'){
-                            alert("保存成功!");
-                            window.location.href="jianli.html";
-                        }else {
-                            alert("发布失败，请重试！");
-                        }
-                    })
-                }
-
+				update() {
+					if (!start()) {
+						return false;
+					}
+					if (vm.enddate != '' && !end()) {
+						return false;
+					}
+					vm.companyname = Trim(vm.companyname, 'g');
+					vm.gangwei = Trim(vm.gangwei, 'g');
+					if (vm.companyname == "") {
+						alert('请填写公司名称')
+						return
+					}
+					if (vm.gangwei == "") {
+						alert('请填写你的职位')
+						return
+					}
+					if ($('.start-time').val() == "") {
+						alert('请选择入职时间')
+						return
+					}
+					if (vm.brief == "") {
+						alert('请填写工作内容')
+						return
+					}
+					var id = "";
+					var publishId = "";
+					if (localStorage.jobWanId) {
+						id = localStorage.jobWanId;
+					}
+					if (localStorage.publishId) {
+						publishId = localStorage.publishId;
+					}
+					var dataa;
+					if (itemid) {
+						dataa = {
+							"userId": localStorage.userId,
+							"id": id,
+							"publishId": publishId,
+							"companyname": vm.companyname,
+							"gangwei": vm.gangwei,
+							"startdate": vm.startdate,
+							"enddate": vm.enddate,
+							"brief": vm.brief,
+							"operationType": 1,
+							"experienceIndex": itemid
+						}
+					} else {
+						dataa = {
+							"userId": localStorage.userId,
+							"id": id,
+							"publishId": publishId,
+							"companyname": vm.companyname,
+							"gangwei": vm.gangwei,
+							"startdate": vm.startdate,
+							"enddate": vm.enddate,
+							"brief": vm.brief
+						}
+					}
+					post('/webQz/editPersonalBasicInfo', dataa,
+						function(data) {
+							console.log(data);
+							if (data.result_code == '1') {
+								alert("保存成功!");
+								window.location.href = "jianli.html";
+							} else {
+								alert("发布失败，请重试！");
+							}
+						})
+				}
 			}
 		})
-
 		var startdate = vm.startdate;
 
 		function start() {
 			var endTime = vm.startdate;
 			var end = new Date(endTime.replace("-", "/").replace("-", "/"));
 			var current = new Date();
-			if(end > current) {
+			if (end > current) {
 				vm.$dialog.alert({
 					mes: '入职时间必须在今天之前!'
 				});
@@ -147,14 +185,13 @@
 			}
 			return true;
 		}
-
 		var enddate = vm.enddate;
 
 		function end() {
 			var endTime = vm.enddate;
 			var end = new Date(endTime.replace("-", "/").replace("-", "/"));
 			var current = new Date();
-			if(end > current) {
+			if (end > current) {
 				vm.$dialog.alert({
 					mes: '离职时间必须在今天之前!'
 				});
@@ -164,19 +201,14 @@
 			return true;
 		}
 
-        function Trim(str,is_global){
-
-
-            var result;
-
-            result = str.replace(/(^\s+)|(\s+$)/g,"");
-
-            if(is_global.toLowerCase()=="g"){
-                result = result.replace(/\s/g,"");
-            }
-            return result;
-
-        }
+		function Trim(str, is_global) {
+			var result;
+			result = str.replace(/(^\s+)|(\s+$)/g, "");
+			if (is_global.toLowerCase() == "g") {
+				result = result.replace(/\s/g, "");
+			}
+			return result;
+		}
 	</script>
 
 </html>
