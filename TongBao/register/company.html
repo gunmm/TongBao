@@ -189,13 +189,13 @@
 			post('/webItem/ItemData', {
 				classId: "009"
 			}, function(data) {
-				vm.companyscales = data.result.resultList;
+				vm.companyscales = data.result;
 			})
 
 			post('/webItem/ItemData', {
 				classId: "010"
 			}, function(data) {
-				vm.companytypes = data.result.resultList;
+				vm.companytypes = data.result;
 			})
 		});
 

@@ -23,11 +23,36 @@
 		<link rel="stylesheet" href="../../static/css/zhaopin-index.css" />
 		<script src="../../js/config.js" type="text/javascript" charset="utf-8"></script>
 
-
-
 	</head>
 
 	<body>
+		<script type="text/javascript" charset="utf-8">
+			var name, phone, email, birth, evaluation, bigdata, isboy, provinceId, cityId, provincee, cityy;
+			post1('/webQz/QiuzhiById', false, {
+				"userId": localStorage.userId,
+			}, function(data) {
+				this.bigdata = data.result;
+				console.log(data);
+				if (data.result.name) {
+					this.name = data.result.name;
+					this.phone = data.result.phone;
+					this.email = data.result.email;
+					this.birth = data.result.birth;
+					this.evaluation = data.result.evaluation;
+					this.provinceId = data.result.provinceId;
+					this.cityId = data.result.cityId;
+					this.provincee = data.result.province;
+					this.cityy = data.result.city;
+					if (data.result.sex == '男') {
+						this.isboy = true;
+						$('#gender').val(1);
+					} else {
+						this.isboy = false;
+						$('#gender').val(2);
+					}
+				}
+			})
+		</script>
 
 		<div id="app">
 			<section class="zp-body zhaobiao">
@@ -53,19 +78,19 @@
 				<div class="zp-list overflow-h">
 					<span class="fl">工作经验</span>
 					<span class="fr zp-next select-btn">
-						<select v-model="jingyan">
-							<option value="">不限</option>
+					<select v-model="jingyan" id="jingyan">
+						<option value="">不限</option>
 	                		<option v-for="item in gzjy" :value="item.itemCode">{{item.itemName}}</option>
 	            		</select>
 						<i class="ico ico-right1"></i>
 					</span>
 				</div>
-				<div class="zp-list overflow-h">
+				<div id="workTitle" class="zp-list overflow-h">
 					<span class="fl">工作职称</span>
 					<span class="fr zp-next select-btn">
-				<select   v-model="zhicheng" class="gzzc">
+				<select  v-model="zhicheng"  class="gzzc">
 	                <option value="">请选择</option>
-	                <option v-for="item in gzzc" :value="item.itemCode">{{item.itemName}}</option>
+	                <option v-for="item in gzzc" :value="item.itemCode"  >{{item.itemName}}</option>
 	            </select><i class="ico ico-right1"></i></span>
 				</div>
 				<div class="zp-list overflow-h">
@@ -118,138 +143,157 @@
 	</body>
 
 	<script type="text/javascript">
-
-
-        //经验要求
-        getDicTable(true,"004",function (data) {
-            vm.gzjy = data.result.resultList;
-        })
-
-        //职称要求
-        getDicTable(true,"005",function (data) {
-            vm.gzzc = data.result.resultList;
-        })
-
-        var province;
-        var city;
-
-        getCity(function(p, c) {
-            province = p;
-            city = c;
-        });
-
-		var vm = new Vue({
-			el: '#app',
-			data: {
-				name: '',
-				isboy: true,
-				birth: '',
-				jingyan: '',
-				gzjy: [],
-				zhicheng: '',
-				gzzc: [],
-				phone: '',
-				email: '',
-				province: province,
-				city: city,
-                evaluation: '',
-			},
-			methods: {
-				chooseaddress: function() {
-					$("#sl-dizhi").show();
-				},
-				selectprovince: function(id, name) {
-					$("#choosedprovincename").val(name);
-					$("#choosedprovince").val(id);
-					$("#choosedcity").val('');
-				},
-				selectcity: function(id, name) {
-					$("#city").html($("#choosedprovincename").val() + ' ' + name);
-					$("#choosedcity").val(id);
-					$("#sl-dizhi").hide();
-				},
-                update(){
-                    if(!checkBirth()||!checkEmail()||!checkTel()){
-                        return false;
-                    }
-
-                    vm.name=Trim(vm.name,'g');
-                    if (vm.name=="") {
-                        alert('请填写姓名')
-                        return
-                    }
-                    if ($('.kbtn')=="") {
-                        alert('请填写出生日期')
-                        return
-                    }
-                    if ($('.gzzc')=="") {
-                        alert('请填写出生日期')
-                        return
-                    }
-                    if ($('#city').text()=="请选择") {
-                        alert('请填写所在城市')
-                        return
-                    }
-
-                    post('/webQz/editPersonalBasicInfo', {
-                        "userId":localStorage.userId,
-                        "id":"",
-						"publishId":"",
-						"name":vm.name,
-						"gender":$('#gender').val(),
-						"birth":vm.birth,
-						"exprience":vm.jingyan,
-						"professionLevel":vm.zhicheng,
-						"phone":vm.phone,
-						"email":vm.email,
-						"province":$("#choosedprovince").val(),
-						"city":$("#choosedcity").val(),
-						"evaluation":vm.evaluation
-                    }, function(data) {
-                        console.log(data);
-                        if (data.result_code == '1'){
-                            alert("保存成功!");
-                            window.location.href="jianli.html";
-                        }else {
-                            alert("发布失败，请重试！");
-                        }
-                    })
-                }
+		 //经验要求
+		getDicTable(true, "004", function(data) {
+				vm.gzjy = data.result;
+				if (bigdata.exprience) {
+					for (var i = 0; i < vm.gzjy.length; i++) {
+						var obj = vm.gzjy[i];
+						if (obj.itemName == bigdata.exprience) {
+							vm.jingyan = obj.itemCode;
+						}
+					}
+				}
+			})
+			//职称要求
+		 getDicTable(true, "005", function(data) {
+			vm.gzzc = data.result;
+			if (bigdata.profession) {
+				for (var i = 0; i < vm.gzzc.length; i++) {
+					var obj = vm.gzzc[i];
+					if (obj.itemName == bigdata.profession) {
+						vm.zhicheng = obj.itemCode;
+					}
+				}
 			}
 		})
-
-		//选择出生日期
+		var province;
+		var city;
+		getCity(function(p, c) {
+			province = p;
+			city = c;
+			if(this.cityId){
+				selectProvinceAndCity();
+			}
+			
+		});
+		var vm = new Vue({
+				el: '#app',
+				data: {
+					name: this.name,
+					isboy: this.isboy,
+					birth: this.birth,
+					jingyan: '',
+					gzjy: [],
+					zhicheng: '',
+					gzzc: [],
+					phone: this.phone,
+					email: this.email,
+					province: province,
+					city: city,
+					evaluation: this.evaluation,
+				},
+				methods: {
+					chooseaddress: function() {
+						$("#sl-dizhi").show();
+					},
+					selectprovince: function(id, name) {
+						$("#choosedprovincename").val(name);
+						$("#choosedprovince").val(id);
+						$("#choosedcity").val('');
+					},
+					selectcity: function(id, name) {
+						$("#city").html($("#choosedprovincename").val() + ' ' + name);
+						$("#choosedcity").val(id);
+						$("#sl-dizhi").hide();
+					},
+					update() {
+						if (!checkBirth() || !checkEmail() || !checkTel()) {
+							return false;
+						}
+						vm.name = Trim(vm.name, 'g');
+						if (vm.name == "") {
+							alert('请填写姓名')
+							return
+						}
+						if ($('.kbtn') == "") {
+							alert('请填写出生日期')
+							return
+						}
+						if ($('.gzzc') == "") {
+							alert('请填写出生日期')
+							return
+						}
+						if ($('#city').text() == "请选择") {
+							alert('请填写所在城市')
+							return
+						}
+						var id = "";
+						var publishId = "";
+						if (localStorage.jobWanId) {
+							id = localStorage.jobWanId;
+						}
+						if (localStorage.publishId) {
+							publishId = localStorage.publishId;
+						}
+						post('/webQz/editPersonalBasicInfo', {
+							"userId": localStorage.userId,
+							"id": id,
+							"publishId": publishId,
+							"name": vm.name,
+							"gender": $('#gender').val(),
+							"birth": vm.birth,
+							"exprience": vm.jingyan,
+							"professionLevel": vm.zhicheng,
+							"phone": vm.phone,
+							"email": vm.email,
+							"province": $("#choosedprovince").val(),
+							"city": $("#choosedcity").val(),
+							"evaluation": vm.evaluation
+						}, function(data) {
+							console.log(data);
+							if (data.result_code == '1') {
+								alert("保存成功!");
+								window.location.href = "jianli.html";
+							} else {
+								alert("发布失败，请重试！");
+							}
+						})
+					}
+				}
+			})
+			//选择出生日期
 		var birth = vm.birth;
 
 		function checkBirth() {
-			var endTime = vm.birth;
-			var end = new Date(endTime.replace("-", "/").replace("-", "/"));
-			var current = new Date();
-			if(end > current) {
-				vm.$dialog.alert({
-					mes: '出生日期必须在今天之前!'
-				});
-				vm.birth = birth;
-				return false;
+				var endTime = vm.birth;
+				var end = new Date(endTime.replace("-", "/").replace("-", "/"));
+				var current = new Date();
+				if (end > current) {
+					vm.$dialog.alert({
+						mes: '出生日期必须在今天之前!'
+					});
+					vm.birth = birth;
+					return false;
+				}
+				return true;
 			}
-			return true;
-		}
+			//检查电话格式
 
-		//检查电话格式
 		function checkTel() {
-			if(!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.phone))) {
-				vm.$dialog.alert({
-					mes: '电话格式不正确!'
-				});
-				return false;
+				if (!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.phone))) {
+					vm.$dialog.alert({
+						mes: '电话格式不正确!'
+					});
+					return false;
+				}
+				return true;
 			}
-			return true;
-		}
+			//检查邮箱格式
 
-		//检查邮箱格式
 		function checkEmail() {
 			var email = vm.email;
-			if(!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+			if (!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
 				vm.$dialog.alert({
 					mes: 'email格式不正确！请重新输入!'
 				});
@@ -258,46 +302,44 @@
 			return true;
 		}
 
+		function selectProvinceAndCity() {
+			$("#choosedprovincename").val(this.provincee);
+			$("#choosedprovince").val(this.provinceId);
+			$("#city").html($("#choosedprovincename").val() + ' ' + this.cityy);
+			$("#choosedcity").val(this.cityId);
+		}
 		$(function() {
 			//选择性别
 			$('.orsex').click(function() {
-				$(this).addClass('orcolor');
-				$(this).parent('span').siblings('span').children('i').removeClass('orcolor');
-				var gender = $(this).parent().data('value');
-				$('#gender').val(gender);
-			})
-
-			//选择省份
+					$(this).addClass('orcolor');
+					$(this).parent('span').siblings('span').children('i').removeClass('orcolor');
+					var gender = $(this).parent().data('value');
+					$('#gender').val(gender);
+				})
+				//选择省份
 			$('.province li').click(function() {
 				$('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
 				$(this).css('background', '#FFFFFF').siblings('.province li').css('background', '#ededed');
-
 			});
-
 			//选择城市
 			$('.city li').click(function() {
 				$('.address span').text($(this).text())
 				$('.zhiwei').text($(this).text())
-				//					$(this).addClass('on-blue').siblings('.job-list li').removeClass('on-blue');
+					//					$(this).addClass('on-blue').siblings('.job-list li').removeClass('on-blue');
 				$('.city li ').removeClass('on-blue');
 				$(this).addClass('on-blue');
 				$('.tab-panl').addClass('none')
 			});
 		})
 
-        function Trim(str,is_global){
-
-
-            var result;
-
-            result = str.replace(/(^\s+)|(\s+$)/g,"");
-
-            if(is_global.toLowerCase()=="g"){
-                result = result.replace(/\s/g,"");
-            }
-            return result;
-
-        }
+		function Trim(str, is_global) {
+			var result;
+			result = str.replace(/(^\s+)|(\s+$)/g, "");
+			if (is_global.toLowerCase() == "g") {
+				result = result.replace(/\s/g, "");
+			}
+			return result;
+		}
 	</script>
 
 </html>

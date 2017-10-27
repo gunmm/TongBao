@@ -2,21 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c3ce519-15ad-4a61-8796-eb13d5524729" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/fabu.html" afterPath="$PROJECT_DIR$/TongBao/fabu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/zhaopin/employment.html" afterPath="$PROJECT_DIR$/TongBao/home/zhaopin/employment.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/home/zhaopin/tousu.html" afterPath="$PROJECT_DIR$/TongBao/home/zhaopin/tousu.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/js/config.js" afterPath="$PROJECT_DIR$/TongBao/js/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/publish/fabugongying.html" afterPath="$PROJECT_DIR$/TongBao/publish/fabugongying.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/publish/fabuzhaobiao.html" afterPath="$PROJECT_DIR$/TongBao/publish/fabuzhaobiao.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/publish/fabuzhaopin.html" afterPath="$PROJECT_DIR$/TongBao/publish/fabuzhaopin.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/publish/jianli/gongzuojl.html" afterPath="$PROJECT_DIR$/TongBao/publish/jianli/gongzuojl.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/publish/jianli/jianli.html" afterPath="$PROJECT_DIR$/TongBao/publish/jianli/jianli.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/publish/jianli/jianlibaseinfo.html" afterPath="$PROJECT_DIR$/TongBao/publish/jianli/jianlibaseinfo.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/publish/jianli/jiaoyujl.html" afterPath="$PROJECT_DIR$/TongBao/publish/jianli/jiaoyujl.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/publish/jianli/qiwanggz.html" afterPath="$PROJECT_DIR$/TongBao/publish/jianli/qiwanggz.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/register/company.html" afterPath="$PROJECT_DIR$/TongBao/register/company.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TongBao/register/register.html" afterPath="$PROJECT_DIR$/TongBao/register/register.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,8 +26,8 @@
       <file leaf-file-name="jianli.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TongBao/publish/jianli/jianli.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="36" column="38" lean-forward="false" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+            <state relative-caret-position="270">
+              <caret line="18" column="73" lean-forward="true" selection-start-line="18" selection-start-column="73" selection-end-line="18" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -43,8 +36,8 @@
       <file leaf-file-name="jiaoyujl.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TongBao/publish/jianli/jiaoyujl.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1770">
-              <caret line="118" column="22" lean-forward="false" selection-start-line="102" selection-start-column="20" selection-end-line="118" selection-end-column="22" />
+            <state relative-caret-position="2040">
+              <caret line="136" column="20" lean-forward="false" selection-start-line="136" selection-start-column="20" selection-end-line="136" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -54,7 +47,7 @@
         <entry file="file://$PROJECT_DIR$/TongBao/publish/jianli/qiwanggz.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="3780">
-              <caret line="252" column="25" lean-forward="false" selection-start-line="247" selection-start-column="29" selection-end-line="252" selection-end-column="25" />
+              <caret line="252" column="21" lean-forward="false" selection-start-line="247" selection-start-column="29" selection-end-line="252" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -64,7 +57,7 @@
         <entry file="file://$PROJECT_DIR$/TongBao/publish/jianli/jianlibaseinfo.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="3120">
-              <caret line="208" column="33" lean-forward="false" selection-start-line="208" selection-start-column="0" selection-end-line="209" selection-end-column="0" />
+              <caret line="208" column="22" lean-forward="false" selection-start-line="208" selection-start-column="0" selection-end-line="209" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -193,8 +186,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="204" />
-    <option name="y" value="43" />
+    <option name="x" value="170" />
+    <option name="y" value="32" />
     <option name="width" value="1603" />
     <option name="height" value="915" />
   </component>
@@ -216,7 +209,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -247,8 +240,8 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -410,14 +403,15 @@
       <workItem from="1508916632801" duration="143000" />
       <workItem from="1508916905216" duration="1123000" />
       <workItem from="1508919135547" duration="12000" />
+      <workItem from="1509074077804" duration="47000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="216308000" />
+    <option name="totallyTimeSpent" value="216355000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="204" y="43" width="1603" height="915" extended-state="0" />
+    <frame x="170" y="32" width="1603" height="915" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -432,7 +426,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297491" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2568866" sideWeight="0.9148936" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2600897" sideWeight="0.9148936" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -484,13 +478,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/TongBao/home/zhaopin/employment.html</url>
-          <line>540</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
@@ -703,8 +690,6 @@
           <caret line="44" column="98" lean-forward="true" selection-start-line="27" selection-start-column="8" selection-end-line="44" selection-end-column="98" />
           <folding>
             <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#25148#26572#0" expanded="false" />
-            <element signature="e#26585#46903#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -818,7 +803,7 @@
     <entry file="file://$PROJECT_DIR$/TongBao/publish/jianli/jianlibaseinfo.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3120">
-          <caret line="208" column="33" lean-forward="false" selection-start-line="208" selection-start-column="0" selection-end-line="209" selection-end-column="0" />
+          <caret line="208" column="22" lean-forward="false" selection-start-line="208" selection-start-column="0" selection-end-line="209" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -826,23 +811,23 @@
     <entry file="file://$PROJECT_DIR$/TongBao/publish/jianli/qiwanggz.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3780">
-          <caret line="252" column="25" lean-forward="false" selection-start-line="247" selection-start-column="29" selection-end-line="252" selection-end-column="25" />
+          <caret line="252" column="21" lean-forward="false" selection-start-line="247" selection-start-column="29" selection-end-line="252" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TongBao/publish/jianli/jiaoyujl.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1770">
-          <caret line="118" column="22" lean-forward="false" selection-start-line="102" selection-start-column="20" selection-end-line="118" selection-end-column="22" />
+        <state relative-caret-position="2040">
+          <caret line="136" column="20" lean-forward="false" selection-start-line="136" selection-start-column="20" selection-end-line="136" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TongBao/publish/jianli/jianli.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="36" column="38" lean-forward="false" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+        <state relative-caret-position="270">
+          <caret line="18" column="73" lean-forward="true" selection-start-line="18" selection-start-column="73" selection-end-line="18" selection-end-column="73" />
           <folding />
         </state>
       </provider>

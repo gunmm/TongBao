@@ -25,9 +25,6 @@
 		<script src="static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
 
-
-
-
 	</head>
 
 	<body>
@@ -37,11 +34,11 @@
 				<div>
 					<!---->
 					<div class="m-grids-2">
-						<a href="publish/jianli/jianli.html" class="grids-item">
+						<a id="fabuqiuzhi" class="grids-item">
 							<div class="grids-icon"><img src="static/img/qiuzhi.png"></div>
 							<div class="grids-txt"><span>求职信息</span></div>
 						</a>
-						<a id="fabuzhaopin"  class="grids-item">
+						<a id="fabuzhaopin" class="grids-item">
 							<div class="grids-icon"><img src="static/img/zhaopin.png"></div>
 							<div class="grids-txt"><span>发布招聘</span></div>
 						</a>
@@ -84,22 +81,19 @@
 	<script type="text/javascript">
 		$(function() {
 			$('#xiaoxi_tip').hide();
-
 			$('router-link').click(function() {
 				//				window.location.href = $(this).attr('to');
 			})
 		})
-
-		apiready = function() {
+		 apiready = function() {
 			api.parseTapmode();
 		}
-
 		var tab = new auiTab({
 				element: document.getElementById("footer"),
 				index: 2
 			},
 			function(ret) {
-				switch(ret.index) {
+				switch (ret.index) {
 					case 1:
 						window.location.replace("home.html")
 						break;
@@ -113,45 +107,50 @@
 						break;
 				}
 			});
-
-		$('#fabuzhaopin').click(function () {
-            if(!localStorage.userId){
-                window.location.href="register/login.html";
-            }else{
-                post('/webUser/findUserMessage', {
-                    userId: localStorage.userId
-                }, function(data) {
-                    if(data.result.resultMap.type == 1){
-                        alert("个人用户不能发布招聘信息!");
-                    }else {
-                        if(data.result.resultMap.regist == 0){
-                            window.location.href="register/company.html";
-                        }else {
-                            if(data.result.resultMap.expire == 0){
-                                alert("您的注册申请正在审核中,审核通过后会有消息提醒");
-                            }else {
-                                window.location.href="publish/fabuzhaopin.html";
-                            }
-                        }
-                    }
-                })
-            }
-        })
-        $('#fabuzhaobiao').click(function () {
-            if(!localStorage.userId){
-                window.location.href="register/login.html";
-            }else{
-                window.location.href="publish/fabuzhaobiao.html";
-            }
-        })
-        $('#fabugongying').click(function () {
-            if(!localStorage.userId){
-                window.location.href="register/login.html";
-            }else{
-                window.location.href="publish/fabugongying.html";
-            }
-        })
+		$('#fabuqiuzhi').click(function() {
+			if (!localStorage.userId) {
+				window.location.href = "register/login.html";
+			} else {
+				if (localStorage.type == 2) {
+					alert("企业用户不能发布求职信息!");
+				} else {
+					window.location.href = "publish/jianli/jianli.html";
+				}
+			}
+		})
+		$('#fabuzhaopin').click(function() {
+			if (!localStorage.userId) {
+				window.location.href = "register/login.html";
+			} else {
+				if (localStorage.type == 1) {
+					alert("个人用户不能发布招聘信息!");
+				} else {
+					if (localStorage.registerState == 0) {
+						window.location.href = "register/company.html";
+					} else {
+						if (localStorage.expireState == 0) {
+							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
+						} else {
+							window.location.href = "publish/fabuzhaopin.html";
+						}
+					}
+				}
+			}
+		})
+		 $('#fabuzhaobiao').click(function() {
+			if (!localStorage.userId) {
+				window.location.href = "register/login.html";
+			} else {
+				window.location.href = "publish/fabuzhaobiao.html";
+			}
+		})
+		 $('#fabugongying').click(function() {
+			if (!localStorage.userId) {
+				window.location.href = "register/login.html";
+			} else {
+				window.location.href = "publish/fabugongying.html";
+			}
+		})
 	</script>
-
 
 </html>

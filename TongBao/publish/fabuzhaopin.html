@@ -1,110 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>招聘信息</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="renderer" content="webkit">
-    <!--UC 浏览器-->
-    <meta name="screen-orientation" content="portrait">
-    <meta name="full-screen" content="yes">
-    <!--QQ x5内核-->
-    <meta name="x5-orientation" content="portrait">
-    <meta name="x5-fullscreen" content="true">
-    <meta name="format-detection" content="telephone=no, email=no">
-    <link rel="stylesheet" type="text/css" href="../static/lib/css/mkui.css">
-    <link rel="stylesheet" href="../static/lib/css/ydui.rem.css">
-    <script src="../static/lib/js/jquery-1.11.1.min.js"></script>
-    <script src="../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
 
-    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
-    <link rel="stylesheet" href="../static/css/zhaopin-index.css">
-    <script src="../js/config.js" type="text/javascript" charset="utf-8"></script>
+	<head>
+		<meta charset="UTF-8">
+		<title>招聘信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<!--UC 浏览器-->
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<!--QQ x5内核-->
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+		<link rel="stylesheet" type="text/css" href="../static/lib/css/mkui.css">
+		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css">
+		<script src="../static/lib/js/jquery-1.11.1.min.js"></script>
+		<script src="../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
 
+		<link rel="stylesheet" type="text/css" href="../static/css/common.css">
+		<link rel="stylesheet" href="../static/css/zhaopin-index.css">
+		<script src="../js/config.js" type="text/javascript" charset="utf-8"></script>
 
+	</head>
 
+	<body class="bg-fff">
 
-</head>
-<body class="bg-fff">
+		<script type="text/javascript" charset="utf-8">
+			var companyname;
+			if (!localStorage.userId) {
+				window.location.href = "../register/login.html";
+			} else {
+				vm.companyname = localStorage.companyname;
+				this.companyname = localStorage.companyname;
+				if (localStorage.type == 1) {
+					alert("个人用户不能发布招聘信息!");
+					window.location.href = "../fabu.html";
+				} else {
+					if (localStorage.registerState == 0) {
+						window.location.href = "register/company.html";
+					} else {
+						if (localStorage.expireState == 0) {
+							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
+							window.location.href = "../fabu.html";
+						}
+					}
+				}
+				//				post('/webUser/findUserMessage', {
+				//					userId: localStorage.userId
+				//				}, function(data) {
+				//					vm.companyname = data.result.orgName;
+				//					this.companyname = data.result.orgName;
+				//					if (data.result.resultMap.type == 1) {
+				//						alert("个人用户不能发布招聘信息!");
+				//						window.location.href = "../fabu.html";
+				//					} else {
+				//						if (data.result.resultMap.regist == 0) {
+				//							window.location.href = "../register/company.html";
+				//						} else {
+				//							if (data.result.resultMap.expire == 0) {
+				//								alert("您的注册申请正在审核中,审核通过后会有消息提醒");
+				//								window.location.href = "../fabu.html";
+				//							}
+				//						}
+				//					}
+				//				})
+			}
+		</script>
 
-<script type="text/javascript" charset="utf-8">
-    localStorage.userId = 813;
-    var companyname;
-    if(!localStorage.userId){
-        window.location.href="../register/login.html";
-    }else{
-        post('/webUser/findUserMessage', {
-            userId: localStorage.userId
-        }, function(data) {
-            vm.companyname = data.result.orgName;
-            this.companyname = data.result.orgName;
-            if(data.result.resultMap.type == 1){
-                alert("个人用户不能发布招聘信息!");
-                window.location.href="../fabu.html";
-            }else {
-                if(data.result.resultMap.regist == 0){
-                    window.location.href="../register/company.html";
-                }else {
-                    if(data.result.resultMap.expire == 0){
-                        alert("您的注册申请正在审核中,审核通过后会有消息提醒");
-                        window.location.href="../fabu.html";
-                    }
-                }
-            }
-        })
-    }
-
-
-</script>
-
-<div id="app" class="overflow-h">
-    <section class="zp-body ">
-        <div class="company-name pl-10">
-            {{companyname}}
-        </div>
-        <div class="zp-list overflow-h">
-            <span class="fl">职位名称</span>
-            <span class="fr ">
+		<div id="app" class="overflow-h">
+			<section class="zp-body ">
+				<div class="company-name pl-10">
+					{{companyname}}
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">职位名称</span>
+					<span class="fr ">
 					<input type="text" placeholder="请填写职位名称" v-model="title"/>
 				</span>
-        </div>
-        <div class="zp-list overflow-h">
-            <span class="fl">岗位类别</span>
-            <span class="fr  select-btn gangwei" @click="choosegangwei()"><span id="gangwei">请选择</span><i
-                    class="ico ico-right1"></i></span>
-        </div>
-        <input type="hidden" id="choosedgangwei"/>
-        <div class="tab-panl none" id="gangweilist">
-            <div class=" overflow-h">
-                <ul class=" fl job">
-                    <li v-for="item in job" :value='item.module'>{{item.itemName}}</li>
-                </ul>
-                <div class="job-list fl none" v-for="item in joblist" >
-                    <ul>
-                        <li v-for="j in item" @click="selectgangwei(j.itemCode,j.itemName)">{{j.itemName}}</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">岗位类别</span>
+					<span class="fr  select-btn gangwei" @click="choosegangwei()"><span id="gangwei">请选择</span><i class="ico ico-right1"></i></span>
+				</div>
+				<input type="hidden" id="choosedgangwei" />
+				<div class="tab-panl none" id="gangweilist">
+					<div class=" overflow-h">
+						<ul class=" fl job">
+							<li v-for="item in job" :value='item.module'>{{item.itemName}}</li>
+						</ul>
+						<div class="job-list fl none" v-for="item in joblist">
+							<ul>
+								<li v-for="j in item" @click="selectgangwei(j.itemCode,j.itemName)">{{j.itemName}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 
-        <div class="zp-list overflow-h">
-            <span class="fl">薪资水平</span>
-            <span class="fr  select-btn">
+				<div class="zp-list overflow-h">
+					<span class="fl">薪资水平</span>
+					<span class="fr  select-btn">
 				<select slot="right" v-model="xinzi" class="select-xizi">
 	                <option value="">请选择</option>
                     <option v-for="item in xinzidic" :value='item.itemCode'>{{item.itemName}}</option>
 
 	            </select>
             </span>
-        </div>
-        <div class="zp-list overflow-h">
-            <span class="fl">福利待遇</span>
-            <span class="fr fu-btn">
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">福利待遇</span>
+					<span class="fr fu-btn">
 
                 <select multiple v-model="fuli">
                     <!--<option value="">请选择</option>-->
@@ -112,376 +122,360 @@
 
                 </select>
             </span>
-        </div>
+				</div>
 
-        <div class="zp-list overflow-h">
-            <p class="overflow-h">
-                <span class="fl ">工作城市</span>
-                <span class="fr  select-btn " @click="chooseaddress()">
+				<div class="zp-list overflow-h">
+					<p class="overflow-h">
+						<span class="fl ">工作城市</span>
+						<span class="fr  select-btn " @click="chooseaddress()">
                     <span id="city">请选择</span>
-                    <i class="ico ico-right1"></i>
-                </span>
-                <input type="hidden" id="choosedprovince"/>
-                <input type="hidden" id="choosedprovincename"/>
-                <input type="hidden" id="choosedcity"/>
-            </p>
-        </div>
+						<i class="ico ico-right1"></i>
+						</span>
+						<input type="hidden" id="choosedprovince" />
+						<input type="hidden" id="choosedprovincename" />
+						<input type="hidden" id="choosedcity" />
+					</p>
+				</div>
 
-        <div class="tab-panl none" id="sl-dizhi">
-            <div class=" overflow-h">
-                <ul class=" province fl">
-                    <li v-for="item in province" @click="selectprovince(item.itemCode,item.name)">{{item.name}}</li>
-                </ul>
-                <div class="city fl none" v-for="item in city">
-                    <ul>
-                        <li v-for="c in item" @click="selectcity(c.itemCode,c.name)">{{c.name}}</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+				<div class="tab-panl none" id="sl-dizhi">
+					<div class=" overflow-h">
+						<ul class=" province fl">
+							<li v-for="item in province" @click="selectprovince(item.itemCode,item.name)">{{item.name}}</li>
+						</ul>
+						<div class="city fl none" v-for="item in city">
+							<ul>
+								<li v-for="c in item" @click="selectcity(c.itemCode,c.name)">{{c.name}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 
-        <div class="zp-list overflow-h">
-            <span class="fl zp-input zp-next">
+				<div class="zp-list overflow-h">
+					<span class="fl zp-input zp-next">
                 <input type="text" placeholder="请填写详细地址" v-model="address"/>
             </span>
-        </div>
+				</div>
 
-        <div class="zp-list overflow-h">
-            <span class="fl">学历要求</span>
-            <span class="fr  select-btn">
+				<div class="zp-list overflow-h">
+					<span class="fl">学历要求</span>
+					<span class="fr  select-btn">
                 <select v-model="xueli">
                     <option value="">不限</option>
                     <option v-for="item in xuelidic" :value='item.itemCode'>{{item.itemName}}</option>
                 </select>
             </span>
-        </div>
+				</div>
 
-        <div class="zp-list overflow-h">
-            <span class="fl">经验要求</span>
-            <span class="fr  select-btn">
+				<div class="zp-list overflow-h">
+					<span class="fl">经验要求</span>
+					<span class="fr  select-btn">
                 <select v-model="jingyan">
                     <option value="">不限</option>
                     <option v-for="item in jingyandic" :value='item.itemCode'>{{item.itemName}}</option>
                 </select>
             </span>
-        </div>
-        <div class="zp-list overflow-h">
-            <span class="fl">职称要求</span>
-            <span class="fr  select-btn">
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">职称要求</span>
+					<span class="fr  select-btn">
                 <select v-model="zhicheng">
                     <option value="">不限</option>
                     <option v-for="item in zhichengdic" :value='item.itemCode'>{{item.itemName}}</option>
                 </select>
             </span>
-        </div>
+				</div>
 
-        <div class="zp-list overflow-h">
-            <span class="fl">性别要求</span>
-            <span class="fr  select-btn">
+				<div class="zp-list overflow-h">
+					<span class="fl">性别要求</span>
+					<span class="fr  select-btn">
                 <select v-model="gender">
                     <option value="">不限</option>
                     <option v-for="item in genderdic" :value='item.id'>{{item.name}}</option>
                 </select>
             </span>
-        </div>
+				</div>
 
-        <div class="zp-list overflow-h">
-            <span class="fl">年龄要求</span>
-            <span class="fr  select-btn">
+				<div class="zp-list overflow-h">
+					<span class="fl">年龄要求</span>
+					<span class="fr  select-btn">
                 <select v-model="age">
                     <option value="">不限</option>
                     <option v-for="item in agedic" :value='item.itemCode'>{{item.itemName}}</option>
                 </select>
             </span>
-        </div>
+				</div>
 
-        <div class="zoverflow-h">
-        <p class="rz-req">任职要求</p>
-        <p>
-        <textarea class="text-body" name="" rows="" cols="" placeholder="请填写职位和岗位要求"
-        v-model="content"></textarea>
-        </p>
-        </div>
+				<div class="zoverflow-h">
+					<p class="rz-req">任职要求</p>
+					<p>
+						<textarea class="text-body" name="" rows="" cols="" placeholder="请填写职位和岗位要求" v-model="content"></textarea>
+					</p>
+				</div>
 
-        <div class="zp-list overflow-h">
-        <span class="fl">招聘人数</span>
-        <span class="fr zp-next">
+				<div class="zp-list overflow-h">
+					<span class="fl">招聘人数</span>
+					<span class="fr zp-next">
         <input type="number" placeholder="请填写招聘人数" v-model="quantity"/>
         </span>
-        </div>
-        <div class="zp-list overflow-h">
-        <span class="fl">联系人</span>
-        <span class="fr zp-next">
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">联系人</span>
+					<span class="fr zp-next">
         <input type="text" placeholder="请填写联系人姓名" v-model="contact"/>
         </span>
-        </div>
-        <div class="zp-list overflow-h">
-        <span class="fl">联系电话</span>
-        <span class="fr zp-next">
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">联系电话</span>
+					<span class="fr zp-next">
         <input type="tel" placeholder="请填写联系电话" v-model="phone" onchange="checkTel()"/>
         </span>
-        </div>
-        <div class="zp-list overflow-h">
-        <span class="fl">电子邮箱</span>
-        <span class="fr zp-next">
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">电子邮箱</span>
+					<span class="fr zp-next">
         <input type="email" placeholder="请填写电子邮箱" v-model="email" onchange="checkEmail()"/>
         </span>
-        </div>
-    </section>
-    <div class="h-20"></div>
-    <div class="sure-btn " @click="fabu()">确认发布</div>
-    <div class="h-20"></div>
-    <div class="m-mask background none " id="show">
-    </div>
-</div>
+				</div>
+			</section>
+			<div class="h-20"></div>
+			<div class="sure-btn " @click="fabu()">确认发布</div>
+			<div class="h-20"></div>
+			<div class="m-mask background none " id="show">
+			</div>
+		</div>
 
-<script src="../static/lib/js/axios.min.js"></script>
-<script>
+		<script src="../static/lib/js/axios.min.js"></script>
+		<script>
+			 //岗位类别
+			var job;
+			var jobList;
+			getDicTable(false, "006", function(data) {
+					var list = data.result;
+					var job = [];
+					var jobList = [];
+					var jobM = {};
+					for (var i = 0; i < list.length; i++) {
+						var obj = list[i];
+						if (!obj.pid) {
+							job.push(obj);
+						} else {
+							jobList.push(obj);
+						}
+					}
+					for (var i = 0; i < job.length; i++) {
+						var array = [];
+						for (var j = 0; j < jobList.length; j++) {
+							if (job[i].id == jobList[j].pid) {
+								array.push(jobList[j]);
+								jobM['' + job[i].id] = array;
+							}
+						}
+					}
+					this.job = job;
+					this.jobList = jobM;
+				})
+				//薪资
+			 getDicTable(true, "001", function(data) {
+					vm.xinzidic = data.result;
+				})
+				//福利待遇
+			var fulidic;
+			getDicTable(false, "002", function(data) {
+					this.fulidic = data.result;
+				})
+				//学历要求
+			 getDicTable(true, "003", function(data) {
+					vm.xuelidic = data.result;
+				})
+				//经验要求
+			 getDicTable(true, "004", function(data) {
+					vm.jingyandic = data.result;
+				})
+				//职称要求
+			 getDicTable(true, "005", function(data) {
+					vm.zhichengdic = data.result;
+				})
+				//年龄要求
+			 getDicTable(true, "012", function(data) {
+				vm.agedic = data.result;
+			})
+			var province;
+			var city;
+			getCity(function(p, c) {
+				province = p;
+				city = c;
+			});
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					companyname: companyname,
+					title: "",
+					xinzidic: [],
+					xinzi: "",
+					fulidic: this.fulidic,
+					fuli: [],
+					province: province,
+					city: city,
+					address: "",
+					xuelidic: [],
+					xueli: "",
+					jingyandic: [],
+					jingyan: "",
+					zhichengdic: [],
+					zhicheng: "",
+					content: "",
+					quantity: "",
+					contact: "",
+					phone: "",
+					email: "",
+					agedic: [],
+					age: "",
+					genderdic: {
+						"1": {
+							"id": 1,
+							"name": "男"
+						},
+						"2": {
+							"id": 2,
+							"name": "女"
+						},
+					},
+					gender: "",
+					job: this.job,
+					joblist: this.jobList,
+				},
+				methods: {
+					selectgangwei: function(id, name) {
+						$("#choosedgangwei").val(id);
+						$("#gangwei").text(name);
+						$("#gangweilist").addClass('none');
+					},
+					choosegangwei: function() {
+						$("#gangweilist").removeClass('none');
+					},
+					chooseaddress: function() {
+						$("#sl-dizhi").show();
+					},
+					selectcity: function(id, name) {
+						$("#city").html($("#choosedprovincename").val() + ' ' + name);
+						$("#choosedcity").val(id);
+						$("#sl-dizhi").hide();
+					},
+					selectprovince: function(id, name) {
+						$("#choosedprovincename").val(name);
+						$("#choosedprovince").val(id);
+						$("#choosedcity").val('');
+					},
+					fabu() {
+						if (!checkEmail() || !checkTel()) {
+							return false;
+						}
+						if (vm.title == "") {
+							alert('请填写职位名称')
+							return;
+						}
+						if ($('#gangwei').text() == '请选择') {
+							alert('请选择岗位类别')
+							return
+						}
+						if ($('.select-xizi').val() == '') {
+							alert('请选择薪资水平')
+							return;
+						}
+						if ($('#city').text() == '请选择') {
+							alert('请选择工作城市')
+							return;
+						}
+						if (vm.address == "") {
+							alert('请填写详细地址')
+							return
+						}
+						if (vm.content == "") {
+							alert('请填写职位和岗位要求')
+							return;
+						}
+						if (vm.quantity == "") {
+							alert('请填写招聘人数')
+							return;
+						}
+						if (vm.contact == "") {
+							alert('请填写联系人姓名')
+							return;
+						}
+						post('/webZp/addZhaopin', {
+							"userId": localStorage.userId,
+							"positionName": vm.title,
+							"post": $("#choosedgangwei").val(),
+							"salary": vm.xinzi,
+							"welfares": vm.fuli,
+							"province": $("#choosedprovince").val(),
+							"city": $("#choosedcity").val(),
+							"address": vm.address,
+							"education": vm.xueli,
+							"experience": vm.jingyan,
+							"professionalRank": vm.zhicheng,
+							"quantity": vm.quantity,
+							"contact": vm.contact,
+							"phone": vm.phone,
+							"email": vm.email,
+							"age": vm.age,
+							"gender": vm.gender,
+							"content": vm.content
+						}, function(data) {
+							if (data.result_code == '1') {
+								alert("发布成功!");
+								window.location.href = "../home/zhaopin/zhaopindetail.html?id=" + data.result
+									.publishId + "&isfb=isfb";
+							} else {
+								alert("发布失败，请重试！");
+							}
+						})
+					},
+				}
+			});
+			 //    var Request=new QueryString();
+			 //    vm.companyname = Request["companyname"];
+			function checkEmail() {
+				var email = vm.email;
+				if (!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+					vm.$dialog.alert({
+						mes: 'email格式不正确！请重新输入!'
+					});
+					return false;
+				}
+				return true;
+			}
 
-    //岗位类别
-    var job;
-    var jobList;
-    getDicTable(false,"006",function (data) {
-        var list = data.result.resultList;
-        var job = [];
-        var jobList = [];
-        var jobM = {};
-        for(var i = 0; i < list.length; i++) {
-            var obj = list[i];
-            if(!obj.pid) {
-                job.push(obj);
-            } else {
-                jobList.push(obj);
-            }
-        }
-        for(var i = 0; i < job.length; i++) {
-            var array = [];
-            for(var j = 0; j < jobList.length; j++) {
-                if(job[i].id == jobList[j].pid) {
-                    array.push(jobList[j]);
-                    jobM['' + job[i].id] = array;
-                }
-            }
-        }
-        this.job = job;
-        this.jobList = jobM;
-    })
+			function checkTel() {
+				if (!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.phone))) {
+					vm.$dialog.alert({
+						mes: '电话格式不正确!'
+					});
+					return false;
+				}
+				return true;
+			}
+			$(function() {
+				$('.province li').click(function() {
+					$('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
+					$(this).css('background', '#FFFFFF').siblings('.province li').css('background', '#ededed');
+				});
+				$('.city li').click(function() {
+						$('.address span').text($(this).text())
+						$('.zhiwei').text($(this).text())
+							//					$(this).addClass('on-blue').siblings('.job-list li').removeClass('on-blue');
+						$('.city li ').removeClass('on-blue');
+						$(this).addClass('on-blue');
+						$('.tab-panl').addClass('none')
+					})
+					/*职位*/
+				$('.job li').click(function() {
+					$('.job-list').eq($(this).index()).removeClass('none').siblings('.job-list').addClass('none');
+					$(this).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
+				});
+			})
+		</script>
 
-    //薪资
-    getDicTable(true,"001",function (data) {
-        vm.xinzidic = data.result.resultList;
-    })
+	</body>
 
-    //福利待遇
-    var fulidic;
-    getDicTable(false,"002",function (data) {
-        this.fulidic = data.result.resultList;
-    })
-
-    //学历要求
-    getDicTable(true,"003",function (data) {
-        vm.xuelidic = data.result.resultList;
-    })
-
-    //经验要求
-    getDicTable(true,"004",function (data) {
-        vm.jingyandic = data.result.resultList;
-    })
-
-    //职称要求
-    getDicTable(true,"005",function (data) {
-        vm.zhichengdic = data.result.resultList;
-    })
-
-    //年龄要求
-    getDicTable(true,"012",function (data) {
-        vm.agedic = data.result.resultList;
-    })
-
-
-    var province;
-    var city;
-
-    getCity(function(p, c) {
-        province = p;
-        city = c;
-    });
-    var vm = new Vue({
-        el: "#app",
-        data: {
-                companyname:companyname,
-                title: "",
-                xinzidic: [],
-                xinzi: "",
-                fulidic: this.fulidic,
-                fuli: [],
-                province: province,
-                city: city,
-                address: "",
-                xuelidic:[],
-                xueli: "",
-                jingyandic:[],
-                jingyan: "",
-                zhichengdic:[],
-                zhicheng: "",
-                content: "",
-                quantity: "",
-                contact: "",
-                phone: "",
-                email: "",
-                agedic:[],
-                age: "",
-                genderdic:{
-                    "1": {"id": 1, "name": "男"},
-                    "2": {"id": 2, "name": "女"},
-                },
-                gender: "",
-                job: this.job,
-                joblist: this.jobList,
-        },
-        methods: {
-            selectgangwei: function (id, name) {
-                $("#choosedgangwei").val(id);
-                $("#gangwei").text(name);
-                $("#gangweilist").addClass('none');
-            },
-            choosegangwei: function () {
-                $("#gangweilist").removeClass('none');
-            },
-            chooseaddress: function () {
-                $("#sl-dizhi").show();
-            },
-            selectcity: function (id, name) {
-                $("#city").html($("#choosedprovincename").val() + ' ' + name);
-                $("#choosedcity").val(id);
-                $("#sl-dizhi").hide();
-            },
-            selectprovince: function (id, name) {
-                $("#choosedprovincename").val(name);
-                $("#choosedprovince").val(id);
-                $("#choosedcity").val('');
-            },
-            fabu() {
-                if (!checkEmail() || !checkTel()) {
-                    return false;
-                }
-                if (vm.title == "") {
-                    alert('请填写职位名称')
-                    return;
-                }
-
-                if ($('#gangwei').text() == '请选择') {
-                    alert('请选择岗位类别')
-                    return
-                }
-
-                if ($('.select-xizi').val() == '') {
-                    alert('请选择薪资水平')
-                    return;
-                }
-                if ($('#city').text() == '请选择') {
-                    alert('请选择工作城市')
-                    return;
-                }
-                if (vm.address == "") {
-                    alert('请填写详细地址')
-                    return
-                }
-
-                if (vm.content == "") {
-                    alert('请填写职位和岗位要求')
-                    return;
-                }
-
-                if (vm.quantity == "") {
-                    alert('请填写招聘人数')
-                    return;
-                }
-
-                if (vm.contact == "") {
-                    alert('请填写联系人姓名')
-                    return;
-                }
-
-                post('/webZp/addZhaopin', {
-                    "userId":localStorage.userId,
-                    "positionName":vm.title,
-                    "post":$("#choosedgangwei").val(),
-                    "salary":vm.xinzi,
-                    "welfares":vm.fuli,
-                    "province":$("#choosedprovince").val(),
-                    "city":$("#choosedcity").val(),
-                    "address":vm.address,
-                    "education":vm.xueli,
-                    "experience":vm.jingyan,
-                    "professionalRank":vm.zhicheng,
-                    "quantity":vm.quantity,
-                    "contact":vm.contact,
-                    "phone":vm.phone,
-                    "email":vm.email,
-                    "age":vm.age,
-                    "gender":vm.gender,
-                    "content":vm.content
-                }, function(data) {
-                    if (data.result_code == '1'){
-                        alert("发布成功!");
-                        window.location.href="../home/zhaopin/zhaopindetail.html?id="+data.result
-                            .publishId+"&isfb=isfb";
-                    }else {
-                        alert("发布失败，请重试！");
-                    }
-                })
-
-            },
-        }
-    });
-
-//    var Request=new QueryString();
-//    vm.companyname = Request["companyname"];
-
-    function checkEmail() {
-        var email = vm.email;
-        if (!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
-            vm.$dialog.alert({mes: 'email格式不正确！请重新输入!'});
-            return false;
-        }
-        return true;
-    }
-
-
-    function checkTel() {
-        if (!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.phone))) {
-            vm.$dialog.alert({mes: '电话格式不正确!'});
-            return false;
-        }
-        return true;
-    }
-
-    $(function () {
-        $('.province li').click(function () {
-            $('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
-            $(this).css('background', '#FFFFFF').siblings('.province li').css('background', '#ededed');
-        });
-        $('.city li').click(function () {
-            $('.address span').text($(this).text())
-            $('.zhiwei').text($(this).text())
-//					$(this).addClass('on-blue').siblings('.job-list li').removeClass('on-blue');
-            $('.city li ').removeClass('on-blue');
-            $(this).addClass('on-blue');
-
-            $('.tab-panl').addClass('none')
-
-        })
-
-        /*职位*/
-        $('.job li').click(function () {
-            $('.job-list').eq($(this).index()).removeClass('none').siblings('.job-list').addClass('none');
-            $(this).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
-        });
-    })
-
-
-</script>
-
-</body>
 </html>

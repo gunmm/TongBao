@@ -17,6 +17,7 @@
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
 		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
+		<script type="text/javascript" src="../../js/config.js"></script>
 		<link rel="stylesheet" href="../../css/mkui.css" />
 		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css" />
 
@@ -35,11 +36,11 @@
 				<div class="tab-panl none" id="gangweilist">
 					<div class=" overflow-h">
 						<ul class=" fl job">
-							<li v-for="item in job">{{item.name}}</li>
+							<li v-for="item in job">{{item.itemName}}</li>
 						</ul>
 						<div class="job-list fl none" v-for="item in joblist">
 							<ul>
-								<li v-for="j in item" @click="selectgangwei(j.id,j.name)">{{j.name}}</li>
+								<li v-for="j in item" @click="selectgangwei(j.itemCode,j.itemName)">{{j.itemName}}</li>
 							</ul>
 						</div>
 					</div>
@@ -49,7 +50,7 @@
 					<span class="fr zp-next select-btn">
 					<select  v-model="companytype" class="info-select1" >
 		                <option value="">不限</option>
-		                <option v-for="item in companytypes" :value="item.k">{{item.v}}</option>
+		                <option v-for="item in companytypes" :value="item.itemCode">{{item.itemName}}</option>
 		            </select></span>
 				</div>
 				<div class="zp-list overflow-h">
@@ -75,7 +76,7 @@
 					<span class="fl">福利待遇</span>
 					<span class="fr zp-next select-btn fuli-btn">
 					<select multiple  v-model="fuli" id="fulidaiyu">
-		                <option v-for="item in fulis" :value="item.k">{{item.v}}</option>
+		                <option v-for="item in fulis" :value="item.itemCode">{{item.itemName}}</option>
 		            </select></span>
 				</div>
 				<div class="zp-list overflow-h">
@@ -83,7 +84,7 @@
 					<span class="fr zp-next select-btn">
 					<select   v-model="jingyan" >
 		                <option value="">不限</option>
-		                <option v-for="item in jingyans" :value="item.k">{{item.v}}</option>
+		                <option v-for="item in jingyans" :value="item.itemCode">{{item.itemName}}</option>
 		            </select></span>
 				</div>
 				<div class="zp-list overflow-h">
@@ -91,7 +92,7 @@
 					<span class="fr zp-next select-btn">
 					<select   v-model="xueli" >
 		                <option value="">不限</option>
-		                <option v-for="item in xuelis" :value="item.k">{{item.v}}</option>
+		                <option v-for="item in xuelis" :value="item.itemCode">{{item.itemName}}</option>
 		            </select></span>
 				</div>
 				<div class="zp-list overflow-h">
@@ -99,7 +100,7 @@
 					<span class="fr zp-next select-btn">
 					<select   v-model="zhicheng" >
 		                <option value="">不限</option>
-		                <option v-for="item in zhichengs" :value="item.k">{{item.v}}</option>
+		                <option v-for="item in zhichengs" :value="item.itemCode">{{item.itemName}}</option>
 		            </select></span>
 				</div>
 			</section>
@@ -110,93 +111,105 @@
 	</body>
 
 	<script type="text/javascript">
+		 //岗位类别
+		var job;
+		var jobList;
+		getDicTable(false, "006", function(data) {
+				var list = data.result;
+				var job = [];
+				var jobList = [];
+				var jobM = {};
+				for (var i = 0; i < list.length; i++) {
+					var obj = list[i];
+					if (!obj.pid) {
+						job.push(obj);
+					} else {
+						jobList.push(obj);
+					}
+				}
+				for (var i = 0; i < job.length; i++) {
+					var array = [];
+					for (var j = 0; j < jobList.length; j++) {
+						if (job[i].id == jobList[j].pid) {
+							array.push(jobList[j]);
+							jobM['' + job[i].id] = array;
+						}
+					}
+				}
+				this.job = job;
+				this.jobList = jobM;
+				//				if (this.bigdata.gangweiId) {
+				//					selectGangweiA();
+				//				}
+			})
+			//公司性质
+		 getDicTable(true, "010", function(data) {
+				vm.companytypes = data.result;
+				//			if (this.bigdata.operationMode) {
+				//				for (var i = 0; i < vm.gongzuofangshis.length; i++) {
+				//					var obj = vm.gongzuofangshis[i];
+				//					if (obj.itemName == this.bigdata.operationMode) {
+				//						vm.gongzuofangshi = obj.itemCode;
+				//					}
+				//				}
+				//			}
+			})
+			//地址
 		var province;
-		$.ajax({
-			type: "get",
-			url: "../../js/province.json",
-			async: false,
-			success: function(data) {
-				province = data;
-			}
+		var city;
+		getCity(function(p, c) {
+			province = p;
+			city = c;
+			//			if (this.bigdata.cityId) {
+			//				selectProvinceAndCity();
+			//			}
 		});
-
+		 //经验要求
+		var jingyans;
+		getDicTable(false, "004", function(data) {
+				this.jingyans = data.result;
+			})
+			//学历要求
+		var xuelis;
+		getDicTable(false, "003", function(data) {
+				this.xuelis = data.result;
+			})
+			//职称要求
+		var zhichengs;
+		getDicTable(false, "005", function(data) {
+				this.zhichengs = data.result;
+			})
+			//福利待遇
+		var fulidic;
+		getDicTable(false, "002", function(data) {
+			this.fulidic = data.result;
+		})
 		var vm = new Vue({
 			el: "#app",
 			data: {
 				companytype: '',
 				companytypes: [{
-						k: '2',
-						v: '111'
-					},
-					{
-						k: '2',
-						v: '111'
-					},
-					{
-						k: '2',
-						v: '111'
-					},
-				],
+					k: '2',
+					v: '111'
+				}, {
+					k: '2',
+					v: '111'
+				}, {
+					k: '2',
+					v: '111'
+				}, ],
 				fuli: '',
-				fulis: [{
-						k: '2',
-						v: '111'
-					},
-					{
-						k: '2',
-						v: '111'
-					},
-					{
-						k: '2',
-						v: '111'
-					},
-				],
+				fulis: this.fulidic,
 				jingyan: '',
-				jingyans: [{
-						k: '2',
-						v: '111'
-					},
-					{
-						k: '2',
-						v: '111'
-					},
-					{
-						k: '2',
-						v: '111'
-					},
-				],
+				jingyans: this.jingyans,
 				xueli: '',
-				xuelis: [{
-						k: '2',
-						v: '111'
-					},
-					{
-						k: '2',
-						v: '111'
-					},
-					{
-						k: '2',
-						v: '111'
-					},
-				],
+				xuelis: this.xuelis,
 				zhicheng: '',
-				zhichengs: [{
-						k: '2',
-						v: '111'
-					},
-					{
-						k: '2',
-						v: '111'
-					},
-					{
-						k: '2',
-						v: '111'
-					},
-				],
+				zhichengs: this.zhichengs,
 				province: province,
-				city: '',
-				job: '',
-				joblist: '',
+				city: city,
+				job: this.job,
+				joblist: this.jobList,
 			},
 			methods: {
 				selectgangwei: function(id, name) {
@@ -221,22 +234,71 @@
 					$("#choosedcity").val('');
 				},
 				save: function() {
-					if($('#gangwei').text() == '请选择') {
+					if ($('#gangwei').text() == '请选择') {
 						alert('请选择职位')
 						return
 					}
-					if($('.info-select1').val() == "") {
+					if ($('.info-select1').val() == "") {
 						alert('请选择公司性质')
 						return
 					}
-					if($('#city').text() == '请选择') {
+					if ($('#city').text() == '请选择') {
 						alert('请选择工作地址')
 						return
 					}
+					
+					var dataa = {
+						"userId":localStorage.userId,
+						"province":$("#choosedprovince").val(),
+						"city":$("#choosedcity").val(),
+						"gangwei":$("#choosedgangwei").val(),
+						"companytype":vm.companytype,
+						"fuli":vm.fuli,
+						"jingyan":vm.jingyan,
+						"xueli":vm.xueli,
+						"zhicheng":vm.zhicheng,
+						"subscribeType":"3",
+					}
+					
+					post('/webUser/subscribePersonal', dataa,
+						function(data) {
+							console.log(data);
+//							if (data.result_code == '1') {
+//								alert("订阅成功!");
+//								window.location.href = "jianli.html";
+//							} else {
+//								alert("订阅失败，请重试！");
+//							}
+						})
+//					axios.post('/dingyue/zhaopin?id=<?=$id;?>', {
+//							gangwei: $("#choosedgangwei").val(),
+//							companytype: vm.companytype,
+//							fuli: vm.fuli,
+//							jingyan: vm.jingyan,
+//							xueli: vm.xueli,
+//							zhicheng: vm.zhicheng,
+//							province: $("#choosedprovince").val(),
+//							city: $("#choosedcity").val(),
+//						})
+//						.then(function(response) {
+//							mes = response.data.message;
+//							icon = 'error';
+//							if (mes == 'ok') {
+//								mes = "订阅成功!";
+//								icon = "success";
+//							}
+//							vm.$dialog.toast({
+//								mes: mes,
+//								icon: icon,
+//								timeout: 1500,
+//								callback: () => {
+//									window.location.href = '/dingyue/editdingyue';
+//								}
+//							});
+//						})
 				},
 			},
 		});
-
 		$(function() {
 			$('.province li').click(function() {
 				$('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');

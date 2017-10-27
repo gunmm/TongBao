@@ -18,6 +18,7 @@
 		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
 		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
 		<script type="text/javascript" src="../../js/aui-tab.js"></script>
+		<script type="text/javascript" src="../../js/config.js"></script>
 
 		<link rel="stylesheet" href="../../css/mkui.css" />
 		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css" />
@@ -99,6 +100,12 @@
 			},
 			methods: {}
 		})
+		
+		if(localStorage.type == 1){
+			vm.type = true;
+		}else{
+			vm.type = false;
+		}
 
 		var tab = new auiTab({
 			element: document.getElementById("tab"),
