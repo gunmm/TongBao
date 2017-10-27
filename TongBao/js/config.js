@@ -6,7 +6,7 @@ $(function() {
 	if(localStorage.userId) {
 
 	}
-	localStorage.userId = 814;
+
 	post('/webUser/findUserMessage', {
 		userId: localStorage.userId
 	}, function(data) {
