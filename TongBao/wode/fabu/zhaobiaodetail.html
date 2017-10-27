@@ -14,7 +14,7 @@
 		<meta name="x5-fullscreen" content="true">
 		<meta name="format-detection" content="telephone=no, email=no">
 
-		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
 		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
 		<link rel="stylesheet" href="../../css/mkui.css" />
@@ -201,21 +201,21 @@
 			<section class="mesg overflow-h border-b">
 				<div class="m-list">
 					<ul>
-						<li v-for="item in datalist" class="overflow-h">
-							<a href="/list/detailzhaobiao?id=11" class="w-100">
-								<div class="recruit-list fl">
-									<div class="recruit-header overflow-h">
-										<h3 class="fl w-75">{{item.title}}</h3>
+						<li class="overflow-h">
+							<a href="/list/detailzhaobiao?id=<?=$model->id ?>" class="w-100">
+								<div class="recruit-list fl ml-10 ">
+									<div class="recruit-header overflow-h mt-10">
+										<h3 class="fl">{{title}}</h3>
 										<p class="fr">
-											{{item.price}}/{{item.unit}}
+											{{item.price==''?'面议':item.price}}/{{item.unit}}
 										</p>
 									</div>
 									<div class="recruit-header overflow-h mt-10">
-										<h4 class="fl overflow-h">{{item.city}}<span class="ml-10">{{item.quantity}}{{item.unit}}</span></h4>
-										<span class="fr time">{{item.created_at}}</span>
+										<h4 class="fl overflow-h mt-5">{{item.city}}<span>{{item.quantity==-1||item.quantity==''?'已招标文件为主	单位：':item.quantity}}{{item.unit}}</span></h4>
+										<span class="fr time">{{item.updatedAt}}</span>
 									</div>
-									<p class="recruit-pos mt-10">
-										{{item.provider}}
+									<p class="recruit-pos mt-5">
+										<?=$model->user->showName?>
 									</p>
 								</div>
 							</a>
@@ -242,7 +242,11 @@
 		</div>
 	</body>
 
+	<script type="text/javascript" src="../../js/config.js"></script>
 	<script type="text/javascript">
+		var qs = new QueryString();
+		var data = JSON.parse(qs['data']);
+
 		var items = [{
 			title: '机打法结合的积分换卡方式都会放假哈跨境电商房间号打飞机收到',
 			price: '100元',

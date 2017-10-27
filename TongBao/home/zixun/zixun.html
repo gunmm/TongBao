@@ -1,191 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>仝仝资讯</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="renderer" content="webkit">
-    <!--UC 浏览器-->
-    <meta name="screen-orientation" content="portrait">
-    <meta name="full-screen" content="yes">
-    <!--QQ x5内核-->
-    <meta name="x5-orientation" content="portrait">
-    <meta name="x5-fullscreen" content="true">
-    <meta name="format-detection" content="telephone=no, email=no">
-    <link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
-    <link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
-    <script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
-    <script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="../../static/css/zixun.css">
-</head>
-<body>
 
-<div id="app" class="zixun">
-    <section class="nav-list ">
+	<head>
+		<meta charset="UTF-8">
+		<title>仝仝资讯</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<!--UC 浏览器-->
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<!--QQ x5内核-->
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+		<link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
+		<script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
+		<script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../../static/css/zixun.css">
 
-        <ul class="nav-head">
-            <li id="category_" class="current" @click="loadFirstPage('')">推荐</li>
-            <li v-for="categorie in categories" :id="'category_'+categorie.id" @click="loadFirstPage(categorie.id)">
-                {{categorie.title}}
-            </li>
-            <!--<li id="category_<?= $category->id ?>" @click="loadFirstPage(<?= $category->id ?>)"><?= $category->title ?></li>-->
-        </ul>
-    </section>
-    <div style="height:40px;"></div>
+		<style>
+			::-webkit-scrollbar {
+				width: 0em;
+			}
+		</style>
+	</head>
 
-    <div>
-        <article class="m-list list-theme4">
-            <a :href='item.url' class="list-item" v-for="item in datalist">
-                <div class="list-img">
-                    <img :src="item.cover">
-                </div>
+	<body>
+		<div id="app" class="zixun">
+			<section class="nav-list">
+				<ul class="nav-head">
+					<li id="category_" class="current" @click="loadFirstPage('')">推荐</li>
+					<li v-for="categorie in categories" :id="'category_'+categorie.id" @click="loadFirstPage(categorie.id)">
+						{{categorie.title}}
+					</li>
+				</ul>
+			</section>
+			<div style="height:40px;"></div>
+			<yd-infinitescroll :on-infinite="loadList">
+				<yd-list theme="4" slot="list">
+					<yd-list-item v-for="item in datalist" :href='"zixundetail.html?id="+item.id'>
+						<img slot="img" :src="ip+item.imgUrl">
+						<span slot="title" class="mt-3">{{item.title}}</span>
+						<yd-list-other slot="other">
+							<p class="overflow-h mt-10">
+								{{item.category}}
+							</p>
+							<div>{{item.updatedAt}}</div>
+						</yd-list-other>
+					</yd-list-item>
+				</yd-list>
+				<!-- 数据全部加载完毕显示 -->
+				<span slot="doneTip" style="font-size: 1.2rem; padding: 0.5rem;">全部数据已加载完成</span>
+				<!-- 加载中提示 -->
+				<img slot="loadingTip" style="width: 3rem; height: 3rem; padding: 0.5rem;" src="../../static/img/loading10.svg" />
+			</yd-infinitescroll>
+		</div>
 
-                <div class="list-mes">
-                    <div class="list-title">
-                        <span class="mt-3">{{item.title}}</span>
-                    </div>
-                    <div class="list-other">
-                        <p class="overflow-h">
-                            {{item.category}}
-                        </p>
-                        <div>{{item.created_at}}</div>
-                    </div>
-                </div>
-            </a>
-        </article>
+		<script type="text/javascript" src="../../js/config.js"></script>
+		<script>
+			getClassifyTable(true, 'base', function(data) {
+				var list = data.result;
+				for(var i = 0; i < list.length; i++) {
+					if(list[i].pid != 0) {
+						vm.categories.push(list[i]);
+					}
+				}
+			})
 
-    </div>
-    <!--<yd-infinitescroll :on-infinite="loadList">-->
-    <!--<yd-list theme="4" slot="list">-->
-    <!--<yd-list-item v-for="item in datalist" :href='item.url' >-->
-    <!--<img slot="img" :src="item.cover" >-->
-    <!--<span slot="title" class="mt-3">{{item.title}}</span>-->
-    <!--<yd-list-other slot="other">-->
-    <!--<p class="overflow-h">-->
-    <!--{{item.category}}-->
-    <!--</p>-->
-    <!--<div>{{item.created_at}}</div>-->
-    <!--</yd-list-other>-->
-    <!--</yd-list-item>-->
-    <!--</yd-list>-->
-    <!--&lt;!&ndash; 数据全部加载完毕显示 &ndash;&gt;-->
-    <!--<span slot="doneTip">全部数据已加载完成</span>-->
-    <!--&lt;!&ndash; 加载中提示 &ndash;&gt;-->
-    <!--<img slot="loadingTip" src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>-->
-    <!--</yd-infinitescroll>-->
-</div>
+			post('/webZx/Base', {
+				pageNo: 1,
+				pageSize: 10,
+				categoryId: ''
+			}, function(data) {
+				console.log(data);
+				vm.datalist = data.result;
+			})
 
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					pageNo: 2,
+					pageSize: 10,
+					categories: [],
+					datalist: [],
+					categoryid: ''
+				},
+				methods: {
+					loadList: function() {
+						post('/webZx/Base', {
+							pageNo: vm.pageNo,
+							pageSize: vm.pageSize,
+							categoryId: vm.categoryid
+						}, function(data) {
+							console.log(data)
+							_list = data.result;
+							if(vm.pageNo == 1) {
+								vm.datalist = _list;
+							} else {
+								vm.datalist = vm.datalist.concat(_list);
+							}
+							if(vm.pageNo > 1 && _list.length < vm.pageSize) {
+								window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
+								return;
+							}
+							window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
+							vm.pageNo++;
+						})
+					},
+					loadFirstPage: function(categoryid) {
+						this.categoryid = categoryid;
+						post('/webZx/Base', {
+							pageNo: 1,
+							pageSize: vm.pageSize,
+							categoryId: categoryid
+						}, function(data) {
+							vm.datalist = data.result;
+						})
+					}
+				}
+			})
 
-<script src="../../static/lib/js/axios.min.js"></script>
-<script>
-    $(function () {
-        $('.nav-head li').click(function () {
-            $(this).addClass('current').siblings('.nav-head li').removeClass('current');
-            $('.car-list').eq($(this).index()).show().siblings('.car-list').hide();
-            //window.location.href="/site/zixun?categoryid="+$(this).attr("id").split("_")[1];
-            var id = $(this).attr("id").split("_").length > 1 ? $(this).attr("id").split("_")[1] : "";
-            //$("#choosecategory").val(id);
-        });
-    });
-    //    var tops=<?= $recommentList ?>;
-    var vm = new Vue({
-        el: '#app',
-        data: {
-            categories: [
-                {
-                    "id": "1",
-                    "title": "设计",
-                },
-                {
-                    "id": "2",
-                    "title": "工程",
-                },
-                {
-                    "id": "3",
-                    "title": "建材",
-                },
-                {
-                    "id": "4",
-                    "title": "地产",
-                },
-                {
-                    "id": "5",
-                    "title": "城乡",
-                },
-                {
-                    "id": "6",
-                    "title": "热点新闻",
-                },
-            ],
-            datalist: [
-                {
-                    "url": "zixundetail.html",
-                    "title": "73人死亡！涉案混凝土商严重违规,董事长,生产厂长,\"保护伞\"全被逮捕！",
-                    "cover": "http://oqspvtuxb.bkt.clouddn.com/17-6-21/62288117.jpg",
-                    "category": "热点新闻",
-                    "created_at": "2017-09-29",
-                },
-                {
-                    "url": "zixundetail.html",
-                    "title": "73人死亡！涉案混凝土商严重违规,董事长,生产厂长,\"保护伞\"全被逮捕！",
-                    "cover": "http://oqspvtuxb.bkt.clouddn.com/17-6-21/62288117.jpg",
-                    "category": "热点新闻",
-                    "created_at": "2017-09-29",
-                },
-                {
-                    "url": "zixundetail.html",
-                    "title": "73人死亡！涉案混凝土商严重违规,董事长,生产厂长,\"保护伞\"全被逮捕！",
-                    "cover": "http://oqspvtuxb.bkt.clouddn.com/17-6-21/62288117.jpg",
-                    "category": "热点新闻",
-                    "created_at": "2017-09-29",
-                },
-            ],
-        },
-        methods: {
-            loadList() {
-                axios.get('/site/zixunpage', {
-                    params: {
-                        page: this.page,
-                        pagesize: this.pageSize,
-                        categoryid: this.categoryid
-                    }
-                }).then(function (response) {
-                    _list = response.data;
-                    vm.datalist = [...vm.datalist,
-                ...
-                    _list
-                ]
-                    ;
-                    if (this.page > 1 && _list.length < vm.pageSize) {
-                        /* 所有数据加载完毕 */
-                        window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
-                        return;
-                    }
-                    /* 单次请求数据完毕 */
-                    window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
-                    vm.page++;
-                });
-            },
-            loadFirstPage(categoryid) {
-                this.categoryid = categoryid;
-                alert(categoryid);
-//                axios.get('/site/zixunpage', {
-//                    params: {
-//                        page: 0,
-//                        pagesize: this.pageSize,
-//                        categoryid: this.categoryid
-//                    }
-//                }).then(function (response) {
-//                    vm.datalist = response.data;
-//                });
-            }
-        }
-    })
-</script>
-</body>
+			$(function() {
+				$('.nav-head li').click(function() {
+					$(this).addClass('current').siblings('.nav-head li').removeClass('current');
+					$('.car-list').eq($(this).index()).show().siblings('.car-list').hide();
+					//window.location.href="/site/zixun?categoryid="+$(this).attr("id").split("_")[1]; 
+					//var id = $(this).attr("id").split("_").length > 1 ? $(this).attr("id").split("_")[1] : "";
+					//$("#choosecategory").val(id); 
+				});
+			});
+		</script>
+	</body>
+
 </html>

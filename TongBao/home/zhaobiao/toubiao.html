@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>投标信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
+		<link rel="stylesheet" href="../../css/mkui.css" />
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../../static/css/common.css" />
+		<link rel="stylesheet" href="../../static/css/pub-tender-has.css" />
+
+	</head>
+
+	<body class="bg-fff">
+		<div id="app">
+			<section>
+				<div class="tunder-head bg-f8f8f8">
+					<span class="">单价:</span>
+					<input type="number" class="single-price" v-model="price" onchange="checkfushu()" class="text-c" />
+					<span class="ml-8">元/{{unit}}</span>
+				</div>
+			</section>
+			<div class="tender-common">
+				<span class="fl f-16 c-2c2c2c">详细表述</span>
+			</div>
+			<div class="tender-con">
+				<textarea rows="" cols="" placeholder="请填写投标详细描述" v-model="content" class="toubiao-comtent"></textarea>
+			</div>
+			<div class="public-sure-btn" @click="toubiao()">
+				确认投标
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="../../js/config.js"></script>
+	<script>
+		var qs = new QueryString();
+		var id = parseInt(qs['id']);
+
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				price: null,
+				unit: qs['unit'],
+				content: null
+			},
+			methods: {
+				toubiao: function() {
+					if(!checkfushu()) {
+						return;
+					}
+
+					if($('.toubiao-comtent').val() == '') {
+						alert('请填写投标内容')
+						return
+					}
+
+					post('/webZb/Toubiao', {
+						publishId: id,
+						userId: 85,
+						price: vm.price,
+						content: vm.content
+					}, function(data) {
+						vm.$dialog.toast({
+							mes: "投标成功!",
+							icon: 'success',
+							timeout: 1500,
+							callback: function() {
+								window.history.go(-1);
+							}
+						});
+					})
+				},
+			}
+		})
+
+		function checkfushu() {
+			if(!(/^\d+(\.\d+)?$/.test(vm.price))) {
+				vm.$dialog.alert({
+					mes: '单价不正确'
+				});
+				return false;
+			}
+			return true;
+		}
+	</script>
+
+</html>

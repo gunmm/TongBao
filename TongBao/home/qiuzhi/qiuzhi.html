@@ -168,7 +168,7 @@
 							</p>
 							<yd-list-other slot="other">
 								<h4 class="mt-10 f-14 ">
-                            		<span class="fl">{{item.orgName}}</span>
+                            		<span class="fl">{{item.showfullname==1?item.orgName:hideStr(item.orgName)}}</span>
                             		<span class="ml-15">{{item.gender}}性</span>
                             		<span class="ml-10">{{item.age}}</span >
                             		<span class="fr time mr-8 ">{{item.updatedAt}}</span>
@@ -182,7 +182,7 @@
 						</yd-list-item>
 					</yd-list>
 					<!-- 数据全部加载完毕显示 -->
-					<span slot="doneTip" class="text-c mt-5 f-14">全部数据已加载完成</span>
+					<span slot="doneTip" class="text-c pd-5 f-14">全部数据已加载完成</span>
 					<!-- 加载中提示 -->
 					<img slot="loadingTip" src="../../static/img/loading10.svg" style="width: 1.5rem;height: 1.5rem;margin: .5rem" />
 				</yd-infinitescroll>
@@ -204,7 +204,7 @@
 		})
 
 		getDicTable(false, "006", function(data) {
-			var list = data.result.resultList;
+			var list = data.result;
 			var job = [];
 			var jobList = [];
 			var jobM = {};
@@ -230,23 +230,23 @@
 		})
 
 		getDicTable(false, "001", function(data) {
-			this.xinzi = data.result.resultList;
+			this.xinzi = data.result;
 		})
 
 		getDicTable(true, "004", function(data) {
-			vm.jingyans = data.result.resultList;
+			vm.jingyans = data.result;
 		})
 
 		getDicTable(true, "003", function(data) {
-			vm.xuelis = data.result.resultList;
+			vm.xuelis = data.result;
 		})
 
 		getDicTable(true, "012", function(data) {
-			vm.ages = data.result.resultList;
+			vm.ages = data.result;
 		})
 
 		getDicTable(true, "005", function(data) {
-			vm.zhichengs = data.result.resultList;
+			vm.zhichengs = data.result;
 		})
 
 		var items = window.history.state;
@@ -315,7 +315,7 @@
 						items = vm.datalist;
 						window.history.pushState(items, "", "qiuzhi.html");
 
-						if(vm.page > 2 && _list.length < vm.pageSize) {
+						if(vm.page > 1 && _list.length < vm.pageSize) {
 							window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
 							return;
 						}

@@ -14,12 +14,14 @@
 		<meta name="x5-fullscreen" content="true">
 		<meta name="format-detection" content="telephone=no, email=no">
 		<link rel="stylesheet" href="css/mkui.css" />
+		<link rel="stylesheet" href="static/lib/css/ydui.rem.css" />
+		<script type="text/javascript" src="static/lib/js/vue.min.js"></script>
 		<link rel="stylesheet" href="css/common.css" />
 		<link rel="stylesheet" href="static/css/common.css" />
 		<link rel="stylesheet" href="css/aui.css" />
 		<script type="text/javascript" src="js/aui-tab.js"></script>
-		<script type="text/javascript" src="js/aui-dialog.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+
 		<style type="text/css">
 			*,
 			:after,
@@ -191,108 +193,121 @@
 	</head>
 
 	<body>
-		<section class="pos-r">
-			<div class="banner-pic">
-				<img src="static/img/QQ.png" />
-			</div>
-			<div class="banner-name pos-a">
-				<img src="static/img/touxiang.png" class="img-rounded">
-			</div>
-			<p class="name">平台</p>
-			<a id="edit">
-				<span class="bj pos-a">编辑</span>
-			</a>
-		</section>
+		<div id="app">
+			<section class="pos-r">
+				<div class="banner-pic">
+					<img src="static/img/QQ.png" />
+				</div>
+				<div class="banner-name pos-a">
+					<img src="static/img/touxiang.png" class="img-rounded">
+				</div>
+				<p class="name">平台</p>
+				<a id="edit">
+					<span class="bj pos-a">编辑</span>
+				</a>
+			</section>
 
-		<section id="my_geren" class="zp-body">
-			<div class="zp-list overflow-h"><span class="fl"><i class="ico ico-jianli"></i>简历 </span> <span class="fr  sx">刷新</span> <span class="fr  bianji"><a href="publish/jianli/jianli.html">编辑</a></span></div>
-			<div class="div1"></div>
-			<div class="zp-list overflow-h">
-				<a href="wode/favorite/gongying.html"><span class="fl"><i class=" ico ico-shoucang4"></i>收藏</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="zp-list overflow-h">
-				<a href="wode/dingyue/gongying.html"><span class="fl"><i class="ico ico-xxdy"></i>信息订阅</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="div1"></div>
-			<div class="zp-list overflow-h">
-				<a href="wode/fabu/zhaobiao.html"><span class="fl"><i class="ico ico-fabu"></i>我的发布</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="zp-list overflow-h">
-				<a href="wode/toubiao.html"><span class="fl"><i class="ico ico-my-toubiao"></i>我的投标</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="zp-list overflow-h">
-				<a href="wode/intention.html"><span class="fl"><i class="ico ico-yxgs"></i>我的意向公司</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="div1"></div>
-			<div class="zp-list overflow-h">
-				<a href="wode/feedback.html"><span class="fl"><i class="ico ico-yjfk"></i>意见反馈</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="zp-list overflow-h">
-				<a href="/page/slug?slug=guide"><span class="fl"><i class="ico ico-yhzn"></i>用户指南</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="zp-list overflow-h">
-				<a href="tel:400-888-8888"><span class="fl"><i class="ico ico-lxkf"></i>联系客服</span> <span class="fr c-3095e3">010-88432617</span></a>
-			</div>
-			<div class="div" style="height: 56px;"></div>
-		</section>
+			<section v-if="type==1" class="zp-body">
+				<div class="zp-list overflow-h"><span class="fl"><i class="ico ico-jianli"></i>简历 </span> <span class="fr  sx">刷新</span> <span class="fr  bianji"><a href="publish/jianli/jianli.html">编辑</a></span></div>
+				<div class="div1"></div>
+				<div class="zp-list overflow-h">
+					<a href="wode/favorite/gongying.html"><span class="fl"><i class=" ico ico-shoucang4"></i>收藏</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="zp-list overflow-h">
+					<a href="wode/dingyue/gongying.html"><span class="fl"><i class="ico ico-xxdy"></i>信息订阅</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="div1"></div>
+				<div class="zp-list overflow-h">
+					<a href="wode/fabu/zhaobiao.html"><span class="fl"><i class="ico ico-fabu"></i>我的发布</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="zp-list overflow-h">
+					<a href="wode/toubiao.html"><span class="fl"><i class="ico ico-my-toubiao"></i>我的投标</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="zp-list overflow-h">
+					<a href="wode/intention.html"><span class="fl"><i class="ico ico-yxgs"></i>我的意向公司</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="div1"></div>
+				<div class="zp-list overflow-h">
+					<a href="wode/feedback.html"><span class="fl"><i class="ico ico-yjfk"></i>意见反馈</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="zp-list overflow-h">
+					<a href="/page/slug?slug=guide"><span class="fl"><i class="ico ico-yhzn"></i>用户指南</span> <span class="fr"><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="zp-list overflow-h">
+					<a href="tel:400-888-8888"><span class="fl"><i class="ico ico-lxkf"></i>联系客服</span> <span class="fr c-3095e3">010-88432617</span></a>
+				</div>
+				<div class="div" style="height: 56px;"></div>
+			</section>
 
-		<section id="my_qiye" class="zp-body">
-			<div class="zp-list overflow-h">
-				<a href="wode/companyprofile.html"><span class="fl"><i class=" ico ico-yxgs"></i>企业信息</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="div1"></div>
-			<div class="zp-list overflow-h">
-				<a href="wode/favorite/gongying.html"><span class="fl"><i class=" ico ico-shoucang4"></i>收藏</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="zp-list overflow-h">
-				<a href="wode/dingyue/gongying.html"><span class="fl"><i class="ico ico-xxdy"></i>信息订阅</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="div1"></div>
-			<div class="zp-list overflow-h">
-				<a href="wode/fabu/zhaobiao.html"><span class="fl"><i class="ico ico-fabu"></i>我的发布</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="zp-list overflow-h">
-				<a href="wode/toubiao.html"><span class="fl"><i class="ico ico-my-toubiao"></i>我的投标</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="zp-list overflow-h">
-				<a href="wode/jianli/toudi.html"><span class="fl"><i class="ico ico-jianli"></i>简历管理</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="div1"></div>
-			<div class="zp-list overflow-h">
-				<a href="wode/feedback.html"><span class="fl"><i class="ico ico-yjfk"></i>意见反馈</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="zp-list overflow-h">
-				<a href="/page/slug?slug=guide"><span class="fl"><i class="ico ico-yhzn"></i>用户指南</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
-			</div>
-			<div class="zp-list overflow-h">
-				<a href="tel:400-888-8888"><span class="fl"><i class="ico ico-lxkf"></i>联系客服</span> <span class="fr  c-3095e3">010-88432617</span></a>
-			</div>
-			<div class="div" style="height: 56px;"></div>
-		</section>
+			<section v-if="type==2" class="zp-body">
+				<div class="zp-list overflow-h">
+					<a href="wode/companyprofile.html"><span class="fl"><i class=" ico ico-yxgs"></i>企业信息</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="div1"></div>
+				<div class="zp-list overflow-h">
+					<a href="wode/favorite/gongying.html"><span class="fl"><i class=" ico ico-shoucang4"></i>收藏</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="zp-list overflow-h">
+					<a href="wode/dingyue/gongying.html"><span class="fl"><i class="ico ico-xxdy"></i>信息订阅</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="div1"></div>
+				<div class="zp-list overflow-h">
+					<a href="wode/fabu/zhaobiao.html"><span class="fl"><i class="ico ico-fabu"></i>我的发布</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="zp-list overflow-h">
+					<a href="wode/toubiao.html"><span class="fl"><i class="ico ico-my-toubiao"></i>我的投标</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="zp-list overflow-h">
+					<a href="wode/jianli/toudi.html"><span class="fl"><i class="ico ico-jianli"></i>简历管理</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="div1"></div>
+				<div class="zp-list overflow-h">
+					<a href="wode/feedback.html"><span class="fl"><i class="ico ico-yjfk"></i>意见反馈</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="zp-list overflow-h">
+					<a href="/page/slug?slug=guide"><span class="fl"><i class="ico ico-yhzn"></i>用户指南</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
+				</div>
+				<div class="zp-list overflow-h">
+					<a href="tel:400-888-8888"><span class="fl"><i class="ico ico-lxkf"></i>联系客服</span> <span class="fr  c-3095e3">010-88432617</span></a>
+				</div>
+				<div class="div" style="height: 56px;"></div>
+			</section>
 
-		<footer class="aui-bar aui-bar-tab" id="footer">
-			<div class="aui-bar-tab-item" tapmode>
-				<i class="aui-iconfont aui-icon-home"></i>
-				<div class="aui-bar-tab-label">首页</div>
-			</div>
-			<div class="aui-bar-tab-item" tapmode>
-				<i class="aui-iconfont aui-icon-edit"></i>
-				<div class="aui-bar-tab-label">发布</div>
-			</div>
-			<div class="aui-bar-tab-item" tapmode>
-				<div id="xiaoxi_tip" class="aui-badge"></div>
-				<i class="aui-iconfont aui-icon-comment"></i>
-				<div class="aui-bar-tab-label">消息</div>
-			</div>
-			<div class="aui-bar-tab-item" tapmode>
-				<i class="aui-iconfont aui-icon-my"></i>
-				<div class="aui-bar-tab-label">我的</div>
-		</footer>
+			<footer class="aui-bar aui-bar-tab" id="footer">
+				<div class="aui-bar-tab-item" tapmode>
+					<i class="aui-iconfont aui-icon-home"></i>
+					<div class="aui-bar-tab-label">首页</div>
+				</div>
+				<div class="aui-bar-tab-item" tapmode>
+					<i class="aui-iconfont aui-icon-edit"></i>
+					<div class="aui-bar-tab-label">发布</div>
+				</div>
+				<div class="aui-bar-tab-item" tapmode>
+					<div id="xiaoxi_tip" class="aui-badge"></div>
+					<i class="aui-iconfont aui-icon-comment"></i>
+					<div class="aui-bar-tab-label">消息</div>
+				</div>
+				<div class="aui-bar-tab-item" tapmode>
+					<i class="aui-iconfont aui-icon-my"></i>
+					<div class="aui-bar-tab-label">我的</div>
+				</div>
+			</footer>
+		</div>
 	</body>
 
 	<script type="text/javascript">
 		$(function() {
 			$('#xiaoxi_tip').hide();
+		})
+
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				type: 1,
+			},
+			methods: {
+
+			}
 		})
 
 		var tab = new auiTab({
@@ -312,22 +327,6 @@
 				case 4:
 					break;
 			}
-		});
-
-		$('#edit').click(function() {
-			new auiDialog().alert({
-				title: "提示",
-				msg: '个人or企业？',
-				buttons: ['个人', '企业']
-			}, function(ret) {
-				if(ret.buttonIndex == 1) {
-					$('#my_qiye').hide();
-					$('#my_geren').show();
-				} else {
-					$('#my_qiye').show();
-					$('#my_geren').hide();
-				}
-			});
 		});
 	</script>
 

@@ -33,14 +33,11 @@
 
 	<body>
 		<div id="app" class="shouye" hidden>
-			<yd-slider autoplay="3000000">
-				<yd-slider-item>
-					<a href="http://www.baidu.com">
-						<img src="http://www.tongtongww.com/storage/upload/1f1deb0d0a241576301fad9a4af2b045.jpg" />
+			<yd-slider id="yd_slider" v-if="imglist.length>0" autoplay="5000">
+				<yd-slider-item v-for="item in imglist">
+					<a :href="item.url">
+						<img :src="ip+item.imgUrl" />
 					</a>
-				</yd-slider-item>
-				<yd-slider-item>
-					<img src="http://www.tongtongww.com/storage/upload/a0c300f0a8865a472d94390a866d9027.jpg" />
 				</yd-slider-item>
 			</yd-slider>
 
@@ -63,23 +60,21 @@
 						<div class="grids-txt"><span>供应信息</span></div>
 					</a>
 				</div>
-
 			</div>
 			<div class="div1"></div>
 			<div class="tongzhi overflow-h">
 				<div class="tongzhi_wenzi clearfix pos">
 					<ul class="tongzhi_lunbo">
-						<li class="clearfix overflow-h">
-							<a href="home/zixun/zixundetail.html" class="huojiang overflow-h">
+						<li v-for="item in zxlist" class="clearfix overflow-h">
+							<a :href="'home/zixun/zixundetail.html?id='+item.id" class="huojiang overflow-h">
 								<i class="ico ico-tongzhi fl"></i>
 								<p class="fl">
-									<nobr>73人死亡！涉案混凝土商严重违规,董</nobr>
+									<nobr>{{item.title}}</nobr>
 								</p>
 							</a>
 							<span class="fr more">
-                        <a href="home/zixun/zixun.html">更多<i class="ico ico-right"></i></a>
-
-                    </span>
+                        		<a href="home/zixun/zixun.html">更多<i class="ico ico-right"></i></a>
+                    		</span>
 						</li>
 					</ul>
 				</div>
@@ -87,37 +82,28 @@
 			<div class="div1"></div>
 			<section>
 				<h2 class="module-title pd-10 overflow-h border-b">
-            <i class="ico ico-zhaopin fl"></i>
-            <span class="fl more-main">最新招聘</span>
-            <span class="fr more">
+            		<i class="ico ico-zhaopin fl"></i>
+            		<span class="fl more-main">最新招聘</span>
+            		<span class="fr more">
 						<a href="home/zhaopin/employment.html">更多<i class="ico ico-right"></i></a>
 					</span>
-        </h2>
+        		</h2>
 				<div class="m-list">
-					<ul id="zhaopinul">
-						<li class="overflow-h  border-b padd">
-							<a href="/list/detailzhaopin?id=417">
+					<ul>
+						<li v-for="item in zplist" class="overflow-h  border-b padd">
+							<a :href='"home/zhaopin/zhaopindetail.html?id="+item.id'>
 								<div class="recruit-list fl ml-10 ">
 									<div class="recruit-header overflow-h">
-										<h3 class="fl w-55 ov-h">财务主管</h3>
-										<p class="fr">面议</p>
+										<h3 class="fl w-55 ov-h">{{item.title}}</h3>
+										<p class="fr">
+											{{item.salary}}
+										</p>
 									</div>
 									<div class="recruit-header overflow-h">
-										<h4 class="fl">平台</h4> <span class="fr time">2017-09-23</span></div>
-									<p class="recruit-pos"><span>北京市 </span> <span class="ml-10"></span> <span class="ml-10">本科</span></p>
-								</div>
-							</a>
-						</li>
-						<li class="overflow-h  border-b padd">
-							<a href="/list/detailzhaopin?id=416">
-								<div class="recruit-list fl ml-10 ">
-									<div class="recruit-header overflow-h">
-										<h3 class="fl w-55 ov-h">投资主管</h3>
-										<p class="fr">面议</p>
+										<h4 class="fl">{{item.orgName}}</h4>
+										<span class="fr time">{{item.updatedAt}}</span>
 									</div>
-									<div class="recruit-header overflow-h">
-										<h4 class="fl">平台</h4> <span class="fr time">2017-09-22</span></div>
-									<p class="recruit-pos"><span>北京市 </span> <span class="ml-10"></span> <span class="ml-10">研究生</span></p>
+									<p class="recruit-pos"><span>{{item.city}}</span> <span class="ml-10">{{item.experience}}</span> <span class="ml-10">{{item.education}}</span></p>
 								</div>
 							</a>
 						</li>
@@ -126,56 +112,39 @@
 			</section>
 			<div class="div1"></div>
 			<section>
-				<h2 class="module-title  overflow-h border-b"><i class="ico ico-qiuzhi fl"></i> <span
-                class="fl more-main">最新求职</span>
-            <span class="fr more"><a href="home/qiuzhi/qiuzhi.html">更多<i class="ico ico-right"></i></a></span></h2>
+				<h2 class="module-title  overflow-h border-b">
+					<i class="ico ico-qiuzhi fl"></i>
+					<span class="fl more-main">最新求职</span>
+            		<span class="fr more">
+            			<a href="home/qiuzhi/qiuzhi.html">更多<i class="ico ico-right"></i></a>
+            		</span>
+				</h2>
 				<div class="m-list">
 					<ul>
-						<li class="overflow-h  border-b padd">
-							<a href="/list/detailqiuzhi?id=198">
+						<li v-for="item in qzlist" class="overflow-h  border-b padd">
+							<a :href="'home/qiuzhi/qiuzhidetail.html?id='+item.id">
 								<div class="recruit-list fl ml-10 ">
 									<div class="recruit-header overflow-h">
-										<h3 class="fl w-55 ov-h">工程师</h3>
-										<p class="fr">8000-10000元</p>
+										<h3 class="fl w-55 ov-h">{{item.title}}</h3>
+										<p class="fr">
+											{{item.salary}}
+										</p>
 									</div>
 									<div class="recruit-header overflow-h">
 										<ul class="name-list overflow-h fl">
 											<li>
-												杨晓东
+												{{item.showfullname==1?item.orgName:hideStr(item.orgName)}}
 											</li>
 											<li>
-												男
+												{{item.gender}}性
 											</li>
 											<li>
-												32岁
+												{{item.age}}
 											</li>
 										</ul>
-										<span class="fr time">2017-07-19</span></div>
-									<p class="recruit-pos"><span>沈阳市 </span> <span class="ml-10">5-8年</span> <span class="ml-10">本科</span></p>
-								</div>
-							</a>
-						</li>
-						<li class="overflow-h  border-b padd">
-							<a href="/list/detailqiuzhi?id=183">
-								<div class="recruit-list fl ml-10 ">
-									<div class="recruit-header overflow-h">
-										<h3 class="fl w-55 ov-h">财务</h3>
-										<p class="fr">5000-8000元</p>
+										<span class="fr time">{{item.updatedAt}}</span>
 									</div>
-									<div class="recruit-header overflow-h">
-										<ul class="name-list overflow-h fl">
-											<li>
-												孟苇苏
-											</li>
-											<li>
-												女
-											</li>
-											<li>
-												26岁
-											</li>
-										</ul>
-										<span class="fr time">2017-07-07</span></div>
-									<p class="recruit-pos"><span>北京市 </span> <span class="ml-10">3-5年</span> <span class="ml-10">大专</span></p>
+									<p class="recruit-pos"><span>{{item.city}}</span> <span class="ml-10">{{item.experience}}</span> <span class="ml-10">{{item.education}}</span></p>
 								</div>
 							</a>
 						</li>
@@ -184,36 +153,31 @@
 			</section>
 			<div class="div1"></div>
 			<section>
-				<h2 class="module-title  overflow-h border-b"><i class="ico ico-zhaobiao fl"></i> <span
-                class="fl more-main">最新招标</span> <span class="fr more"><a href="home/zhaobiao/zhaobiao.html">更多<i
-                class="ico ico-right"></i></a></span></h2>
+				<h2 class="module-title  overflow-h border-b">
+					<i class="ico ico-zhaobiao fl"></i> 
+					<span class="fl more-main">最新招标</span> 
+					<span class="fr more">
+						<a href="home/zhaobiao/zhaobiao.html">更多<i class="ico ico-right"></i></a>
+					</span>
+				</h2>
 				<div class="m-list">
 					<ul>
-						<li class="overflow-h  border-b padd">
-							<a href="/list/detailzhaobiao?id=426">
+						<li v-for="item in zblist" class="overflow-h  border-b padd">
+							<a :href='"home/zhaobiao/zhaobiaodetail.html?id="+item.id'>
 								<div class="recruit-list fl ml-10 ">
 									<div class="recruit-header overflow-h">
-										<h3 class="fl w-55 ov-h">中交路桥南方工程有限公司延崇高速2标矿粉招标公告</h3>
-										<p class="fr">面议/吨</p>
+										<h3 class="fl w-55 ov-h">{{item.title}}</h3>
+										<p class="fr">
+											{{item.price==''?'面议':item.price}}/{{item.unit}}
+										</p>
 									</div>
 									<div class="recruit-header overflow-h">
-										<h4 class="fl">北京市<span>以招标文件为主</span></h4> <span class="fr time">2017-09-25</span>
+										<h4 class="fl">{{item.city}}<span>{{item.quantity==-1||item.quantity==''?'已招标文件为主   单位:':item.quantity}}{{item.unit}}</span></h4>
+										<span class="fr time">{{item.created_at}}</span>
 									</div>
-									<p class="recruit-pos">平台</p>
-								</div>
-							</a>
-						</li>
-						<li class="overflow-h  border-b padd">
-							<a href="/list/detailzhaobiao?id=425">
-								<div class="recruit-list fl ml-10 ">
-									<div class="recruit-header overflow-h">
-										<h3 class="fl w-55 ov-h">中交路桥南方工程有限公司延崇高速2标粉煤灰招标公告</h3>
-										<p class="fr">面议/批</p>
-									</div>
-									<div class="recruit-header overflow-h">
-										<h4 class="fl">北京市<span>以招标文件为主</span></h4> <span class="fr time">2017-09-25</span>
-									</div>
-									<p class="recruit-pos">平台</p>
+									<p class="recruit-pos">
+										{{item.orgName}}
+									</p>
 								</div>
 							</a>
 						</li>
@@ -222,35 +186,31 @@
 			</section>
 			<div class="div1"></div>
 			<section>
-				<h2 class="module-title pd-10 overflow-h border-b"><i class="ico ico-gongying fl"></i> <span
-                class="fl more-main">最新供应</span> <span class="fr more"><a href="home/gongying/gongying.html">更多<i
-                class="ico ico-right"></i></a></span></h2>
+				<h2 class="module-title pd-10 overflow-h border-b">
+					<i class="ico ico-gongying fl"></i> 
+					<span class="fl more-main">最新供应</span> 
+					<span class="fr more">
+						<a href="home/gongying/gongying.html">更多<i class="ico ico-right"></i></a>
+					</span>
+				</h2>
 				<div class="m-list">
 					<ul>
-						<li class="overflow-h  border-b padd">
-							<a href="/list/detailgongying?id=328">
+						<li v-for="item in gylist" class="overflow-h  border-b padd">
+							<a :href='"home/gongying/gongyingdetail.html?id="+item.id'>
 								<div class="recruit-list fl ml-10 ">
 									<div class="recruit-header overflow-h">
-										<h3 class="fl w-55 ov-h">砂石</h3>
-										<p class="fr">65元/吨</p>
+										<h3 class="fl w-55 ov-h">{{item.title}}</h3>
+										<p class="fr">
+											{{item.price}}/{{item.unit}}
+										</p>
 									</div>
 									<div class="recruit-header overflow-h">
-										<h4 class="fl">保定市<span>300000吨</span></h4> <span class="fr time">2017-08-19</span>
+										<h4 class="fl">{{item.city}}<span>{{item.quantity}}{{item.unit}}</span></h4>
+										<span class="fr time">{{item.updatedAt}}</span>
 									</div>
-									<p class="recruit-pos">熊爸</p>
-								</div>
-							</a>
-						</li>
-						<li class="overflow-h  border-b padd">
-							<a href="/list/detailgongying?id=275">
-								<div class="recruit-list fl ml-10 ">
-									<div class="recruit-header overflow-h">
-										<h3 class="fl w-55 ov-h">供应水泥</h3>
-										<p class="fr">395元/吨</p>
-									</div>
-									<div class="recruit-header overflow-h">
-										<h4 class="fl">唐山市<span>10000吨</span></h4> <span class="fr time">2017-08-11</span></div>
-									<p class="recruit-pos">北京乾元日盛国际贸易股份有限公司</p>
+									<p class="recruit-pos">
+										{{item.orgName}}
+									</p>
 								</div>
 							</a>
 						</li>
@@ -282,26 +242,74 @@
 		</div>
 	</body>
 
+	<script type="text/javascript" src="js/config.js"></script>
 	<script type="text/javascript">
-		console.log(localStorage.userId)
-		
-		new Vue({
+		var imglist = [];
+		post('/webLb/Carousel', {}, function(data) {
+			imglist = data.result;
+		})
+
+		post('/webZx/Base', {
+			pageNo: 1,
+			pageSize: 1,
+			categoryId: ''
+		}, function(data) {
+			vm.zxlist = data.result;
+		})
+
+		post('/webZp/Zhaopin', {
+			pageNo: 1,
+			pageSize: 2
+		}, function(data) {
+			vm.zplist = data.result;
+		})
+
+		post('/webQz/Qiuzhi', {
+			pageNo: 1,
+			pageSize: 2
+		}, function(data) {
+			vm.qzlist = data.result;
+		})
+
+		post('/webZb/Zhaobiao', {
+			pageNo: 1,
+			pageSize: 2
+		}, function(data) {
+			vm.zblist = data.result;
+		})
+
+		post('/webGy/Gongying', {
+			pageNo: 1,
+			pageSize: 2
+		}, function(data) {
+			vm.gylist = data.result;
+		})
+
+		var vm = new Vue({
 			el: '#app',
-			data: {},
-			methods: {},
+			data: {
+				zxlist: [],
+				zplist: [],
+				qzlist: [],
+				zblist: [],
+				gylist: []
+			},
+			methods: {
+
+			},
 			mounted: function() {
 				$('#app').show();
 			}
 		});
+
 		$(function() {
+			$('#xiaoxi_tip').hide();
+
 			$('router-link').click(function() {
 				window.location.href = $(this).attr("to");
 			});
 		});
-	</script>
 
-	<script type="text/javascript">
-		$('#xiaoxi_tip').hide();
 		var tab = new auiTab({
 			element: document.getElementById("footer"),
 			index: 1

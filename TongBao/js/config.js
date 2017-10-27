@@ -82,7 +82,7 @@ function post1(url, async, data, callback) {
 
 function QueryString() {
 	var name, value, i;
-	var str = location.href;
+	var str = decodeURI(location.href);
 	var num = str.indexOf("?")
 	str = str.substr(num + 1);
 	var arrtmp = str.split("&");

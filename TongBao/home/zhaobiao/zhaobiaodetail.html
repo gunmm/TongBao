@@ -25,7 +25,6 @@
 		<script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="../../static/css/common.css">
 		<link rel="stylesheet" type="text/css" href="../../static/css/zhaobiaoxiangqing.css">
-
 		<link rel="stylesheet" type="text/css" href="../../static/lib/css/bootstrap-grid.min.css">
 		<link rel="stylesheet" type="text/css" href="../../static/lib/css/zoomify.min.css">
 		<!--背景样式 弹框样式-->
@@ -204,10 +203,39 @@
 			.g-fix-ios-overflow-scrolling-bug {
 				-webkit-overflow-scrolling: auto !important
 			}
+			
+			.fabuDetail {
+				font-size: 11px;
+				margin: 0 auto;
+				width: 21px;
+				line-height: 14px;
+				color: white;
+				position: fixed;
+				top: 84px;
+				right: 5px;
+				border-radius: 3px;
+				padding-top: 0.5rem;
+				background-color: #F91605;
+				opacity: 0.5;
+				filter: alpha(Opacity=40);
+				-moz-opacity: 0.4;
+				height: 75px;
+				text-align: center;
+				zoom: 1.6;
+			}
+			
+			.understandMore {
+				font-weight: 600;
+				text-align: center;
+				display: none;
+				font-family: NotoSansHans-Regular;
+				font-size: 15px;
+				color: #03A9F4;
+			}
 		</style>
 	</head>
 
-	<body style="background: #FFFFFF;">
+	<body class="bg-fff">
 		<div id="app">
 			<section class="job-address">
 				<h3 class="border-b">招标类别：
@@ -231,7 +259,6 @@
 						<li class="fl">联系人：<span>{{contact}}</span></li>
 						<li class="fr">联系电话：<span>{{phone}}</span></li>
 					</ul>
-
 				</div>
 				<div class="valid fuli overflow-h">
 					<p>有效期至：<span>{{end_at}}</span></p>
@@ -254,27 +281,12 @@
 					</a>
 				</p>
 			</section>
-
-			<!--<?php if(!empty($model->data->specifications)&&!empty($des)){?>-->
-			<!--<section class="param ">-->
-			<!--<h3 class="border-b">规格参数</h3>-->
-			<!--<div class="mfrs overflow-h">-->
-			<!--<?php-->
-			<!--$vals=explode(",", $model->data->specifications);-->
-			<!--foreach (explode(",", $des) as $index=>$item){-->
-			<!--?>-->
-			<!--<?php if($index%2==0){?>-->
-			<!--<p class="fl mr-20"><span class=""><?=$item;?>：</span><span ><?=empty($vals[$index])?'':$vals[$index];?></span></p>-->
-			<!--<?php }else{?>-->
-			<!--<p class="fl "><span class=""><?=$item;?>：</span><span><?=empty($vals[$index])?'':$vals[$index];?></span></p>-->
-			<!--</div>-->
-			<!--<div class="mfrs overflow-h">-->
-			<!--<?php }?>-->
-			<!--<?php }?>-->
-			<!--</div>-->
-			<!--</section>-->
-			<!--<?php }?>-->
-
+			<section class="param" v-if="guiges">
+				<h3 class="border-b">规格参数</h3>
+				<div class="mfrs overflow-h" v-for="item in guiges">
+					<p class="fl mr-20"><span class="">{{item}}</p>
+				</div>
+			</section>
 			<div class="div1"></div>
 			<section class="invite">
 				<h3 class="border-b">招标详情</h3>
@@ -285,128 +297,148 @@
 				</div>
 			</section>
 			<div class="tousu pos-r">
-				<a href="../zhaopin/tousu.html?name=qwqwqwqwqwqw">
+				<a :href="'../zhaopin/tousu.html?id=' + id + '&name=' + title">
 					<div class="tousu-main pos-a">
 						<i class="ico ico-tousu"></i>
 						<span>投诉</span>
-					</div>
+				</div>
 				</a>
-			</div>
-			<!--相似招标-->
-			<section class="like-zb">
-				<h3 class="border-b same">相似招标</h3>
-				<section class="content-list  lh-24 ">
-					<div>
-						<article class="m-list list-theme4">
-							<a v-for="item in similaritylist" :href='"zhaobiaodetail.html?id="+item.id' class="list-item">
-								<div class="list-img"></div>
-								<div class="list-mes">
-									<div class="list-title">
-										<p class="f-16 ">
-											<span>{{item.title}}</span>
-											<span class="fr c-ec9d1d">{{item.price==''?'面议':item.price}}/{{item.unit}}</span>
-										</p>
-									</div>
-									<div class="list-other">
-										<h4 class="mt-10 f-14 ">
+		</div>
+		<!--相似招标-->
+		<section class="like-zb">
+			<h3 class="border-b same">相似招标</h3>
+			<section class="content-list  lh-24 ">
+				<div>
+					<article class="m-list list-theme4">
+						<a v-for="item in similaritylist" :href='"zhaobiaodetail.html?id="+item.id' class="list-item">
+							<div class="list-img"></div>
+							<div class="list-mes">
+								<div class="list-title">
+									<p class="f-16 ">
+										<span>{{item.title}}</span>
+										<span class="fr c-ec9d1d">{{item.price==''?'面议':item.price}}/{{item.unit}}</span>
+									</p>
+								</div>
+								<div class="list-other">
+									<h4 class="mt-10 f-14 ">
 											<span class="fl">{{item.city}}</span>
 											<span class="ml-15">{{item.quantity==-1||item.quantity==''?'已招标文件为主	单位：':item.quantity}}{{item.unit}}</span>
 									 		<span class="fr time mr-8 ">{{item.created_at}}</span>
 										</h4>
-										<p class="recruit-pos f-14 mt-5 pos-name">{{item.orgName}}</p>
-									</div>
+									<p class="recruit-pos f-14 mt-5 pos-name">{{item.orgName}}</p>
 								</div>
-							</a>
-						</article>
-					</div>
-				</section>
+							</div>
+						</a>
+					</article>
+				</div>
 			</section>
-			<div style="height: 57px;"></div>
-			<footer>
-				<ul class="overflow-h">
-					<li>
-						<a :href="'tel:'+phone">
-							<img src="../../static/img/ico-phone.png" alt="" />
-							<span>电话</span>
-						</a>
-					</li>
-					<li class="second">
-						<a :href='"../../message/chat_detail.html?id="+userId'>
-							<img src="../../static/img/xiaoxi.png" alt="" />
-							<span>消息</span>
-						</a>
-					</li>
-					<li class="third sc" @click="favourite()">
-						<img id="scimage" src="../../static/img/shoucang1.png" alt="" />
-						<span class="on">收藏</span>
-					</li>
-					<li class="last">
-						<span class="todi">
-                    		<a href="#">立即投标</a>
-                    		<!--已投标-->
-                		</span>
-					</li>
-				</ul>
-			</footer>
+		</section>
+		<div style="height: 57px;"></div>
+		<footer>
+			<ul class="overflow-h">
+				<li>
+					<a :href="'tel:'+phone">
+						<img src="../../static/img/ico-phone.png" alt="" />
+						<span>电话</span>
+					</a>
+				</li>
+				<li class="second">
+					<a :href='"../../message/chat_detail.html?id="+userId'>
+						<img src="../../static/img/xiaoxi.png" alt="" />
+						<span>消息</span>
+					</a>
+				</li>
+				<li class="third sc" @click="favouritec()">
+					<img v-if="isShoucang" src="../../static/img/shoucang2.png" alt="" />
+					<img v-else src="../../static/img/shoucang1.png" alt="" />
+					<span class="on">收藏</span>
+				</li>
+				<li class="last">
+					<span v-if="isToudi" class="todi" id="asd">已投标</span>
+					<span v-else class="todi">
+							<a :href="'toubiao.html?id='+id+'&unit='+unit">立即投标</a>
+						</span>
+				</li>
+			</ul>
+		</footer>
+		<div class="fabuDetail" style="display: none;">我也要发布</div>
+		<div class="understandMore">
+			<p class="ml-10">了解更多请关注“仝仝生态”</p>
+			<img src="../../static/img/wx_gzhewm.png" width="225px" height="225px;" style="margin: 0px auto;">
+			<p class="ml-10 f-13 mt-5">长按识别二维码即可关注</p>
+			<div style="height: 64px;"></div>
+		</div>
 		</div>
 	</body>
 
-	<!--<script type="text/javascript" charset="utf-8">-->
-	<!--wx.config(<?php echo Yii::$app->wechat->js->config(array('checkJsApi','onMenuShareTimeline','onMenuShareAppMessage'), false) ?>);-->
-	<!--var title='【仝仝生态】<?=$model->title; ?>';-->
-	<!--wx.ready(function () {-->
-	<!--var shareData = {-->
-	<!--title: title, // 分享标题 -->
-	<!--desc: '<?=$model->description; ?>', // 分享描述  -->
-	<!--link: window.location.href, // 分享链接  -->
-	<!--imgUrl: ''-->
-	<!--};-->
-	<!--wx.onMenuShareAppMessage(shareData);-->
-	<!--wx.onMenuShareTimeline(shareData);-->
-	<!--});-->
-	<!--</script>-->
-
 	<script type="text/javascript" src="../../js/config.js"></script>
 	<script type="text/javascript">
+		/* 如果是分享跳转的链接显示我要发布按钮*/
+		var urlStr = window.location.href;
+		if((urlStr.indexOf('from=singlemessage')) > 0 ||
+			(urlStr.indexOf('from=timeline')) > 0 ||
+			(urlStr.indexOf('from=groupmessage')) > 0) {
+			$('.fabuDetail').css('display', 'block');
+			$('.understandMore').css('display', 'block');
+		}
+
 		var qs = new QueryString();
 		var id = parseInt(qs['id']);
+		id = 379;
 
-		$(function() {
-			if(qs['iszb']) {
-				window.history.pushState({}, "首页", "");
-				window.addEventListener("popstate", function(e) {
-					window.location.replace('zhaobiao.html');
-				}, false);
+		if(qs['iszb']) {
+			window.history.pushState({}, "首页", "");
+			window.addEventListener("popstate", function(e) {
+				window.location.replace('zhaobiao.html');
+			}, false);
+		}
+
+		post('/webZb/ZhaobiaoDetail', {
+			id: id
+		}, function(data) {
+			console.log(data)
+			var d = data.result;
+			vm.category = d.category;
+			vm.price = d.price;
+			vm.unit = d.unit;
+			vm.quantity = d.quantity;
+			vm.contact = d.contact;
+			vm.phone = d.phone;
+			vm.end_at = d.endAt;
+			vm.updated_at = d.updateAt;
+			vm.favourite = d.shoucang;
+			vm.trueView = d.liulan;
+			vm.address = d.address;
+			vm.daohang = d.ditu;
+			vm.content = strReplace(d.content);
+			vm.title = d.title;
+			vm.userId = d.userId;
+			vm.guiges = d.guiges;
+		})
+
+		post('/webSc/isFavorite', {
+			id: id,
+			userId: 85
+		}, function(data) {
+			vm.isShoucang = data.result;
+			if(data.result) {
+				$('.on').css('color', '#ec9d1d');
+				$('.on').html('取消');
 			}
+		})
 
-			post('/webZb/ZhaobiaoDetail', {
-				id: 379
-			}, function(data) {
-				console.log(data)
-				var d = data.result;
-				vm.category = d.category;
-				vm.price = d.price;
-				vm.unit = d.unit;
-				vm.quantity = d.quantity;
-				vm.contact = d.contact;
-				vm.phone = d.phone;
-				vm.end_at = d.endAt;
-				vm.updated_at = d.updateAt;
-				vm.favourite = d.shoucang;
-				vm.trueView = d.liulan;
-				vm.address = d.address;
-				vm.daohang = d.ditu;
-				vm.content = strReplace(d.content);
-				vm.title = d.title;
-				vm.userId = d.userId;
-			})
+		post('/webZb/isToubiao', {
+			publishId: id,
+			userId: 85
+		}, function(data) {
+			vm.isToudi = data.result;
+		})
 
-			post('/webZb/Zhaobiao', {
-				pageNo: 1,
-				pageSize: 2
-			}, function(data) {
-				vm.similaritylist = data.result;
-			})
+		post('/webZb/Zhaobiao', {
+			pageNo: 1,
+			pageSize: 2
+		}, function(data) {
+			vm.similaritylist = data.result;
 		})
 
 		var vm = new Vue({
@@ -427,71 +459,62 @@
 				city: "",
 				address: "",
 				content: "",
-				similaritylist: [],
+				similaritylist: null,
 				unit: "",
 				daohang: "",
-				userId: ""
+				userId: "",
+				isShoucang: false,
+				isToudi: false,
+				guiges: null
 			},
 			methods: {
-				favourite: function() {
-					//                axios.post('/favourite/index', {
-					//                    id:id
-					//                }).then(function (response) {
-					//                    action=response.data.action;
-					//                    mes="收藏成功!";
-					//                    if(action=="cancel"){
-					//                        mes="取消"+mes;
-					//                        $('#scimage').attr('src','/static/img/shoucang1.png');
-					//                        $('.on').css('color','#717171');
-					//                        $('.on').html('收藏');
-					//                    }else{
-					//                        $('#scimage').attr('src','/static/img/shoucang2.png');
-					//                        $('.on').css('color','#ec9d1d');
-					//                        $('.on').html('取消');
-					//                    }
-					//                    vm.$dialog.toast({
-					//                        mes: mes,
-					//                        icon: 'success',
-					//                        timeout: 1500,
-					//                    });
-					//                });
+				favouritec: function() {
+					post('/webSc/favorite', {
+						userId: 85,
+						id: id,
+						shoucang: !vm.isShoucang
+					}, function(data) {
+						vm.isShoucang = !vm.isShoucang;
+						if(vm.isShoucang) {
+							$('.on').css('color', '#ec9d1d');
+							$('.on').html('取消');
+						} else {
+							$('.on').css('color', '#717171');
+							$('.on').html('收藏');
+						}
+						vm.$dialog.toast({
+							mes: data.reason,
+							icon: 'success',
+							timeout: 1500,
+						});
+					})
 				}
 			},
 		})
+
+		$(function() {
+			/** 发布链接页面跳转*/
+			$(".fabuDetail").on('click', function() {
+				vm.$dialog.confirm({
+					mes: '<div style="text-align: center;">发布信息之前需关注<font color="red">“仝仝生态”</font></br>是否确认关注?</div>',
+					opts: [{
+							txt: '关注',
+							color: false,
+							callback: function() {
+								window.location.href = 'http://dwz.cn/6fbbCU';
+							}
+						},
+						{
+							txt: '我已关注',
+							color: false,
+							callback: function() {
+								window.location.href = '../../fabu.html';
+							}
+						}
+					]
+				});
+			});
+		})
 	</script>
-	<!--<script type="text/javascript">-->
-	<!--$(function(){-->
-	<!--if (<?=$model->isfavourite; ?>) {-->
-	<!--$("#scimage").attr('src','/static/img/shoucang2.png');-->
-	<!--$('.on').css('color','#ec9d1d');-->
-	<!--} else{-->
-	<!--$("#scimage").attr('src','/static/img/shoucang1.png');-->
-	<!--$('.on').css('color','#717171');-->
-	<!--}-->
-	<!--if(<?=$type?>==1){-->
-	<!--pushHistory();-->
-	<!--var bool=false;-->
-	<!--setTimeout(function(){-->
-	<!--bool=true;-->
-	<!--},1500);-->
-	<!--window.addEventListener("popstate", function(e) {-->
-	<!--if(bool)-->
-	<!--{-->
-	<!--location.href='/list/zhaobiao';-->
-	<!--}-->
-	<!--pushHistory();-->
-
-	<!--}, false);-->
-	<!--}-->
-	<!--});-->
-
-	<!--function pushHistory() {-->
-	<!--var state = {-->
-	<!--title: "title",-->
-	<!--url: "#"-->
-	<!--};-->
-	<!--window.history.pushState(state, "title", "#");-->
-	<!--}-->
-	<!--</script>-->
 
 </html>

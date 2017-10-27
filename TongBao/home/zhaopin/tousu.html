@@ -1,123 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>投诉信息</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="renderer" content="webkit">
-    <!--UC 浏览器-->
-    <meta name="screen-orientation" content="portrait">
-    <meta name="full-screen" content="yes">
-    <!--QQ x5内核-->
-    <meta name="x5-orientation" content="portrait">
-    <meta name="x5-fullscreen" content="true">
-    <meta name="format-detection" content="telephone=no, email=no">
-    <link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
-    <link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
-    <script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
-    <script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="../../static/css/common.css">
-    <script src="../../static/lib/js/axios.min.js"></script>
-    <script src="../../js/config.js" type="text/javascript" charset="utf-8"></script>
 
+	<head>
+		<meta charset="UTF-8">
+		<title>投诉信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<!--UC 浏览器-->
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<!--QQ x5内核-->
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+		<link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
+		<script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
+		<script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../../static/css/common.css">
+		<script src="../../js/config.js" type="text/javascript" charset="utf-8"></script>
 
-</head>
-<body class="bg-fff">
+	</head>
 
-<div id="app">
-    <section class="tousu-com">
-        <p class="pd-14 f-16 c-7d817a">信息投诉:<span>{{name}}</span></p>
-        <textarea name="" rows="" cols="" placeholder="请填写投诉内容" v-model="content" class="tousu-comtent"></textarea>
-        <section class="shili-show  mt-20">
+	<body class="bg-fff">
+		<div id="app">
+			<section class="tousu-com">
+				<p class="pd-14 f-16 c-7d817a">信息投诉 : <span>{{name}}</span></p>
+				<textarea name="" rows="" cols="" placeholder="请填写投诉内容" v-model="content" class="tousu-comtent"></textarea>
+				<section class="shili-show  mt-20">
+					<div id="insert" class="insert-pic fl regis ml-20 mb-15">
+						<div class="charu-pic">
+							<img id="tsimg" src="../../static/img/zhaoxiang.png" onclick="chooseImage()" />
+						</div>
+						<input id="image" class="fr compile-pic" type="file" accept="image/*" hidden="true" onchange="imagePreview(this)">
+					</div>
+				</section>
+				<p class="queding" @click="tousu()">确定投诉</p>
+			</section>
+		</div>
 
-            <div id="insert" class="insert-pic fl regis ml-20 mb-15">
-                <div class="charu-pic">
-                    <img id="tsimg" src="../../static/img/zhaoxiang.png" onclick="chooseImage()"/>
+		<script type="text/javascript" charset="utf-8">
+			var qs = new QueryString();
+			var id = parseInt(qs['id']);
+			var name = qs['name'];
 
-                </div>
-                <!--<input type="hidden" id="image"/>-->
-                <input id="image" class="fr compile-pic" type="file" accept="image/*" hidden="true"
-                       onchange="imagePreview(this)">
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					name: name,
+					content: null,
+					img: ''
+				},
+				methods: {
+					tousu: function() {
+						if($('.tousu-comtent').val() == '') {
+							alert('请填写投诉内容')
+							return
+						}
 
-            </div>
-        </section>
-        <p class="queding" @click="toushu()">确定投诉</p>
-    </section>
+						post('/webTs/tousu', {
+							userId: 101,
+							publishId: id,
+							content: vm.content,
+							tousuImg: vm.img
+						}, function(data) {
+							vm.$dialog.toast({
+								mes: "感谢您的支持和理解我们会尽快对信息进行核实与处理。",
+								icon: 'success',
+								timeout: 1500,
+								callback: function() {
+									window.history.go(-1);
+								}
+							});
+						})
+					},
+				}
+			})
 
+			function chooseImage() {
+				$('#image').click();
+			}
 
-</div>
+			function imagePreview(input) {
+				var files = input.files;
+				for(var i = 0; i < files.length; i++) { //预览新添加的图片
+					var file = files[i];
+					var imageType = /^image\//;
+					if(!imageType.test(file.type)) {
+						alert("请选择图片类型上传");
+						continue;
+					}
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						vm.img = e.target.result;
+						$('#tsimg').attr('src', e.target.result);
+					};
+					reader.readAsDataURL(file);
+				}
+			}
+		</script>
+	</body>
 
-<script>
-    //    var id=<?=$model->id?>;
-    var vm = new Vue({
-        el: "#app",
-        data: {
-            content: null,
-            name: "北京金都园林绿化有限责任公司"
-        },
-        methods: {
-            toushu() {
-                if ($('.tousu-comtent').val() == '') {
-                    alert('请填写投诉内容')
-                    return
-                }
-                alert("发送请求投诉" + $('.tousu-comtent').val());
-//                axios.post('/list/toushu?id='+id, {
-//                    image:$("#image").val(),
-//                    content:vm.content
-//                }).then(function (response) {
-//                    vm.$dialog.toast({
-//                        mes: "感谢您的支持和理解我们会尽快对信息进行核实与处理。",
-//                        icon: 'success',
-//                        timeout: 1500,
-//                        callback: () => {
-//                        window.location.href= '/list/<?=$model->module; ?>';
-//                }
-//                });
-//                }
-//                );
-            },
-        }
-    })
-</script>
-<script src="../../js/config.js" type="text/javascript" charset="utf-8"></script>
-
-<script type="text/javascript" charset="utf-8">
-    function chooseImage() {
-        $('#image').click();
-    }
-
-    function imagePreview(input) {
-        var files = input.files;
-        for (var i = 0; i < files.length; i++) { //预览新添加的图片
-            var file = files[i];
-            var imageType = /^image\//;
-            if (!imageType.test(file.type)) {
-                //					alert("请选择图片类型上传");
-                new auiToast().fail({
-                    title: "请选择图片类型",
-                    duration: 2000
-                });
-                continue;
-            }
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                console.log(e.target.result)
-                $('#tsimg').attr('src', e.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    var Request=new QueryString();
-    vm.name = Request["name"];
-
-</script>
-
-</body>
 </html>

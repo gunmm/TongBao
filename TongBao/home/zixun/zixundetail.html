@@ -1,146 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>资迅详情</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="renderer" content="webkit">
-    <!--UC 浏览器-->
-    <meta name="screen-orientation" content="portrait">
-    <meta name="full-screen" content="yes">
-    <!--QQ x5内核-->
-    <meta name="x5-orientation" content="portrait">
-    <meta name="x5-fullscreen" content="true">
-    <meta name="format-detection" content="telephone=no, email=no">
-    <link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
-    <link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
-    <script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
-    <script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="../../static/css/zixunxiangqing.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/common.css">
-</head>
-<body class="bg-fff">
 
-<div id="app">
-    <section class="news-title border-b">
-        <p class="title">{{title}}</p>
-        <ul class="overflow-h">
-            <li class="fl title-name">{{category}}</li>
-            <li class="fr time">{{created_at}}<span> {{trueView}}阅读</span></li>
-            <!--<?= Html::icon('eye')?>-->
-        </ul>
-    </section>
+	<head>
+		<meta charset="UTF-8">
+		<title>资迅详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<!--UC 浏览器-->
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<!--QQ x5内核-->
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+		<link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
+		<script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
+		<script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../../static/css/zixunxiangqing.css">
+		<link rel="stylesheet" type="text/css" href="../../static/css/common.css">
+	</head>
 
-    <section class="content" id="content">
-    </section>
+	<body class="bg-fff">
 
-    <div class="div1"></div>
-    <footer class="pos-f border-t">
-        <ul class="overflow-h">
-            <li class="fl border-r" @click="zan(0)">
-                <!--@click="zan(<?=$model->isUp ? '0' : '1'?>)"-->
-                <i class="zan ico ico-zan"></i>
-                <!--<?=$model->isUp ? 'ico-zan2' : 'ico-zan'?>-->
-                <span id="zannum" class="active" style="color:#717171">
-                    <!--color:<?=$model->isUp ? '#097ed8' : '#717171'?>-->
+		<div id="app">
+			<section class="news-title border-b">
+				<p class="title">{{title}}</p>
+				<ul class="overflow-h">
+					<li class="fl title-name">{{category}}</li>
+					<li class="fr time">{{created_at}}<span> {{trueView}}阅读</span></li>
+				</ul>
+			</section>
+			<section class="content" id="content">
+			</section>
+			<div class="div1 mb-20"></div>
+			<footer class="pos-f border-t">
+				<ul class="overflow-h">
+					<li class="fl border-r" @click="zan(0)">
+						<i class="zan ico" v-bind:class="[isZan?'ico-zan2':'ico-zan']"></i>
+						<span id="zannum" class="active" v-bind:style="{color:isZan?'#097ed8':'#717171'}">
                     <em id="total">{{upTotal}}</em>
-                </span>
-            </li>
-            <li class="fl" @click="favourite()">
-                <i class="favourite ico ico-shoucang"></i>
-                <span class="on">收藏</span>
-            </li>
-        </ul>
-    </footer>
-</div>
+                	</span>
+					</li>
+					<li class="fl" @click="favourite()">
+						<i class="favourite ico ico-shoucang" v-bind:class="[isShoucang?'ico-shoucang2':'ico-shoucang1']"></i>
+						<span class="on">收藏</span>
+					</li>
+				</ul>
+			</footer>
+		</div>
 
+		<script type="text/javascript" src="../../js/config.js"></script>
+		<script type="text/javascript">
+			var qs = new QueryString();
+			var id = parseInt(qs['id']);
+			id = 27;
 
-<!--<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>-->
-<!--<script type="text/javascript" charset="utf-8">-->
-<!--wx.config(<?php echo Yii::$app->wechat->js->config(array('checkJsApi','onMenuShareTimeline','onMenuShareAppMessage'), false) ?>);-->
-<!--var title='【仝仝生态】<?=$model->title; ?>';-->
-<!--wx.ready(function () {-->
-<!--var shareData = {-->
-<!--title: title, // 分享标题 -->
-<!--desc: '<?=$model->description; ?>', // 分享描述  -->
-<!--link: window.location.href, // 分享链接  -->
-<!--imgUrl: '<?=$model->cover; ?>'-->
-<!--};-->
-<!--wx.onMenuShareAppMessage(shareData);-->
-<!--wx.onMenuShareTimeline(shareData);-->
-<!--});-->
-<!--</script>-->
-<script src="../../static/lib/js/axios.min.js"></script>
-<script type="text/javascript">
-    window.onload = function () {
-        var content = document.getElementById("content");
-        content.innerHTML = "<section class=\"content \"><p>事件：<strong></strong></p><p>2016年11月24日，江西丰城发电厂三期扩建工程发生冷却塔施工平台坍塌特别重大事故，造成73人死亡、2人受伤，直接经济损失10197.2万元。</p><p><br></p><p>事故救援现场</p><p>日前，国务院江西丰城发电厂“11·24”冷却塔施工平台坍塌特别重大事故调查组发布调查结果。备受水泥行业关注的在项目建设中混凝土应用存在的问题也有了明确的认定，调查结果显示：为项目建设提供混凝土的供应商是违规建设，并无工商许可、无预拌混凝土专业承包资质、未通过环境保护等部门验收批复、尚未获得设立批复的情况下就违规向项目供应商品混凝土，该公司负责人也因涉嫌生产、销售伪劣产品罪，被检察机关批准逮捕。</p><p><br></p><p>混凝土供应商存在的主要问题</p><p>据调查组的认定显示，此起事故的直接原因是施工单位在7号冷却塔第50节筒壁混凝土强度不足的情况下，违规拆除第50节模板，致使第50节筒壁混凝土失去模板支护，不足以承受上部荷载，从底部最薄弱处开始坍塌，造成第50节及以上筒壁混凝土和模架体系连续倾塌坠落。坠落物冲击与筒壁内侧连接的平桥附着拉索，导致平桥也整体倒塌。</p><p>国电丰城鼎力新型建材有限公司（以下简称丰城鼎力建材公司）是7号冷却塔预拌混凝土供应单位。2016年7月22日，丰城鼎力建材公司与7号冷却塔施工单位河北亿能公司签订了《商品混凝土采购合同》，由丰城鼎力建材公司负责供应商品混凝土。经查，丰城鼎力建材公司在未获批准的情况下，已于2016年4月在丰城发电厂三期扩建工程施工现场设立混凝土搅拌站，开始供应混凝土。</p><p>调查组在有关责任单位存在的主要问题中明确指出，7号冷却塔混凝土供应单位丰城鼎力建材公司在2016年4月份无工商许可、无预拌混凝土专业承包资质、未通过环境保护等部门验收批复、尚未获得设立批复的情况下违规向丰城发电厂三期扩建工程项目供应商品混凝土。生产经理不具备混凝土生产的相关知识和经验，内部试验室人员配备不符合规定要求。生产关键环节把控不严，未严格按照混凝土配合比添加外加剂，无浇筑申请单即供应混凝土。</p><p><br></p><p>地方“保护伞”被依法追责</p><p>与很多违规水泥项目一样，地方主管部门在整个事件过程中也难辞其咎。调查组也对明确指出了其中主管部门的严重问题。其中，丰城市工业和信息化委员会存在的主要问题为：</p><p>一、违规批复设立混凝土搅拌站。在明知丰城鼎力建材公司借用“河南二建丰电三期项目部”名义、非自设搅拌站、未征求国土资源、规划、建设、环境保护等部门意见的情况下，对不符合布点条件的丰城鼎力建材公司混凝土搅拌站出具“基本符合”的结论，并违规批准设立丰城鼎力建材公司搅拌站。</p><p>二、对丰城鼎力建材公司监督不力。未认真履行行业监督管理职责，对丰城鼎力建材公司在2016年4月尚未获得设立批复、未获得环保验收批复、未获得建筑业预拌混凝土专业承包资质、工商营业执照未授予“商品砼生产、销售”范围的情况下，违规建设、生产和销售预拌混凝土的行为失察、失处。</p><p>丰城市政府的主要责任为违反相关规定，在丰城鼎力建材公司不具备规定条件、丰城市工业和信息化委员会未履行相应程序的情况下，违规干预、越权同意丰城市工业和信息化委员会批复设立丰城鼎力建材公司搅拌站。</p><p><br></p><p>相关人员被追究刑事责任人员</p><p>丰城鼎力建材公司（3人）：</p><p>顾玉兴，群众，丰城鼎力建材公司法定代表人、董事长。2017年1月4日，因涉嫌生产、销售伪劣产品罪，被检察机关批准逮捕。</p><p>朱海敏，群众，丰城鼎力建材公司副厂长。2017年1月4日，因涉嫌生产、销售伪劣产品罪，被检察机关批准逮捕。</p><p>徐国军，中共党员，丰城鼎力建材公司经理。2016年12月21日，因涉嫌行贿罪，被检察机关批准逮捕。</p><p><br></p><p>丰城市工业和信息化委员会（3人）：</p><p>涂爱平，丰城市工业和信息化委员会党委书记、主任。2017年5月18日，因涉嫌滥用职权罪，被检察机关批准逮捕。</p><p>毛卫东，中共党员，丰城市工业和信息化委员会副主任。2016年12月19日，因涉嫌玩忽职守罪，被检察机关批准逮捕。</p><p>刘汉辉，中共党员，原丰城市工业和信息化委员会散装水泥预搅拌办公室负责人。2016年12月19日，因涉嫌玩忽职守罪，被检察机关批准逮捕。</p><p><br></p><p>丰城市政府（3人）：</p><p>杨玉平，宜春市委委员、市政府党组成员、副市长，2011年5月至2016年8月任丰城市委书记，其中，2016年4月至8月，同时主持丰城市政府工作。违规干预、越权批准设立丰城鼎力建材公司搅拌站。对事故的发生负有主要领导责任，建议给予撤销党内职务、撤职处分。</p><p>喻军，樟树市委常委，2014年7月至201 6年7月任丰城市委常委、副市长，协助市长分管工业和信息化等工作，负责与丰城发电厂的联系工作。疏于管理，对分管部门履行监管职责督促指导不力，对丰城市工业和信息化委员会在预拌混凝土行业管理中的失职失责问题和在设立预拌混凝土搅拌站审批中的弄虚作假问题失察；对丰城鼎力建材公司搅拌站设立审批过程把关不严。对事故的发生负有重要领导责任，建议给予党内严重警告处分。</p><p>徐思明，丰城市人大常委会副主任，2010年12月至2016年9月任丰城市政府党组成员、办公室主任。在设立丰城鼎力建材公司搅拌站事宜中，违反《丰城市人民政府工作规则》，撰拟同意设立搅拌站的批复意见。建议进行诫勉谈话。</p><p>在本次事故中，我们更加深刻的认识到作为建筑材料供应商，每一个企业都应该严格遵守各项政策法规，保证所生产的产品达到各项标准要求。但是在水泥行业，仍时有无证生产、假冒伪劣甚至权力机构为违规项目提供“保护伞”的消息见诸报端，小参希望通过这一起惨痛的事故能唤起涉事人员的良知，这样的悲剧不再重演。</p></section>";
-    }
-    //    var id=<?=$model->id;?>;
-    var vm = new Vue({
-        el: '#app',
-        data: {
-            title: "73人死亡！涉案混凝土商严重违规,董事长,生产厂长,\"保护伞\"全被逮捕！",
-            category: "热点新闻",
-            created_at: "2017-09-30",
-            trueView: "70",
-            upTotal: "50",
-        },
-        methods: {
-            favourite() {
-//                axios.post('/favourite/index', {
-//                    id:id
-//                }).then(function (response) {
-//                    action=response.data.action;
-//                    mes="收藏成功!";
-//                    if(action=="cancel"){
-//                        mes="取消"+mes;
-//                        $('.favourite').removeClass('ico-shoucang2').addClass('ico-shoucang1')
-//                        $('.on').css('color','#717171');
-//                        $('.on').html('收藏');
-//                    }else{
-//                        $('.favourite').removeClass('ico-shoucang1').addClass('ico-shoucang2')
-//                        $('.on').css('color','#ec9d1d');
-//                        $('.on').html('取消');
-//                    }
-//                    vm.$dialog.toast({
-//                        mes: mes,
-//                        icon: 'success',
-//                        timeout: 1500
-//                    })
-//                })
-            },
-            zan(status) {
-//                if(status==1){
-//                    axios.get('/vote/index?id='+id).then(function (response) {
-//                        $("#total").html(response.data.up);
-//                        $('.zan').removeClass('ico-zan2').removeClass('ico-zan').addClass('ico-zan2')
-//                        $("#zannum").css('color','#097ed8');
-//                    })
-//                }
-            }
-        },
-    });
-</script>
-<!--<script type="text/javascript">-->
-<!--$(function(){-->
-<!--if (<?=$model->isFavourite; ?>) {-->
-<!--$('.favourite').removeClass('ico-shoucang').addClass('ico-shoucang2')-->
-<!--$('.on').css('color','#ec9d1d');-->
-<!--$('.on').html('取消');-->
-<!--} else{-->
-<!--$('.favourite').removeClass('ico-shoucang2').addClass('ico-shoucang')-->
-<!--$('.on').css('color','#717171');-->
-<!--$('.on').html('收藏');-->
-<!--}-->
-<!--});-->
-<!--</script>-->
+			post('/webZx/BaseMessage', {
+				id: id
+			}, function(data) {
+				console.log(data)
+				var d = data.result;
+				vm.title = d.title;
+				vm.category = d.category;
+				vm.trueView = d.read;
+				vm.created_at = d.updatedAt;
+				vm.upTotal = d.vote;
 
+				var content = document.getElementById("content");
+				content.innerHTML = strReplace(d.content);
+			})
 
-</body>
+			post('/webSc/isFavorite', {
+				id: id,
+				userId: 85
+			}, function(data) {
+				vm.isShoucang = data.result;
+				if(data.result) {
+					$('.on').css('color', '#ec9d1d');
+					$('.on').html('取消');
+				}
+			})
+
+			post('/webSc/isVote', {
+				id: id,
+				userId: 85
+			}, function(data) {
+				vm.isZan = data.result;
+			})
+
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					title: "",
+					category: "",
+					created_at: "",
+					trueView: "",
+					upTotal: 0,
+					isShoucang: false,
+					isZan: false
+				},
+				methods: {
+					favourite: function() {
+						post('/webSc/favorite', {
+							userId: 85,
+							id: id,
+							shoucang: !vm.isShoucang
+						}, function(data) {
+							vm.isShoucang = !vm.isShoucang;
+							if(vm.isShoucang) {
+								$('.on').css('color', '#ec9d1d');
+								$('.on').html('取消');
+							} else {
+								$('.on').css('color', '#717171');
+								$('.on').html('收藏');
+							}
+							vm.$dialog.toast({
+								mes: data.reason,
+								icon: 'success',
+								timeout: 1500,
+							});
+						})
+					},
+					zan: function(status) {
+						if(vm.isZan) {
+							return;
+						}
+						post('/webSc/vote', {
+							id: id,
+							userId: 85
+						}, function(data) {
+							vm.isZan = true;
+							vm.upTotal += 1;
+						})
+					}
+				},
+			});
+		</script>
+	</body>
+
 </html>

@@ -27,6 +27,37 @@
 		<link rel="stylesheet" type="text/css" href="../../static/css/common.css">
 		<link rel="stylesheet" type="text/css" href="../../static/css/detail-jianlj.css">
 		<script type="text/javascript" src="../../static/lib/js/jquery-1.11.1.min.js"></script>
+
+		<style type="text/css">
+			.fabuDetail {
+				font-size: 11px;
+				margin: 0 auto;
+				width: 21px;
+				line-height: 14px;
+				color: white;
+				position: fixed;
+				top: 84px;
+				right: 5px;
+				border-radius: 3px;
+				padding-top: 0.5rem;
+				background-color: #F91605;
+				opacity: 0.5;
+				filter: alpha(Opacity=40);
+				-moz-opacity: 0.4;
+				height: 75px;
+				text-align: center;
+				zoom: 1.6;
+			}
+			
+			.understandMore {
+				font-weight: 600;
+				text-align: center;
+				display: none;
+				font-family: NotoSansHans-Regular;
+				font-size: 15px;
+				color: #03A9F4;
+			}
+		</style>
 	</head>
 
 	<body class="bg-fff">
@@ -88,7 +119,7 @@
 						<span>{{work.startdate}}至 {{work.enddate}}</span>
 					</div>
 					<div class="job-content border-l" style="padding-bottom: 0.8rem;">
-						<p style="margin-top: 1.2rem; padding-top: 0;">{{iscompany?work.companyname:'*****'}}</p>
+						<p style="margin-top: 1.2rem; padding-top: 0;">{{showcompanyname?work.companyname:'*****'}}</p>
 						<p style="margin-top: 0.3rem; padding-top: 0;">{{work.brief}}</p>
 					</div>
 				</div>
@@ -118,7 +149,7 @@
 			</section>
 			<!--投诉-->
 			<div class="tousu pos-r">
-				<a href="../zhaopin/tousu.html?name=qwqwqwqwqwqw">
+				<a :href="'../zhaopin/tousu.html?id=' + id + '&name=' + name">
 					<div class="tousu-main pos-a">
 						<i class="ico ico-tousu"></i>
 						<span>投诉</span>
@@ -165,7 +196,7 @@
 			<!--</section>-->
 			<!--<?php }?>-->
 			<div style="height: 57px;"></div>
-			<footer v-if="iscompany">
+			<footer v-if="type==2">
 				<ul class="overflow-h">
 					<li>
 						<a href="tel:<?=$model['phone']; ?>">
@@ -179,103 +210,101 @@
 							<span>消息</span>
 						</a>
 					</li>
-					<li class="third sc" @click="favourite()">
-						<img id="scimage" src="../../static/img/shoucang1.png" alt="" />
+					<li class="third sc" @click="favouriteClick()">
+						<img v-if="isShoucang" src="../../static/img/shoucang2.png" alt="" />
+						<img v-else src="../../static/img/shoucang1.png" alt="" />
 						<span class="on">收藏</span>
 					</li>
 					<li class="last">
-						<span class="todi" @click="toudi()">邀请面试</span>
-
-						<!--<?php if($model['istoudi']){?>-->
-						<!--<span class="todi">已邀请面试</span>-->
-						<!--<?php }else{?>-->
-						<!--<span class="todi" @click="toudi()">邀请面试</span>-->
-						<!--<?php }?>-->
+						<span v-if="isToudi" class="todi" id="asd" @click="toudi()">已邀请面试</span>
+						<span v-else class="todi" @click="toudi()">邀请面试</span>
 					</li>
 				</ul>
 			</footer>
+
+			<div class="fabuDetail" style="display: none;">我也要发布</div>
+			<div class="understandMore">
+				<p class="ml-10">了解更多请关注“仝仝生态”</p>
+				<img src="../../static/img/wx_gzhewm.png" width="225px" height="225px;" style="margin: 0px auto;">
+				<p class="ml-10 f-13 mt-5">长按识别二维码即可关注</p>
+				<div style="height: 64px;"></div>
+			</div>
 		</div>
-
 	</body>
-
-	<!--<script type="text/javascript" charset="utf-8">-->
-	<!--//    wx.config(<?php echo Yii::$app->wechat->js->config(array('checkJsApi','onMenuShareTimeline','onMenuShareAppMessage'), false) ?>);-->
-	<!--var title='【仝仝生态】<?=$model['name'] ?>';-->
-	<!--wx.ready(function () {-->
-	<!--var shareData = {-->
-	<!--title: title, // 分享标题-->
-	<!--desc: '<?=$model['description']; ?>', // 分享描述-->
-	<!--link: window.location.href, // 分享链接-->
-	<!--imgUrl: ''-->
-	<!--};-->
-	<!--wx.onMenuShareAppMessage(shareData);-->
-	<!--wx.onMenuShareTimeline(shareData);-->
-	<!--});-->
-	<!--</script>-->
 
 	<script type="text/javascript" src="../../js/config.js"></script>
 	<script type="text/javascript">
+		/* 如果是分享跳转的链接显示我要发布按钮*/
+		var urlStr = window.location.href;
+		if((urlStr.indexOf('from=singlemessage')) > 0 ||
+			(urlStr.indexOf('from=timeline')) > 0 ||
+			(urlStr.indexOf('from=groupmessage')) > 0) {
+			$('.fabuDetail').css('display', 'block');
+			$('.understandMore').css('display', 'block');
+		}
+
 		var qs = new QueryString();
 		var id = parseInt(qs['id']);
+		id = 70;
 
-		$(function() {
-			if(qs['isqz']) {
-				window.history.pushState({}, "首页", "");
-				window.addEventListener("popstate", function(e) {
-					window.location.replace('qiuzhi.html');
-				}, false);
+		post('/webQz/QiuzhiById', {
+			id: id
+		}, function(data) {
+			console.log(data)
+			var d = data.result;
+			if(d.showfullname == 1) {
+				vm.name = d.name;
+			} else {
+				vm.name = hideStr(d.name);
+			};
+			vm.avatar = ip + d.touxiang;
+			vm.updated_at = d.gengxin;
+			vm.favourite = d.shoucang;
+			vm.view = d.liulan;
+			vm.phone = d.phone;
+			vm.email = d.email;
+			vm.age = d.age;
+			vm.xueli = d.educational;
+			vm.jingyan = d.exprience;
+			vm.targetcity = d.targetcity;
+			vm.zhicheng = d.profession;
+			vm.evaluation = strReplace(d.evaluation);
+			vm.worklist = JSON.parse(d.experience);
+			vm.studylist = JSON.parse(d.education);
+			vm.gongzuofangshi = d.operationMode;
+			vm.onduty = d.onduty;
+			vm.jointime = d.jointime;
+			vm.gangwei = d.gangwei;
+			vm.city = d.city;
+			vm.targetprovince = d.targetprovince;
+			vm.targetxinzi = d.targetSalary;
+			vm.gender = d.sex == '男';
+			vm.showcompanyname = d.showcompanyname == 1;
+		})
+
+		post('/webSc/isFavorite', {
+			id: id,
+			userId: 85
+		}, function(data) {
+			vm.isShoucang = data.result;
+			if(data.result) {
+				$('.on').css('color', '#ec9d1d');
+				$('.on').html('取消');
 			}
+		})
 
-			post('/webQz/QiuzhiById', {
-				id: 70
-			}, function(data) {
-				console.log(data)
-				var d = data.result;
-				if(d.showfullname == 1) {
-					vm.name = d.name;
-				} else {
-					vm.name = hideStr(d.name);
-				};
-				vm.avatar = ip + d.touxiang;
-				vm.updated_at = d.gengxin;
-				vm.favourite = d.shoucang;
-				vm.view = d.liulan;
-				vm.phone = d.phone;
-				vm.email = d.email;
-				vm.age = d.age;
-				vm.xueli = d.educational;
-				vm.jingyan = d.exprience;
-				vm.targetcity = d.targetcity;
-				vm.zhicheng = d.profession;
-				vm.evaluation = strReplace(d.evaluation);
-				vm.worklist = JSON.parse(d.experience);
-				vm.studylist = JSON.parse(d.education);
-				vm.gongzuofangshi = d.operationMode;
-				vm.onduty = d.onduty;
-				vm.jointime = d.jointime;
-				vm.gangwei = d.gangwei;
-				vm.city = d.city;
-				vm.targetprovince = d.targetprovince;
-				vm.targetxinzi = d.targetSalary;
-				vm.gender = d.sex == '男';
-				vm.iscompany = d.showcompanyname == 1;
-			})
+		post('/webQz/isInterview', {
+			id: id,
+			userId: 85
+		}, function(data) {
+			vm.isToudi = data.result;
+		})
 
-			post('/webQz/Qiuzhi', {
-				pageNo: 1,
-				pageSize: 2
-			}, function(data) {
-				vm.zuixinzhaopins = data.result;
-			})
-
-			/* 如果是分享跳转的链接显示我要发布按钮*/
-			var urlStr = window.location.href;
-			if((urlStr.indexOf('from=singlemessage')) > 0 ||
-				(urlStr.indexOf('from=timeline')) > 0 ||
-				(urlStr.indexOf('from=groupmessage')) > 0) {
-				$('.fabuDetail').css('display', 'block');
-				$('.understandMore').css('display', 'block');
-			}
+		post('/webQz/Qiuzhi', {
+			pageNo: 1,
+			pageSize: 2
+		}, function(data) {
+			vm.zuixinzhaopins = data.result;
 		})
 
 		var vm = new Vue({
@@ -304,65 +333,74 @@
 				worklist: [],
 				studylist: [],
 				evaluation: '',
-				iscompany: false
+				showcompanyname: false,
+				type: 2,
+				isShoucang: false,
+				isToudi: false
 			},
 			methods: {
-				favourite: function() {
-					//                axios.post('/favourite/index', {
-					//                    id:id
-					//                }).then(function (response) {
-					//                    action=response.data.action;
-					//                    mes="收藏成功!";
-					//                    if(action=="cancel"){
-					//                        mes="取消"+mes;
-					//                        $('#scimage').attr('src','/static/img/shoucang1.png');
-					//                        $('.on').css('color','#717171');
-					//                        $('.on').html('收藏');
-					//                    }else{
-					//                        $('#scimage').attr('src','/static/img/shoucang2.png');
-					//                        $('.on').css('color','#ec9d1d');
-					//                        $('.on').html('取消');
-					//                    }
-					//                    vm.$dialog.toast({
-					//                        mes: mes,
-					//                        icon: 'success',
-					//                        timeout: 1500,
-					//                    });
-					//                });
+				favouriteClick: function() {
+					post('/webSc/favorite', {
+						userId: 85,
+						id: id,
+						shoucang: !vm.isShoucang
+					}, function(data) {
+						vm.isShoucang = !vm.isShoucang;
+						if(vm.isShoucang) {
+							$('.on').css('color', '#ec9d1d');
+							$('.on').html('取消');
+						} else {
+							$('.on').css('color', '#717171');
+							$('.on').html('收藏');
+						}
+						vm.$dialog.toast({
+							mes: data.reason,
+							icon: 'success',
+							timeout: 1500,
+						});
+					})
 				},
 				toudi: function() {
-					//                axios.post('/toudi/index', {
-					//                    id:id
-					//                }).then(function (response) {
-					//                    action=response.data.action;
-					//                    mes="邀请成功!";
-					//                    $(".todi").html("已邀请面试");
-					//                    if(action=="cancel"){
-					//                        mes="取消"+mes;
-					//                        $(".todi").html("邀请面试");
-					//                    }
-					//                    vm.$dialog.toast({
-					//                        mes: mes,
-					//                        icon: 'success',
-					//                        timeout: 1500,
-					//                    });
-					//                });
+					post('/webQz/Interview', {
+						userId: 85,
+						id: id,
+						isYaoqing: !vm.isToudi
+					}, function(data) {
+						console.log(data);
+						vm.isToudi = !vm.isToudi;
+						vm.$dialog.toast({
+							mes: data.reason,
+							icon: 'success',
+							timeout: 1500,
+						});
+					})
 				}
 			},
 		})
+
+		$(function() {
+			/** 发布链接页面跳转*/
+			$(".fabuDetail").on('click', function() {
+				vm.$dialog.confirm({
+					mes: '<div style="text-align: center;">发布信息之前需关注<font color="red">“仝仝生态”</font></br>是否确认关注?</div>',
+					opts: [{
+							txt: '关注',
+							color: false,
+							callback: function() {
+								window.location.href = 'http://dwz.cn/6fbbCU';
+							}
+						},
+						{
+							txt: '我已关注',
+							color: false,
+							callback: function() {
+								window.location.href = '../../fabu.html';
+							}
+						}
+					]
+				});
+			});
+		})
 	</script>
-	<!--<script type="text/javascript">-->
-	<!--<?php if(!empty(Yii::$app->user->identity->profile)&&Yii::$app->user->identity->profile->type==2){?>-->
-	<!--$(function(){-->
-	<!--if (<?=$model['isfavourite']; ?>) {-->
-	<!--$("#scimage").attr('src','/static/img/shoucang2.png');-->
-	<!--$('.on').css('color','#ec9d1d');-->
-	<!--} else{-->
-	<!--$("#scimage").attr('src','/static/img/shoucang1.png');-->
-	<!--$('.on').css('color','#717171');-->
-	<!--}-->
-	<!--});-->
-	<!--<?php }?>-->
-	<!--</script>-->
 
 </html>

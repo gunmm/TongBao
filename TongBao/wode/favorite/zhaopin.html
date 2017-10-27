@@ -14,7 +14,7 @@
 		<meta name="x5-fullscreen" content="true">
 		<meta name="format-detection" content="telephone=no, email=no">
 
-		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="../../static/lib/js/vue.min.js"></script>
 		<script type="text/javascript" src="../../static/lib/js/ydui.js"></script>
 		<script type="text/javascript" src="../../js/aui-tab.js"></script>
@@ -27,57 +27,81 @@
 
 	<body>
 		<div id="app">
-			<div class="aui-tab" id="tab">
-				<div id="gongying" class="aui-tab-item aui-active">供应信息</div>
-				<div id="zhaobiao" class="aui-tab-item">招标信息</div>
-				<div id="zhaopin" class="aui-tab-item" v-if="type">招聘信息</div>
-				<div id="qiuzhi" class="aui-tab-item" v-else>求职信息</div>
-				<div id="zixun" class="aui-tab-item">仝仝资讯</div>
-			</div>
-			<div style="background-color: lightgray; height: 1px;"></div>
-			<article class="m-list list-theme4">
-				<a v-for="item in items" :href="item.url" class="list-item">
-					<div class="list-img"></div>
-					<div class="list-mes">
-						<div class="list-title">
-							<p class="f-16 "><span>{{item.title}}</span><span class="fr c-ec9d1d">{{item.xinzi}}</span></p>
-						</div>
-						<div class="list-other">
-							<h4 class="f-14 overflow-h"><span class="fl">{{item.companyname}}</span><span class="ml-15"></span><span class="fr time mr-8 ">{{item.created_at}}</span></h4>
-							<p class="recruit-pos f-14 mt-5 pos-name">{{item.city}} {{item.jingyan}} {{item.xueli}}</p>
-						</div>
-					</div>
-				</a>
-			</article>
+			<section class="content-list  lh-24" style="padding-top: 2.25rem;">
+				<yd-infinitescroll :on-infinite="loadList">
+					<yd-list theme="4" slot="list">
+						<yd-list-item v-for="item in datalist" :href='"../../home/zhaopin/zhaopindetail.html?id="+item.id'>
+							<p slot="title" class="f-16 ">
+								<span>{{item.title}}</span>
+								<span class="fr c-ec9d1d">{{item.salary}}</span>
+							</p>
+							<yd-list-other slot="other">
+								<h4 class="f-14 overflow-h">
+									<span class="fl">{{item.orgName}}</span>
+									<span class="fr time">{{item.updatedAt}}</span>
+								</h4>
+								<p class="recruit-pos f-14 mt-5 pos-name">{{item.city}} {{item.experience}} {{item.education}}</p>
+							</yd-list-other>
+						</yd-list-item>
+					</yd-list>
+					<!-- 数据全部加载完毕显示 -->
+					<span slot="doneTip" class="text-c mt-5 f-14">全部数据已加载完成</span>
+					<!-- 加载中提示 -->
+					<img slot="loadingTip" src="../../static/img/loading10.svg" />
+				</yd-infinitescroll>
+			</section>
+			<section style="position: fixed; left: 0px; top: 0px; width: 100%;">
+				<div class="aui-tab" id="tab">
+					<div id="gongying" class="aui-tab-item aui-active">供应信息</div>
+					<div id="zhaobiao" class="aui-tab-item">招标信息</div>
+					<div id="zhaopin" class="aui-tab-item" v-if="type==1">招聘信息</div>
+					<div id="qiuzhi" class="aui-tab-item" v-else>求职信息</div>
+					<div id="zixun" class="aui-tab-item">仝仝资讯</div>
+				</div>
+				<div style="background-color: lightgray; height: 1px;"></div>
+			</section>
 		</div>
 	</body>
 
+	<script type="text/javascript" src="../../js/config.js"></script>
 	<script type="text/javascript">
+		post('/webUser/Favorite', {
+			pageNo: 1,
+			pageSize: 10,
+			messageType: 3,
+			userId: 85
+		}, function(data) {
+			console.log(data)
+			vm.datalist = data.result;
+		})
+
 		var vm = new Vue({
 			el: '#app',
 			data: {
-				type: true,
-				items: [{
-						title: "工程师",
-						xinzi: "1000元",
-						companyname: "鬼才国际",
-						created_at: "2017-10-02",
-						city: "北京",
-						jingyan: "3年以上",
-						xueli: "本科"
-					},
-					{
-						title: "会计",
-						xinzi: "1000元",
-						companyname: "鬼才国际",
-						created_at: "2017-10-02",
-						city: "北京",
-						jingyan: "3年以上",
-						xueli: "本科"
-					}
-				]
+				pageNo: 2,
+				pageSize: 10,
+				type: localStorage.type,
+				datalist: []
 			},
-			methods: {}
+			methods: {
+				loadList: function() {
+					post('/webUser/Favorite', {
+						pageNo: vm.pageNo,
+						pageSize: vm.pageSize,
+						messageType: 3,
+						userId: 85
+					}, function(data) {
+						_list = data.result;
+						vm.datalist = vm.datalist.concat(_list);
+						if(vm.pageNo > 1 && _list.length < vm.pageSize) {
+							window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
+							return;
+						}
+						window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
+						vm.pageNo++;
+					})
+				}
+			}
 		})
 
 		var tab = new auiTab({

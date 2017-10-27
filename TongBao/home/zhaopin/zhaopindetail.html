@@ -137,7 +137,7 @@
 				</div>
 			</section>
 			<div class="tousu pos-r">
-				<a href="tousu.html?name=qwqwqwqwqwqw" charset="utf-8">
+				<a :href="'tousu.html?id=' + id + '&name=' + name" charset="utf-8">
 					<div class="tousu-main pos-a">
 						<i class="ico ico-tousu"></i>
 						<span>投诉</span>
@@ -208,8 +208,12 @@
 				<div class="text-main h-200">
 					<p class="border-b">提示</p>
 					<p>您还未创建简历，发布简历后才可以投递</p>
-					<p class="overflow-h"><span class="fl quxiao">取消</span> <span class="fl sure"><a
-                    href="/member/jianli">发布简历</a></span></p>
+					<p class="overflow-h">
+						<span class="fl quxiao">取消</span>
+						<span class="fl sure">
+							<a href="../../publish/jianli/jianli.html">发布简历</a>
+						</span>
+					</p>
 				</div>
 			</section>
 			<div class="fabuDetail" style="display: none;">我也要发布</div>
@@ -222,7 +226,7 @@
 		</div>
 	</body>
 
-	<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
 		wx.config({
 			"debug": false,
@@ -245,7 +249,8 @@
 			wx.onMenuShareAppMessage(shareData);
 			wx.onMenuShareTimeline(shareData);
 		});
-	</script>
+	</script>-->
+
 	<script type="text/javascript">
 		/* 如果是分享跳转的链接显示我要发布按钮*/
 		var urlStr = window.location.href;
@@ -258,6 +263,7 @@
 
 		var qs = new QueryString();
 		var id = parseInt(qs['id']);
+		id = 382;
 
 		if(qs['isfb']) {
 			window.history.pushState({}, "首页", "");
@@ -267,7 +273,7 @@
 		}
 
 		post('/webZp/ZhaopinById', {
-			id: 382
+			id: id
 		}, function(data) {
 			console.log(data)
 			var d = data.result;
@@ -296,19 +302,18 @@
 		})
 
 		post('/webSc/isFavorite', {
-			id: 382,
+			id: id,
 			userId: 101
 		}, function(data) {
 			vm.isShoucang = data.result;
 			if(data.result) {
-				$('#scimage').attr('src', '../../static/img/shoucang2.png');
 				$('.on').css('color', '#ec9d1d');
 				$('.on').html('取消');
 			}
 		})
 
 		post('/webZp/isToudi', {
-			id: 382,
+			id: id,
 			userId: 101
 		}, function(data) {
 			vm.isToudi = data.result;
@@ -356,7 +361,7 @@
 				favourite: function() {
 					post('/webSc/favorite', {
 						userId: 101,
-						id: 382,
+						id: id,
 						shoucang: !vm.isShoucang
 					}, function(data) {
 						vm.isShoucang = !vm.isShoucang;
@@ -377,8 +382,13 @@
 				toudi: function() {
 					post('/webZp/toudi', {
 						userId: 101,
-						id: 382
+						id: id
 					}, function(data) {
+						console.log(data);
+						if(!data.result) {
+							$('#m-publsh').removeClass('none');
+							return;
+						}
 						vm.isToudi = !vm.isToudi;
 						vm.$dialog.toast({
 							mes: data.reason,
@@ -391,6 +401,10 @@
 		})
 
 		$(function() {
+			$('.quxiao').click(function() {
+				$('#m-publsh').addClass('none');
+			});
+
 			/** 发布链接页面跳转*/
 			$(".fabuDetail").on('click', function() {
 				vm.$dialog.confirm({
@@ -406,7 +420,7 @@
 							txt: '我已关注',
 							color: false,
 							callback: function() {
-								window.location.href = '../../publish/fabuzhaopin.html';
+								window.location.href = '../../fabu.html';
 							}
 						}
 					]
