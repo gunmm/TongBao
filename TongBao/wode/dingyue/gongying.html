@@ -61,6 +61,10 @@
 	</body>
 
 	<script type="text/javascript">
+		//		post('查询列表', {},
+		//			function(data) {
+		//				console.log(data);
+		//			})
 		var vm = new Vue({
 			el: '#app',
 			data: {
@@ -143,11 +147,11 @@
 		})
 
 		if(localStorage.type == 1) {
+			console.log(localStorage.type);
 			vm.type = true;
 		} else {
 			vm.type = false;
 		}
-
 		var tab = new auiTab({
 			element: document.getElementById("tab"),
 			index: 1

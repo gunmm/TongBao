@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>更新用户信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<!--UC 浏览器-->
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<!--QQ x5内核-->
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+		<link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
+		<script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
+		<script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+
+		<link rel="stylesheet" type="text/css" href="../../static/css/common.css">
+		<link rel="stylesheet" type="text/css" href="../../static/css/add-jianli.css">
+		<link rel="stylesheet" type="text/css" href="../../static/css/zhaopin-index.css">
+
+		<script type="text/javascript" src="../../js/config.js"></script>
+
+	</head>
+
+	<body>
+		<div id="app">
+			<section class="compile-head  bg-fff border-b" v-if="type">
+				<div class="overflow-h">
+					<span class="fl ">近期生活照</span>
+					<div class="fr compile-pic">
+						<img id="headImg" src="../../static/img/my-logo.png" alt="" onclick="chooseImage()" />
+						<input id="ip_logo" class="fr compile-pic" type="file" accept="image/*" hidden="true" onchange="uploadLogo(this)">
+						<span class="fr g-right"><a href=""><i class="ico ico-right1 right-posi"></i></a></span>
+					</div>
+				</div>
+			</section>
+
+			<section class="zp-body">
+				<div class="zp-list overflow-h" v-if="type">
+					<span class="fl">昵称</span>
+					<span class="fr">
+							<a>{{nickname}}
+								<!--<i class="ico ico-right1"></i>-->
+							</a>
+						</span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">手机号码</span>
+					<span class="fr zp-next">{{phone}}</span>
+				</div>
+				<div class="zp-list overflow-h">
+					<span class="fl">修改密码</span>
+					<span class="fr zp-next"><a href="changepassword.html"><i class="ico ico-right-last"></i></a></span>
+				</div>
+			</section>
+		</div>
+		
+		<script type="text/javascript" charset="utf-8">
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					type: true,
+					nickname: 'All is well',
+					phone: '13001689161'
+				},
+				methods: {},
+			});
+
+			function chooseImage() {
+				$('#ip_logo').click();
+			};
+
+			function uploadLogo(input) {
+				var files = input.files;
+				var file = files[0];
+				var imageType = /^image\//;
+				if (!imageType.test(file.type)) {
+					alert("请选择图片类型上传");
+					return;
+				}
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function(e) {
+					$('#headImg').attr('src', e.target.result);
+					post('/webUser/changeMyTouxiang', {
+							'userId': localStorage.userId,
+							'img': e.target.result
+						},
+						function(data) {
+							console.log(data);
+							if (data.result_code == 1) {
+								alert("修改成功！");
+							} else {
+								alert("修改失败，请重试！");
+							}
+						})
+				};
+			}
+			if (localStorage.avatar) {
+				$('#headImg').attr('src', ip + localStorage.avatar);
+			}
+			if(localStorage.type == 1){
+				vm.type = true;
+			}else{
+				vm.type = false;
+			}
+			vm.phone = localStorage.phone;
+			vm.nickname = localStorage.companyname;
+		</script>
+
+	</body>
+
+</html>

@@ -33,11 +33,9 @@
 				post1('/webQz/QiuzhiById',false, {
 					"userId": localStorage.userId,
 				}, function(data) {
-					console.log(data);
 					var workDic = JSON.parse(data.result.education);
 					console.log(workDic);
 					var obj = workDic[itemid];
-					console.log(obj);
 					this.schoolname = obj.schoolname;
 					this.major = obj.major;
 					this.graduationyear = obj.graduationyear;

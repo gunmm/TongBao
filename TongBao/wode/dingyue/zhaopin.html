@@ -81,6 +81,13 @@
 			},
 			methods: {}
 		})
+		
+		
+		if(localStorage.type == 1){
+			vm.type = true;
+		}else{
+			vm.type = false;
+		}
 
 		var tab = new auiTab({
 			element: document.getElementById("tab"),

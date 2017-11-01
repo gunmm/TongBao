@@ -33,7 +33,10 @@
 				"userId": localStorage.userId,
 			}, function(data) {
 				console.log(data);
-				$('#avatar').attr('src', ip + data.result.touxiang);
+				if(data.result.touxiang){
+					$('#avatar').attr('src', ip + data.result.touxiang);
+				}
+				
 				if (data.result.name) {
 					vm.hasbaseinfo = true;
 					vm.name = data.result.name;
@@ -120,7 +123,7 @@
 		<div id="app">
 			<section class="compile-head  bg-fff">
 				<div class="overflow-h"><span class="fl ">近期证件照</span>
-					<div class="fr compile-pic"><img style="border-radius: 50%;" id="avatar" src="../../static/img/touxiang.png" alt="" onclick="chooseImage()"><span class="fr g-right"><i class="ico ico-right1 right-posi"></i></span></div>
+					<div class="fr compile-pic"><img style="border-radius: 50%;" id="avatar" src="../../static/img/my-logo.png" alt="" onclick="chooseImage()"><span class="fr g-right"><i class="ico ico-right1 right-posi"></i></span></div>
 					<input id="img_input" class="fr compile-pic" type="file" accept="image/*" hidden="true" onchange="imagePreview(this)">
 				</div>
 			</section>
@@ -388,6 +391,10 @@
 		}
 
 		function deleteWork(id) {
+			var mymessage = confirm("确认删除？");
+			if (mymessage == false) {
+				return;
+			}
 			post('/webQz/editPersonalBasicInfo', {
 				"userId": localStorage.userId,
 				"id": localStorage.jobWanId,

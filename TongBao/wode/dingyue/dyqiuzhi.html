@@ -26,6 +26,20 @@
 	</head>
 
 	<body>
+		<script>
+			var Request = new QueryString();
+			var itemid = Request["id"];
+			var obj;
+			if (itemid) {
+				post1('/webUser/subscribePersonaListl', false, {
+					"userId": localStorage.userId,
+				}, function(data) {
+					console.log(data);
+					var jobDic = data.result.job;
+					this.obj = jobDic[itemid];
+				})
+			}
+		</script>
 		<div id="app" class="no-select">
 			<section class="zp-body">
 				<div class="zp-list overflow-h">
@@ -70,7 +84,7 @@
 					<span class="fr zp-next select-btn">
 					<select   v-model="jingyan" >
 		                <option value="">不限</option>
-		                <option v-for="item in jingyans" value="item.itemCode">{{item.itemName}}</option>
+		                <option v-for="item in jingyans" :value="item.itemCode">{{item.itemName}}</option>
 		            </select>
 					<i class="ico ico-right1"></i></span>
 				</div>
@@ -127,9 +141,9 @@
 				}
 				this.job = job;
 				this.jobList = jobM;
-				//				if (this.bigdata.gangweiId) {
-				//					selectGangweiA();
-				//				}
+				if (this.obj) {
+					selectGangweiA();
+				}
 			})
 			//地址
 		var province;
@@ -137,25 +151,39 @@
 		getCity(function(p, c) {
 			province = p;
 			city = c;
-			//			if (this.bigdata.cityId) {
-			//				selectProvinceAndCity();
-			//			}
+			if (this.obj) {
+				selectProvinceAndCity();
+			}
 		});
 		 //经验要求
 		var jingyans;
 		getDicTable(true, "004", function(data) {
 				vm.jingyans = data.result;
+				if(this.obj){
+					vm.jingyan = this.obj.jingyanId;
+				}
 			})
 			//学历要求
 		var xuelis;
 		getDicTable(true, "003", function(data) {
-			vm.xuelis = data.result;
-		})
-		//职称要求
+				vm.xuelis = data.result;
+				if(this.obj){
+					vm.xueli = this.obj.xueliId;
+				}
+			})
+			//职称要求
 		var zhichengs;
 		getDicTable(true, "005", function(data) {
-				vm.zhichengs = data.result;
-			})
+			vm.zhichengs = data.result;
+			if (this.obj) {
+				for (var i = 0; i < vm.zhichengs.length; i++) {
+					var obj = vm.zhichengs[i];
+					if (obj.itemName == this.obj.zhicheng) {
+						vm.zhicheng = obj.itemCode;
+					}
+				}
+			}
+		})
 		var vm = new Vue({
 			el: "#app",
 			data: {
@@ -228,27 +256,43 @@
 						alert('请选择工作地址')
 						return
 					}
-					
-					var dataa = {
-						"userId":localStorage.userId,
-						"province":$("#choosedprovince").val(),
-						"city":$("#choosedcity").val(),
-						"gangwei":$("#choosedgangwei").val(),
-						"jingyan":vm.jingyan,
-						"xueli":vm.xueli,
-						"zhicheng":vm.zhicheng,
-						"subscribeType":"4",
+					var dataa;
+					var Request = new QueryString();
+			        var itemid = Request["id"];
+					if (itemid) {
+						dataa = {
+							"userId": localStorage.userId,
+							"province": $("#choosedprovince").val(),
+							"city": $("#choosedcity").val(),
+							"gangwei": $("#choosedgangwei").val(),
+							"jingyan": vm.jingyan,
+							"xueli": vm.xueli,
+							"zhicheng": vm.zhicheng,
+							"subscribeType": "4",
+							"operationIndex": itemid,
+							"operationType": 1
+						}
+					} else {
+						dataa = {
+							"userId": localStorage.userId,
+							"province": $("#choosedprovince").val(),
+							"city": $("#choosedcity").val(),
+							"gangwei": $("#choosedgangwei").val(),
+							"jingyan": vm.jingyan,
+							"xueli": vm.xueli,
+							"zhicheng": vm.zhicheng,
+							"subscribeType": "4",
+						}
 					}
-					
 					post('/webUser/subscribePersonal', dataa,
 						function(data) {
 							console.log(data);
-//							if (data.result_code == '1') {
-//								alert("订阅成功!");
-//								window.location.href = "jianli.html";
-//							} else {
-//								alert("订阅失败，请重试！");
-//							}
+							if (data.result_code == '1') {
+								alert("订阅成功!");
+								window.location.href = "editdingyue.html";
+							} else {
+								alert("订阅失败，请重试！");
+							}
 						})
 				},
 			},
@@ -269,6 +313,18 @@
 				$(this).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
 			});
 		});
+
+		function selectGangweiA() {
+			$("#choosedgangwei").val(this.obj.gangweiId);
+			$("#gangwei").text(this.obj.gangwei);
+		}
+
+		function selectProvinceAndCity() {
+			//			$("#choosedprovincename").val(this.bigdata.province);
+			$("#choosedprovince").val(this.obj.provinceId);
+			$("#city").html($("#choosedprovincename").val() + ' ' + this.obj.display);
+			$("#choosedcity").val(this.obj.city);
+		}
 	</script>
 
 </html>
