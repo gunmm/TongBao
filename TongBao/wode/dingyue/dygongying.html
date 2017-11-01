@@ -27,6 +27,20 @@
 
 	<body>
 		<div id="app">
+			<script>
+				var Request = new QueryString();
+				var itemid = Request["id"];
+				var obj;
+				if (itemid) {
+					post1('/webUser/subscribePersonaListl', false, {
+						"userId": localStorage.userId,
+					}, function(data) {
+						console.log(data);
+						var jobDic = data.result.supply;
+						this.obj = jobDic[itemid];
+					})
+				}
+			</script>
 			<section class="zp-body zhaobiao">
 				<div class="zp-list overflow-h">
 					<span class="fl">供应类别</span>
@@ -71,14 +85,15 @@
 	</body>
 
 	<script type="text/javascript">
-		//地址
+		 //地址
 		var province;
 		var city;
 		getCity(function(p, c) {
 			province = p;
-			city = c; //			if (this.bigdata.cityId) {
-			//				selectProvinceAndCity();
-			//			}
+			city = c;
+			if (this.obj) {
+				selectProvinceAndCity();
+			}
 		});
 		 //类别
 		var job;
@@ -116,8 +131,10 @@
 			}
 			this.job = job;
 			this.jobList = jobM;
+			if (this.obj) {
+				selectGangweiA();
+			}
 		})
-
 		var vm = new Vue({
 			el: "#app",
 			data: {
@@ -157,49 +174,41 @@
 						alert('请选择工作地址')
 						return
 					}
-					var dataa = {
-						"userId":localStorage.userId,
-						"province":$("#choosedprovince").val(),
-						"city":$("#choosedcity").val(),
-						"category_id":$("#choosedgangwei").val(),
-						"subscribeType":"5",
+					var dataa;
+					var Request = new QueryString();
+					var itemid = Request["id"];
+					if (itemid) {
+						dataa = {
+							"userId": localStorage.userId,
+							"province": $("#choosedprovince").val(),
+							"city": $("#choosedcity").val(),
+							"category_id": $("#choosedgangwei").val(),
+							"subscribeType": "5",
+							"operationIndex": itemid,
+							"operationType": 1
+						}
+					} else {
+						dataa = {
+							"userId": localStorage.userId,
+							"province": $("#choosedprovince").val(),
+							"city": $("#choosedcity").val(),
+							"category_id": $("#choosedgangwei").val(),
+							"subscribeType": "5",
+						}
 					}
-					
 					post('/webUser/subscribePersonal', dataa,
 						function(data) {
 							console.log(data);
-//							if (data.result_code == '1') {
-//								alert("订阅成功!");
-//								window.location.href = "jianli.html";
-//							} else {
-//								alert("订阅失败，请重试！");
-//							}
+							if (data.result_code == '1') {
+								alert("订阅成功!");
+								window.location.href = "editdingyue.html";
+							} else {
+								alert("订阅失败，请重试！");
+							}
 						})
-//					axios.post('/dingyue/zhaobiao?id=<?=$id;?>', {
-//							category_id: $("#choosedgangwei").val(),
-//							province: $("#choosedprovince").val(),
-//							city: $("#choosedcity").val(),
-//						})
-//						.then(function(response) {
-//							mes = response.data.message;
-//							icon = 'error';
-//							if (mes == 'ok') {
-//								mes = "订阅成功!";
-//								icon = "success";
-//							}
-//							vm.$dialog.toast({
-//								mes: mes,
-//								icon: icon,
-//								timeout: 1500,
-//								callback: () => {
-//									window.location.href = '/dingyue/editdingyue';
-//								}
-//							});
-//						})
 				},
 			},
 		});
-
 		$(function() {
 			$('.province li').click(function() {
 				$('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
@@ -216,6 +225,18 @@
 				$(this).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
 			});
 		})
+
+		function selectGangweiA() {
+			$("#choosedgangwei").val(this.obj.category_id);
+			$("#gangwei").text(this.obj.categoryName);
+		}
+
+		function selectProvinceAndCity() {
+			//			$("#choosedprovincename").val(this.bigdata.province);
+			$("#choosedprovince").val(this.obj.provinceId);
+			$("#city").html($("#choosedprovincename").val() + ' ' + this.obj.display);
+			$("#choosedcity").val(this.obj.city);
+		}
 	</script>
 
 </html>

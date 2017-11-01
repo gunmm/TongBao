@@ -29,19 +29,16 @@
 				box-sizing: border-box;
 				outline: none
 			}
-			
 			body,
 			html {
 				height: 100%
 			}
-			
 			body {
 				background-color: #f5f5f5;
 				font-size: 12px;
 				-webkit-font-smoothing: antialiased;
 				font-family: arial, sans-serif
 			}
-			
 			blockquote,
 			body,
 			button,
@@ -71,7 +68,6 @@
 				margin: 0;
 				padding: 0
 			}
-			
 			article,
 			aside,
 			audio,
@@ -92,7 +88,6 @@
 				margin: 0;
 				padding: 0
 			}
-			
 			h1,
 			h2,
 			h3,
@@ -101,12 +96,10 @@
 			h6 {
 				font-size: 100%
 			}
-			
 			fieldset,
 			img {
 				border: 0
 			}
-			
 			address,
 			caption,
 			cite,
@@ -118,21 +111,17 @@
 				font-style: normal;
 				font-weight: 400
 			}
-			
 			ol,
 			ul {
 				list-style: none
 			}
-			
 			a {
 				color: inherit
 			}
-			
 			a,
 			a:hover {
 				text-decoration: none
 			}
-			
 			a,
 			button,
 			input,
@@ -140,7 +129,6 @@
 			select {
 				-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 			}
-			
 			button,
 			input,
 			select {
@@ -151,7 +139,6 @@
 				-webkit-appearance: none;
 				-moz-appearance: none
 			}
-			
 			button::-moz-focus-inner,
 			input[type=button]::-moz-focus-inner,
 			input[type=file]>input[type=button]::-moz-focus-inner,
@@ -159,23 +146,19 @@
 			input[type=submit]::-moz-focus-inner {
 				border: none
 			}
-			
 			input[type=checkbox],
 			input[type=radio] {
 				vertical-align: middle
 			}
-			
 			input::-webkit-inner-spin-button,
 			input::-webkit-outer-spin-button {
 				-webkit-appearance: none!important;
 				-moz-appearance: none!important;
 				margin: 0
 			}
-			
 			input:-webkit-autofill {
 				-webkit-box-shadow: 0 0 0 1000px #fff inset
 			}
-			
 			textarea {
 				outline: none;
 				border-radius: 0;
@@ -185,7 +168,6 @@
 				resize: none;
 				font: 100% tahoma, \5b8b\4f53, arial
 			}
-			
 			.g-fix-ios-overflow-scrolling-bug {
 				-webkit-overflow-scrolling: auto!important
 			}
@@ -202,12 +184,12 @@
 					<img src="static/img/touxiang.png" class="img-rounded">
 				</div>
 				<p class="name">平台</p>
-				<a id="edit">
+				<a id="edit" href="wode/person/updatesetting.html">
 					<span class="bj pos-a">编辑</span>
 				</a>
 			</section>
 
-			<section v-if="type==1" class="zp-body">
+			<section v-if="type" class="zp-body">
 				<div class="zp-list overflow-h"><span class="fl"><i class="ico ico-jianli"></i>简历 </span> <span class="fr  sx">刷新</span> <span class="fr  bianji"><a href="publish/jianli/jianli.html">编辑</a></span></div>
 				<div class="div1"></div>
 				<div class="zp-list overflow-h">
@@ -239,9 +221,9 @@
 				<div class="div" style="height: 56px;"></div>
 			</section>
 
-			<section v-if="type==2" class="zp-body">
+			<section v-else class="zp-body">
 				<div class="zp-list overflow-h">
-					<a href="wode/companyprofile.html"><span class="fl"><i class=" ico ico-yxgs"></i>企业信息</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
+					<a href="register/company.html?id=id"><span class="fl"><i class=" ico ico-yxgs"></i>企业信息</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
 				</div>
 				<div class="div1"></div>
 				<div class="zp-list overflow-h">
@@ -296,25 +278,28 @@
 	</body>
 
 	<script type="text/javascript">
+		
 		$(function() {
 			$('#xiaoxi_tip').hide();
 		})
-
 		var vm = new Vue({
 			el: '#app',
 			data: {
-				type: 1,
+				type: true,
 			},
-			methods: {
-
-			}
+			methods: {}
 		})
-
+		
+		if (localStorage.type == 1) {
+			vm.type = true;
+		} else {
+			vm.type = false;
+		}
 		var tab = new auiTab({
 			element: document.getElementById("footer"),
 			index: 4
 		}, function(ret) {
-			switch(ret.index) {
+			switch (ret.index) {
 				case 1:
 					window.location.replace("home.html")
 					break;

@@ -51,25 +51,33 @@
 						}
 					}
 				}
-				//				post('/webUser/findUserMessage', {
-				//					userId: localStorage.userId
-				//				}, function(data) {
-				//					vm.companyname = data.result.orgName;
-				//					this.companyname = data.result.orgName;
-				//					if (data.result.resultMap.type == 1) {
-				//						alert("个人用户不能发布招聘信息!");
-				//						window.location.href = "../fabu.html";
-				//					} else {
-				//						if (data.result.resultMap.regist == 0) {
-				//							window.location.href = "../register/company.html";
-				//						} else {
-				//							if (data.result.resultMap.expire == 0) {
-				//								alert("您的注册申请正在审核中,审核通过后会有消息提醒");
-				//								window.location.href = "../fabu.html";
-				//							}
-				//						}
-				//					}
-				//				})
+			}
+			var Request = new QueryString();
+			var itemid = Request["id"];
+			var obj;
+			var title, address, content, quantity, contact, phone, email, fuli, gender;
+			if (itemid) {
+				post1('/webZp/ZhaopinById', false, {
+					id: itemid,
+				}, function(data) {
+					this.obj = data.result;
+					console.log(this.obj);
+					this.title = data.result.name;
+					this.address = data.result.dizhi;
+					this.content = data.result.zhiweimiaoshu;
+					this.quantity = data.result.quantity;
+					this.contact = data.result.contact;
+					this.phone = data.result.phone;
+					this.email = data.result.email;
+					var fuliarray = data.result.welfareId.split(',');
+					this.fuli = fuliarray;
+					var sexyaoqiu = data.result.sexyaoqiu;
+					if (sexyaoqiu == '男') {
+						this.gender = 1;
+					} else {
+						this.gender = 2;
+					}
+				})
 			}
 		</script>
 
@@ -273,10 +281,21 @@
 					}
 					this.job = job;
 					this.jobList = jobM;
+					if (obj) {
+						selectProvinceAndCity();
+					}
 				})
 				//薪资
 			 getDicTable(true, "001", function(data) {
 					vm.xinzidic = data.result;
+					if (this.obj) {
+						for (var i = 0; i < vm.xinzidic.length; i++) {
+							var obj = vm.xinzidic[i];
+							if (obj.itemName == this.obj.xinzi) {
+								vm.xinzi = obj.itemCode;
+							}
+						}
+					}
 				})
 				//福利待遇
 			var fulidic;
@@ -286,48 +305,73 @@
 				//学历要求
 			 getDicTable(true, "003", function(data) {
 					vm.xuelidic = data.result;
+					if (this.obj) {
+						for (var i = 0; i < vm.xuelidic.length; i++) {
+							var obj = vm.xuelidic[i];
+							if (obj.itemName == this.obj.xueliyaoqiu) {
+								vm.xueli = obj.itemCode;
+							}
+						}
+					}
 				})
 				//经验要求
 			 getDicTable(true, "004", function(data) {
 					vm.jingyandic = data.result;
+					if (this.obj) {
+						for (var i = 0; i < vm.jingyandic.length; i++) {
+							var obj = vm.jingyandic[i];
+							if (obj.itemName == this.obj.jingyanyaoqiu) {
+								vm.jingyan = obj.itemCode;
+							}
+						}
+					}
 				})
 				//职称要求
 			 getDicTable(true, "005", function(data) {
 					vm.zhichengdic = data.result;
+					if (this.obj) {
+						vm.zhicheng = this.obj.professionalId;
+					}
 				})
 				//年龄要求
 			 getDicTable(true, "012", function(data) {
 				vm.agedic = data.result;
+				if (this.obj) {
+					vm.age = this.obj.ageId;
+				}
 			})
 			var province;
 			var city;
 			getCity(function(p, c) {
 				province = p;
 				city = c;
+				if (this.obj) {
+					selectGangweiA();
+				}
 			});
 			var vm = new Vue({
 				el: "#app",
 				data: {
 					companyname: companyname,
-					title: "",
+					title: this.title,
 					xinzidic: [],
 					xinzi: "",
 					fulidic: this.fulidic,
-					fuli: [],
+					fuli: this.fuli,
 					province: province,
 					city: city,
-					address: "",
+					address: this.address,
 					xuelidic: [],
 					xueli: "",
 					jingyandic: [],
 					jingyan: "",
 					zhichengdic: [],
 					zhicheng: "",
-					content: "",
-					quantity: "",
-					contact: "",
-					phone: "",
-					email: "",
+					content: this.content,
+					quantity: this.quantity,
+					contact: this.contact,
+					phone: this.phone,
+					email: this.email,
 					agedic: [],
 					age: "",
 					genderdic: {
@@ -340,7 +384,7 @@
 							"name": "女"
 						},
 					},
-					gender: "",
+					gender: this.gender,
 					job: this.job,
 					joblist: this.jobList,
 				},
@@ -402,34 +446,65 @@
 							alert('请填写联系人姓名')
 							return;
 						}
-						post('/webZp/addZhaopin', {
-							"userId": localStorage.userId,
-							"positionName": vm.title,
-							"post": $("#choosedgangwei").val(),
-							"salary": vm.xinzi,
-							"welfares": vm.fuli,
-							"province": $("#choosedprovince").val(),
-							"city": $("#choosedcity").val(),
-							"address": vm.address,
-							"education": vm.xueli,
-							"experience": vm.jingyan,
-							"professionalRank": vm.zhicheng,
-							"quantity": vm.quantity,
-							"contact": vm.contact,
-							"phone": vm.phone,
-							"email": vm.email,
-							"age": vm.age,
-							"gender": vm.gender,
-							"content": vm.content
-						}, function(data) {
-							if (data.result_code == '1') {
-								alert("发布成功!");
-								window.location.href = "../home/zhaopin/zhaopindetail.html?id=" + data.result
-									.publishId + "&isfb=isfb";
-							} else {
-								alert("发布失败，请重试！");
+						var dataa, urlstr;
+						var Request = new QueryString();
+						var itemid = Request["id"];
+						if (itemid) {
+							urlstr = '/webZp/editZhaopin';
+							dataa = {
+								"publishId": itemid,
+								"userId": localStorage.userId,
+								"positionName": vm.title,
+								"post": $("#choosedgangwei").val(),
+								"salary": vm.xinzi,
+								"welfares": vm.fuli,
+								"province": $("#choosedprovince").val(),
+								"city": $("#choosedcity").val(),
+								"address": vm.address,
+								"education": vm.xueli,
+								"experience": vm.jingyan,
+								"professionalRank": vm.zhicheng,
+								"quantity": vm.quantity,
+								"contact": vm.contact,
+								"phone": vm.phone,
+								"email": vm.email,
+								"age": vm.age,
+								"gender": vm.gender,
+								"content": vm.content
 							}
-						})
+						} else {
+							urlstr = '/webZp/addZhaopin';
+							dataa = {
+								"userId": localStorage.userId,
+								"positionName": vm.title,
+								"post": $("#choosedgangwei").val(),
+								"salary": vm.xinzi,
+								"welfares": vm.fuli,
+								"province": $("#choosedprovince").val(),
+								"city": $("#choosedcity").val(),
+								"address": vm.address,
+								"education": vm.xueli,
+								"experience": vm.jingyan,
+								"professionalRank": vm.zhicheng,
+								"quantity": vm.quantity,
+								"contact": vm.contact,
+								"phone": vm.phone,
+								"email": vm.email,
+								"age": vm.age,
+								"gender": vm.gender,
+								"content": vm.content
+							}
+						}
+						post(urlstr, dataa,
+							function(data) {
+								if (data.result_code == '1') {
+									alert("发布成功!");
+									window.location.href = "../home/zhaopin/zhaopindetail.html?id=" + data.result
+										.publishId + "&isfb=isfb";
+								} else {
+									alert("发布失败，请重试！");
+								}
+							})
 					},
 				}
 			});
@@ -474,6 +549,18 @@
 					$(this).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
 				});
 			})
+
+			function selectGangweiA() {
+				$("#choosedgangwei").val(this.obj.postId);
+				$("#gangwei").text(this.obj.job);
+			}
+
+			function selectProvinceAndCity() {
+				//			$("#choosedprovincename").val(this.bigdata.province);
+				$("#choosedprovince").val(this.obj.province);
+				$("#city").html($("#choosedprovincename").val() + ' ' + this.obj.city);
+				$("#choosedcity").val(this.obj.cityId);
+			}
 		</script>
 
 	</body>

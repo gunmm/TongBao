@@ -13,7 +13,6 @@
 		<meta name="x5-orientation" content="portrait">
 		<meta name="x5-fullscreen" content="true">
 		<meta name="format-detection" content="telephone=no, email=no">
-
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 		<script type="text/javascript" src="../static/lib/js/vue.min.js"></script>
 		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
@@ -29,7 +28,6 @@
 				height: 90px;
 				width: 33.33%;
 			}
-			
 			.show-pic ul li div {
 				margin: auto;
 			}
@@ -43,7 +41,7 @@
 					<span class="fl">公司LOGO</span>
 					<span class="fr"><i class="ico ico-right1"></i></span>
 					<span class="fr panl-logo">
-						<img id="logocompany" class="img-rounded" style="border-radius: 10%;" src="../static/img/3.jpg" onclick="chooseImg(1)" />
+						<img id="logocompany" class="img-rounded" style="border-radius: 10%;" src="../static/img/my-logo.png" onclick="chooseImg(1)" />
 						<input id="ip_logo" class="fr compile-pic" type="file" accept="image/*" hidden="true" onchange="uploadLogo(this)">
 						<span class="fr g-right"><i class="ico ico-right1 right-posi"></i></span>
 					</span>
@@ -169,12 +167,62 @@
 		</div>
 	</body>
 
+	<script type="text/javascript" charset="utf-8">
+		var Request = new QueryString();
+		var itemid = Request["id"];
+		var obj;
+		var companyname, companyphone, companyemail, companyscale, companytype, companyaddress, companybrief, picarray, logostr, renzhengpic;
+		if (itemid) {
+			post1('/webUser/findUserMessage', false, {
+				userId: localStorage.userId
+			}, function(data) {
+				console.log(data);
+				this.obj = data.result.compnay;
+				this.companyname = data.result.compnay.orgName;
+				this.companyphone = data.result.compnay.communicationPhone;
+				this.companyemail = data.result.compnay.orgEmail;
+				this.companyscale = data.result.compnay.orgScale;
+				this.companytype = data.result.compnay.orgType;
+				this.companyaddress = data.result.compnay.orgAddress;
+				this.companybrief = data.result.compnay.orgBrief;
+				if (data.result.compnay.imgBaseList) {
+					this.picarray = data.result.compnay.imgBaseList;
+					for (var i = 0; i < data.result.compnay.imgBaseList.length; i++) {
+						var str = data.result.compnay.imgBaseList[i];
+						$("#xz").before(
+							"<li class='pos-r fl'>" +
+							"<div class='zhanshi2 pos-r'>" +
+							"<img src='" + str + "'/>" +
+							"<input type='hidden' name='shilizhanshi' value=''/>" +
+							"<div id='" + str + "' class='delet-pic' onclick='removeLi(this)'>" +
+							"<img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' />" +
+							"</div>" +
+							"</div>" +
+							"</li>");
+					}
+				} else {
+					this.picarray = [];
+				}
+				if (data.result.compnay.logoImgBase) {
+					this.logostr = data.result.compnay.logoImgBase;
+					$('#logocompany').attr('src', data.result.compnay.logoImgBase);
+				}
+				if (data.result.compnay.companycertificationImgBase) {
+					this.renzhengpic = data.result.compnay.companycertificationImgBase;
+					$('#ziliao').attr('src', data.result.compnay.companycertificationImgBase);
+				}
+			})
+		} else {
+			this.picarray = [];
+		}
+	</script>
+
 	<script type="text/javascript">
-        var Request = new QueryString();
-        var name = Request["name"];
-        var uid =  Request["uid"];
+		var Request = new QueryString();
+		var name = Request["name"];
+		var uid = Request["uid"];
 		$(function() {
-			if(name == 'register') {
+			if (name == 'register') {
 				pushHistory();
 				window.addEventListener("popstate", function(e) {
 					window.location.replace('../home.html');
@@ -185,13 +233,11 @@
 					window.history.pushState(state, "首页", "");
 				}
 			}
-
 			post('/webItem/ItemData', {
 				classId: "009"
 			}, function(data) {
 				vm.companyscales = data.result;
 			})
-
 			post('/webItem/ItemData', {
 				classId: "010"
 			}, function(data) {
@@ -202,38 +248,38 @@
 		function Trim(str, is_global) {
 			var result;
 			result = str.replace(/(^\s+)|(\s+$)/g, "");
-			if(is_global.toLowerCase() == "g") {
+			if (is_global.toLowerCase() == "g") {
 				result = result.replace(/\s/g, "");
 			}
 			return result;
 		}
-
 		var province;
 		var city;
-
 		getCity(function(p, c) {
 			province = p;
 			city = c;
+			if (this.obj) {
+				selectProvinceAndCity();
+			}
 		});
-
 		var vm = new Vue({
 			el: '#app',
 			data: {
-				logostr: '',
-				companyname: '',
-				companyphone: '',
-				companyemail: '',
-				companyscale: '',
+				logostr: this.logostr,
+				companyname: this.companyname,
+				companyphone: this.companyphone,
+				companyemail: this.companyemail,
+				companyscale: this.companyscale,
 				companyscales: [],
-				companytype: '',
+				companytype: this.companytype,
 				companytypes: [],
-				companyaddress: '',
-				companybrief: '',
+				companyaddress: this.companyaddress,
+				companybrief: this.companybrief,
 				companyshows: [],
 				province: province,
 				city: city,
-				shilipic: [],
-				renzhengpic: ''
+				shilipic: this.picarray,
+				renzhengpic: this.renzhengpic
 			},
 			methods: {
 				chooseaddress: function() {
@@ -254,42 +300,39 @@
 					$("input[name='shilizhanshi']").each(function(index) {
 						shilizhanshi += this.value + ",";
 					});
-					if(shilizhanshi.length > 1) {
+					if (shilizhanshi.length > 1) {
 						$("#companyshow").val(shilizhanshi.substring(0, shilizhanshi.length - 1));
 					}
-					if(!checkEmail() || !checkTel()) {
+					if (!checkEmail() || !checkTel()) {
 						return false;
 					}
 					vm.companyname = Trim(vm.companyname, 'g');
-
-					if(vm.companyname == "") {
+					if (vm.companyname == "") {
 						alert('请填写企业名称')
 						return
 					}
-
-					if($('.info-select1').val() == "") {
+					if ($('.info-select1').val() == "") {
 						alert('请选择企业规模')
 						return
 					}
-
-					if($('.info-select2').val() == "") {
+					if ($('.info-select2').val() == "") {
 						alert('请选择企业性质')
 						return
 					}
-					if($('.city-choice').text() == '请选择') {
+					if ($('.city-choice').text() == '请选择') {
 						alert('请选择城市所在地')
 						return
 					}
-					if($('.address-info').val() == "") {
+					if ($('.address-info').val() == "") {
 						alert('请填写详细地址')
 						return
 					}
-					if($('.jishao-com').val() == "") {
+					if ($('.jishao-com').val() == "") {
 						alert('请填写企业介绍')
 						return
 					}
-                    post('/webCompnay/companyEdit', {
-                        "userId":localStorage.userId,
+					post('/webCompnay/companyEdit', {
+						"userId": localStorage.userId,
 						"orgName": vm.companyname,
 						"communicationPhone": vm.companyphone,
 						"orgEmail": vm.companyemail,
@@ -299,17 +342,13 @@
 						"city": $("#choosedcity").val(),
 						"orgAddress": vm.companyaddress,
 						"orgBrief": vm.companybrief,
-						"logoPic":vm.logostr,
-						"companycertificationPic":vm.renzhengpic,
-                        "companyshowPic":JSON.stringify(vm.shilipic)
-
+						"logoPic": vm.logostr,
+						"companycertificationPic": vm.renzhengpic,
+						"companyshowPic": vm.shilipic
 					}, function(data) {
-                        localStorage.orgId = data.result.orgId;
-                        window.location.replace('../home.html');
-					}, function() {
-
-					})
-
+						localStorage.orgId = data.result.orgId;
+						window.location.replace('../home.html');
+					}, function() {})
 				}
 			}
 		});
@@ -325,7 +364,7 @@
 
 		function checkEmail() {
 			var email = vm.companyemail;
-			if(!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+			if (!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
 				vm.$dialog.alert({
 					mes: 'email格式不正确！请重新输入!'
 				});
@@ -335,7 +374,7 @@
 		}
 
 		function checkTel() {
-			if(!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.companyphone))) {
+			if (!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.companyphone))) {
 				vm.$dialog.alert({
 					mes: '电话格式不正确!固定电话请在区号后和分机号前加-,如:010-6501345-123'
 				});
@@ -343,7 +382,6 @@
 			}
 			return true;
 		}
-
 		$(function() {
 			$('.province li').click(function() {
 				$('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
@@ -359,7 +397,7 @@
 		})
 
 		function chooseImg(e) {
-			switch(e) {
+			switch (e) {
 				case 1:
 					$('#ip_logo').click();
 					break;
@@ -376,7 +414,7 @@
 			var files = input.files;
 			var file = files[0];
 			var imageType = /^image\//;
-			if(!imageType.test(file.type)) {
+			if (!imageType.test(file.type)) {
 				alert("请选择图片类型上传");
 				return;
 			}
@@ -390,10 +428,10 @@
 
 		function uploadShiLi(input) {
 			var files = input.files;
-			for(var i = 0; i < files.length; i++) { //预览新添加的图片
+			for (var i = 0; i < files.length; i++) { //预览新添加的图片
 				var file = files[i];
 				var imageType = /^image\//;
-				if(!imageType.test(file.type)) {
+				if (!imageType.test(file.type)) {
 					alert("请选择图片类型上传");
 					continue;
 				}
@@ -401,7 +439,7 @@
 				reader.readAsDataURL(file);
 				reader.onload = function(e) {
 					$("#xz").before(
-					    "<li class='pos-r fl'>" +
+						"<li class='pos-r fl'>" +
 						"<div class='zhanshi2 pos-r'>" +
 						"<img src='" + e.target.result + "'/>" +
 						"<input type='hidden' name='shilizhanshi' value=''/>" +
@@ -417,10 +455,10 @@
 
 		function uploadZiLiao(input) {
 			var files = input.files;
-			for(var i = 0; i < files.length; i++) { //预览新添加的图片
+			for (var i = 0; i < files.length; i++) { //预览新添加的图片
 				var file = files[i];
 				var imageType = /^image\//;
-				if(!imageType.test(file.type)) {
+				if (!imageType.test(file.type)) {
 					alert("请选择图片类型上传");
 					continue;
 				}
@@ -431,6 +469,13 @@
 					vm.renzhengpic = e.target.result;
 				};
 			}
+		}
+
+		function selectProvinceAndCity() {
+			//			$("#choosedprovincename").val(this.bigdata.province);
+			$("#choosedprovince").val(this.obj.province);
+			$("#city").html($("#choosedprovincename").val() + ' ' + this.obj.strCity);
+			$("#choosedcity").val(this.obj.city);
 		}
 	</script>
 

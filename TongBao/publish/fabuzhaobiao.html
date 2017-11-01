@@ -27,56 +27,32 @@
 		<link rel="stylesheet" type="text/css" href="../static/css/common.css">
 		<link rel="stylesheet" type="text/css" href="../static/css/zhaopin-index.css">
 		<script src="../js/config.js" type="text/javascript" charset="utf-8"></script>
-
-		<script type="text/javascript" charset="utf-8">
-			if (!localStorage.userId) {
-				window.location.href = "../register/login.html";
-			} else {
-				post('/webUser/findUserMessage', {
-					userId: localStorage.userId
-				}, function(data) {
-					if (data.result.resultMap.type == 2) {
-						if (data.result.resultMap.regist == 0) {
-							window.location.href = "../register/company.html";
-						} else {
-							if (data.result.resultMap.expire == 0) {
-								alert("您的注册申请正在审核中,审核通过后会有消息提醒");
-								window.location.href = "../fabu.html";
-							}
-						}
-					}
-				})
-			}
-			var Request = new QueryString();
-			var itemid = Request["id"];
-//			if (1) {
-//				post('/webZb/ZhaobiaoDetail', {
-//					id: 379
-//				}, function(data) {
-//					console.log(data)
-						//			var d = data.result;
-						//			vm.category = d.category;
-						//			vm.price = d.price;
-						//			vm.unit = d.unit;
-						//			vm.quantity = d.quantity;
-						//			vm.contact = d.contact;
-						//			vm.phone = d.phone;
-						//			vm.end_at = d.endAt;
-						//			vm.updated_at = d.updateAt;
-						//			vm.favourite = d.shoucang;
-						//			vm.trueView = d.liulan;
-						//			vm.address = d.address;
-						//			vm.daohang = d.ditu;
-						//			vm.content = strReplace(d.content);
-						//			vm.title = d.title;
-						//			vm.userId = d.userId;
-						//			vm.guiges = d.guiges;
-//				})
-//			}
-		</script>
 	</head>
 
 	<body class="bg-f8f8f8">
+		<script type="text/javascript" charset="utf-8">
+			var Request = new QueryString();
+			var itemid = Request["id"];
+			var obj;
+			var title, quantity, price, unit, end_at, address, contact, phone, content;
+			if (itemid) {
+				post1('/webZb/ZhaobiaoDetail', false, {
+					id: itemid,
+				}, function(data) {
+					this.obj = data.result;
+					this.title = data.result.title;
+					this.quantity = data.result.quantity;
+					this.price = data.result.price;
+					this.unit = data.result.unit;
+					this.end_at = data.result.endAt;
+					this.address = data.result.address;
+					this.contact = data.result.contact;
+					this.phone = data.result.phone;
+					this.content = data.result.content;
+					console.log(this.obj);
+				})
+			}
+		</script>
 
 		<div id="app">
 			<section class="tender-top mb-10">
@@ -227,29 +203,35 @@
 				}
 				this.job = job;
 				this.jobList = jobM;
+				if (this.obj) {
+					selectGangweiA();
+				}
 			})
 			var province;
 			var city;
 			getCity(function(p, c) {
 				province = p;
 				city = c;
+				if (this.obj) {
+					selectProvinceAndCity();
+				}
 			});
 			var items = new Array();
 			var isfabu = false;
 			var vm = new Vue({
 				el: "#app",
 				data: {
-					title: "",
-					quantity: "",
-					price: "",
-					unit: "",
-					end_at: "",
+					title: this.title,
+					quantity: this.quantity,
+					price: this.price,
+					unit: this.unit,
+					end_at: this.end_at,
 					province: province,
 					city: city,
-					address: "",
-					contact: "",
-					phone: "",
-					content: "",
+					address: this.address,
+					contact: this.contact,
+					phone: this.phone,
+					content: this.content,
 					job: this.job,
 					joblist: this.jobList,
 				},
@@ -347,29 +329,56 @@
 							alert('参数规格填写不完整!');
 							return;
 						}
-						post('/webZb/addZhaobiao', {
-							"userId": localStorage.userId,
-							"tenderTitel": vm.title,
-							"categoryId": $("#choosedgangwei").val(),
-							"quantity": vm.quantity,
-							"price": vm.price,
-							"unit": vm.unit,
-							"endAt": vm.end_at,
-							"province": $("#choosedprovince").val(),
-							"city": $("#choosedcity").val(),
-							"address": vm.address,
-							"contact": vm.contact,
-							"phone": vm.phone,
-							"content": vm.contact,
-							"specificationArray": guigecanshu
-						}, function(data) {
-							if (data.result_code == 1) {
-								alert("发布成功！");
-								window.location.href = "../home/zhaobiao/zhaobiaodetail.html?id=" + data.result.publishId + "&iszb=iszb";
-							} else {
-								alert("发布失败，请重试！");
+						var dataa, urlstr;
+						var Request = new QueryString();
+						var itemid = Request["id"];
+						if (itemid) {
+							urlstr = '/webZb/editZhaobiao';
+							dataa = {
+								"publishId": itemid,
+								"userId": localStorage.userId,
+								"tenderTitel": vm.title,
+								"categoryId": $("#choosedgangwei").val(),
+								"quantity": vm.quantity,
+								"price": vm.price,
+								"unit": vm.unit,
+								"endAt": vm.end_at,
+								"province": $("#choosedprovince").val(),
+								"city": $("#choosedcity").val(),
+								"address": vm.address,
+								"contact": vm.contact,
+								"phone": vm.phone,
+								"content": vm.contact,
+								"specificationArray": guigecanshu
 							}
-						})
+						} else {
+							urlstr = '/webZb/addZhaobiao';
+							dataa = {
+								"userId": localStorage.userId,
+								"tenderTitel": vm.title,
+								"categoryId": $("#choosedgangwei").val(),
+								"quantity": vm.quantity,
+								"price": vm.price,
+								"unit": vm.unit,
+								"endAt": vm.end_at,
+								"province": $("#choosedprovince").val(),
+								"city": $("#choosedcity").val(),
+								"address": vm.address,
+								"contact": vm.contact,
+								"phone": vm.phone,
+								"content": vm.contact,
+								"specificationArray": guigecanshu
+							}
+						}
+						post(urlstr, dataa,
+							function(data) {
+								if (data.result_code == 1) {
+									alert("发布成功！");
+									window.location.href = "../home/zhaobiao/zhaobiaodetail.html?id=" + data.result.publishId + "&iszb=iszb";
+								} else {
+									alert("发布失败，请重试！");
+								}
+							})
 					},
 				},
 			});
@@ -434,6 +443,18 @@
 					$(this).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
 				});
 			})
+
+			function selectGangweiA() {
+				$("#choosedgangwei").val(this.obj.categoryId);
+				$("#gangwei").text(this.obj.category);
+			}
+
+			function selectProvinceAndCity() {
+				//			$("#choosedprovincename").val(this.bigdata.province);
+				$("#choosedprovince").val(this.obj.provinceId);
+				$("#city").html($("#choosedprovincename").val() + ' ' + this.obj.city);
+				$("#choosedcity").val(this.obj.cityId);
+			}
 		</script>
 
 	</body>

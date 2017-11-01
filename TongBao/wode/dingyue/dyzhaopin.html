@@ -26,6 +26,28 @@
 	</head>
 
 	<body>
+
+		<script>
+			var Request = new QueryString();
+			var itemid = Request["id"];
+			var obj, jingyanId, xueliId, fuli;
+			if (itemid) {
+				post1('/webUser/subscribePersonaListl', false, {
+					"userId": localStorage.userId,
+				}, function(data) {
+					var jobDic = data.result.recruit;
+					this.obj = jobDic[itemid];
+					this.jingyanId = this.obj.jingyanId;
+					this.xueliId = this.obj.xueliId;
+					this.fuli = this.obj.fuli;
+					console.log(this.obj);
+				})
+			} else {
+				this.jingyanId = 100;
+				this.xueliId = 100;
+				this.fuli = [];
+			}
+		</script>
 		<div id="app">
 			<section class="zp-body">
 				<div class="zp-list overflow-h">
@@ -83,7 +105,7 @@
 					<span class="fl">经验要求</span>
 					<span class="fr zp-next select-btn">
 					<select   v-model="jingyan" >
-		                <option value="">不限</option>
+		                <option value="100">不限</option>
 		                <option v-for="item in jingyans" :value="item.itemCode">{{item.itemName}}</option>
 		            </select></span>
 				</div>
@@ -91,7 +113,7 @@
 					<span class="fl">学历要求</span>
 					<span class="fr zp-next select-btn">
 					<select   v-model="xueli" >
-		                <option value="">不限</option>
+		                <option value="100">不限</option>
 		                <option v-for="item in xuelis" :value="item.itemCode">{{item.itemName}}</option>
 		            </select></span>
 				</div>
@@ -111,6 +133,16 @@
 	</body>
 
 	<script type="text/javascript">
+		 //地址
+		var province;
+		var city;
+		getCity(function(p, c) {
+			province = p;
+			city = c;
+			if (this.obj) {
+				selectProvinceAndCity();
+			}
+		});
 		 //岗位类别
 		var job;
 		var jobList;
@@ -138,33 +170,23 @@
 				}
 				this.job = job;
 				this.jobList = jobM;
-				//				if (this.bigdata.gangweiId) {
-				//					selectGangweiA();
-				//				}
+				if (this.obj) {
+					selectGangweiA();
+				}
 			})
 			//公司性质
 		 getDicTable(true, "010", function(data) {
 				vm.companytypes = data.result;
-				//			if (this.bigdata.operationMode) {
-				//				for (var i = 0; i < vm.gongzuofangshis.length; i++) {
-				//					var obj = vm.gongzuofangshis[i];
-				//					if (obj.itemName == this.bigdata.operationMode) {
-				//						vm.gongzuofangshi = obj.itemCode;
-				//					}
-				//				}
-				//			}
+				if (this.obj) {
+					for (var i = 0; i < vm.companytypes.length; i++) {
+						var obj = vm.companytypes[i];
+						if (obj.itemName == this.obj.companytype) {
+							vm.companytype = obj.itemCode;
+						}
+					}
+				}
 			})
-			//地址
-		var province;
-		var city;
-		getCity(function(p, c) {
-			province = p;
-			city = c;
-			//			if (this.bigdata.cityId) {
-			//				selectProvinceAndCity();
-			//			}
-		});
-		 //经验要求
+			//经验要求
 		var jingyans;
 		getDicTable(false, "004", function(data) {
 				this.jingyans = data.result;
@@ -175,9 +197,16 @@
 				this.xuelis = data.result;
 			})
 			//职称要求
-		var zhichengs;
-		getDicTable(false, "005", function(data) {
-				this.zhichengs = data.result;
+		 getDicTable(true, "005", function(data) {
+				vm.zhichengs = data.result;
+				if (this.obj) {
+					for (var i = 0; i < vm.zhichengs.length; i++) {
+						var obj = vm.zhichengs[i];
+						if (obj.itemName == this.obj.zhicheng) {
+							vm.zhicheng = obj.itemCode;
+						}
+					}
+				}
 			})
 			//福利待遇
 		var fulidic;
@@ -198,14 +227,14 @@
 					k: '2',
 					v: '111'
 				}, ],
-				fuli: '',
-				fulis: this.fulidic,
-				jingyan: '',
+				jingyan: this.jingyanId,
 				jingyans: this.jingyans,
-				xueli: '',
+				fuli: this.fuli,
+				fulis: this.fulidic,
+				xueli: this.xueliId,
 				xuelis: this.xuelis,
 				zhicheng: '',
-				zhichengs: this.zhichengs,
+				zhichengs: [],
 				province: province,
 				city: city,
 				job: this.job,
@@ -246,56 +275,48 @@
 						alert('请选择工作地址')
 						return
 					}
-					
-					var dataa = {
-						"userId":localStorage.userId,
-						"province":$("#choosedprovince").val(),
-						"city":$("#choosedcity").val(),
-						"gangwei":$("#choosedgangwei").val(),
-						"companytype":vm.companytype,
-						"fuli":vm.fuli,
-						"jingyan":vm.jingyan,
-						"xueli":vm.xueli,
-						"zhicheng":vm.zhicheng,
-						"subscribeType":"3",
+					var dataa;
+					var Request = new QueryString();
+					var itemid = Request["id"];
+					if (itemid) {
+						dataa = {
+							"userId": localStorage.userId,
+							"province": $("#choosedprovince").val(),
+							"city": $("#choosedcity").val(),
+							"gangwei": $("#choosedgangwei").val(),
+							"companytype": vm.companytype,
+							"fuli": vm.fuli,
+							"jingyan": vm.jingyan,
+							"xueli": vm.xueli,
+							"zhicheng": vm.zhicheng,
+							"subscribeType": "3",
+							"operationIndex":itemid,
+							"operationType":1
+						}
+					} else {
+						dataa = {
+							"userId": localStorage.userId,
+							"province": $("#choosedprovince").val(),
+							"city": $("#choosedcity").val(),
+							"gangwei": $("#choosedgangwei").val(),
+							"companytype": vm.companytype,
+							"fuli": vm.fuli,
+							"jingyan": vm.jingyan,
+							"xueli": vm.xueli,
+							"zhicheng": vm.zhicheng,
+							"subscribeType": "3",
+						}
 					}
-					
-					post('/webUser/subscribePersonal', dataa,
-						function(data) {
-							console.log(data);
-//							if (data.result_code == '1') {
-//								alert("订阅成功!");
-//								window.location.href = "jianli.html";
-//							} else {
-//								alert("订阅失败，请重试！");
-//							}
-						})
-//					axios.post('/dingyue/zhaopin?id=<?=$id;?>', {
-//							gangwei: $("#choosedgangwei").val(),
-//							companytype: vm.companytype,
-//							fuli: vm.fuli,
-//							jingyan: vm.jingyan,
-//							xueli: vm.xueli,
-//							zhicheng: vm.zhicheng,
-//							province: $("#choosedprovince").val(),
-//							city: $("#choosedcity").val(),
-//						})
-//						.then(function(response) {
-//							mes = response.data.message;
-//							icon = 'error';
-//							if (mes == 'ok') {
-//								mes = "订阅成功!";
-//								icon = "success";
-//							}
-//							vm.$dialog.toast({
-//								mes: mes,
-//								icon: icon,
-//								timeout: 1500,
-//								callback: () => {
-//									window.location.href = '/dingyue/editdingyue';
-//								}
-//							});
-//						})
+						post('/webUser/subscribePersonal', dataa,
+							function(data) {
+								console.log(data);
+								if (data.result_code == '1') {
+									alert("订阅成功!");
+									window.location.href = "editdingyue.html";
+								} else {
+									alert("订阅失败，请重试！");
+								}
+							})
 				},
 			},
 		});
@@ -315,6 +336,18 @@
 				$(this).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
 			});
 		});
+
+		function selectGangweiA() {
+			$("#choosedgangwei").val(this.obj.gangweiId);
+			$("#gangwei").text(this.obj.gangwei);
+		}
+
+		function selectProvinceAndCity() {
+			//			$("#choosedprovincename").val(this.bigdata.province);
+			$("#choosedprovince").val(this.obj.provinceId);
+			$("#city").html($("#choosedprovincename").val() + ' ' + this.obj.display);
+			$("#choosedcity").val(this.obj.city);
+		}
 	</script>
 
 </html>

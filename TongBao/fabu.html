@@ -141,14 +141,38 @@
 			if (!localStorage.userId) {
 				window.location.href = "register/login.html";
 			} else {
-				window.location.href = "publish/fabuzhaobiao.html";
+				if (localStorage.type == 1) {
+					window.location.href = "publish/fabuzhaobiao.html";
+				} else {
+					if (localStorage.registerState == 0) {
+						window.location.href = "register/company.html";
+					} else {
+						if (localStorage.expireState == 0) {
+							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
+						} else {
+							window.location.href = "publish/fabuzhaobiao.html";
+						}
+					}
+				}
 			}
 		})
 		 $('#fabugongying').click(function() {
 			if (!localStorage.userId) {
 				window.location.href = "register/login.html";
 			} else {
-				window.location.href = "publish/fabugongying.html";
+				if (localStorage.type == 1) {
+					window.location.href = "publish/fabuzhaobiao.html";
+				} else {
+					if (localStorage.registerState == 0) {
+						window.location.href = "register/company.html";
+					} else {
+						if (localStorage.expireState == 0) {
+							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
+						} else {
+							window.location.href = "publish/fabuzhaobiao.html";
+						}
+					}
+				}
 			}
 		})
 	</script>

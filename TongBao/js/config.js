@@ -1,4 +1,4 @@
-var ip = 'http://192.168.0.90:8080';
+var ip = 'http://192.168.0.90:8081';
 
 var vm = new Vue();
 
@@ -6,7 +6,7 @@ $(function() {
 	if(localStorage.userId) {
 
 	}
-
+     localStorage.userId = 814;
 	post('/webUser/findUserMessage', {
 		userId: localStorage.userId
 	}, function(data) {
@@ -18,6 +18,11 @@ $(function() {
 		localStorage.expireState = data.result.expire;
 		//企业名称
 		localStorage.companyname = data.result.orgName;
+		//头像
+		localStorage.avatar = data.result.touxiang;
+		//手机号
+		localStorage.phone = data.result.telephone;	
+//		console.log(data);
 	})
 })
 
