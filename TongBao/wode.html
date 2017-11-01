@@ -16,11 +16,12 @@
 		<link rel="stylesheet" href="css/mkui.css" />
 		<link rel="stylesheet" href="static/lib/css/ydui.rem.css" />
 		<script type="text/javascript" src="static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="static/lib/js/ydui.js"></script>
 		<link rel="stylesheet" href="css/common.css" />
 		<link rel="stylesheet" href="static/css/common.css" />
 		<link rel="stylesheet" href="css/aui.css" />
 		<script type="text/javascript" src="js/aui-tab.js"></script>
-		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script src="static/lib/js/jquery-1.11.1.min.js"></script>
 
 		<style type="text/css">
 			*,
@@ -199,15 +200,15 @@
 					<img src="static/img/QQ.png" />
 				</div>
 				<div class="banner-name pos-a">
-					<img src="static/img/touxiang.png" class="img-rounded">
+					<img :src="userInfo.touxiang?ip+userInfo.touxiang:'static/img/avatar_96x96.png'" class="img-rounded">
 				</div>
-				<p class="name">平台</p>
+				<p class="name">{{userInfo.orgName}}</p>
 				<a id="edit">
 					<span class="bj pos-a">编辑</span>
 				</a>
 			</section>
 
-			<section v-if="type==1" class="zp-body">
+			<section v-if="userInfo.type==1" class="zp-body">
 				<div class="zp-list overflow-h"><span class="fl"><i class="ico ico-jianli"></i>简历 </span> <span class="fr  sx">刷新</span> <span class="fr  bianji"><a href="publish/jianli/jianli.html">编辑</a></span></div>
 				<div class="div1"></div>
 				<div class="zp-list overflow-h">
@@ -239,7 +240,7 @@
 				<div class="div" style="height: 56px;"></div>
 			</section>
 
-			<section v-if="type==2" class="zp-body">
+			<section v-if="userInfo.type==2" class="zp-body">
 				<div class="zp-list overflow-h">
 					<a href="wode/companyprofile.html"><span class="fl"><i class=" ico ico-yxgs"></i>企业信息</span> <span class="fr "><i class="ico ico-right1"></i></span></a>
 				</div>
@@ -295,7 +296,12 @@
 		</div>
 	</body>
 
+	<script type="text/javascript" src="js/config.js"></script>
 	<script type="text/javascript">
+		getUserInfo(localStorage.userId, function(data) {
+			vm.userInfo = data.result;
+		})
+
 		$(function() {
 			$('#xiaoxi_tip').hide();
 		})
@@ -303,7 +309,7 @@
 		var vm = new Vue({
 			el: '#app',
 			data: {
-				type: 1,
+				userInfo: ''
 			},
 			methods: {
 
@@ -322,7 +328,7 @@
 					window.location.replace("fabu.html")
 					break;
 				case 3:
-					window.location.replace("xiaoxi.html")
+					window.location.replace("message/xiaoxi.html")
 					break;
 				case 4:
 					break;

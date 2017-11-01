@@ -28,10 +28,17 @@
 				<yd-infinitescroll :on-infinite="loadList">
 					<yd-list theme="4" slot="list">
 						<yd-list-item v-for="item in datalist">
-							<p slot="title" class="f-16 "><span onclick="detail(this)">{{item.title}}</span><span style="display:none">{{item.id}}</span><span class="fr c-ec9d1d">{{item.xinzi}}</span></p>
+							<p slot="title" class="f-16 ">
+								<span onclick="detail(this)">{{item.zhaopin.title}}</span>
+								<span style="display:none">{{item.zhaopin.id}}</span>
+								<span class="fr c-ec9d1d">{{item.zhaopin.salary}}</span>
+							</p>
 							<yd-list-other slot="other">
-								<h4 class="mt-10 f-14 overflow-h"><span class="fl">{{item.companyname}}</span><span class="fr time mr-8 ">{{item.created_at}}</span></h4>
-								<p class="recruit-pos f-14 mt-5">{{item.city}} {{item.jingyan}} {{item.xueli}}<span class="delet fr" onclick=deleteIntetion(this)>删除</span><span style="display:none">{{item.id}}</span></p>
+								<h4 class="mt-10 f-14 overflow-h">
+									<span class="fl">{{item.zhaopin.orgName}}</span>
+									<span class="fr time">{{item.zhaopin.updatedAt}}</span>
+								</h4>
+								<p class="recruit-pos f-14 mt-5">{{item.zhaopin.city}} {{item.zhaopin.experience}} {{item.zhaopin.education}}<span class="delet fr" style="margin-right: 0;" onclick=deleteIntetion(this)>删除</span><span style="display:none">{{item.zhaopin.id}}</span></p>
 							</yd-list-other>
 						</yd-list-item>
 					</yd-list>
@@ -44,54 +51,39 @@
 		</div>
 	</body>
 
+	<script type="text/javascript" src="../js/config.js"></script>
 	<script type="text/javascript">
-		var items = [{
-			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
-			xinzi: '1000元',
-			companyname: '232',
-			created_at: '2017-10-09',
-		}, {
-			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
-			xinzi: '1000元',
-			companyname: '232',
-			created_at: '2017-10-09',
-		}, {
-			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
-			xinzi: '1000元',
-			companyname: '232',
-			created_at: '2017-10-09',
-		}, {
-			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
-			xinzi: '1000元',
-			companyname: '232',
-			created_at: '2017-10-09',
-		}, {
-			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
-			xinzi: '1000元',
-			companyname: '232',
-			created_at: '2017-10-09',
-		}, {
-			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
-			xinzi: '1000元',
-			companyname: '232',
-			created_at: '2017-10-09',
-		}, {
-			title: '尽快了解多少了科技股份可怜是大家打开国际圣诞快乐公交卡时打',
-			xinzi: '1000元',
-			companyname: '232',
-			created_at: '2017-10-09',
-		}];
+		post('/webUser/FavoriteCompany', {
+			pageNo: 1,
+			pageSize: 10,
+			userId: localStorage.userId
+		}, function(data) {
+			vm.datalist = data.result;
+		})
+
 		var vm = new Vue({
 			el: "#app",
 			data: {
-				page: 2,
+				pageNo: 2,
 				pageSize: 10,
-				datalist: items,
+				datalist: []
 			},
 			methods: {
 				loadList: function() {
-					//					window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
-					//					window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
+					post('/webUser/FavoriteCompany', {
+						pageNo: vm.pageNo,
+						pageSize: vm.pageSize,
+						userId: localStorage.userId
+					}, function(data) {
+						_list = data.result;
+						vm.datalist = vm.datalist.concat(_list);
+						if(vm.pageNo > 1 && _list.length < vm.pageSize) {
+							window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
+							return;
+						}
+						window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
+						vm.pageNo++;
+					})
 				},
 			}
 		});
@@ -102,18 +94,19 @@
 				title: '删除',
 				mes: '确定删除吗?',
 				opts: function() {
-					vm.$dialog.toast({
-						mes: '删除成功',
-						timeout: 6000
-					});
-					window.location.href = "/member/deletetoudi?id=" + id;
+					post('/webUser/DeletedFavoriteCompanyById/', {
+						userId: 85,
+						id: id
+					}, function(data) {
+						$(obj).parent().parent().parent().parent().remove();
+					})
 				}
 			});
 		}
 
 		function detail(obj) {
 			id = $(obj).next("span").text();
-			window.location.href = "/list/detailzhaopin?id=" + id;
+			window.location.href = "../home/zhaopin/zhaopindetail.html?id=" + id;
 		}
 	</script>
 

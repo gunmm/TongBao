@@ -223,9 +223,9 @@
 									<span class="ml-10">{{item.education}}</span>
 									</span>
 									<span class="fr">
-									  		<button class="f-13 c-ccc mr-10" :value='item.id' onclick=remove(this)>删除</button>
-											<button class="f-13 c-3095e3 mr-10" :value='item.id' onclick=refresh(this)>更新</button>
-											<span class="f-13 "><a :href='item.editurl' class="c-3095e3" >编辑</a></span>
+									  	<button :id="item.id" class="f-13 c-ccc mr-10" :value='item.id' @click="remove(item.id)">删除</button>
+										<button class="f-13 c-3095e3 mr-10" :value='item.id' @click="refresh(item.id)">更新</button>
+										<span class="f-13 "><a :href='"../../publish/fabuzhaopin.html?id="+item.id' class="c-3095e3" >编辑</a></span>
 									</span>
 								</p>
 							</yd-list-other>
@@ -254,7 +254,7 @@
 			pageNo: 1,
 			pageSize: 10,
 			messageType: 3,
-			userId: 85
+			userId: localStorage.userId
 		}, function(data) {
 			console.log(data)
 			vm.datalist = data.result;
@@ -274,7 +274,7 @@
 						pageNo: vm.pageNo,
 						pageSize: vm.pageSize,
 						messageType: 3,
-						userId: 85
+						userId: localStorage.userId
 					}, function(data) {
 						_list = data.result;
 						vm.datalist = vm.datalist.concat(_list);
@@ -286,8 +286,7 @@
 						vm.pageNo++;
 					})
 				},
-				remove: function(obj) {
-					var id = $(obj).attr("value");
+				remove: function(id) {
 					vm.$dialog.confirm({
 						title: '删除',
 						mes: '确认要删除吗?',
@@ -295,18 +294,23 @@
 							post('/webUser/DeleteById', {
 								id: id
 							}, function(data) {
-								console.log(data)
-								$(obj).parent().parent().parent().parent().remove;
+								$('#' + id).parent().parent().parent().parent().parent().remove();
 							})
 						}
 					});
 				},
-				refresh: function(obj) {
-					var id = $(obj).attr("value");
+				refresh: function(id) {
 					post('/webUser/UpdateById', {
 						id: id
 					}, function(data) {
-						console.log(data)
+						vm.$dialog.toast({
+							mes: '更新成功',
+							icon: 'success',
+							timeout: 1500,
+							callback: function() {
+								window.location.replace("zhaopin.html")
+							}
+						});
 					})
 				}
 			}

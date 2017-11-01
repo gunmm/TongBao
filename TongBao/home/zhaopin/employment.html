@@ -417,8 +417,9 @@
 				vm.zhichengs = data.result;
 			})
 
-			var items = window.history.state;
-			if(!items) {
+			var state = window.history.state;
+			if(!state) {
+				state = '';
 				post('/webZp/Zhaopin', {
 					pageNo: 1,
 					pageSize: 10
@@ -433,7 +434,7 @@
 				data: {
 					page: 2,
 					pageSize: 10,
-					datalist: items,
+					datalist: state.items,
 					textarr: {
 						jingyan: '请选择',
 						xueli: '请选择',
@@ -459,6 +460,11 @@
 				},
 				methods: {
 					loadList: function() {
+						if(state) {
+							if(state.page) {
+								vm.page = state.page;
+							}
+						}
 						post('/webZp/Zhaopin', {
 							pageNo: vm.page,
 							pageSize: vm.pageSize,
@@ -472,7 +478,6 @@
 							age: vm.age,
 							gender: vm.gender,
 						}, function(data) {
-							console.log(data);
 							_list = data.result;
 							if(vm.page == 1) {
 								vm.datalist = _list;
@@ -480,8 +485,10 @@
 								vm.datalist = vm.datalist.concat(_list);
 							}
 
-							items = vm.datalist;
-							window.history.pushState(items, "", "employment.html");
+							window.history.pushState({
+								items: vm.datalist,
+								page: vm.page += 1
+							}, "", "employment.html");
 
 							if(vm.page > 1 && _list.length < vm.pageSize) {
 								window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');

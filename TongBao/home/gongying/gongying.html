@@ -186,8 +186,9 @@
 			this.xinzi = data.result;
 		})
 
-		var items = window.history.state;
-		if(!items) {
+		var state = window.history.state;
+		if(!state) {
+			state = '';
 			post('/webGy/Gongying', {
 				pageNo: 1,
 				pageSize: 10
@@ -202,7 +203,7 @@
 			data: {
 				page: 2,
 				pageSize: 10,
-				datalist: items,
+				datalist: state.items,
 				textarr: {
 					jingyan: '请选择',
 					xueli: '请选择',
@@ -228,6 +229,11 @@
 			},
 			methods: {
 				loadList: function() {
+					if(state) {
+						if(state.page) {
+							vm.page = state.page;
+						}
+					}
 					post('/webGy/Gongying', {
 						pageNo: vm.page,
 						pageSize: vm.pageSize,
@@ -244,8 +250,10 @@
 							vm.datalist = vm.datalist.concat(_list);
 						}
 
-						items = vm.datalist;
-						window.history.pushState(items, "", "gongying.html");
+						window.history.pushState({
+							items: vm.datalist,
+							page: vm.page += 1
+						}, "", "gongying.html");
 
 						if(vm.page > 1 && _list.length < vm.pageSize) {
 							window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');

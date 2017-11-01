@@ -76,7 +76,7 @@
 					<span class="fr">{{xinzi}}</span>
 				</div>
 				<p class="zhiwei mt-10">职位 : <span>{{job}}</span></p>
-				<div class="require overflow-h" v-if="jingyanyaoqiu&&xueliyaoqiu&&zhichengyaoqiu&&ageyaoqiu&&sexyaoqiu">
+				<div class="require overflow-h" v-if="jingyanyaoqiu||xueliyaoqiu||zhichengyaoqiu||ageyaoqiu||sexyaoqiu">
 					<span class="fl yaoqiu">要求 : <span></span></span>
 					<ul class="overflow-h">
 						<li class="fl" v-if="jingyanyaoqiu"><span>{{jingyanyaoqiu}}</span><i></i></li>
@@ -179,7 +179,7 @@
 				</section>
 			</section>
 			<div style="height: 57px;"></div>
-			<footer v-if="type==1">
+			<footer v-if="type==1&&localStorage.userId!=userId">
 				<ul class="overflow-h">
 					<li style="height: 100px">
 						<a :href='"tel:"+phone'>
@@ -263,7 +263,6 @@
 
 		var qs = new QueryString();
 		var id = parseInt(qs['id']);
-		id = 382;
 
 		if(qs['isfb']) {
 			window.history.pushState({}, "首页", "");
@@ -303,7 +302,7 @@
 
 		post('/webSc/isFavorite', {
 			id: id,
-			userId: 101
+			userId: localStorage.userId
 		}, function(data) {
 			vm.isShoucang = data.result;
 			if(data.result) {
@@ -314,7 +313,7 @@
 
 		post('/webZp/isToudi', {
 			id: id,
-			userId: 101
+			userId: localStorage.userId
 		}, function(data) {
 			vm.isToudi = data.result;
 		})
@@ -360,7 +359,7 @@
 			methods: {
 				favourite: function() {
 					post('/webSc/favorite', {
-						userId: 101,
+						userId: localStorage.userId,
 						id: id,
 						shoucang: !vm.isShoucang
 					}, function(data) {
@@ -381,7 +380,7 @@
 				},
 				toudi: function() {
 					post('/webZp/toudi', {
-						userId: 101,
+						userId: localStorage.userId,
 						id: id
 					}, function(data) {
 						console.log(data);

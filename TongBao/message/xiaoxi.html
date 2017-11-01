@@ -14,16 +14,16 @@
 		<meta name="x5-fullscreen" content="true">
 		<meta name="format-detection" content="telephone=no, email=no">
 
-		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
-		<script type="text/javascript" src="static/lib/js/vue.min.js"></script>
-		<script type="text/javascript" src="static/lib/js/ydui.js"></script>
-		<link rel="stylesheet" href="css/mkui.css" />
-		<link rel="stylesheet" href="static/lib/css/ydui.rem.css" />
-		<link rel="stylesheet" href="static/css/common.css" />
+		<script src="../static/lib/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
+		<link rel="stylesheet" href="../css/mkui.css" />
+		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../static/css/common.css" />
 
-		<link rel="stylesheet" href="css/aui.css" />
-		<script type="text/javascript" src="js/aui-tab.js"></script>
-		<script type="text/javascript" src="js/aui-dialog.js"></script>
+		<link rel="stylesheet" href="../css/aui.css" />
+		<script type="text/javascript" src="../js/aui-tab.js"></script>
+		<script type="text/javascript" src="../js/aui-dialog.js"></script>
 
 		<style>
 			.msg-right p span:nth-child(2) {
@@ -51,39 +51,40 @@
 			<section v-if="msg_empty">
 				<div class="fail">
 					<div class="fail-pic">
-						<img src="static/img/fabu-fail.png" alt="" />
+						<img src="../static/img/fabu-fail.png" alt="" />
 					</div>
 					<p>现在还没有收到消息哦</p>
 				</div>
 			</section>
-			<section v-for="item in systemMessage" class="mesg overflow-h border-b">
-				<div class="pic">
-					<a href=""><img src="static/img/Group@2x.png" /></a>
+			<section class="mesg overflow-h border-b">
+				<div class="pic pos-r">
+					<a><img src="../static/img/Group@2x.png" /></a>
+					<i v-if="systemMessage.read==0" class="red"></i>
 				</div>
 				<div class="msg-right">
 					<p class="overflow-h">
 						<span class="fl" onclick="detail(1)">系统通知</span>
 						<span class="fr mr-8" onclick="deleteMessage(this)">删除</span>
-						<span class="fr">{{item.created_at}}</span>
+						<span class="fr">{{systemMessage.strCreatedAt}}</span>
 					</p>
-					<p class="msg-news" onclick="detail(1)">
-						{{item.content}}
+					<p id="sys_content" class="msg-news" onclick="detail(1)">
+						{{systemMessage.messageContent}}
 					</p>
 				</div>
 			</section>
 			<section v-for="item in chatMessage" class="mesg overflow-h border-b">
 				<div class="pic pos-r">
-					<a href=""><img :src="item.avatar" /></a>
-					<i v-if="item.read==0" class="red"></i>
+					<a :href="item.fromUid==localStorage.userId?'cardgongying.html?id='+item.toUid:'cardgongying.html?id='+item.fromUid"><img :src="item.touxiang?ip+item.touxiang:'../static/img/avatar_96x96.png'" /></a>
+					<i v-if="item.fromUid!=localStorage.userId&&item.read==0" class="red"></i>
 				</div>
 				<div class="msg-right">
 					<p class="overflow-h">
-						<span class="fl" @click="chat(item.from_uid)">{{item.nickname}}</span>
+						<span class="fl" @click="chat(item.from_uid)">{{item.nickName}}</span>
 						<span class="fr mr-8" onclick="deleteMessage(this)">删除</span>
-						<span class="fr">{{item.created_at}}</span>
+						<span class="fr">{{item.strCreatedAt}}</span>
 					</p>
 					<p class="msg-news" @click="chat(item.from_uid)">
-						{{item.content}}
+						{{item.messageContent}}
 					</p>
 				</div>
 			</section>
@@ -109,19 +110,25 @@
 		</footer>
 	</body>
 
+	<script type="text/javascript" src="../js/config.js"></script>
 	<script type="text/javascript">
-		new Vue({
+		post('/webUser/myMessage', {
+			userId: localStorage.userId
+		}, function(data) {
+			console.log(data);
+			vm.systemMessage = data.result.Message;
+			vm.chatMessage = data.result.ChatList;
+
+			var content = document.getElementById("sys_content");
+			content.innerHTML = vm.systemMessage.messageContent;
+		})
+
+		var vm = new Vue({
 			el: '#app',
 			data: {
 				msg_empty: false,
-				systemMessage: [{}],
-				chatMessage: [{
-					avatar: 'static/img/touxiang.png',
-					read: 0,
-					nickname: '王爷',
-					content: 'ad看风景阿卡丽附近开了多少放声大哭减肥开始',
-					from_uid: '1122',
-				}]
+				systemMessage: '',
+				chatMessage: []
 			},
 			mounted: function() {
 				$("#app").show();
@@ -153,15 +160,15 @@
 			function(ret) {
 				switch(ret.index) {
 					case 1:
-						window.location.replace("home.html")
+						window.location.replace("../home.html")
 						break;
 					case 2:
-						window.location.replace("fabu.html")
+						window.location.replace("../fabu.html")
 						break;
 					case 3:
 						break;
 					case 4:
-						window.location.replace("wode.html")
+						window.location.replace("../wode.html")
 						break;
 				}
 			});

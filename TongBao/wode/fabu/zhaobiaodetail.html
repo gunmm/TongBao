@@ -193,48 +193,49 @@
 			.g-fix-ios-overflow-scrolling-bug {
 				-webkit-overflow-scrolling: auto!important
 			}
+			
+			.list-theme4 .list-item .list-mes .list-title {
+				line-height: 1.5rem!important;
+				max-height: none!important;
+			}
 		</style>
 	</head>
 
-	<body>
+	<body class="bg-fff">
 		<div id="app">
-			<section class="mesg overflow-h border-b">
-				<div class="m-list">
-					<ul>
-						<li class="overflow-h">
-							<a href="/list/detailzhaobiao?id=<?=$model->id ?>" class="w-100">
-								<div class="recruit-list fl ml-10 ">
-									<div class="recruit-header overflow-h mt-10">
-										<h3 class="fl">{{title}}</h3>
-										<p class="fr">
-											{{item.price==''?'面议':item.price}}/{{item.unit}}
-										</p>
-									</div>
-									<div class="recruit-header overflow-h mt-10">
-										<h4 class="fl overflow-h mt-5">{{item.city}}<span>{{item.quantity==-1||item.quantity==''?'已招标文件为主	单位：':item.quantity}}{{item.unit}}</span></h4>
-										<span class="fr time">{{item.updatedAt}}</span>
-									</div>
-									<p class="recruit-pos mt-5">
-										<?=$model->user->showName?>
-									</p>
-								</div>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</section>
-			<section v-for="item in bidlist" class="mesg overflow-h border-b">
+			<article class="m-list list-theme4">
+				<a :href="'../../home/zhaobiao/zhaobiaodetail.html?id='+data.id" class="list-item">
+					<div class="list-img"></div>
+					<div class="list-mes">
+						<div class="list-title">
+							<p class="f-16">
+								<span>{{data.title}}</span>
+								<span class="fr c-ec9d1d">{{data.price==''?'面议':data.price}}/{{data.unit}}</span>
+							</p>
+						</div>
+						<div class="list-other">
+							<h4 class="mt-10 f-14 ">
+								<span class="fl">{{data.city}}</span>
+								<span class="ml-15">{{data.quantity==-1||data.quantity==''?'已招标文件为主	单位：':data.quantity}}{{data.unit}}</span> 
+								<span class="fr time ">{{data.updatedAt}}</span>
+							</h4>
+							<p class="recruit-pos f-14 mt-5 pos-name">{{data.orgName}}</p>
+						</div>
+					</div>
+				</a>
+			</article>
+			<section v-for="item in bidlist" :id="item.id" class="mesg overflow-h border-b">
 				<div class="pic">
-					<a href="/managefabu/cardgongying?id=111"><img :src="item.src" /></a>
+					<a href=""><img :src="ip+item.touxiangUrl" /></a>
 				</div>
 				<div class="msg-right">
 					<p class="overflow-h">
-						<span class="fl">{{item.showName}}</span>
-						<span class="fr mr-10"><a @click="remove(item.id)" class="c-ccc">删除</a></span>
-						<span class="fr">{{item.updata_at}}</span>
+						<span class="fl">{{item.nickName}}</span>
+						<span class="fr"><a @click="remove(item.id)" class="c-ccc mr-5">删除</a></span>
+						<span class="fr">{{item.createAt}}</span>
 					</p>
-					<p class="f-16">￥<i>{{item.price}}/{{item.unit}}</i></p>
-					<p class="msg-news pr-10">
+					<p class="f-16">￥<i>{{item.toubiaoPrice}}/{{item.unit}}</i></p>
+					<p class="msg-news">
 						{{item.content}}
 					</p>
 				</div>
@@ -245,39 +246,36 @@
 	<script type="text/javascript" src="../../js/config.js"></script>
 	<script type="text/javascript">
 		var qs = new QueryString();
-		var data = JSON.parse(qs['data']);
+		var id = parseInt(qs['id']);
 
-		var items = [{
-			title: '机打法结合的积分换卡方式都会放假哈跨境电商房间号打飞机收到',
-			price: '100元',
-			unit: '斤',
-			city: '北京市',
-			quantity: '100',
-			created_at: '2017-10-02',
-			provider: '一个公司'
-		}]
+		post('/webUser/FindToubiaoById', {
+			pageNo: null,
+			pageSize: null,
+			id: id
+		}, function(data) {
+			console.log(data);
+			vm.data = data.result.zhaobiao;
+			vm.bidlist = data.result.bidList;
+		})
 
 		var vm = new Vue({
 			el: '#app',
 			data: {
-				datalist: items,
-				bidlist: [{
-					id: '111',
-					showName: '11111111',
-					src: 'http://www.tongtongww.com/assets/f5bc70bd/avatar_96x96.png',
-					updata_at: '07-28'
-				}]
+				data: '',
+				bidlist: []
 			},
-			methods: {}
-		})
-
-		function remove(id) {
-			console.log(id);
-
-			if(confirm('确定删除吗?')) {
-				window.location.href = "/managefabu/removetoubiao?id=" + id;
+			methods: {
+				remove: function(id) {
+					if(confirm('确定删除吗?')) {
+						post('/webUser/DeletedToubiaoById', {
+							id: id
+						}, function(data) {
+							$('#' + id).remove();
+						})
+					}
+				}
 			}
-		}
+		})
 	</script>
 
 </html>

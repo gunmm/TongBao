@@ -14,12 +14,11 @@
 		<meta name="x5-fullscreen" content="true">
 		<meta name="format-detection" content="telephone=no, email=no">
 
-		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script src="../static/lib/js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="../static/lib/js/vue.min.js"></script>
 		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
 		<link rel="stylesheet" href="../css/mkui.css" />
 		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
-		<link rel="stylesheet" href="../static/css/common.css" />
 
 		<link rel="stylesheet" href="../css/aui.css" />
 
@@ -48,38 +47,44 @@
 				float: left;
 				padding: 0 5px;
 			}
+			
+			.m-toast p {
+				color: #FFFFFF;
+			}
 		</style>
 	</head>
 
-	<body onload="window.scrollTo(0,document.body.scrollHeight);">
+	<body>
 		<div id="app">
-			<section id="chat">
-				<li v-for="item in chatlist" class="aui-chat">
-					<div class="aui-chat-header">{{item.created_at}}</div>
-					<div v-if="item.is==0" class="aui-chat-item aui-chat-left">
-						<div class="aui-chat-media">
-							<img :src="item.avatar" />
-						</div>
-						<div class="aui-chat-inner">
-							<div class="aui-chat-content">
-								<div class="aui-chat-arrow"></div>
-								{{item.content}}
+			<section>
+				<ul id="chat">
+					<li v-for="item in chatlist" class="aui-chat">
+						<div class="aui-chat-header">{{item.strCreatedAt}}</div>
+						<div v-if="item.fromUid!=85" class="aui-chat-item aui-chat-left">
+							<div class="aui-chat-media" style="height: 2rem;">
+								<img style="height: 100%;" :src="item.toTouxiang?ip+item.toTouxiang:'../static/img/avatar_96x96.png'" />
+							</div>
+							<div class="aui-chat-inner">
+								<div class="aui-chat-content">
+									<div class="aui-chat-arrow"></div>
+									{{item.messageContent}}
+								</div>
 							</div>
 						</div>
-					</div>
-					<div v-else class="aui-chat-item aui-chat-right">
-						<div class="aui-chat-media">
-							<img :src="item.avatar" />
-						</div>
-						<div class="aui-chat-inner">
-							<div class="aui-chat-content">
-								<div class="aui-chat-arrow"></div>
-								{{item.content}}
+						<div v-else class="aui-chat-item aui-chat-right">
+							<div class="aui-chat-media" style="height: 2rem;">
+								<img style="height: 100%;" :src="item.fromTouxiang?ip+item.fromTouxiang:'../static/img/avatar_96x96.png'" />
 							</div>
-							<div class="aui-chat-status"></div>
+							<div class="aui-chat-inner">
+								<div class="aui-chat-content">
+									<div class="aui-chat-arrow"></div>
+									{{item.messageContent}}
+								</div>
+								<div class="aui-chat-status"></div>
+							</div>
 						</div>
-					</div>
-				</li>
+					</li>
+				</ul>
 			</section>
 			<div class="clearfix" style="height:50px;"></div>
 			<footer class="chat_footer">
@@ -93,37 +98,58 @@
 		</div>
 	</body>
 
+	<script type="text/javascript" src="../js/config.js"></script>
 	<script type="text/javascript">
+		var qs = new QueryString();
+		var toId = parseInt(qs['id']);
+		toId = 1;
+
+		post('/webUser/myAllMessage', {
+			userId: 85,
+			toId: toId
+		}, function(data) {
+			vm.chatlist = data.result;
+
+			setTimeout(function() {
+				window.scrollTo(0, document.body.scrollHeight);
+			}, 500)
+		})
+
 		var vm = new Vue({
 			el: '#app',
 			data: {
-				ok: true,
-				chatlist: [{
-					content: '123333333333',
-					is: 0,
-					avatar: '../static/img/touxiang.png',
-					created_at: '09-11 18:08'
-				}]
+				chatlist: []
 			}
 		})
-
-		var loc = location.href;
-		var id = loc.split("=")[1];
 
 		function scrollToEnd() { //滚动到底部
 			var h = $('#chat').height() - $(window).height();
 			$('#chat').scrollTop(h);
 		}
 
-		$('#send').click(function() {
-			var v = $('#in').val();
+		$(function() {
+			$('#send').click(function() {
+				var v = $('#in').val();
+				if(!v) {
+					window.scrollTo(0, document.body.scrollHeight);
+					vm.$dialog.toast({
+						mes: '内容不能为空',
+						timeout: 1000
+					})
 
-			$('#chat').append('<li class="aui-chat"><div class="aui-chat-item aui-chat-right"><div class = "aui-chat-media"><img src = "../static/img/touxiang.png" /></div><div class = "aui-chat-inner"><div class = "aui-chat-content"><div class = "aui-chat-arrow"></div>' + v + '</div><div class = "aui-chat-status"></div></div></div></li>');
-
-			$('#in').val("");
-
-			window.scroll(0, document.body.scrollHeight);
-		});
+					return false;
+				}
+				post('/webUser/mySendMessage', {
+					fromUid: 85,
+					toUid: toId,
+					messageContent: v
+				}, function(data) {
+					$('#chat').append('<li class="aui-chat"><div class="aui-chat-header"></div><div class="aui-chat-item aui-chat-right"><div class = "aui-chat-media" style="height: 2rem;"><img style="height: 100%;" src = "' + ip + localStorage.avatar + '" /></div><div class = "aui-chat-inner"><div class = "aui-chat-content"><div class = "aui-chat-arrow"></div>' + v + '</div><div class = "aui-chat-status"></div></div></div></li>');
+					window.scrollTo(0, document.body.scrollHeight);
+				})
+				$('#in').val("");
+			});
+		})
 	</script>
 
 </html>

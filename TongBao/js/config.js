@@ -1,24 +1,27 @@
-var ip = 'http://192.168.0.90:8080';
+var ip = 'http://192.168.1.120:8080';
 
 var vm = new Vue();
 
 $(function() {
-	if(localStorage.userId) {
-
+	localStorage.userId = 85;
+	if(localStorage.userId && !localStorage.type && !localStorage.companyname) {
+		post('/webUser/findUserMessage', {
+			userId: localStorage.userId
+		}, function(data) {
+			//1:个人 	2:企业
+			localStorage.type = data.result.type;
+			//0:未填写企业资料	1:已提交企业资料
+			localStorage.registerState = data.result.regist;
+			//0:企业待审核	1:企业已审核
+			localStorage.expireState = data.result.expire;
+			//企业名称|个人昵称
+			localStorage.companyname = data.result.orgName;
+			//头像
+			localStorage.avatar = data.result.touxiang;
+			//手机号
+			localStorage.phone = data.result.teletphone;
+		})
 	}
-
-	post('/webUser/findUserMessage', {
-		userId: localStorage.userId
-	}, function(data) {
-		//1:个人 	2:企业
-		localStorage.type = data.result.type;
-		//0:未填写企业资料	1:已提交企业资料
-		localStorage.registerState = data.result.regist;
-		//0:企业待审核	1:企业已审核
-		localStorage.expireState = data.result.expire;
-		//企业名称
-		localStorage.companyname = data.result.orgName;
-	})
 })
 
 /**
@@ -245,4 +248,19 @@ function getClassifyTable(async, classType, callback) {
 			});
 		}
 	});
+}
+
+/**
+ * 获取用户信息 
+ * @param {Object} userId
+ * @param {Object} callback
+ */
+function getUserInfo(userId, callback) {
+	if(userId) {
+		post('/webUser/findUserMessage', {
+			userId: userId
+		}, function(data) {
+			callback(data);
+		})
+	}
 }

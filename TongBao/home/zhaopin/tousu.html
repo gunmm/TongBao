@@ -62,9 +62,8 @@
 							alert('请填写投诉内容')
 							return
 						}
-
 						post('/webTs/tousu', {
-							userId: 101,
+							userId: localStorage.userId,
 							publishId: id,
 							content: vm.content,
 							tousuImg: vm.img

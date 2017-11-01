@@ -196,16 +196,16 @@
 			<!--</section>-->
 			<!--<?php }?>-->
 			<div style="height: 57px;"></div>
-			<footer v-if="type==2">
+			<footer v-if="type==2&&localStorage.userId!=userId">
 				<ul class="overflow-h">
 					<li>
-						<a href="tel:<?=$model['phone']; ?>">
+						<a :href="'tel:'+phone">
 							<img src="../../static/img/ico-phone.png" alt="" />
 							<span>电话</span>
 						</a>
 					</li>
 					<li class="second">
-						<a href="/tongzhi/cha">
+						<a :href="'../../message/chat_detail.html?id='+userId">
 							<img src="../../static/img/xiaoxi.png" alt="" />
 							<span>消息</span>
 						</a>
@@ -245,7 +245,6 @@
 
 		var qs = new QueryString();
 		var id = parseInt(qs['id']);
-		id = 70;
 
 		post('/webQz/QiuzhiById', {
 			id: id
@@ -280,11 +279,12 @@
 			vm.targetxinzi = d.targetSalary;
 			vm.gender = d.sex == '男';
 			vm.showcompanyname = d.showcompanyname == 1;
+			vm.userId = d.userId;
 		})
 
 		post('/webSc/isFavorite', {
 			id: id,
-			userId: 85
+			userId: localStorage.userId
 		}, function(data) {
 			vm.isShoucang = data.result;
 			if(data.result) {
@@ -295,7 +295,7 @@
 
 		post('/webQz/isInterview', {
 			id: id,
-			userId: 85
+			userId: localStorage.userId
 		}, function(data) {
 			vm.isToudi = data.result;
 		})
@@ -336,12 +336,14 @@
 				showcompanyname: false,
 				type: 2,
 				isShoucang: false,
-				isToudi: false
+				isToudi: false,
+				userId: '',
+				phone: ''
 			},
 			methods: {
 				favouriteClick: function() {
 					post('/webSc/favorite', {
-						userId: 85,
+						userId: localStorage.userId,
 						id: id,
 						shoucang: !vm.isShoucang
 					}, function(data) {
@@ -362,7 +364,7 @@
 				},
 				toudi: function() {
 					post('/webQz/Interview', {
-						userId: 85,
+						userId: localStorage.userId,
 						id: id,
 						isYaoqing: !vm.isToudi
 					}, function(data) {

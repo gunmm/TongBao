@@ -70,7 +70,7 @@
 
 					post('/webZb/Toubiao', {
 						publishId: id,
-						userId: 85,
+						userId: localStorage.userId,
 						price: vm.price,
 						content: vm.content
 					}, function(data) {

@@ -14,43 +14,61 @@
 		<meta name="x5-fullscreen" content="true">
 		<meta name="format-detection" content="telephone=no, email=no">
 
-		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script src="../static/lib/js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="../static/lib/js/vue.min.js"></script>
 		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
 		<link rel="stylesheet" href="../css/mkui.css" />
 		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
 		<link rel="stylesheet" href="../static/css/common.css" />
+
+		<style>
+			.list-theme4 .list-item .list-mes .list-title {
+				line-height: 1.5rem!important;
+				max-height: none!important;
+			}
+			
+			.a {
+				width: 60%;
+			}
+		</style>
 	</head>
 
 	<body>
 		<div id="app">
 			<section>
 				<div class="m-list">
-					<ul v-for="item in datalist" class="bg-fff mb-10" :id='"ul_"+item.id'>
-						<li class="overflow-h  border-b padd">
-							<div class="recruit-list fl ml-10 ">
-								<div class="recruit-header overflow-h">
-									<a href="item.url">
-										<h3 class="fl">{{item.title}}</h3></a>
-									<p class="fr">
-										{{item.price}}/{{item.unit}}
-									</p>
+					<ul v-for="item in datalist" class="bg-fff mb-10" :id='item.id'>
+						<article class="m-list list-theme4">
+							<div class="list-item">
+								<div class="list-img"></div>
+								<div class="list-mes">
+									<div class="list-title">
+										<p class="f-16">
+											<a class="a" :href="'../home/zhaobiao/zhaobiaodetail.html?id='+item.zhaobiao.id">
+												<span style="width: 100%;">{{item.title}}</span>
+											</a>
+											<span class="fr c-ec9d1d">{{item.zhaobiao.price==''?'面议':item.zhaobiao.price}}/{{item.zhaobiao.unit}}</span>
+										</p>
+									</div>
+									<div class="list-other">
+										<h4 class="mt-10 f-14 ">
+											<span class="fl">{{item.zhaobiao.city}}</span>
+											<span class="ml-15">{{item.zhaobiao.quantity==-1||item.zhaobiao.quantity==''?'已招标文件为主	单位：':item.zhaobiao.quantity}}{{item.zhaobiao.unit}}</span> 
+											<span class="fr time ">{{item.zhaobiao.updatedAt}}</span>
+										</h4>
+										<p class="recruit-pos overflow-h mt-10">
+											<span class="fl">{{item.zhaobiao.orgName}}</span>
+											<span class="delet fr" style="margin-right: 0;" @click="deleteToubiao(item.id)">删除</span>
+										</p>
+									</div>
 								</div>
-								<div class="recruit-header overflow-h">
-									<h4 class="fl"><span>{{item.city}}</span>   <span class="num-pro">{{item.quantity}}</span></h4>
-									<span class="fr time">{{item.created_at}}</span>
-								</div>
-								<p class="recruit-pos overflow-h">
-									<span class="fl">{{item.provider}}</span>
-									<span class="delet fr" @click="deleteToubiao(item.id)">删除</span>
-								</p>
 							</div>
-						</li>
+						</article>
 						<li class="overflow-h  border-b padd">
 							<a href="">
 								<div class="recruit-list fl ml-10 ">
 									<div class="recruit-header overflow-h">
-										<h3 class="fl product-num">{{item.toubiaoprice}}元/{{item.unit}}</h3>
+										<h3 class="fl product-num">{{item.toubiaoPrice}}元/{{item.unit}}</h3>
 									</div>
 									<div class="recruit-header overflow-h">
 										<h4 class="fl information">{{item.content}}</h4>
@@ -64,17 +82,30 @@
 		</div>
 	</body>
 
+	<script type="text/javascript" src="../js/config.js"></script>
 	<script type="text/javascript">
+		post('/webUser/MyToubiao', {
+			pageNo: null,
+			pageSize: null,
+			userId: localStorage.userId
+		}, function(data) {
+			vm.datalist = data.result;
+		})
+
 		var vm = new Vue({
 			el: "#app",
 			data: {
-				datalist: [{
-					id: '111'
-				}]
+				datalist: []
 			},
 			methods: {
 				deleteToubiao: function(id) {
-					$("#ul_" + id).remove();
+					if(confirm('确定删除吗?')) {
+						post('/webUser/DeletedMyToubiaoById', {
+							id: id
+						}, function(data) {
+							$('#' + id).remove();
+						})
+					}
 				},
 			}
 		});

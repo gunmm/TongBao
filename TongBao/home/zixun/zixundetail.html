@@ -59,7 +59,6 @@
 		<script type="text/javascript">
 			var qs = new QueryString();
 			var id = parseInt(qs['id']);
-			id = 27;
 
 			post('/webZx/BaseMessage', {
 				id: id
@@ -73,12 +72,12 @@
 				vm.upTotal = d.vote;
 
 				var content = document.getElementById("content");
-				content.innerHTML = strReplace(d.content);
+				content.innerHTML = d.content;
 			})
 
 			post('/webSc/isFavorite', {
 				id: id,
-				userId: 85
+				userId: localStorage.userId
 			}, function(data) {
 				vm.isShoucang = data.result;
 				if(data.result) {
@@ -89,7 +88,7 @@
 
 			post('/webSc/isVote', {
 				id: id,
-				userId: 85
+				userId: localStorage.userId
 			}, function(data) {
 				vm.isZan = data.result;
 			})
@@ -108,7 +107,7 @@
 				methods: {
 					favourite: function() {
 						post('/webSc/favorite', {
-							userId: 85,
+							userId: localStorage.userId,
 							id: id,
 							shoucang: !vm.isShoucang
 						}, function(data) {
@@ -133,7 +132,7 @@
 						}
 						post('/webSc/vote', {
 							id: id,
-							userId: 85
+							userId: localStorage.userId
 						}, function(data) {
 							vm.isZan = true;
 							vm.upTotal += 1;

@@ -13,11 +13,13 @@
 		<meta name="x5-orientation" content="portrait">
 		<meta name="x5-fullscreen" content="true">
 		<meta name="format-detection" content="telephone=no, email=no">
-		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+		<script src="../static/lib/js/jquery-1.11.1.min.js"></script>
 
 		<link rel="stylesheet" href="../css/mkui.css" />
 		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
 		<link rel="stylesheet" href="../static/css/common.css" />
+		<script type="text/javascript" src="../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
 
 		<style type="text/css">
 			*,
@@ -190,27 +192,38 @@
 	</head>
 
 	<body>
-
-		<div id="messaage">
-			<div class="notice-time overflow-h">
-				<p class="overflow-h">
-					<span class="fl pl-5">07-19</span>
-					<span class="fl pl-5">10:11</span>
-				</p>
-			</div>
-			<div class="bg-fff notice-content">
-				<p>你发布的招聘有了新的投递，
-					<a href="/member/yingpin">点击查看</a>
-				</p>
-			</div>
+		<div id="app">
+			<section v-for="item in datalist">
+				<div style="width: 30%;" class="notice-time overflow-h">
+					<p class="overflow-h">
+						<span style="width: 100%;">{{item.strCreatedAt}}</span>
+					</p>
+				</div>
+				<div class="bg-fff notice-content">
+					<p v-html="item.messageContent"> </p>
+				</div>
+			</section>
 		</div>
-
 	</body>
 
+	<script type="text/javascript" src="../js/config.js"></script>
 	<script type="text/javascript">
-		
-		
-		
+		post('/webUser/myAllSystemMessage', {
+			userId: localStorage.userId
+		}, function(data) {
+			console.log(data);
+			vm.datalist = data.result
+		})
+
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				datalist: []
+			},
+			methods: {
+
+			}
+		})
 	</script>
 
 </html>

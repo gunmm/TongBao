@@ -334,7 +334,7 @@
 			</section>
 		</section>
 		<div style="height: 57px;"></div>
-		<footer>
+		<footer v-if="localStorage.userId!=userId">
 			<ul class="overflow-h">
 				<li>
 					<a :href="'tel:'+phone">
@@ -384,7 +384,6 @@
 
 		var qs = new QueryString();
 		var id = parseInt(qs['id']);
-		id = 379;
 
 		if(qs['iszb']) {
 			window.history.pushState({}, "首页", "");
@@ -418,7 +417,7 @@
 
 		post('/webSc/isFavorite', {
 			id: id,
-			userId: 85
+			userId: localStorage.userId
 		}, function(data) {
 			vm.isShoucang = data.result;
 			if(data.result) {
@@ -429,7 +428,7 @@
 
 		post('/webZb/isToubiao', {
 			publishId: id,
-			userId: 85
+			userId: localStorage.userId
 		}, function(data) {
 			vm.isToudi = data.result;
 		})
@@ -470,7 +469,7 @@
 			methods: {
 				favouritec: function() {
 					post('/webSc/favorite', {
-						userId: 85,
+						userId: localStorage.userId,
 						id: id,
 						shoucang: !vm.isShoucang
 					}, function(data) {

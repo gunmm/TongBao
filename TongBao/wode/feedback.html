@@ -39,7 +39,7 @@
 	<body class="bg-fff">
 		<div id="app">
 			<section class="">
-				<textarea name="" rows="" cols="" placeholder="请填写意见反馈内容" v-model="content" class="tousu-comtent" onchange="aa(this)"></textarea>
+				<textarea name="" rows="" cols="" placeholder="请填写意见反馈内容" v-model="content" class="tousu-comtent"></textarea>
 				<section class="shili-show  mt-20">
 					<div class="show-pic fl" style="width: 100%;">
 						<ul class="" id="showul">
@@ -79,19 +79,19 @@
 						alert('请填写意见反馈内容')
 						return
 					}
-					vm.$dialog.toast({
-						mes: "感谢您的支持和理解我们会尽快对信息进行核实与处理。",
-						icon: 'success',
-						timeout: 1500,
-						callback: function() {
-							window.location.href = '/member/index';
-						}
-					});
-
-					post('/web/upload', {
-						pic: JSON.stringify(vm.imgs)
+					post('/webUser/Feedback', {
+						userId: localStorage.userId,
+						content: vm.content,
+						img: vm.imgs
 					}, function(data) {
-						console.log(data);
+						vm.$dialog.toast({
+							mes: "感谢您的支持和理解我们会尽快对信息进行核实与处理。",
+							icon: 'success',
+							timeout: 1500,
+							callback: function() {
+								window.history.go(-1);
+							}
+						});
 					})
 				},
 			}
@@ -99,10 +99,6 @@
 
 		function chooseMultipleImage() {
 			$('#img_input').click();
-		}
-
-		function aa(obj) {
-			console.log(obj.value)
 		}
 
 		function imagePreview(input) {
