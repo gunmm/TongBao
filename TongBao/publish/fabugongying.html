@@ -39,12 +39,14 @@
 				margin: auto;
 			}
 		</style>
-		<script type="text/javascript" charset="utf-8">
-		</script>
 	</head>
 
 	<body class="bg-f8f8f8">
-
+		<script>
+			if (!localStorage.userId) {
+				window.location.href = "../register/login.html";
+			}
+		</script>
 		<div id="app">
 
 			<section class="tender-top mb-10">
@@ -324,7 +326,6 @@
 						//            if(shilizhanshi.length>1){
 						//                $("#productimages").val(shilizhanshi.substring(0,shilizhanshi.length-1));
 						//            }
-						
 						var guigecanshu = new Array();
 						$("input[name='specification']").each(function(index) {
 							guigecanshu.push(this.value);

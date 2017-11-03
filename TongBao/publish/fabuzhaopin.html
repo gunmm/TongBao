@@ -78,6 +78,9 @@
 						this.gender = 2;
 					}
 				})
+			} else {
+				this.gender = '';
+				this.fuli = [];
 			}
 		</script>
 
@@ -89,8 +92,8 @@
 				<div class="zp-list overflow-h">
 					<span class="fl">职位名称</span>
 					<span class="fr ">
-					<input type="text" placeholder="请填写职位名称" v-model="title"/>
-				</span>
+						<input type="text" placeholder="请填写职位名称" v-model="title"/>
+					</span>
 				</div>
 				<div class="zp-list overflow-h">
 					<span class="fl">岗位类别</span>
@@ -113,23 +116,19 @@
 				<div class="zp-list overflow-h">
 					<span class="fl">薪资水平</span>
 					<span class="fr  select-btn">
-				<select slot="right" v-model="xinzi" class="select-xizi">
-	                <option value="">请选择</option>
-                    <option v-for="item in xinzidic" :value='item.itemCode'>{{item.itemName}}</option>
-
-	            </select>
-            </span>
+						<select slot="right" v-model="xinzi" class="select-xizi">
+							<option value="">请选择</option>
+							<option v-for="item in xinzidic" :value='item.itemCode'>{{item.itemName}}</option>
+						</select>
+					</span>
 				</div>
 				<div class="zp-list overflow-h">
 					<span class="fl">福利待遇</span>
 					<span class="fr fu-btn">
-
-                <select multiple v-model="fuli">
-                    <!--<option value="">请选择</option>-->
-                    <option v-for="item in fulidic" :value='item.itemCode'>{{item.itemName}}</option>
-
-                </select>
-            </span>
+						<select multiple v-model="fuli">
+						<!--<option value="">请选择</option>--><option v-for="item in fulidic" :value='item.itemCode'>{{item.itemName}}</option>
+						</select>
+					</span>
 				</div>
 
 				<div class="zp-list overflow-h">
@@ -164,7 +163,7 @@
             </span>
 				</div>
 
-				<div class="zp-list overflow-h">
+				<div class="zp-list ovserflow-h">
 					<span class="fl">学历要求</span>
 					<span class="fr  select-btn">
                 <select v-model="xueli">
@@ -285,9 +284,24 @@
 						selectProvinceAndCity();
 					}
 				})
-				//薪资
-			 getDicTable(true, "001", function(data) {
+				//福利待遇
+			var fulidic;
+			getDicTable(false, "002", function(data) {
+				this.fulidic = data.result;
+			})
+			var province;
+			var city;
+			getCity(function(p, c) {
+				province = p;
+				city = c;
+				if (this.obj) {
+					selectGangweiA();
+				}
+			});
+			 //薪资
+			getDicTable(true, "001", function(data) {
 					vm.xinzidic = data.result;
+					console.log(vm.xinzidic);
 					if (this.obj) {
 						for (var i = 0; i < vm.xinzidic.length; i++) {
 							var obj = vm.xinzidic[i];
@@ -296,11 +310,6 @@
 							}
 						}
 					}
-				})
-				//福利待遇
-			var fulidic;
-			getDicTable(false, "002", function(data) {
-					this.fulidic = data.result;
 				})
 				//学历要求
 			 getDicTable(true, "003", function(data) {
@@ -340,15 +349,6 @@
 					vm.age = this.obj.ageId;
 				}
 			})
-			var province;
-			var city;
-			getCity(function(p, c) {
-				province = p;
-				city = c;
-				if (this.obj) {
-					selectGangweiA();
-				}
-			});
 			var vm = new Vue({
 				el: "#app",
 				data: {
@@ -410,7 +410,7 @@
 						$("#choosedprovince").val(id);
 						$("#choosedcity").val('');
 					},
-					fabu() {
+					fabu: function() {
 						if (!checkEmail() || !checkTel()) {
 							return false;
 						}

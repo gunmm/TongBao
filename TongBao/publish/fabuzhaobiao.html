@@ -31,6 +31,9 @@
 
 	<body class="bg-f8f8f8">
 		<script type="text/javascript" charset="utf-8">
+			if (!localStorage.userId) {
+				window.location.href = "../register/login.html";
+			}
 			var Request = new QueryString();
 			var itemid = Request["id"];
 			var obj;

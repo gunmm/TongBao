@@ -28,6 +28,21 @@
 	</head>
 
 	<body>
+		<script>
+			localStorage.userId = 85;
+			if (localStorage.userId) {
+				getUserInfo(localStorage.userId, function(data) {
+					//1:个人 	2:企业
+					localStorage.type = data.result.type;
+					//0:未填写企业资料	1:已提交企业资料
+					localStorage.registerState = data.result.regist;
+					//0:企业待审核	1:企业已审核
+					localStorage.expireState = data.result.expire;
+					
+					localStorage.companyname = data.result.orgName;
+				})
+			}
+		</script>
 		<div id="app">
 			<div class="nav-height"></div>
 			<section class="sheet-pic">
@@ -118,7 +133,7 @@
 				}
 			}
 		})
-		$('#fabuzhaopin').click(function() {
+		 $('#fabuzhaopin').click(function() {
 			if (!localStorage.userId) {
 				window.location.href = "register/login.html";
 			} else {

@@ -30,21 +30,17 @@
 		<script>
 			var Request = new QueryString();
 			var itemid = Request["id"];
-			var obj, jingyanId, xueliId, fuli;
+			var obj, fuli;
 			if (itemid) {
 				post1('/webUser/subscribePersonaListl', false, {
 					"userId": localStorage.userId,
 				}, function(data) {
 					var jobDic = data.result.recruit;
 					this.obj = jobDic[itemid];
-					this.jingyanId = this.obj.jingyanId;
-					this.xueliId = this.obj.xueliId;
 					this.fuli = this.obj.fuli;
 					console.log(this.obj);
 				})
 			} else {
-				this.jingyanId = 100;
-				this.xueliId = 100;
 				this.fuli = [];
 			}
 		</script>
@@ -105,7 +101,7 @@
 					<span class="fl">经验要求</span>
 					<span class="fr zp-next select-btn">
 					<select   v-model="jingyan" >
-		                <option value="100">不限</option>
+		                <option value="">不限</option>
 		                <option v-for="item in jingyans" :value="item.itemCode">{{item.itemName}}</option>
 		            </select></span>
 				</div>
@@ -113,7 +109,7 @@
 					<span class="fl">学历要求</span>
 					<span class="fr zp-next select-btn">
 					<select   v-model="xueli" >
-		                <option value="100">不限</option>
+		                <option value="">不限</option>
 		                <option v-for="item in xuelis" :value="item.itemCode">{{item.itemName}}</option>
 		            </select></span>
 				</div>
@@ -187,14 +183,24 @@
 				}
 			})
 			//经验要求
-		var jingyans;
-		getDicTable(false, "004", function(data) {
-				this.jingyans = data.result;
+		getDicTable(true, "004", function(data) {
+				vm.jingyans = data.result;
+				if(this.obj){
+					if(this.obj.jingyanId){
+						vm.jingyanId = this.obj.jingyanId;
+					}
+				}
+				
+
 			})
 			//学历要求
-		var xuelis;
-		getDicTable(false, "003", function(data) {
-				this.xuelis = data.result;
+		getDicTable(true, "003", function(data) {
+				vm.xuelis = data.result;
+				if(this.obj){
+					if(this.obj.xueliId){
+						vm.xueliId = this.obj.xueliId;
+					}
+				}
 			})
 			//职称要求
 		 getDicTable(true, "005", function(data) {
@@ -227,12 +233,12 @@
 					k: '2',
 					v: '111'
 				}, ],
-				jingyan: this.jingyanId,
-				jingyans: this.jingyans,
+				jingyan: '',
+				jingyans: [],
 				fuli: this.fuli,
 				fulis: this.fulidic,
-				xueli: this.xueliId,
-				xuelis: this.xuelis,
+				xueli: '',
+				xuelis: [],
 				zhicheng: '',
 				zhichengs: [],
 				province: province,

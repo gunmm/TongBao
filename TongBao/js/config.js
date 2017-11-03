@@ -1,10 +1,10 @@
-var ip = 'http://192.168.1.120:8080';
+var ip = 'http://192.168.0.90:8081';
 
 var vm = new Vue();
 
 $(function() {
-	localStorage.userId = 85;
-	if(localStorage.userId && !localStorage.type && !localStorage.companyname) {
+	localStorage.userId = 814;
+//	if (localStorage.userId && !localStorage.type && !localStorage.companyname) {
 		post('/webUser/findUserMessage', {
 			userId: localStorage.userId
 		}, function(data) {
@@ -21,7 +21,7 @@ $(function() {
 			//手机号
 			localStorage.phone = data.result.teletphone;
 		})
-	}
+//	}
 })
 
 /**
@@ -40,7 +40,7 @@ function post(url, data, callback, callback1) {
 		data: data,
 		success: function(data) {
 			vm.$dialog.loading.close();
-			if(data.result_code != 1) {
+			if (data.result_code != 1) {
 				new Vue().$dialog.alert({
 					mes: data.reason
 				});
@@ -53,7 +53,7 @@ function post(url, data, callback, callback1) {
 			vm.$dialog.alert({
 				mes: '服务器连接失败!'
 			});
-			if(callback1 != null) {
+			if (callback1 != null) {
 				callback1();
 			}
 		}
@@ -69,7 +69,7 @@ function post1(url, async, data, callback) {
 		data: data,
 		success: function(data) {
 			vm.$dialog.loading.close();
-			if(data.result_code != 1) {
+			if (data.result_code != 1) {
 				new Vue().$dialog.alert({
 					mes: data.reason
 				});
@@ -92,9 +92,9 @@ function QueryString() {
 	var num = str.indexOf("?")
 	str = str.substr(num + 1);
 	var arrtmp = str.split("&");
-	for(i = 0; i < arrtmp.length; i++) {
+	for (i = 0; i < arrtmp.length; i++) {
 		num = arrtmp[i].indexOf("=");
-		if(num > 0) {
+		if (num > 0) {
 			name = arrtmp[i].substring(0, num);
 			value = arrtmp[i].substr(num + 1);
 			this[name] = value;
@@ -107,7 +107,7 @@ function QueryString() {
  * @param {Object} str
  */
 function strReplace(str) {
-	if(str) {
+	if (str) {
 		return str.replace(/\ /g, "&nbsp;").replace(/\n/g, "<br/>");
 	}
 }
@@ -117,10 +117,10 @@ function strReplace(str) {
  * @param {Object} str
  */
 function hideStr(str) {
-	if(str) {
+	if (str) {
 		var s = str[0];
-		for(var i = 0; i < str.length; i++) {
-			if(i > 0) {
+		for (var i = 0; i < str.length; i++) {
+			if (i > 0) {
 				s += '*';
 			}
 		}
@@ -129,15 +129,15 @@ function hideStr(str) {
 }
 
 Array.prototype.indexOf = function(val) {
-	for(var i = 0; i < this.length; i++) {
-		if(this[i] == val) return i;
+	for (var i = 0; i < this.length; i++) {
+		if (this[i] == val) return i;
 	}
 	return -1;
 };
 
 Array.prototype.remove = function(val) {
 	var index = this.indexOf(val);
-	if(index > -1) {
+	if (index > -1) {
 		this.splice(index, 1);
 	}
 };
@@ -155,7 +155,7 @@ function getCity(callback) {
 		data: {},
 		success: function(data) {
 			vm.$dialog.loading.close();
-			if(data.result_code != 1) {
+			if (data.result_code != 1) {
 				new Vue().$dialog.alert({
 					mes: data.reason
 				});
@@ -165,18 +165,22 @@ function getCity(callback) {
 			var province = [];
 			var city = [];
 			var cityM = {};
-			for(var i = 0; i < list.length; i++) {
+			for (var i = 0; i < list.length; i++) {
 				var obj = list[i];
-				if(obj.deep == 1) {
+				if (obj.deep == 1) {
 					province.push(obj);
-				} else if(obj.deep == 2) {
+				} else if (obj.deep == 2) {
 					city.push(obj);
 				}
 			}
-			for(var i = 0; i < province.length; i++) {
+			for (var i = 0; i < province.length; i++) {
 				var array = [];
-				for(var j = 0; j < city.length; j++) {
-					if(city[j].parentId == i + 1) {
+				array.push({
+					'name': '全' + province[i].name,
+					'id': province[i].id
+				});
+				for (var j = 0; j < city.length; j++) {
+					if (city[j].parentId == i + 1) {
 						array.push(city[j]);
 						cityM['' + (i + 1)] = array;
 					}
@@ -204,7 +208,7 @@ function getDicTable(async, classId, callback) {
 		},
 		success: function(data) {
 			vm.$dialog.loading.close();
-			if(data.result_code != 1) {
+			if (data.result_code != 1) {
 				new Vue().$dialog.alert({
 					mes: data.reason
 				});
@@ -233,7 +237,7 @@ function getClassifyTable(async, classType, callback) {
 		},
 		success: function(data) {
 			vm.$dialog.loading.close();
-			if(data.result_code != 1) {
+			if (data.result_code != 1) {
 				new Vue().$dialog.alert({
 					mes: data.reason
 				});
@@ -251,12 +255,12 @@ function getClassifyTable(async, classType, callback) {
 }
 
 /**
- * 获取用户信息 
+ * 获取用户信息
  * @param {Object} userId
  * @param {Object} callback
  */
 function getUserInfo(userId, callback) {
-	if(userId) {
+	if (userId) {
 		post('/webUser/findUserMessage', {
 			userId: userId
 		}, function(data) {
