@@ -65,7 +65,7 @@
 		<div id="app">
 			<section class="detail-head overflow-h border-b">
 				<div class="head-pic ">
-					<img :src='avatar' />
+					<img :src='avatar?ip+avatar:"../../static/img/avatar_96x96.png"' />
 				</div>
 				<p class="text-c mingzi mt-10">
 					{{name}}<i class="ico" v-bind:class="[gender?'ico-boy':'ico-girl']"></i>
@@ -144,7 +144,7 @@
 			<section class="hope-job evaluation">
 				<h3 class="border-b ">自我评价</h3>
 				<div class="name-job self-narrative">
-					<p class="job-name">{{evaluation}}</p>
+					<p class="job-name" v-html="evaluation"></p>
 				</div>
 			</section>
 			<!--投诉-->
@@ -256,7 +256,7 @@
 			} else {
 				vm.name = hideStr(d.name);
 			};
-			vm.avatar = ip + d.touxiang;
+			vm.avatar = d.touxiang;
 			vm.updated_at = d.gengxin;
 			vm.favourite = d.shoucang;
 			vm.view = d.liulan;
@@ -282,23 +282,34 @@
 			vm.userId = d.userId;
 		})
 
-		post('/webSc/isFavorite', {
-			id: id,
-			userId: localStorage.userId
-		}, function(data) {
-			vm.isShoucang = data.result;
-			if(data.result) {
-				$('.on').css('color', '#ec9d1d');
-				$('.on').html('取消');
-			}
-		})
+		if(localStorage.userId) {
+			post('/webSc/isFavorite', {
+				id: id,
+				userId: localStorage.userId
+			}, function(data) {
+				vm.isShoucang = data.result;
+				if(data.result) {
+					$('.on').css('color', '#ec9d1d');
+					$('.on').html('取消');
+				}
+			})
 
-		post('/webQz/isInterview', {
-			id: id,
-			userId: localStorage.userId
-		}, function(data) {
-			vm.isToudi = data.result;
-		})
+			post('/webQz/isInterview', {
+				id: id,
+				userId: localStorage.userId
+			}, function(data) {
+				vm.isToudi = data.result;
+			})
+
+			getUserInfo(localStorage.userId, function(data) {
+				vm.type = data.result.type;
+			})
+
+			post('/webUser/addBrowser', {
+				userId: localStorage.userId,
+				articleId: id
+			}, function(data) {})
+		}
 
 		post('/webQz/Qiuzhi', {
 			pageNo: 1,
@@ -342,6 +353,11 @@
 			},
 			methods: {
 				favouriteClick: function() {
+					if(!localStorage.userId) {
+						window.location.href = '../../register/register.html';
+						return;
+					}
+
 					post('/webSc/favorite', {
 						userId: localStorage.userId,
 						id: id,
@@ -363,6 +379,11 @@
 					})
 				},
 				toudi: function() {
+					if(!localStorage.userId) {
+						window.location.href = '../../register/register.html';
+						return;
+					}
+
 					post('/webQz/Interview', {
 						userId: localStorage.userId,
 						id: id,

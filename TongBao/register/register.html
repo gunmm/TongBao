@@ -154,9 +154,10 @@
 					post('/webRegist/userRegist', {
 						userType: type,
 						telPhone: vm.phone,
-						pwdHash: hexMD5(vm.password)
+						pwdHash: hexMD5(vm.password),
+						id: localStorage.userId
 					}, function(data) {
-						localStorage.userId = data.result.userId;
+						//						localStorage.userId = data.result.userId;
 						if(type == 1) {
 							window.location.replace('../home.html');
 						} else {

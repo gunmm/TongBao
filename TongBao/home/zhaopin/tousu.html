@@ -45,6 +45,10 @@
 		</div>
 
 		<script type="text/javascript" charset="utf-8">
+			if(!localStorage.userId) {
+				window.location.replace('../../register/register.html');
+			}
+
 			var qs = new QueryString();
 			var id = parseInt(qs['id']);
 			var name = qs['name'];

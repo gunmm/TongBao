@@ -111,8 +111,7 @@
 			<section class="invite">
 				<h3 class="border-b">供应详情</h3>
 				<div class="content">
-					<p>
-						{{content}}
+					<p v-html="content">
 					</p>
 				</div>
 			</section>
@@ -230,16 +229,23 @@
 			imglist = d.imgUrl;
 		})
 
-		post('/webSc/isFavorite', {
-			id: id,
-			userId: localStorage.userId
-		}, function(data) {
-			vm.isShoucang = data.result;
-			if(data.result) {
-				$('.on').css('color', '#ec9d1d');
-				$('.on').html('取消');
-			}
-		})
+		if(localStorage.userId) {
+			post('/webSc/isFavorite', {
+				id: id,
+				userId: localStorage.userId
+			}, function(data) {
+				vm.isShoucang = data.result;
+				if(data.result) {
+					$('.on').css('color', '#ec9d1d');
+					$('.on').html('取消');
+				}
+			})
+
+			post('/webUser/addBrowser', {
+				userId: localStorage.userId,
+				articleId: id
+			}, function(data) {})
+		}
 
 		post('/webGy/Gongying', {
 			pageNo: 1,
@@ -275,6 +281,11 @@
 			},
 			methods: {
 				favouritec: function() {
+					if(!localStorage.userId) {
+						window.location.href = '../../register/register.html';
+						return;
+					}
+
 					post('/webSc/favorite', {
 						userId: localStorage.userId,
 						id: id,

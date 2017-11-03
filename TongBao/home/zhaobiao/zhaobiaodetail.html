@@ -291,8 +291,7 @@
 			<section class="invite">
 				<h3 class="border-b">招标详情</h3>
 				<div class="content">
-					<p>
-						{{content}}
+					<p v-html="content">
 					</p>
 				</div>
 			</section>
@@ -432,6 +431,11 @@
 		}, function(data) {
 			vm.isToudi = data.result;
 		})
+
+		post('/webUser/addBrowser', {
+			userId: localStorage.userId,
+			articleId: id
+		}, function(data) {})
 
 		post('/webZb/Zhaobiao', {
 			pageNo: 1,

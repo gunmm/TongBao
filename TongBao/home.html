@@ -230,7 +230,7 @@
 					<div class="aui-bar-tab-label">发布</div>
 				</div>
 				<div class="aui-bar-tab-item" tapmode>
-					<div id="xiaoxi_tip" class="aui-badge"></div>
+					<div v-if="xiaoxi" id="xiaoxi_tip" class="aui-badge">{{xiaoxi}}</div>
 					<i class="aui-iconfont aui-icon-comment"></i>
 					<div class="aui-bar-tab-label">消息</div>
 				</div>
@@ -285,6 +285,12 @@
 			vm.gylist = data.result;
 		})
 
+		post('/webUser/allNotReadMessage', {
+			userId: localStorage.userId
+		}, function(data) {
+			vm.xiaoxi = data.result;
+		})
+
 		var vm = new Vue({
 			el: '#app',
 			data: {
@@ -292,7 +298,8 @@
 				zplist: [],
 				qzlist: [],
 				zblist: [],
-				gylist: []
+				gylist: [],
+				xiaoxi: ''
 			},
 			methods: {
 
@@ -303,8 +310,6 @@
 		});
 
 		$(function() {
-			$('#xiaoxi_tip').hide();
-
 			$('router-link').click(function() {
 				window.location.href = $(this).attr("to");
 			});
@@ -321,9 +326,17 @@
 					window.location.replace("fabu.html")
 					break;
 				case 3:
+					if(!localStorage.userId) {
+						window.location.href = 'register/register.html';
+						return;
+					}
 					window.location.replace("message/xiaoxi.html")
 					break;
 				case 4:
+					if(!localStorage.userId) {
+						window.location.href = 'register/register.html';
+						return;
+					}
 					window.location.replace("wode.html")
 					break;
 			}

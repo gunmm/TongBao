@@ -1,4 +1,4 @@
-var ip = 'http://192.168.1.120:8080';
+var ip = 'http://192.168.0.90:8081';
 
 var vm = new Vue();
 
@@ -20,6 +20,13 @@ $(function() {
 			localStorage.avatar = data.result.touxiang;
 			//手机号
 			localStorage.phone = data.result.teletphone;
+		})
+	}
+
+	if(!localStorage.userId) {
+		wxAuthorization(window.location.href, function(data) {
+			console.log(data);
+			window.location.href = data.result;
 		})
 	}
 })
@@ -154,6 +161,7 @@ function getCity(callback) {
 		async: false,
 		data: {},
 		success: function(data) {
+			console.log(data)
 			vm.$dialog.loading.close();
 			if(data.result_code != 1) {
 				new Vue().$dialog.alert({
@@ -175,6 +183,10 @@ function getCity(callback) {
 			}
 			for(var i = 0; i < province.length; i++) {
 				var array = [];
+				array.push({
+					'name': '全' + province[i].name,
+					'id': province[i].id
+				});
 				for(var j = 0; j < city.length; j++) {
 					if(city[j].parentId == i + 1) {
 						array.push(city[j]);
@@ -263,4 +275,12 @@ function getUserInfo(userId, callback) {
 			callback(data);
 		})
 	}
+}
+
+function wxAuthorization(url, callback) {
+	post('/weixinCon/getAuthorizationUrl', {
+		callbackUrl: url
+	}, function(data) {
+		callback(data);
+	})
 }

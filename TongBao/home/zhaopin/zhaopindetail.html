@@ -95,8 +95,8 @@
 			<section class="collec border-b">
 				<ul class="overflow-h mb-1">
 					<li>更新：<span>{{gengxin}}</span></li>
-					<li>收藏：<span>{{liulan}}次</span></li>
-					<li>浏览：<span>{{shoucang}}人</span></li>
+					<li>收藏：<span>{{shoucang}}次</span></li>
+					<li>浏览：<span>{{liulan}}人</span></li>
 				</ul>
 			</section>
 			<div class="div1"></div>
@@ -111,8 +111,7 @@
 				<h3 class="border-b mt-15">职位描述</h3>
 				<div class="content">
 					<!--<p>岗位职责：</p>-->
-					<p>
-						{{zhiweimiaoshu}}
+					<p v-html="zhiweimiaoshu">
 					</p>
 				</div>
 			</section>
@@ -299,6 +298,11 @@
 			vm.userId = d.userId;
 			vm.qiyetupian = d.jianjieUrl;
 		})
+
+		post('/webUser/addBrowser', {
+			userId: localStorage.userId,
+			articleId: id
+		}, function(data) {})
 
 		post('/webSc/isFavorite', {
 			id: id,

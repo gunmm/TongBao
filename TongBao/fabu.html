@@ -56,62 +56,75 @@
 			<div class="back-pic pos-a">
 				<img src="static/img/Nipic_19152711_20170117203201811000@2x.png">
 			</div>
+			<footer class="aui-bar aui-bar-tab" id="footer">
+				<div class="aui-bar-tab-item" tapmode>
+					<i class="aui-iconfont aui-icon-home"></i>
+					<div class="aui-bar-tab-label">首页</div>
+				</div>
+				<div class="aui-bar-tab-item" tapmode>
+					<i class="aui-iconfont aui-icon-edit"></i>
+					<div class="aui-bar-tab-label">发布</div>
+				</div>
+				<div class="aui-bar-tab-item" tapmode>
+					<div v-if="xiaoxi" id="xiaoxi_tip" class="aui-badge">{{xiaoxi}}</div>
+					<i class="aui-iconfont aui-icon-comment"></i>
+					<div class="aui-bar-tab-label">消息</div>
+				</div>
+				<div class="aui-bar-tab-item" tapmode>
+					<i class="aui-iconfont aui-icon-my"></i>
+					<div class="aui-bar-tab-label">我的</div>
+				</div>
+			</footer>
 		</div>
-
-		<footer class="aui-bar aui-bar-tab" id="footer">
-			<div class="aui-bar-tab-item" tapmode>
-				<i class="aui-iconfont aui-icon-home"></i>
-				<div class="aui-bar-tab-label">首页</div>
-			</div>
-			<div class="aui-bar-tab-item" tapmode>
-				<i class="aui-iconfont aui-icon-edit"></i>
-				<div class="aui-bar-tab-label">发布</div>
-			</div>
-			<div class="aui-bar-tab-item" tapmode>
-				<div id="xiaoxi_tip" class="aui-badge"></div>
-				<i class="aui-iconfont aui-icon-comment"></i>
-				<div class="aui-bar-tab-label">消息</div>
-			</div>
-			<div class="aui-bar-tab-item" tapmode>
-				<i class="aui-iconfont aui-icon-my"></i>
-				<div class="aui-bar-tab-label">我的</div>
-		</footer>
 	</body>
 
 	<script type="text/javascript">
-		$(function() {
-			$('#xiaoxi_tip').hide();
-			$('router-link').click(function() {
-				//				window.location.href = $(this).attr('to');
-			})
+		post('/webUser/allNotReadMessage', {
+			userId: localStorage.userId
+		}, function(data) {
+			vm.xiaoxi = data.result;
 		})
-		 apiready = function() {
-			api.parseTapmode();
-		}
+
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				xiaoxi: ''
+			}
+		})
+
 		var tab = new auiTab({
 				element: document.getElementById("footer"),
 				index: 2
 			},
 			function(ret) {
-				switch (ret.index) {
+				switch(ret.index) {
 					case 1:
 						window.location.replace("home.html")
 						break;
 					case 2:
 						break;
 					case 3:
+						if(!localStorage.userId) {
+							window.location.href = 'register/register.html';
+							return;
+						}
 						window.location.replace("message/xiaoxi.html")
 						break;
 					case 4:
+						if(!localStorage.userId) {
+							window.location.href = 'register/register.html';
+							return;
+						}
 						window.location.replace("wode.html")
 						break;
 				}
 			});
+
 		$('#fabuqiuzhi').click(function() {
-			if (!localStorage.userId) {
+			if(!localStorage.userId) {
 				window.location.href = "register/login.html";
 			} else {
-				if (localStorage.type == 2) {
+				if(localStorage.type == 2) {
 					alert("企业用户不能发布求职信息!");
 				} else {
 					window.location.href = "publish/jianli/jianli.html";
@@ -119,16 +132,16 @@
 			}
 		})
 		$('#fabuzhaopin').click(function() {
-			if (!localStorage.userId) {
+			if(!localStorage.userId) {
 				window.location.href = "register/login.html";
 			} else {
-				if (localStorage.type == 1) {
+				if(localStorage.type == 1) {
 					alert("个人用户不能发布招聘信息!");
 				} else {
-					if (localStorage.registerState == 0) {
+					if(localStorage.registerState == 0) {
 						window.location.href = "register/company.html";
 					} else {
-						if (localStorage.expireState == 0) {
+						if(localStorage.expireState == 0) {
 							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 						} else {
 							window.location.href = "publish/fabuzhaopin.html";
@@ -137,17 +150,17 @@
 				}
 			}
 		})
-		 $('#fabuzhaobiao').click(function() {
-			if (!localStorage.userId) {
+		$('#fabuzhaobiao').click(function() {
+			if(!localStorage.userId) {
 				window.location.href = "register/login.html";
 			} else {
-				if (localStorage.type == 1) {
+				if(localStorage.type == 1) {
 					window.location.href = "publish/fabuzhaobiao.html";
 				} else {
-					if (localStorage.registerState == 0) {
+					if(localStorage.registerState == 0) {
 						window.location.href = "register/company.html";
 					} else {
-						if (localStorage.expireState == 0) {
+						if(localStorage.expireState == 0) {
 							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 						} else {
 							window.location.href = "publish/fabuzhaobiao.html";
@@ -156,17 +169,17 @@
 				}
 			}
 		})
-		 $('#fabugongying').click(function() {
-			if (!localStorage.userId) {
+		$('#fabugongying').click(function() {
+			if(!localStorage.userId) {
 				window.location.href = "register/login.html";
 			} else {
-				if (localStorage.type == 1) {
+				if(localStorage.type == 1) {
 					window.location.href = "publish/fabuzhaobiao.html";
 				} else {
-					if (localStorage.registerState == 0) {
+					if(localStorage.registerState == 0) {
 						window.location.href = "register/company.html";
 					} else {
-						if (localStorage.expireState == 0) {
+						if(localStorage.expireState == 0) {
 							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 						} else {
 							window.location.href = "publish/fabuzhaobiao.html";

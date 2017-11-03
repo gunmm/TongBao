@@ -19,6 +19,9 @@
 		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
 		<link rel="stylesheet" href="../css/mkui.css" />
 		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../static/css/chat.css" />
+		<link rel="stylesheet" href="../static/css/xiaoxi.css" />
+		<link rel="stylesheet" href="../static/css/common.css" />
 
 		<link rel="stylesheet" href="../css/aui.css" />
 
@@ -51,18 +54,24 @@
 			.m-toast p {
 				color: #FFFFFF;
 			}
+			
+			.chatbox {
+				max-width: 80%;
+			}
 		</style>
 	</head>
 
-	<body>
+	<body class="bg-f8f8f8">
 		<div id="app">
-			<section>
+			<section class="chat-list">
 				<ul id="chat">
 					<li v-for="item in chatlist" class="aui-chat">
 						<div class="aui-chat-header">{{item.strCreatedAt}}</div>
-						<div v-if="item.fromUid!=85" class="aui-chat-item aui-chat-left">
+						<div v-if="item.fromUid!=localStorage.userId" class="aui-chat-item aui-chat-left">
 							<div class="aui-chat-media" style="height: 2rem;">
-								<img style="height: 100%;" :src="item.toTouxiang?ip+item.toTouxiang:'../static/img/avatar_96x96.png'" />
+								<a :href="'cardgongying.html?id='+item.fromUid">
+									<img style="height: 2rem;" :src="item.toTouxiang?ip+item.toTouxiang:'../static/img/avatar_96x96.png'" />
+								</a>
 							</div>
 							<div class="aui-chat-inner">
 								<div class="aui-chat-content">
@@ -73,7 +82,9 @@
 						</div>
 						<div v-else class="aui-chat-item aui-chat-right">
 							<div class="aui-chat-media" style="height: 2rem;">
-								<img style="height: 100%;" :src="item.fromTouxiang?ip+item.fromTouxiang:'../static/img/avatar_96x96.png'" />
+								<a :href="'cardgongying.html?id='+item.fromUid">
+									<img style="height: 2rem;" :src="item.fromTouxiang?ip+item.fromTouxiang:'../static/img/avatar_96x96.png'" />
+								</a>
 							</div>
 							<div class="aui-chat-inner">
 								<div class="aui-chat-content">
@@ -102,18 +113,6 @@
 	<script type="text/javascript">
 		var qs = new QueryString();
 		var toId = parseInt(qs['id']);
-		toId = 1;
-
-		post('/webUser/myAllMessage', {
-			userId: 85,
-			toId: toId
-		}, function(data) {
-			vm.chatlist = data.result;
-
-			setTimeout(function() {
-				window.scrollTo(0, document.body.scrollHeight);
-			}, 500)
-		})
 
 		var vm = new Vue({
 			el: '#app',
@@ -122,12 +121,23 @@
 			}
 		})
 
-		function scrollToEnd() { //滚动到底部
-			var h = $('#chat').height() - $(window).height();
-			$('#chat').scrollTop(h);
-		}
-
 		$(function() {
+			if(!localStorage.userId) {
+				window.location.replace('../register/register.html');
+				return;
+			}
+
+			post('/webUser/myAllMessage', {
+				userId: localStorage.userId,
+				toId: toId
+			}, function(data) {
+				console.log(data)
+				vm.chatlist = data.result;
+				setTimeout(function() {
+					window.scrollTo(0, document.body.scrollHeight);
+				}, 500)
+			})
+
 			$('#send').click(function() {
 				var v = $('#in').val();
 				if(!v) {
@@ -136,11 +146,10 @@
 						mes: '内容不能为空',
 						timeout: 1000
 					})
-
-					return false;
+					return;
 				}
 				post('/webUser/mySendMessage', {
-					fromUid: 85,
+					fromUid: localStorage.userId,
 					toUid: toId,
 					messageContent: v
 				}, function(data) {

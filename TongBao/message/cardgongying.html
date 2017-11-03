@@ -286,7 +286,7 @@
 	<script>
 		var qs = new QueryString();
 		var id = parseInt(qs['id']);
-
+		console.log(id)
 		getUserInfo(id, function(data) {
 			console.log(data)
 			vm.userInfo = data.result;
