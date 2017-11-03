@@ -27,22 +27,30 @@
 	</head>
 
 	<body>
+		<script>
+			if (!localStorage.userId) {
+				window.location.href = "../../register/login.html";
+			}
+		</script>
 		<div id="app">
 			<section class="content-list  lh-24" style="padding-top: 2.25rem;">
 				<yd-infinitescroll :on-infinite="loadList">
 					<yd-list theme="4" slot="list">
-						<yd-list-item v-for="item in datalist" :href='item.url'>
+						<yd-list-item v-for="item in datalist" :href="'../../home/gongying/gongyingdetail.html?id='+item.id">
 							<p slot="title" class="f-16 "><span>{{item.title}}</span><span class="fr c-ec9d1d">{{item.price}}/{{item.unit}}</span></p>
 							<yd-list-other slot="other">
-								<h4 class="mt-10 f-14 overflow-h"><span class="fl">{{item.city}}</span><span class="ml-15">{{item.quantity}}{{item.unit}}</span><span class="fr time mr-8 ">{{item.created_at}}</span></h4>
-								<p class="recruit-pos f-14 mt-5 ">{{item.provider}}</p>
+								<h4 class="mt-10 f-14 overflow-h">
+									<span class="fl">{{item.cityName}}</span>
+									<span class="ml-15">{{item.quantity}}{{item.unit}}</span>
+									<span class="fr time mr-8 ">{{datetransform(item.updatedAt)}}</span></h4>
+								<p class="recruit-pos f-14 mt-5 ">{{item.contact}}</p>
 							</yd-list-other>
 						</yd-list-item>
 					</yd-list>
 					<!-- 数据全部加载完毕显示 -->
 					<span slot="doneTip" class="text-c mt-5 f-14">全部数据已加载完成</span>
 					<!-- 加载中提示 -->
-					<img slot="loadingTip" src="/static/img/loading10.svg" />
+					<img slot="loadingTip" src="../../static/img/loading10.svg" />
 				</yd-infinitescroll>
 			</section>
 			<section style="position: fixed; left: 0px; top: 0px; width: 100%;">
@@ -61,92 +69,59 @@
 	</body>
 
 	<script type="text/javascript">
-		//		post('查询列表', {},
-		//			function(data) {
-		//				console.log(data);
-		//			})
+		var state = window.history.state;
+		if (!state) {
+			state = '';
+			post('/webUser/subScribeSupplyInfo', {
+				"userId": localStorage.userId,
+				"pageNo": 1,
+				"pageSize": 10
+			}, function(data) {
+				console.log(data);
+				vm.datalist = data.result;
+			})
+		}
 		var vm = new Vue({
 			el: '#app',
 			data: {
+				page: 2,
+				pageSize: 10,
 				type: true,
-				datalist: [{
-						title: "111111",
-						price: "1000元",
-						unit: "吨",
-						city: "北京",
-						quantity: "800",
-						created_at: "2017-10-02",
-						provider: "北京市海淀区"
-					}, {
-						title: "111111",
-						price: "1000元",
-						unit: "吨",
-						city: "北京",
-						quantity: "800",
-						created_at: "2017-10-02",
-						provider: "北京市海淀区"
-					}, {
-						title: "111111",
-						price: "1000元",
-						unit: "吨",
-						city: "北京",
-						quantity: "800",
-						created_at: "2017-10-02",
-						provider: "北京市海淀区"
-					}, {
-						title: "111111",
-						price: "1000元",
-						unit: "吨",
-						city: "北京",
-						quantity: "800",
-						created_at: "2017-10-02",
-						provider: "北京市海淀区"
-					}, {
-						title: "111111",
-						price: "1000元",
-						unit: "吨",
-						city: "北京",
-						quantity: "800",
-						created_at: "2017-10-02",
-						provider: "北京市海淀区"
-					},
-					{
-						title: "111111",
-						price: "1000元",
-						unit: "吨",
-						city: "北京",
-						quantity: "800",
-						created_at: "2017-10-02",
-						provider: "北京市海淀区"
-					},
-					{
-						title: "111111",
-						price: "1000元",
-						unit: "吨",
-						city: "北京",
-						quantity: "800",
-						created_at: "2017-10-02",
-						provider: "北京市海淀区"
-					},
-					{
-						title: "111111",
-						price: "1000元",
-						unit: "吨",
-						city: "北京",
-						quantity: "800",
-						created_at: "2017-10-02",
-						provider: "北京市海淀区"
-					}
-				]
+				datalist: state.items
 			},
 			methods: {
 				loadList: function() {
-
+					if (state) {
+						if (state.page) {
+							vm.page = state.page;
+						}
+					}
+					post('/webUser/subScribeSupplyInfo', {
+						pageNo: vm.page,
+						pageSize: vm.pageSize,
+						userId: localStorage.userId
+					}, function(data) {
+						_list = data.result;
+						if (vm.page == 1) {
+							vm.datalist = _list;
+						} else {
+							vm.datalist = vm.datalist.concat(_list);
+						}
+						window.history.pushState({
+							items: vm.datalist,
+							page: vm.page += 1
+						}, "", "gongying.html");
+						if (vm.page > 1 && _list.length < vm.pageSize) {
+							window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
+							return;
+						}
+						window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
+						vm.page++;
+					})
 				}
 			}
 		})
-
-		if(localStorage.type == 1) {
+		if (localStorage.type == 1) {
 			console.log(localStorage.type);
 			vm.type = true;
 		} else {
@@ -158,6 +133,32 @@
 		}, function(ret) {
 			window.location.replace("../dingyue/" + ret.dom.id + ".html")
 		});
+
+		function datetransform(e) {
+			var pattern = "yyyy-MM-dd";
+			var s = new Date(e);
+			return s.format(pattern);
+		}
+		Date.prototype.format = function(format) {
+			var o = {
+				"M+": this.getMonth() + 1,
+				"d+": this.getDate(),
+				"h+": this.getHours(),
+				"m+": this.getMinutes(),
+				"s+": this.getSeconds(),
+				"q+": Math.floor((this.getMonth() + 3) / 3),
+				"S": this.getMilliseconds()
+			}
+			if (/(y+)/.test(format)) {
+				format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			}
+			for (var k in o) {
+				if (new RegExp("(" + k + ")").test(format)) {
+					format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+				}
+			}
+			return format;
+		}
 	</script>
 
 </html>

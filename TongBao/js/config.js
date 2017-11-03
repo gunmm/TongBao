@@ -3,7 +3,7 @@ var ip = 'http://192.168.0.90:8081';
 var vm = new Vue();
 
 $(function() {
-	localStorage.userId = 85;
+	localStorage.userId = 814;
 	if(localStorage.userId && !localStorage.type && !localStorage.companyname) {
 		post('/webUser/findUserMessage', {
 			userId: localStorage.userId
@@ -263,7 +263,7 @@ function getClassifyTable(async, classType, callback) {
 }
 
 /**
- * 获取用户信息 
+ * 获取用户信息
  * @param {Object} userId
  * @param {Object} callback
  */
