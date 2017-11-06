@@ -29,19 +29,16 @@
 
 	<body>
 		<script>
-			localStorage.userId = 85;
-			if(localStorage.userId) {
-				getUserInfo(localStorage.userId, function(data) {
-					//1:个人 	2:企业
-					localStorage.type = data.result.type;
-					//0:未填写企业资料	1:已提交企业资料
-					localStorage.registerState = data.result.regist;
-					//0:企业待审核	1:企业已审核
-					localStorage.expireState = data.result.expire;
-
-					localStorage.companyname = data.result.orgName;
-				})
-			}
+			getUserInfo(localStorage.userId, function(data) {
+				//1:个人 	2:企业
+				localStorage.type = data.result.type;
+				//0:未填写企业资料	1:已提交企业资料
+				localStorage.registerState = data.result.regist;
+				//0:企业待审核	1:企业已审核
+				localStorage.expireState = data.result.expire;
+				localStorage.companyname = data.result.orgName;
+				localStorage.regStatus = data.result.regStatus;
+			})
 		</script>
 		<div id="app">
 			<div class="nav-height"></div>
@@ -99,34 +96,32 @@
 		}, function(data) {
 			vm.xiaoxi = data.result;
 		})
-
 		var vm = new Vue({
 			el: '#app',
 			data: {
 				xiaoxi: ''
 			}
 		})
-
 		var tab = new auiTab({
 				element: document.getElementById("footer"),
 				index: 2
 			},
 			function(ret) {
-				switch(ret.index) {
+				switch (ret.index) {
 					case 1:
 						window.location.replace("home.html")
 						break;
 					case 2:
 						break;
 					case 3:
-						if(!localStorage.userId) {
+						if (!localStorage.userId) {
 							window.location.href = 'register/register.html';
 							return;
 						}
 						window.location.replace("message/xiaoxi.html")
 						break;
 					case 4:
-						if(!localStorage.userId) {
+						if (!localStorage.userId) {
 							window.location.href = 'register/register.html';
 							return;
 						}
@@ -134,30 +129,28 @@
 						break;
 				}
 			});
-
 		$('#fabuqiuzhi').click(function() {
-			if(!localStorage.userId) {
-				window.location.href = "register/login.html";
+			if (localStorage.regStatus != 1) {
+				window.location.href = "register/register.html";
 			} else {
-				if(localStorage.type == 2) {
+				if (localStorage.type == 2) {
 					alert("企业用户不能发布求职信息!");
 				} else {
 					window.location.href = "publish/jianli/jianli.html";
 				}
 			}
 		})
-
-		$('#fabuzhaopin').click(function() {
-			if(!localStorage.userId) {
-				window.location.href = "register/login.html";
+		 $('#fabuzhaopin').click(function() {
+			if (localStorage.regStatus != 1) {
+				window.location.href = "register/register.html";
 			} else {
-				if(localStorage.type == 1) {
+				if (localStorage.type == 1) {
 					alert("个人用户不能发布招聘信息!");
 				} else {
-					if(localStorage.registerState == 0) {
+					if (localStorage.registerState == 0) {
 						window.location.href = "register/company.html";
 					} else {
-						if(localStorage.expireState == 0) {
+						if (localStorage.expireState == 0) {
 							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 						} else {
 							window.location.href = "publish/fabuzhaopin.html";
@@ -166,17 +159,17 @@
 				}
 			}
 		})
-		$('#fabuzhaobiao').click(function() {
-			if(!localStorage.userId) {
-				window.location.href = "register/login.html";
+		 $('#fabuzhaobiao').click(function() {
+			if (localStorage.regStatus != 1) {
+				window.location.href = "register/register.html";
 			} else {
-				if(localStorage.type == 1) {
+				if (localStorage.type == 1) {
 					window.location.href = "publish/fabuzhaobiao.html";
 				} else {
-					if(localStorage.registerState == 0) {
+					if (localStorage.registerState == 0) {
 						window.location.href = "register/company.html";
 					} else {
-						if(localStorage.expireState == 0) {
+						if (localStorage.expireState == 0) {
 							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 						} else {
 							window.location.href = "publish/fabuzhaobiao.html";
@@ -185,17 +178,17 @@
 				}
 			}
 		})
-		$('#fabugongying').click(function() {
-			if(!localStorage.userId) {
-				window.location.href = "register/login.html";
+		 $('#fabugongying').click(function() {
+			if (localStorage.regStatus != 1) {
+				window.location.href = "register/register.html";
 			} else {
-				if(localStorage.type == 1) {
+				if (localStorage.type == 1) {
 					window.location.href = "publish/fabuzhaobiao.html";
 				} else {
-					if(localStorage.registerState == 0) {
+					if (localStorage.registerState == 0) {
 						window.location.href = "register/company.html";
 					} else {
-						if(localStorage.expireState == 0) {
+						if (localStorage.expireState == 0) {
 							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 						} else {
 							window.location.href = "publish/fabuzhaobiao.html";
