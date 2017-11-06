@@ -4,7 +4,7 @@ var ip = 'http://www.cnsyear.cn';
 var vm = new Vue();
 
 $(function() {
-//	localStorage.userId = 838;
+	//		localStorage.userId = 838;
 
 	var urlStr = window.location.href;
 	if(urlStr.indexOf('userInfoJson=') > 0) {
@@ -36,6 +36,7 @@ function post(url, data, callback, callback1) {
 		traditional: true,
 		data: data,
 		success: function(data) {
+			log(url + "==>>" + JSON.stringify(data));
 			vm.$dialog.loading.close();
 			if(data.result_code != 1) {
 				new Vue().$dialog.alert({
@@ -44,7 +45,6 @@ function post(url, data, callback, callback1) {
 				return;
 			}
 			callback(data);
-			log(url + "==>>" + JSON.stringify(data));
 		},
 		error: function() {
 			vm.$dialog.loading.close();
@@ -152,7 +152,6 @@ function getCity(callback) {
 		async: false,
 		data: {},
 		success: function(data) {
-			console.log(data)
 			vm.$dialog.loading.close();
 			if(data.result_code != 1) {
 				new Vue().$dialog.alert({
