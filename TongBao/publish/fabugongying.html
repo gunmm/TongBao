@@ -401,7 +401,7 @@
 								"address": vm.address,
 								"contact": vm.contact,
 								"phone": vm.phone,
-								"content": vm.contact,
+								"content": vm.content,
 								"specificationArray": guigecanshu,
 								"imgBaseArray": vm.productpic
 							}
@@ -420,7 +420,7 @@
 								"address": vm.address,
 								"contact": vm.contact,
 								"phone": vm.phone,
-								"content": vm.contact,
+								"content": vm.content,
 								"specificationArray": guigecanshu,
 								"imgBaseArray": vm.productpic
 							}
@@ -430,7 +430,7 @@
 								if (data.result_code == 1) {
 									console.log(data);
 									alert("发布成功！");
-									window.location.href = "../home/zhaobiao/zhaobiaodetail.html?id=" + data.result.publishId + "&isgy=isgy";
+									window.location.href = "../home/gongying/gongyingdetail.html?id=" + data.result.publishId + "&isgy=isgy";
 								} else {
 									alert("发布失败，请重试！");
 								}

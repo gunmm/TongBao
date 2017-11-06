@@ -284,6 +284,7 @@
 						$("input[name='specification']").each(function(index) {
 							guigecanshu.push(this.value);
 						});
+						console.log(guigecanshu);
 						if (!checkEndAt() || !checkTel() || !checkint || !checkfushu()) {
 							return false;
 						}
@@ -353,7 +354,7 @@
 								"address": vm.address,
 								"contact": vm.contact,
 								"phone": vm.phone,
-								"content": vm.contact,
+								"content": vm.content,
 								"specificationArray": guigecanshu
 							}
 						} else {
@@ -371,7 +372,7 @@
 								"address": vm.address,
 								"contact": vm.contact,
 								"phone": vm.phone,
-								"content": vm.contact,
+								"content": vm.content,
 								"specificationArray": guigecanshu
 							}
 						}
