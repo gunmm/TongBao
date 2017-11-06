@@ -244,6 +244,11 @@
 
 	<script type="text/javascript" src="js/config.js"></script>
 	<script type="text/javascript">
+		var userInfo = '';
+		getUserInfo(localStorage.userId, function(data) {
+			userInfo = data.result;
+		})
+
 		var imglist = [];
 		post('/webLb/Carousel', {}, function(data) {
 			imglist = data.result;
@@ -326,14 +331,14 @@
 					window.location.replace("fabu.html")
 					break;
 				case 3:
-					if(!localStorage.userId) {
+					if(userInfo.regStatus != 1) {
 						window.location.href = 'register/register.html';
 						return;
 					}
 					window.location.replace("message/xiaoxi.html")
 					break;
 				case 4:
-					if(!localStorage.userId) {
+					if(userInfo.regStatus != 1) {
 						window.location.href = 'register/register.html';
 						return;
 					}

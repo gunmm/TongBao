@@ -303,23 +303,21 @@
 
 	<script type="text/javascript" src="js/config.js"></script>
 	<script type="text/javascript">
-		$(function() {
-			if(!localStorage.userId) {
+		getUserInfo(localStorage.userId, function(data) {
+			vm.userInfo = data.result;
+
+			if(data.result.regStatus != 1) {
 				window.location.replace('register/register.html');
 				return;
 			}
 
 			$('#app').show();
+		})
 
-			getUserInfo(localStorage.userId, function(data) {
-				vm.userInfo = data.result;
-			})
-
-			post('/webUser/allNotReadMessage', {
-				userId: localStorage.userId
-			}, function(data) {
-				vm.xiaoxi = data.result;
-			})
+		post('/webUser/allNotReadMessage', {
+			userId: localStorage.userId
+		}, function(data) {
+			vm.xiaoxi = data.result;
 		})
 
 		var vm = new Vue({

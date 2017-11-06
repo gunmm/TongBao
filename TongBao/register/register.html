@@ -126,14 +126,14 @@
 						});
 						return false;
 					}
-					//					if(vm.yanzhenma != vm.yanzhengmare) {
-					//						this.$dialog.toast({
-					//							mes: '验证码不正确',
-					//							icon: 'error',
-					//							timeout: 1500
-					//						});
-					//						return false;
-					//					}
+					if(vm.yanzhenma != vm.yanzhengmare) {
+						this.$dialog.toast({
+							mes: '验证码不正确',
+							icon: 'error',
+							timeout: 1500
+						});
+						return false;
+					}
 					if(vm.password == '') {
 						this.$dialog.toast({
 							mes: '密码不能为空',
@@ -159,7 +159,7 @@
 					}, function(data) {
 						//						localStorage.userId = data.result.userId;
 						if(type == 1) {
-							window.location.replace('../home.html');
+							window.location.replace(document.referrer);
 						} else {
 							window.location.replace('../register/company.html?name=register');
 						}

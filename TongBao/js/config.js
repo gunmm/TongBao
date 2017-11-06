@@ -1,25 +1,23 @@
-//var ip = 'http://www.cnsyear.cn';
-var ip = 'http://192.168.1.120:8080';
+var ip = 'http://www.cnsyear.cn';
+//var ip = 'http://192.168.1.120:8080';
 
 var vm = new Vue();
 
 $(function() {
-	localStorage.userId = 85;
+//	localStorage.userId = 838;
 
 	var urlStr = window.location.href;
 	if(urlStr.indexOf('userInfoJson=') > 0) {
 		var str = decodeURI(urlStr);
 		var userInfo = JSON.parse(str.split('userInfoJson=')[1]);
 		localStorage.userId = userInfo.userId;
-		console.log(userInfo);
 		return;
 	}
 
 	if(!localStorage.userId) {
-		//		wxAuthorization(window.location.href, function(data) {
-		//			console.log(data);
-		//			window.location.href = data.result;
-		//		})
+		wxAuthorization(window.location.href, function(data) {
+			window.location.href = data.result;
+		})
 	}
 })
 
@@ -46,6 +44,7 @@ function post(url, data, callback, callback1) {
 				return;
 			}
 			callback(data);
+			log(url + "==>>" + JSON.stringify(data));
 		},
 		error: function() {
 			vm.$dialog.loading.close();
@@ -275,4 +274,10 @@ function wxAuthorization(url, callback) {
 	}, function(data) {
 		callback(data);
 	})
+}
+
+function log(str) {
+	if(true) {
+		console.log(str);
+	}
 }
