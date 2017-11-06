@@ -136,7 +136,7 @@
 				</div>
 			</section>
 			<div class="tousu pos-r">
-				<a :href="'tousu.html?id=' + id + '&name=' + name" charset="utf-8">
+				<a :href="userInfo.regStatus == 1?'../zhaopin/tousu.html?id=' + id + '&name=' + title:'../../register/register.html'" charset="utf-8">
 					<div class="tousu-main pos-a">
 						<i class="ico ico-tousu"></i>
 						<span>投诉</span>
@@ -187,7 +187,7 @@
 						</a>
 					</li>
 					<li class="second">
-						<a :href='"../../message/chat_detail.html?id="+userId'>
+						<a :href='userInfo.regStatus == 1?"../../message/chat_detail.html?id="+userId:"../../register/register.html"'>
 							<img src="../../static/img/xiaoxi.png" alt="" />
 							<span>消息</span>
 						</a>
@@ -251,6 +251,12 @@
 	</script>-->
 
 	<script type="text/javascript">
+		var userInfo = '';
+		getUserInfo(localStorage.userId, function(data) {
+			userInfo = data.result;
+			vm.type = data.result.type;
+		})
+
 		/* 如果是分享跳转的链接显示我要发布按钮*/
 		var urlStr = window.location.href;
 		if((urlStr.indexOf('from=singlemessage')) > 0 ||
@@ -362,6 +368,11 @@
 			},
 			methods: {
 				favourite: function() {
+					if(userInfo.regStatus != 1) {
+						window.location.href = '../../register/register.html';
+						return;
+					}
+
 					post('/webSc/favorite', {
 						userId: localStorage.userId,
 						id: id,

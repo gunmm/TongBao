@@ -149,7 +149,7 @@
 			</section>
 			<!--投诉-->
 			<div class="tousu pos-r">
-				<a :href="'../zhaopin/tousu.html?id=' + id + '&name=' + name">
+				<a :href="userInfo.regStatus == 1?'../zhaopin/tousu.html?id=' + id + '&name=' + title:'../../register/register.html'">
 					<div class="tousu-main pos-a">
 						<i class="ico ico-tousu"></i>
 						<span>投诉</span>
@@ -205,7 +205,7 @@
 						</a>
 					</li>
 					<li class="second">
-						<a :href="'../../message/chat_detail.html?id='+userId">
+						<a :href='userInfo.regStatus == 1?"../../message/chat_detail.html?id="+userId:"../../register/register.html"'>
 							<img src="../../static/img/xiaoxi.png" alt="" />
 							<span>消息</span>
 						</a>
@@ -234,6 +234,12 @@
 
 	<script type="text/javascript" src="../../js/config.js"></script>
 	<script type="text/javascript">
+		var userInfo = '';
+		getUserInfo(localStorage.userId, function(data) {
+			userInfo = data.result;
+			vm.type = data.result.type;
+		})
+
 		/* 如果是分享跳转的链接显示我要发布按钮*/
 		var urlStr = window.location.href;
 		if((urlStr.indexOf('from=singlemessage')) > 0 ||
@@ -249,7 +255,6 @@
 		post('/webQz/QiuzhiById', {
 			id: id
 		}, function(data) {
-			console.log(data)
 			var d = data.result;
 			if(d.showfullname == 1) {
 				vm.name = d.name;
@@ -282,34 +287,28 @@
 			vm.userId = d.userId;
 		})
 
-		if(localStorage.userId) {
-			post('/webSc/isFavorite', {
-				id: id,
-				userId: localStorage.userId
-			}, function(data) {
-				vm.isShoucang = data.result;
-				if(data.result) {
-					$('.on').css('color', '#ec9d1d');
-					$('.on').html('取消');
-				}
-			})
+		post('/webSc/isFavorite', {
+			id: id,
+			userId: localStorage.userId
+		}, function(data) {
+			vm.isShoucang = data.result;
+			if(data.result) {
+				$('.on').css('color', '#ec9d1d');
+				$('.on').html('取消');
+			}
+		})
 
-			post('/webQz/isInterview', {
-				id: id,
-				userId: localStorage.userId
-			}, function(data) {
-				vm.isToudi = data.result;
-			})
+		post('/webQz/isInterview', {
+			id: id,
+			userId: localStorage.userId
+		}, function(data) {
+			vm.isToudi = data.result;
+		})
 
-			getUserInfo(localStorage.userId, function(data) {
-				vm.type = data.result.type;
-			})
-
-			post('/webUser/addBrowser', {
-				userId: localStorage.userId,
-				articleId: id
-			}, function(data) {})
-		}
+		post('/webUser/addBrowser', {
+			userId: localStorage.userId,
+			articleId: id
+		}, function(data) {})
 
 		post('/webQz/Qiuzhi', {
 			pageNo: 1,
@@ -353,7 +352,7 @@
 			},
 			methods: {
 				favouriteClick: function() {
-					if(!localStorage.userId) {
+					if(userInfo.regStatus != 1) {
 						window.location.href = '../../register/register.html';
 						return;
 					}

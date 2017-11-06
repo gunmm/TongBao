@@ -57,6 +57,11 @@
 
 		<script type="text/javascript" src="../../js/config.js"></script>
 		<script type="text/javascript">
+			var userInfo = '';
+			getUserInfo(localStorage.userId, function(data) {
+				userInfo = data.result;
+			})
+
 			var qs = new QueryString();
 			var id = parseInt(qs['id']);
 
@@ -106,6 +111,11 @@
 				},
 				methods: {
 					favourite: function() {
+						if(userInfo.regStatus != 1) {
+							window.location.href = '../../register/register.html';
+							return;
+						}
+
 						post('/webSc/favorite', {
 							userId: localStorage.userId,
 							id: id,

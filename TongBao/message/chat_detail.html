@@ -122,11 +122,6 @@
 		})
 
 		$(function() {
-			if(!localStorage.userId) {
-				window.location.replace('../register/register.html');
-				return;
-			}
-
 			post('/webUser/myAllMessage', {
 				userId: localStorage.userId,
 				toId: toId

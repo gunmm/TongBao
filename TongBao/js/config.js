@@ -1,33 +1,25 @@
-var ip = 'http://192.168.0.90:8081';
+//var ip = 'http://www.cnsyear.cn';
+var ip = 'http://192.168.1.120:8080';
 
 var vm = new Vue();
 
 $(function() {
-	localStorage.userId = 814;
-	if(localStorage.userId && !localStorage.type && !localStorage.companyname) {
-		post('/webUser/findUserMessage', {
-			userId: localStorage.userId
-		}, function(data) {
-			//1:个人 	2:企业
-			localStorage.type = data.result.type;
-			//0:未填写企业资料	1:已提交企业资料
-			localStorage.registerState = data.result.regist;
-			//0:企业待审核	1:企业已审核
-			localStorage.expireState = data.result.expire;
-			//企业名称|个人昵称
-			localStorage.companyname = data.result.orgName;
-			//头像
-			localStorage.avatar = data.result.touxiang;
-			//手机号
-			localStorage.phone = data.result.teletphone;
-		})
+	localStorage.userId = 85;
+
+	var urlStr = window.location.href;
+	if(urlStr.indexOf('userInfoJson=') > 0) {
+		var str = decodeURI(urlStr);
+		var userInfo = JSON.parse(str.split('userInfoJson=')[1]);
+		localStorage.userId = userInfo.userId;
+		console.log(userInfo);
+		return;
 	}
 
 	if(!localStorage.userId) {
-		wxAuthorization(window.location.href, function(data) {
-			console.log(data);
-			window.location.href = data.result;
-		})
+		//		wxAuthorization(window.location.href, function(data) {
+		//			console.log(data);
+		//			window.location.href = data.result;
+		//		})
 	}
 })
 
