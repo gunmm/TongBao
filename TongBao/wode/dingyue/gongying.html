@@ -28,9 +28,11 @@
 
 	<body>
 		<script>
-			if (!localStorage.userId) {
-				window.location.href = "../../register/login.html";
-			}
+			getUserInfo(localStorage.userId, function(data) {
+				if (data.result.regStatus != 1) {
+					window.location.href = "../../register/register.html";
+				}
+			})
 		</script>
 		<div id="app">
 			<section class="content-list  lh-24" style="padding-top: 2.25rem;">
