@@ -70,9 +70,8 @@
 			pageNo: 1,
 			pageSize: 10,
 			messageType: 5,
-			userId: 85
+			userId: localStorage.userId
 		}, function(data) {
-			console.log(data)
 			vm.datalist = data.result;
 		})
 
@@ -90,7 +89,7 @@
 						pageNo: vm.pageNo,
 						pageSize: vm.pageSize,
 						messageType: 5,
-						userId: 85
+						userId: localStorage.userId
 					}, function(data) {
 						_list = data.result;
 						vm.datalist = vm.datalist.concat(_list);
