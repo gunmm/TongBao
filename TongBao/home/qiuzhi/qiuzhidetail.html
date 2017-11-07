@@ -239,7 +239,6 @@
 			userInfo = data.result;
 			vm.type = data.result.type;
 		})
-
 		/* 如果是分享跳转的链接显示我要发布按钮*/
 		var urlStr = window.location.href;
 		if((urlStr.indexOf('from=singlemessage')) > 0 ||
@@ -248,10 +247,9 @@
 			$('.fabuDetail').css('display', 'block');
 			$('.understandMore').css('display', 'block');
 		}
-
 		var qs = new QueryString();
 		var id = parseInt(qs['id']);
-
+		localStorage.qiuzhisign = 1;
 		var xuelis;
 		getDicTable(true, "003", function(data) {
 			xuelis = data.result;
@@ -299,7 +297,6 @@
 				}
 			}
 		}
-
 		post('/webSc/isFavorite', {
 			id: id,
 			userId: localStorage.userId
@@ -310,26 +307,22 @@
 				$('.on').html('取消');
 			}
 		})
-
 		post('/webQz/isInterview', {
 			id: id,
 			userId: localStorage.userId
 		}, function(data) {
 			vm.isToudi = data.result;
 		})
-
 		post('/webUser/addBrowser', {
 			userId: localStorage.userId,
 			articleId: id
 		}, function(data) {})
-
 		post('/webQz/Qiuzhi', {
 			pageNo: 1,
 			pageSize: 2
 		}, function(data) {
 			vm.zuixinzhaopins = data.result;
 		})
-
 		var vm = new Vue({
 			el: '#app',
 			data: {
@@ -369,7 +362,6 @@
 						window.location.href = '../../register/register.html';
 						return;
 					}
-
 					post('/webSc/favorite', {
 						userId: localStorage.userId,
 						id: id,
@@ -395,7 +387,6 @@
 						window.location.href = '../../register/register.html';
 						return;
 					}
-
 					post('/webQz/Interview', {
 						userId: localStorage.userId,
 						id: id,
@@ -412,27 +403,24 @@
 				}
 			},
 		})
-
 		$(function() {
 			/** 发布链接页面跳转*/
 			$(".fabuDetail").on('click', function() {
 				vm.$dialog.confirm({
 					mes: '<div style="text-align: center;">发布信息之前需关注<font color="red">“仝仝生态”</font></br>是否确认关注?</div>',
 					opts: [{
-							txt: '关注',
-							color: false,
-							callback: function() {
-								window.location.href = 'http://dwz.cn/6fbbCU';
-							}
-						},
-						{
-							txt: '我已关注',
-							color: false,
-							callback: function() {
-								window.location.href = '../../fabu.html';
-							}
+						txt: '关注',
+						color: false,
+						callback: function() {
+							window.location.href = 'http://dwz.cn/6fbbCU';
 						}
-					]
+					}, {
+						txt: '我已关注',
+						color: false,
+						callback: function() {
+							window.location.href = '../../fabu.html';
+						}
+					}]
 				});
 			});
 		})

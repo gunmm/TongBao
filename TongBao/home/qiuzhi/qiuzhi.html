@@ -252,6 +252,15 @@
 		})
 
 		var state = window.history.state;
+		if (localStorage.qiuzhisign) {
+				if (localStorage.qiuzhisign == 1) {
+					localStorage.qiuzhisign = 0;
+				}else{
+					state = null;
+				}
+			}else{
+				state = null;
+			}
 		if(!state) {
 			state = '';
 			post('/webQz/Qiuzhi', {

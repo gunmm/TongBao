@@ -420,6 +420,15 @@
 			})
 
 			var state = window.history.state;
+			if (localStorage.zhaopinsign) {
+				if (localStorage.zhaopinsign == 1) {
+					localStorage.zhaopinsign = 0;
+				}else{
+					state = null;
+				}
+			}else{
+				state = null;
+			}
 			if(!state) {
 				state = '';
 				post('/webZp/Zhaopin', {

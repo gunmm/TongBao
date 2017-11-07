@@ -189,6 +189,15 @@
 		})
 
 		var state = window.history.state;
+		if (localStorage.gongyingsign) {
+				if (localStorage.gongyingsign == 1) {
+					localStorage.gongyingsign = 0;
+				}else{
+					state = null;
+				}
+			}else{
+				state = null;
+			}
 		if(!state) {
 			state = '';
 			post('/webGy/Gongying', {

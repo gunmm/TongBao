@@ -143,12 +143,10 @@
 			var job;
 			var jobList;
 			var xinzi;
-
 			getCity(function(p, c) {
 				this.province = p;
 				this.city = c;
 			})
-
 			post1('/webItem/getCategoryList', false, {
 				type: 'zhaobiao'
 			}, function(data) {
@@ -184,12 +182,19 @@
 				this.job = a;
 				this.jobList = bM;
 			})
-
 			getDicTable(false, '013', function(data) {
 				this.xinzi = data.result;
 			})
-
 			var state = window.history.state;
+			if(localStorage.zhaobiaosign) {
+				if(localStorage.zhaobiaosign == 1) {
+					localStorage.zhaobiaosign = 0;
+				} else {
+					state = null;
+				}
+			} else {
+				state = null;
+			}
 			if(!state) {
 				state = '';
 				post('/webZb/Zhaobiao', {
@@ -200,7 +205,6 @@
 					vm.datalist = data.result;
 				})
 			}
-
 			var vm = new Vue({
 				el: "#app",
 				data: {
@@ -260,12 +264,10 @@
 							} else {
 								vm.datalist = vm.datalist.concat(_list);
 							}
-
 							window.history.pushState({
 								items: vm.datalist,
 								page: vm.page += 1
 							}, "", "zhaobiao.html");
-
 							if(vm.page > 2 && _list.length < vm.pageSize) {
 								window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
 								return;
@@ -339,7 +341,6 @@
 				window.addEventListener("popstate", function(e) {
 					window.location.replace('../../home.html');
 				}, false);
-
 				$('.tab-nav li').on("click", function() {
 					$('.tab-nav li span').removeClass('current');
 					$(this).find('span').addClass('current');
@@ -354,7 +355,6 @@
 						$(this).find('span').removeClass('current')
 					}
 					window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
-
 					//$(this).children('i').removeClass('ico-bottom2').addClass('ico-bottom1');
 				});
 				$('.province li').click(function() {
@@ -378,7 +378,6 @@
 					$('.zhiwei span').text($(this).text());
 					$('.zhiwei span').removeClass('current');
 					$('.zhiwei').children('i').removeClass('ico-bottom2').addClass('ico-bottom');
-
 					$('.tab-panl').addClass('none')
 					$('.job-list li ').removeClass('current');
 					$(this).addClass('current')
@@ -392,9 +391,7 @@
 					$('.quanbu span').text($(this).text());
 					$('.quanbu span').removeClass('current');
 					$('.tab-panl').addClass('none')
-
 				});
-
 				$("#keyword").on('keypress', function(e) {
 					var keycode = e.keyCode;
 					var searchName = $(this).val();

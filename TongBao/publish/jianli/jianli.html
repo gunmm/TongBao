@@ -33,10 +33,9 @@
 				"userId": localStorage.userId,
 			}, function(data) {
 				console.log(data);
-				if(data.result.touxiang){
+				if (data.result.touxiang) {
 					$('#avatar').attr('src', ip + data.result.touxiang);
 				}
-				
 				if (data.result.name) {
 					vm.hasbaseinfo = true;
 					vm.name = data.result.name;
@@ -284,7 +283,7 @@
 				hasworkinfo: true,
 				haseduinfo: false,
 				hasexpectinfo: false,
-				showqiuzhi: true,
+				showqiuzhi: false,
 				showfullname: false,
 				showcompanyname: false,
 				name: "",
@@ -307,7 +306,7 @@
 			methods: {
 				preview() {
 					if (preview == 1) {
-						window.location.href = "../../home/qiuzhi/qiuzhidetail.html?id="+localStorage.publishId;
+						window.location.href = "../../home/qiuzhi/qiuzhidetail.html?id=" + localStorage.publishId;
 					} else {
 						vm.$dialog.toast({
 							mes: "信息填写完整才可预览和被企业查看!",
@@ -320,15 +319,15 @@
 		})
 		 $(function() {
 			$('.show').click(function() {
-				var sildOff;
-				if (vm.showqiuzhi) {
-					sildOff = 1;
-					vm.showqiuzhi = false;
-				}else{
-					sildOff = 0;
-					vm.showqiuzhi = true;
-				}
 				if (preview > 0) {
+					var sildOff;
+					if (vm.showqiuzhi) {
+						sildOff = 1;
+						vm.showqiuzhi = false;
+					} else {
+						sildOff = 0;
+						vm.showqiuzhi = true;
+					}
 					//					sildOff = sildOff == 1 ? 0 : 1;
 					post('/webQz/showExhibitionJob', {
 						"showStatus": sildOff,
@@ -464,14 +463,13 @@
 				};
 			}
 			post('/webQz/editPersonalBasicInfo', dataa,
-					function(data) {
-						if (data.result_code == '1') {
-							alert("操作成功!");
-						} else {
-							alert("发布失败，请重试！");
-						}
-					})
-				
+				function(data) {
+					if (data.result_code == '1') {
+						alert("操作成功!");
+					} else {
+						alert("发布失败，请重试！");
+					}
+				})
 		}
 	</script>
 
