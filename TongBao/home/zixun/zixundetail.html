@@ -44,7 +44,7 @@
 					<li class="fl border-r" @click="zan(0)">
 						<i class="zan ico" v-bind:class="[isZan?'ico-zan2':'ico-zan']"></i>
 						<span id="zannum" class="active" v-bind:style="{color:isZan?'#097ed8':'#717171'}">
-                    <em id="total">{{upTotal}}</em>
+                    <em id="total">{{upTotal?upTotal:0}}</em>
                 	</span>
 					</li>
 					<li class="fl" @click="favourite()">

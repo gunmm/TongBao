@@ -255,41 +255,41 @@
 		var xuelis;
 		getDicTable(true, "003", function(data) {
 			xuelis = data.result;
-		})
 
-		post('/webQz/QiuzhiById', {
-			id: id
-		}, function(data) {
-			var d = data.result;
-			if(d.showfullname == 1) {
-				vm.name = d.name;
-			} else {
-				vm.name = hideStr(d.name);
-			};
-			vm.avatar = d.touxiang;
-			vm.updated_at = d.gengxin;
-			vm.favourite = d.shoucang;
-			vm.view = d.liulan;
-			vm.phone = d.phone;
-			vm.email = d.email;
-			vm.age = d.age;
-			vm.xueli = d.educational;
-			vm.jingyan = d.exprience;
-			vm.targetcity = d.targetcity;
-			vm.zhicheng = d.profession;
-			vm.evaluation = strReplace(d.evaluation);
-			vm.worklist = JSON.parse(d.experience);
-			vm.studylist = JSON.parse(d.education);
-			vm.gongzuofangshi = d.operationMode;
-			vm.onduty = d.onduty;
-			vm.jointime = d.jointime;
-			vm.gangwei = d.gangwei;
-			vm.city = d.city;
-			vm.targetprovince = d.targetprovince;
-			vm.targetxinzi = d.targetSalary;
-			vm.gender = d.sex == '男';
-			vm.showcompanyname = d.showcompanyname == 1;
-			vm.userId = d.userId;
+			post('/webQz/QiuzhiById', {
+				id: id
+			}, function(data) {
+				var d = data.result;
+				if(d.showfullname == 1) {
+					vm.name = d.name;
+				} else {
+					vm.name = hideStr(d.name);
+				};
+				vm.avatar = d.touxiang;
+				vm.updated_at = d.gengxin;
+				vm.favourite = d.shoucang;
+				vm.view = d.liulan;
+				vm.phone = d.phone;
+				vm.email = d.email;
+				vm.age = d.age;
+				vm.xueli = d.educational;
+				vm.jingyan = d.exprience;
+				vm.targetcity = d.targetcity;
+				vm.zhicheng = d.profession;
+				vm.evaluation = strReplace(d.evaluation);
+				vm.worklist = JSON.parse(d.experience);
+				vm.studylist = JSON.parse(d.education);
+				vm.gongzuofangshi = d.operationMode;
+				vm.onduty = d.onduty;
+				vm.jointime = d.jointime;
+				vm.gangwei = d.gangwei;
+				vm.city = d.city;
+				vm.targetprovince = d.targetprovince;
+				vm.targetxinzi = d.targetSalary;
+				vm.gender = d.sex == '男';
+				vm.showcompanyname = d.showcompanyname == 1;
+				vm.userId = d.userId;
+			})
 		})
 
 		function getXueli(id) {

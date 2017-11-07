@@ -206,8 +206,10 @@
 				<!--搜索区域-->
 				<section class="w-serach pos-f  pl-10 pr-10 bg-ff5252 overflow-h">
 					<span class="search-text fl">
-						<i class="ico ico-shouye"></i>
-						<p><a href="../../home.html">首页</a></p>
+						<a href="javascript:shouye()">
+							<i class="ico ico-shouye"></i>
+							<p>首页</p>
+						</a>
 					</span>
 					<form action="">
 						<div class="m-serah pos-r">
@@ -340,7 +342,7 @@
 							</p>
 							<yd-list-other slot="other">
 								<h4 class="mt-10 f-14 overflow-h">
-                            <span class="fl">{{item.orgName}}</span>
+                            <span class="fl" style="width: 70%;">{{item.orgName}}</span>
                             <span class="fr time ">{{item.updatedAt}}</span>
                         </h4>
 								<p class="recruit-pos f-14 mt-5 pos-name">
@@ -378,7 +380,7 @@
 				var jobM = {};
 				for(var i = 0; i < list.length; i++) {
 					var obj = list[i];
-					if(!obj.module) {
+					if(!obj.pid) {
 						job.push(obj);
 					} else {
 						jobList.push(obj);
@@ -387,7 +389,7 @@
 				for(var i = 0; i < job.length; i++) {
 					var array = [];
 					for(var j = 0; j < jobList.length; j++) {
-						if(job[i].id == jobList[j].module) {
+						if(job[i].id == jobList[j].pid) {
 							array.push(jobList[j]);
 							jobM['' + job[i].id] = array;
 						}
@@ -550,6 +552,10 @@
 					$("#app").show();
 				}
 			});
+
+			function shouye() {
+				window.location.replace('../../home.html');
+			}
 
 			$(function() {
 				window.addEventListener("popstate", function(e) {

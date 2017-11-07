@@ -32,8 +32,10 @@
 				<!--搜索区域-->
 				<section class="w-serach pos-f  pl-10 pr-10 bg-ff5252 overflow-h">
 					<span class="search-text fl">
-						<i class="ico ico-shouye"></i>
-						<p><a href="../../home.html">首页</a></p>
+						<a href="javascript:shouye()">
+							<i class="ico ico-shouye"></i>
+							<p>首页</p>
+						</a>
 					</span>
 					<form action="">
 						<div class="m-serah pos-r">
@@ -319,6 +321,10 @@
 			}
 
 		});
+
+		function shouye() {
+			window.location.replace('../../home.html');
+		}
 
 		$(function() {
 			$('.tab-nav li').on("click", function() {
