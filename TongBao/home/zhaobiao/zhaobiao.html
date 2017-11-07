@@ -115,7 +115,7 @@
 						<yd-list-item v-for="item in datalist" :href='"zhaobiaodetail.html?id="+item.id'>
 							<p slot="title" class="f-16 ">
 								<span>{{item.title}}</span>
-								<span class="fr c-ec9d1d">{{item.price==''?'面议':item.price}}/{{item.unit}}</span>
+								<span class="fr c-ec9d1d">{{item.price==''?'面议':item.price+'元'}}/{{item.unit}}</span>
 							</p>
 							<yd-list-other slot="other">
 								<h4 class="mt-10 f-14 ">
@@ -238,7 +238,9 @@
 					loadList: function() {
 						if(state) {
 							if(state.page) {
-								vm.page = state.page;
+								if(vm.page != 1) {
+									vm.page = state.page;
+								}
 							}
 						}
 						post('/webZb/Zhaobiao', {
@@ -328,6 +330,10 @@
 			});
 
 			$(function() {
+				window.addEventListener("popstate", function(e) {
+					window.location.replace('../../home.html');
+				}, false);
+
 				$('.tab-nav li').on("click", function() {
 					$('.tab-nav li span').removeClass('current');
 					$(this).find('span').addClass('current');

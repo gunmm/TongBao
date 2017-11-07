@@ -1,10 +1,10 @@
-var ip = 'http://www.cnsyear.cn';
-//var ip = 'http://192.168.1.120:8080';
+//var ip = 'http://www.cnsyear.cn';
+var ip = 'http://192.168.1.120:8080';
 
 var vm = new Vue();
 
 $(function() {
-	//		localStorage.userId = 838;
+	localStorage.userId = 85;
 
 	var urlStr = window.location.href;
 	if(urlStr.indexOf('userInfoJson=') > 0) {

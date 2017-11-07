@@ -231,7 +231,9 @@
 				loadList: function() {
 					if(state) {
 						if(state.page) {
-							vm.page = state.page;
+							if(vm.page != 1) {
+								vm.page = state.page;
+							}
 						}
 					}
 					post('/webGy/Gongying', {

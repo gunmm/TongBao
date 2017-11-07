@@ -171,7 +171,7 @@
                             		<span class="fl">{{item.showfullname==1?item.orgName:hideStr(item.orgName)}}</span>
                             		<span class="ml-15">{{item.gender}}性</span>
                             		<span class="ml-10">{{item.age}}</span >
-                            		<span class="fr time mr-8 ">{{item.updatedAt}}</span>
+                            		<span class="fr time ">{{item.updatedAt}}</span>
                         		</h4>
 								<p class="recruit-pos f-14 mt-5 pos-name">
 									<span>{{item.city}}</span>
@@ -256,7 +256,6 @@
 				pageNo: 1,
 				pageSize: 10
 			}, function(data) {
-				console.log(data);
 				vm.datalist = data.result;
 			})
 		}
@@ -294,7 +293,9 @@
 				loadList: function() {
 					if(state) {
 						if(state.page) {
-							vm.page = state.page;
+							if(vm.page != 1) {
+								vm.page = state.page;
+							}
 						}
 					}
 					post('/webQz/Qiuzhi', {
@@ -310,7 +311,6 @@
 						age: vm.age,
 						gender: vm.gender,
 					}, function(data) {
-						console.log(data);
 						_list = data.result;
 						if(vm.page == 1) {
 							vm.datalist = _list;
@@ -384,6 +384,10 @@
 		});
 
 		$(function() {
+			window.addEventListener("popstate", function(e) {
+				window.location.replace('../../home.html');
+			}, false);
+
 			$('.tab-nav li').on("click", function() {
 				$('.tab-nav li span').removeClass('current');
 				$(this).find('span').addClass('current');

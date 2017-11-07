@@ -48,7 +48,7 @@
 
 	<body>
 		<div id="app" hidden>
-			<section v-if="!systemMessage">
+			<section v-if="!systemMessage&&chatMessage.length<1">
 				<div class="fail">
 					<div class="fail-pic">
 						<img src="../static/img/fabu-fail.png" alt="" />
@@ -56,7 +56,7 @@
 					<p>现在还没有收到消息哦</p>
 				</div>
 			</section>
-			<section v-else class="mesg overflow-h border-b">
+			<section v-if="systemMessage" class="mesg overflow-h border-b">
 				<div class="pic pos-r">
 					<a><img src="../static/img/Group@2x.png" /></a>
 					<i v-if="systemMessage.read==0" class="red"></i>
@@ -78,11 +78,11 @@
 				</div>
 				<div class="msg-right">
 					<p class="overflow-h">
-						<span class="fl" @click="chat(item.from_uid)">{{item.nickName}}</span>
+						<span class="fl" @click="chat(item.fromUid==localStorage.userId?item.toUid:item.fromUid)">{{item.nickName}}</span>
 						<span class="fr mr-8" onclick="deleteMessage(this)">删除</span>
 						<span class="fr">{{item.strCreatedAt}}</span>
 					</p>
-					<p class="msg-news" @click="chat(item.from_uid)">
+					<p class="msg-news" @click="chat(item.fromUid==localStorage.userId?item.toUid:item.fromUid)">
 						{{item.messageContent}}
 					</p>
 				</div>

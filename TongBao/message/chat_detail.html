@@ -114,6 +114,17 @@
 		var qs = new QueryString();
 		var toId = parseInt(qs['id']);
 
+		log(localStorage.userId + "==" + toId);
+		post('/webUser/myAllMessage', {
+			userId: localStorage.userId,
+			toId: toId
+		}, function(data) {
+			vm.chatlist = data.result;
+			setTimeout(function() {
+				window.scrollTo(0, document.body.scrollHeight);
+			}, 500)
+		})
+
 		var vm = new Vue({
 			el: '#app',
 			data: {
@@ -122,17 +133,6 @@
 		})
 
 		$(function() {
-			post('/webUser/myAllMessage', {
-				userId: localStorage.userId,
-				toId: toId
-			}, function(data) {
-				console.log(data)
-				vm.chatlist = data.result;
-				setTimeout(function() {
-					window.scrollTo(0, document.body.scrollHeight);
-				}, 500)
-			})
-
 			$('#send').click(function() {
 				var v = $('#in').val();
 				if(!v) {
