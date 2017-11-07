@@ -94,6 +94,16 @@
 	            </select><i class="ico ico-right1"></i></span>
 				</div>
 				<div class="zp-list overflow-h">
+					<span class="fl">最高学历</span>
+					<span class="fr zp-next select-btn">
+					<select v-model="xueli">
+						<option value="">不限</option>
+	                		<option v-for="item in xuelidic" :value="item.itemCode">{{item.itemName}}</option>
+	            		</select>
+						<i class="ico ico-right1"></i>
+					</span>
+				</div>
+				<div class="zp-list overflow-h">
 					<span class="fl">联系电话</span>
 					<span class="fr zp-next">
 					<input type="number" placeholder="请填写联系电话"  v-model="phone" onchange="checkTel()"/>
@@ -167,6 +177,18 @@
 				}
 			}
 		})
+		 //学历要求
+		getDicTable(true, "003", function(data) {
+			vm.xuelidic = data.result;
+			if (bigdata.educational) {
+				for (var i = 0; i < vm.xuelidic.length; i++) {
+					var obj = vm.xuelidic[i];
+					if (obj.itemName == bigdata.educational) {
+						vm.xueli = obj.itemCode;
+					}
+				}
+			}
+		})
 		var province;
 		var city;
 		getCity(function(p, c) {
@@ -187,6 +209,8 @@
 					gzjy: [],
 					zhicheng: '',
 					gzzc: [],
+					xuelidic:[],
+					xueli:'',
 					phone: this.phone,
 					email: this.email,
 					province: province,
@@ -249,12 +273,13 @@
 							"email": vm.email,
 							"province": $("#choosedprovince").val(),
 							"city": $("#choosedcity").val(),
-							"evaluation": vm.evaluation
+							"evaluation": vm.evaluation,
+							"educationalBackground":vm.xueli
 						}, function(data) {
 							console.log(data);
 							if (data.result_code == '1') {
 								alert("保存成功!");
-								window.location.href = "jianli.html";
+								window.history.back();
 							} else {
 								alert("发布失败，请重试！");
 							}

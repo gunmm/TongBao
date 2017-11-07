@@ -295,7 +295,7 @@
 							console.log(data);
 							if (data.result_code == '1') {
 								alert("订阅成功!");
-								window.location.href = "editdingyue.html";
+								window.history.back();
 							} else {
 								alert("订阅失败，请重试！");
 							}

@@ -162,7 +162,7 @@
 							console.log(data);
 							if (data.result_code == '1') {
 								alert("保存成功!");
-								window.location.href = "jianli.html";
+								window.history.back();
 							} else {
 								alert("发布失败，请重试！");
 							}
