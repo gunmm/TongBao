@@ -91,6 +91,7 @@
 	</body>
 
 	<script type="text/javascript">
+		
 		post('/webUser/allNotReadMessage', {
 			userId: localStorage.userId
 		}, function(data) {
@@ -107,21 +108,21 @@
 				index: 2
 			},
 			function(ret) {
-				switch(ret.index) {
+				switch (ret.index) {
 					case 1:
 						window.location.replace("home.html")
 						break;
 					case 2:
 						break;
 					case 3:
-						if(localStorage.regStatus != 1) {
+						if (localStorage.regStatus != 1) {
 							window.location.href = 'register/register.html';
 							return;
 						}
 						window.location.replace("message/xiaoxi.html")
 						break;
 					case 4:
-						if(localStorage.regStatus != 1) {
+						if (localStorage.regStatus != 1) {
 							window.location.href = 'register/register.html';
 							return;
 						}
@@ -130,27 +131,27 @@
 				}
 			});
 		$('#fabuqiuzhi').click(function() {
-			if(localStorage.regStatus != 1) {
+			if (localStorage.regStatus != 1) {
 				window.location.href = "register/register.html";
 			} else {
-				if(localStorage.type == 2) {
+				if (localStorage.type == 2) {
 					alert("企业用户不能发布求职信息!");
 				} else {
 					window.location.href = "publish/jianli/jianli.html";
 				}
 			}
 		})
-		$('#fabuzhaopin').click(function() {
-			if(localStorage.regStatus != 1) {
+		 $('#fabuzhaopin').click(function() {
+			if (localStorage.regStatus != 1) {
 				window.location.href = "register/register.html";
 			} else {
-				if(localStorage.type == 1) {
+				if (localStorage.type == 1) {
 					alert("个人用户不能发布招聘信息!");
 				} else {
-					if(localStorage.registerState == 0) {
+					if (localStorage.registerState == 0) {
 						window.location.href = "register/company.html";
 					} else {
-						if(localStorage.expireState == 0) {
+						if (localStorage.expireState == 0) {
 							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 						} else {
 							window.location.href = "publish/fabuzhaopin.html";
@@ -159,17 +160,17 @@
 				}
 			}
 		})
-		$('#fabuzhaobiao').click(function() {
-			if(localStorage.regStatus != 1) {
+		 $('#fabuzhaobiao').click(function() {
+			if (localStorage.regStatus != 1) {
 				window.location.href = "register/register.html";
 			} else {
-				if(localStorage.type == 1) {
+				if (localStorage.type == 1) {
 					window.location.href = "publish/fabuzhaobiao.html";
 				} else {
-					if(localStorage.registerState == 0) {
+					if (localStorage.registerState == 0) {
 						window.location.href = "register/company.html";
 					} else {
-						if(localStorage.expireState == 0) {
+						if (localStorage.expireState == 0) {
 							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 						} else {
 							window.location.href = "publish/fabuzhaobiao.html";
@@ -178,17 +179,17 @@
 				}
 			}
 		})
-		$('#fabugongying').click(function() {
-			if(localStorage.regStatus != 1) {
+		 $('#fabugongying').click(function() {
+			if (localStorage.regStatus != 1) {
 				window.location.href = "register/register.html";
 			} else {
-				if(localStorage.type == 1) {
+				if (localStorage.type == 1) {
 					window.location.href = "publish/fabugongying.html";
 				} else {
-					if(localStorage.registerState == 0) {
+					if (localStorage.registerState == 0) {
 						window.location.href = "register/company.html";
 					} else {
-						if(localStorage.expireState == 0) {
+						if (localStorage.expireState == 0) {
 							alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 						} else {
 							window.location.href = "publish/fabugongying.html";

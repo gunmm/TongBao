@@ -152,6 +152,7 @@ function getCity(callback) {
 		async: false,
 		data: {},
 		success: function(data) {
+			console.log(data);
 			vm.$dialog.loading.close();
 			if(data.result_code != 1) {
 				new Vue().$dialog.alert({

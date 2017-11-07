@@ -272,9 +272,10 @@
 		if(qs['isfb']) {
 			window.history.pushState({}, "首页", "");
 			window.addEventListener("popstate", function(e) {
-				window.location.replace('employment.html');
+				window.location.replace('employment.html?isback=isback');
 			}, false);
 		}
+		localStorage.zhaopinsign = 1;
 
 		post('/webZp/ZhaopinById', {
 			id: id

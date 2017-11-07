@@ -48,7 +48,6 @@
 				text-align: center;
 				zoom: 1.6;
 			}
-			
 			.understandMore {
 				font-weight: 600;
 				text-align: center;
@@ -236,32 +235,29 @@
 	<script type="text/javascript">
 		var userInfo = '';
 		getUserInfo(localStorage.userId, function(data) {
-			userInfo = data.result;
-			vm.type = data.result.type;
-		})
-
-		/* 如果是分享跳转的链接显示我要发布按钮*/
+				userInfo = data.result;
+				vm.type = data.result.type;
+			})
+			/* 如果是分享跳转的链接显示我要发布按钮*/
 		var urlStr = window.location.href;
-		if((urlStr.indexOf('from=singlemessage')) > 0 ||
+		if ((urlStr.indexOf('from=singlemessage')) > 0 ||
 			(urlStr.indexOf('from=timeline')) > 0 ||
 			(urlStr.indexOf('from=groupmessage')) > 0) {
 			$('.fabuDetail').css('display', 'block');
 			$('.understandMore').css('display', 'block');
 		}
-
 		var qs = new QueryString();
 		var id = parseInt(qs['id']);
-
+		localStorage.qiuzhisign = 1;
 		var xuelis;
 		getDicTable(true, "003", function(data) {
 			xuelis = data.result;
 		})
-
-		post('/webQz/QiuzhiById', {
+		 post('/webQz/QiuzhiById', {
 			id: id
 		}, function(data) {
 			var d = data.result;
-			if(d.showfullname == 1) {
+			if (d.showfullname == 1) {
 				vm.name = d.name;
 			} else {
 				vm.name = hideStr(d.name);
@@ -293,43 +289,38 @@
 		})
 
 		function getXueli(id) {
-			for(var i = 0; i < xuelis.length; i++) {
-				if(xuelis[i].itemCode == id) {
+			for (var i = 0; i < xuelis.length; i++) {
+				if (xuelis[i].itemCode == id) {
 					return xuelis[i].itemName;
 				}
 			}
 		}
-
 		post('/webSc/isFavorite', {
 			id: id,
 			userId: localStorage.userId
 		}, function(data) {
 			vm.isShoucang = data.result;
-			if(data.result) {
+			if (data.result) {
 				$('.on').css('color', '#ec9d1d');
 				$('.on').html('取消');
 			}
 		})
-
-		post('/webQz/isInterview', {
+		 post('/webQz/isInterview', {
 			id: id,
 			userId: localStorage.userId
 		}, function(data) {
 			vm.isToudi = data.result;
 		})
-
-		post('/webUser/addBrowser', {
+		 post('/webUser/addBrowser', {
 			userId: localStorage.userId,
 			articleId: id
 		}, function(data) {})
-
-		post('/webQz/Qiuzhi', {
+		 post('/webQz/Qiuzhi', {
 			pageNo: 1,
 			pageSize: 2
 		}, function(data) {
 			vm.zuixinzhaopins = data.result;
 		})
-
 		var vm = new Vue({
 			el: '#app',
 			data: {
@@ -365,18 +356,17 @@
 			},
 			methods: {
 				favouriteClick: function() {
-					if(userInfo.regStatus != 1) {
+					if (userInfo.regStatus != 1) {
 						window.location.href = '../../register/register.html';
 						return;
 					}
-
 					post('/webSc/favorite', {
 						userId: localStorage.userId,
 						id: id,
 						shoucang: !vm.isShoucang
 					}, function(data) {
 						vm.isShoucang = !vm.isShoucang;
-						if(vm.isShoucang) {
+						if (vm.isShoucang) {
 							$('.on').css('color', '#ec9d1d');
 							$('.on').html('取消');
 						} else {
@@ -391,11 +381,10 @@
 					})
 				},
 				toudi: function() {
-					if(!localStorage.userId) {
+					if (!localStorage.userId) {
 						window.location.href = '../../register/register.html';
 						return;
 					}
-
 					post('/webQz/Interview', {
 						userId: localStorage.userId,
 						id: id,
@@ -412,27 +401,24 @@
 				}
 			},
 		})
-
-		$(function() {
+		 $(function() {
 			/** 发布链接页面跳转*/
 			$(".fabuDetail").on('click', function() {
 				vm.$dialog.confirm({
 					mes: '<div style="text-align: center;">发布信息之前需关注<font color="red">“仝仝生态”</font></br>是否确认关注?</div>',
 					opts: [{
-							txt: '关注',
-							color: false,
-							callback: function() {
-								window.location.href = 'http://dwz.cn/6fbbCU';
-							}
-						},
-						{
-							txt: '我已关注',
-							color: false,
-							callback: function() {
-								window.location.href = '../../fabu.html';
-							}
+						txt: '关注',
+						color: false,
+						callback: function() {
+							window.location.href = 'http://dwz.cn/6fbbCU';
 						}
-					]
+					}, {
+						txt: '我已关注',
+						color: false,
+						callback: function() {
+							window.location.href = '../../fabu.html';
+						}
+					}]
 				});
 			});
 		})

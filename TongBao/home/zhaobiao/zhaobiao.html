@@ -141,38 +141,36 @@
 			var job;
 			var jobList;
 			var xinzi;
-
 			getCity(function(p, c) {
 				this.province = p;
 				this.city = c;
 			})
-
-			post1('/webItem/getCategoryList', false, {
+			 post1('/webItem/getCategoryList', false, {
 				type: 'zhaobiao'
 			}, function(data) {
 				var list = data.result;
 				var a = [];
 				var b = [];
 				var bM = {};
-				for(var i = 0; i < list.length; i++) {
-					if(list[i].pid == 0) {
+				for (var i = 0; i < list.length; i++) {
+					if (list[i].pid == 0) {
 						a.push(list[i]);
 					} else {
 						b.push(list[i]);
 					}
 				}
-				for(var i = 0; i < a.length; i++) {
+				for (var i = 0; i < a.length; i++) {
 					var array = [];
-					for(var j = 0; j < b.length; j++) {
-						if(a[i].id == b[j].pid) {
+					for (var j = 0; j < b.length; j++) {
+						if (a[i].id == b[j].pid) {
 							array.push(b[j]);
 							bM['' + a[i].id] = array;
 						}
 					}
 				}
-				for(var i = 0; i < a.length - 1; i++) {
-					for(var j = 0; j < a.length - 1 - i; j++) {
-						if(a[j].id > a[j + 1].id) {
+				for (var i = 0; i < a.length - 1; i++) {
+					for (var j = 0; j < a.length - 1 - i; j++) {
+						if (a[j].id > a[j + 1].id) {
 							var temp = a[j];
 							a[j] = a[j + 1];
 							a[j + 1] = temp;
@@ -182,13 +180,20 @@
 				this.job = a;
 				this.jobList = bM;
 			})
-
-			getDicTable(false, '013', function(data) {
+			 getDicTable(false, '013', function(data) {
 				this.xinzi = data.result;
 			})
-
 			var state = window.history.state;
-			if(!state) {
+			if (localStorage.zhaobiaosign) {
+				if (localStorage.zhaobiaosign == 1) {
+					localStorage.zhaobiaosign = 0;
+				}else{
+					state = null;
+				}
+			}else{
+				state = null;
+			}
+			if (!state) {
 				state = '';
 				post('/webZb/Zhaobiao', {
 					pageNo: 1,
@@ -198,7 +203,6 @@
 					vm.datalist = data.result;
 				})
 			}
-
 			var vm = new Vue({
 				el: "#app",
 				data: {
@@ -236,9 +240,9 @@
 				},
 				methods: {
 					loadList: function() {
-						if(state) {
-							if(state.page) {
-								if(vm.page != 1) {
+						if (state) {
+							if (state.page) {
+								if (vm.page != 1) {
 									vm.page = state.page;
 								}
 							}
@@ -253,18 +257,16 @@
 							title: vm.title
 						}, function(data) {
 							_list = data.result;
-							if(vm.page == 1) {
+							if (vm.page == 1) {
 								vm.datalist = _list;
 							} else {
 								vm.datalist = vm.datalist.concat(_list);
 							}
-
 							window.history.pushState({
 								items: vm.datalist,
 								page: vm.page += 1
 							}, "", "zhaobiao.html");
-
-							if(vm.page > 2 && _list.length < vm.pageSize) {
+							if (vm.page > 2 && _list.length < vm.pageSize) {
 								window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
 								return;
 							}
@@ -301,19 +303,19 @@
 						vm.loadList();
 					},
 					buxian: function(t) {
-						if(t == 'leibie') {
+						if (t == 'leibie') {
 							$(".tab-nav>.zhiwei>span").html('类别');
 							$(".tab-nav>.zhiwei>span").removeClass('current');
 							$(".tab-nav>.zhiwei>i").removeClass('ico-bottom2').addClass('ico-bottom');
 							$("#choosedcategory").val('')
 						}
-						if(t == 'city') {
+						if (t == 'city') {
 							$(".tab-nav>.address>span").html('城市');
 							$(".tab-nav>.address>span").removeClass('current');
 							$(".tab-nav>.address>i").removeClass('ico-bottom2').addClass('ico-bottom');
 							$("#choosedcity").val('');
 						}
-						if(t == 'jiage') {
+						if (t == 'jiage') {
 							$(".tab-nav>.xinzi>span").html('价格');
 							$(".tab-nav>.xinzi>span").removeClass('current');
 							$(".tab-nav>.xinzi>i").removeClass('ico-bottom2').addClass('ico-bottom');
@@ -328,16 +330,14 @@
 					$("#app").show();
 				}
 			});
-
 			$(function() {
 				window.addEventListener("popstate", function(e) {
 					window.location.replace('../../home.html');
 				}, false);
-
 				$('.tab-nav li').on("click", function() {
 					$('.tab-nav li span').removeClass('current');
 					$(this).find('span').addClass('current');
-					if($('.tab-panl').eq($(this).index()).hasClass('none')) {
+					if ($('.tab-panl').eq($(this).index()).hasClass('none')) {
 						$('.tab-panl').eq($(this).index()).removeClass('none').siblings('.tab-panl').addClass('none');
 						$(this).children('i').removeClass('ico-bottom').addClass('ico-bottom2');
 						$(this).siblings().children('i').removeClass('ico-bottom2').addClass('ico-bottom')
@@ -348,7 +348,6 @@
 						$(this).find('span').removeClass('current')
 					}
 					window.$yduiBus.$emit('ydui.infinitescroll.finishLoad');
-
 					//$(this).children('i').removeClass('ico-bottom2').addClass('ico-bottom1');
 				});
 				$('.province li').click(function() {
@@ -356,14 +355,14 @@
 					$(this).css('background', '#FFFFFF').siblings('.province li').css('background', '#ededed');
 				});
 				$('.city li').click(function() {
-					$('.address span').text($(this).text())
-					$('.city li ').removeClass('current');
-					$(this).addClass('current')
-					$('.address span').removeClass('current');
-					$('.address').children('i').removeClass('ico-bottom2').addClass('ico-bottom')
-					$('.tab-panl').addClass('none')
-				})
-				/*职位*/
+						$('.address span').text($(this).text())
+						$('.city li ').removeClass('current');
+						$(this).addClass('current')
+						$('.address span').removeClass('current');
+						$('.address').children('i').removeClass('ico-bottom2').addClass('ico-bottom')
+						$('.tab-panl').addClass('none')
+					})
+					/*职位*/
 				$('.job li').click(function() {
 					$('.job-list').eq($(this).index()).removeClass('none').siblings('.job-list').addClass('none');
 					$(this).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
@@ -372,7 +371,6 @@
 					$('.zhiwei span').text($(this).text());
 					$('.zhiwei span').removeClass('current');
 					$('.zhiwei').children('i').removeClass('ico-bottom2').addClass('ico-bottom');
-
 					$('.tab-panl').addClass('none')
 					$('.job-list li ').removeClass('current');
 					$(this).addClass('current')
@@ -386,13 +384,11 @@
 					$('.quanbu span').text($(this).text());
 					$('.quanbu span').removeClass('current');
 					$('.tab-panl').addClass('none')
-
 				});
-
 				$("#keyword").on('keypress', function(e) {
 					var keycode = e.keyCode;
 					var searchName = $(this).val();
-					if(keycode == '13') {
+					if (keycode == '13') {
 						e.preventDefault();
 						//请求搜索接口
 						vm.page = 1;
