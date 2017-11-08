@@ -62,7 +62,7 @@
 				</div>
 			</div>
 			<div class="div1"></div>
-			<div class="tongzhi overflow-h">
+			<div class="tongzhi overflow-h" v-if='zxlist.length>0'>
 				<div class="tongzhi_wenzi clearfix pos">
 					<ul class="tongzhi_lunbo">
 						<li v-for="item in zxlist" class="clearfix overflow-h">
@@ -80,7 +80,7 @@
 				</div>
 			</div>
 			<div class="div1"></div>
-			<section>
+			<section v-if='zplist.length>0'>
 				<h2 class="module-title pd-10 overflow-h border-b">
             		<i class="ico ico-zhaopin fl"></i>
             		<span class="fl more-main">最新招聘</span>
@@ -111,7 +111,7 @@
 				</div>
 			</section>
 			<div class="div1"></div>
-			<section>
+			<section v-if='qzlist.length>0'>
 				<h2 class="module-title  overflow-h border-b">
 					<i class="ico ico-qiuzhi fl"></i>
 					<span class="fl more-main">最新求职</span>
@@ -152,7 +152,7 @@
 				</div>
 			</section>
 			<div class="div1"></div>
-			<section>
+			<section v-if='zblist.length>0'>
 				<h2 class="module-title  overflow-h border-b">
 					<i class="ico ico-zhaobiao fl"></i> 
 					<span class="fl more-main">最新招标</span> 
@@ -185,7 +185,7 @@
 				</div>
 			</section>
 			<div class="div1"></div>
-			<section>
+			<section v-if='gylist.length>0'>
 				<h2 class="module-title pd-10 overflow-h border-b">
 					<i class="ico ico-gongying fl"></i> 
 					<span class="fl more-main">最新供应</span> 

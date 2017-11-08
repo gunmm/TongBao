@@ -73,7 +73,7 @@
 								icon: 'success',
 								timeout: 1500,
 								callback: function() {
-									window.history.go(-1);
+									window.history.back();
 								}
 							});
 						})
@@ -95,11 +95,22 @@
 						continue;
 					}
 					var reader = new FileReader();
-					reader.onload = function(e) {
-						vm.img = e.target.result;
-						$('#tsimg').attr('src', e.target.result);
-					};
 					reader.readAsDataURL(file);
+					reader.onload = function(e) {
+						dealImage(e.target.result, {
+							quality: 0.1
+						}, function(value) {
+							post('/upload/fileMobileBase', {
+									"imgBases": value
+								},
+								function(data) {
+									if(data.result.length > 0) {
+										vm.img = data.result[0];
+									}
+								})
+							$('#tsimg').attr('src', value);
+						});
+					};
 				}
 			}
 		</script>

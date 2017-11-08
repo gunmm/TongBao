@@ -5,7 +5,7 @@ var provinceCity = '[{"deep":1,"name":"北京市","id":1,"sort":0,"parentId":0},
 
 var vm = new Vue();
 
-localStorage.userId = 85;
+localStorage.userId = 818;
 
 var urlStr = window.location.href;
 if(urlStr.indexOf('userInfoJson=') > 0) {

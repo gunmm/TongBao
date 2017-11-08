@@ -113,9 +113,19 @@
 				var reader = new FileReader();
 				reader.readAsDataURL(file);
 				reader.onload = function(e) {
-					var value = e.target.result;
-					vm.imgs.push(value);
-					$("#xz").before("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='" + value + "'/><input type='hidden' name='shilizhanshi' value=''/><div id='" + value + "' class='delet-pic' onclick='removeLi(this)'><img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
+					dealImage(e.target.result, {
+						quality: 0.1
+					}, function(value) {
+						post('/upload/fileMobileBase', {
+								"imgBases": value
+							},
+							function(data) {
+								if(data.result.length > 0) {
+									vm.imgs.push(data.result[0]);
+								}
+							})
+						$("#xz").before("<li class='pos-r fl'><div class='zhanshi2 pos-r'><img src='" + value + "'/><input type='hidden' name='shilizhanshi' value=''/><div id='" + value + "' class='delet-pic' onclick='removeLi(this)'><img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' /></div></div></li>");
+					});
 				};
 			}
 			input.value = "";
