@@ -31,8 +31,20 @@
 			getUserInfo(localStorage.userId, function(data) {
 				if (data.result.regStatus != 1) {
 					window.location.href = "../../register/register.html";
+				} else {
+					if (data.result.type == 2) {
+						if (data.result.regist == 0) {
+							window.location.href = "../../register/company.html";
+						} else {
+							if (data.result.expire == 0) {
+								alert("您的注册申请正在审核中,审核通过后会有消息提醒");
+								window.location.href = "../../fabu.html";
+							}
+						}
+					}
 				}
 			})
+			 
 		</script>
 		<div id="app">
 			<section class="content-list  lh-24" style="padding-top: 2.25rem;">

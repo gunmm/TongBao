@@ -45,10 +45,26 @@
 	<body class="bg-f8f8f8">
 		<script>
 			getUserInfo(localStorage.userId, function(data) {
-				if (data.result.regStatus != 1) {
-					window.location.href = "../register/register.html";
-				}
-			})
+					if (data.result.regStatus != 1) {
+						window.location.href = "../register/register.html";
+					} else {
+						if (data.result.type == 2) {
+							if (data.result.regist == 0) {
+								window.location.href = "../register/company.html";
+							} else {
+								if (data.result.expire == 0) {
+									alert("您的注册申请正在审核中,审核通过后会有消息提醒");
+									window.location.href = "../fabu.html";
+								}
+							}
+						}
+					}
+				})
+				//			 getUserInfo(localStorage.userId, function(data) {
+				//				if (data.result.regStatus != 1) {
+				//					window.location.href = "../register/register.html";
+				//				}
+				//			})
 		</script>
 		<div id="app">
 
@@ -192,13 +208,13 @@
 					this.phone = data.result.phone;
 					this.content = data.result.content;
 					if (data.result.imgUrl.length > 0) {
-						this.picarray = data.result.imgListBase;
-						for (var i = 0; i < data.result.imgListBase.length; i++) {
-							var str = data.result.imgListBase[i];
+						this.picarray = data.result.imgUrl;
+						for (var i = 0; i < data.result.imgUrl.length; i++) {
+							var str = data.result.imgUrl[i];
 							$("#xz").before(
 								"<li class='pos-r fl'>" +
 								"<div class='zhanshi2 pos-r'>" +
-								"<img src='" + str + "'/>" +
+								"<img src='" + ip + str + "'/>" +
 								"<input type='hidden' name='shilizhanshi' value=''/>" +
 								"<div id='" + str + "' class='delet-pic' onclick='removeLi(this)'>" +
 								"<img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' />" +
@@ -449,6 +465,7 @@
 			function removeLi(obj) {
 				$(obj).parent().parent().remove();
 				vm.productpic.remove(obj.id);
+				console.log(vm.productpic);
 			}
 
 			function removeOld(obj, url) {
@@ -567,7 +584,18 @@
 							"</div>" +
 							"</div>" +
 							"</li>");
-						vm.productpic.push(e.target.result);
+						dealImage(e.target.result, {
+							quality: 0.1
+						}, function(value) {
+							post('/upload/fileMobileBase', {
+									"imgBases": value
+								},
+								function(data) {
+									if (data.result.length > 0) {
+										vm.productpic.push(data.result[0]);
+									}
+								})
+						});
 					};
 				}
 			}

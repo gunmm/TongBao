@@ -25,11 +25,15 @@
 
 	<body>
 		<script type="text/javascript" charset="utf-8">
-			var bigdata;
+			var bigdata,jobWanId, publishId;
 			post1('/webQz/QiuzhiById', false, {
 				"userId": localStorage.userId,
 			}, function(data) {
 				this.bigdata = data.result;
+				if (data.result.jobWanId) {
+					this.jobWanId = data.result.jobWanId;
+					this.publishId = data.result.publishId;
+				}
 				console.log(data);
 			})
 		</script>
@@ -194,6 +198,15 @@
 				vm.onduty = this.bigdata.onduty;
 			}
 		})
+		 
+		 var id = "";
+		var publishId1 = "";
+		if (this.jobWanId) {
+			id = this.jobWanId;
+		}
+		if (this.publishId) {
+			publishId1 = this.publishId;
+		}
 		var vm = new Vue({
 			el: '#app',
 			data: {
@@ -263,19 +276,11 @@
 						alert('请选择入职时间')
 						return
 					}
-					var id = "";
-					var publishId = "";
-					if (localStorage.jobWanId) {
-						id = localStorage.jobWanId;
-					}
-					if (localStorage.publishId) {
-						publishId = localStorage.publishId;
-					}
-					console.log(id + "------" + publishId);
+					
 					post('/webQz/editPersonalBasicInfo', {
 						"userId": localStorage.userId,
 						"id": id,
-						"publishId": publishId,
+						"publishId": publishId1,
 						"targetPost": $("#choosedgangwei").val(),
 						"operationMode": vm.gongzuofangshi,
 						"targetprovince": $("#choosedprovince").val(),

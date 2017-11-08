@@ -26,96 +26,15 @@
 
 	<body>
 		<script type="text/javascript" charset="utf-8">
-			var jobWanId;
-			var publishId;
-			var hasbaseinfo;
-			post('/webQz/QiuzhiById', {
-				"userId": localStorage.userId,
-			}, function(data) {
-				console.log(data);
-				if (data.result.touxiang) {
-					$('#avatar').attr('src', ip + data.result.touxiang);
-				}
-				if (data.result.name) {
-					vm.hasbaseinfo = true;
-					vm.name = data.result.name;
-					vm.sex = data.result.sex;
-					vm.exprience = data.result.exprience;
-					vm.age = data.result.age;
-					vm.city = data.result.city;
-					vm.phone = data.result.phone;
-					vm.email = data.result.email;
-					vm.evaluation = data.result.evaluation;
+			getUserInfo(localStorage.userId, function(data) {
+				if (data.result.regStatus != 1) {
+					window.location.href = "../../register/register.html";
 				} else {
-					vm.hasbaseinfo = false;
-				}
-				if (data.result.gangwei) {
-					vm.hasexpectinfo = true;
-					vm.trueGangwei = data.result.gangwei;
-					vm.gongzuofangshi = data.result.operationMode;
-					vm.targetcity = data.result.targetprovince;
-					vm.targetxinzi = data.result.targetSalary;
-					if (data.result.ondutyId == 1) {
-						vm.onduty = "在职";
-					} else {
-						vm.onduty = "离职";
-					}
-					vm.jointime = data.result.jointime;
-				} else {
-					vm.hasexpectinfo = false;
-				}
-				if (data.result.status == 0) {
-					vm.showqiuzhi = true;
-				} else {
-					vm.showqiuzhi = false;
-				}
-				if (data.result.showfullname == 1) {
-					vm.showfullname = true;
-				} else {
-					vm.showfullname = false;
-				}
-				if (data.result.showcompanyname == 1) {
-					vm.showcompanyname = true;
-				} else {
-					vm.showcompanyname = false;
-				}
-				var workDic = JSON.parse(data.result.experience);
-				for (var i = 0; i < workDic.length; i++) {
-					var obj = workDic[i];
-					obj.id = i;
-				}
-				var jiaoyuDic = JSON.parse(data.result.education);
-				for (var i = 0; i < jiaoyuDic.length; i++) {
-					var obj = jiaoyuDic[i];
-					obj.id = i;
-					switch (obj.xueli) {
-						case '2':
-							obj.xueli = "初中";
-							break;
-						case '3':
-							obj.xueli = "高中";
-							break;
-						case '4':
-							obj.xueli = "大专";
-							break;
-						case '5':
-							obj.xueli = "本科";
-							break;
-						case '6':
-							obj.xueli = "研究生";
-							break;
-						case '7':
-							obj.xueli = "博士";
-							break;
-						default:
-							break;
+					if (data.result.type == 2) {
+						alert("企业用户不能发布求职信息!");
+						window.location.href = "../../fabu.html";
 					}
 				}
-				vm.workDic = workDic;
-				vm.jiaoyuDic = jiaoyuDic;
-				localStorage.jobWanId = data.result.jobWanId;
-				localStorage.publishId = data.result.publishId;
-				localStorage.exprience = data.result.exprience;
 			})
 		</script>
 
@@ -245,37 +164,135 @@
 	</body>
 
 	<script type="text/javascript">
+		var jobWanId;
+		var publishId;
+		var hasbaseinfo;
 		var preview;
-		$.ajax({
-			type: "post",
-			url: ip + "/webQz/getResumeIsPerfect",
-			async: true,
-			traditional: true,
-			data: {
-				"publishId": localStorage.publishId
-			},
-			success: function(data) {
-				vm.$dialog.loading.close();
-				if (data.result_code != 1) {
-					new Vue().$dialog.alert({
-						mes: data.reason
-					});
-					return;
-				} else {
-					if (data.reason == 'accept') {
-						preview = 1;
-					} else {
-						preview = 0;
-					}
-				}
-			},
-			error: function() {
-				vm.$dialog.loading.close();
-				vm.$dialog.alert({
-					mes: '服务器连接失败!'
-				});
+		post('/webQz/QiuzhiById', {
+			"userId": localStorage.userId,
+		}, function(data) {
+			console.log(data);
+			if (data.result.publishId) {
+				this.jobWanId = data.result.jobWanId;
+				this.publishId = data.result.publishId;
+				previewStatus();
 			}
-		});
+			if (data.result.touxiang) {
+				$('#avatar').attr('src', ip + data.result.touxiang);
+			}
+			if (data.result.name) {
+				vm.hasbaseinfo = true;
+				vm.name = data.result.name;
+				vm.sex = data.result.sex;
+				vm.exprience = data.result.exprience;
+				vm.age = data.result.age;
+				vm.city = data.result.city;
+				vm.phone = data.result.phone;
+				vm.email = data.result.email;
+				vm.evaluation = data.result.evaluation;
+			} else {
+				vm.hasbaseinfo = false;
+			}
+			if (data.result.gangwei) {
+				vm.hasexpectinfo = true;
+				vm.trueGangwei = data.result.gangwei;
+				vm.gongzuofangshi = data.result.operationMode;
+				vm.targetcity = data.result.targetprovince;
+				vm.targetxinzi = data.result.targetSalary;
+				if (data.result.ondutyId == 1) {
+					vm.onduty = "在职";
+				} else {
+					vm.onduty = "离职";
+				}
+				vm.jointime = data.result.jointime;
+			} else {
+				vm.hasexpectinfo = false;
+			}
+			if (data.result.status == 0) {
+				vm.showqiuzhi = true;
+			} else {
+				vm.showqiuzhi = false;
+			}
+			if (data.result.showfullname == 1) {
+				vm.showfullname = true;
+			} else {
+				vm.showfullname = false;
+			}
+			if (data.result.showcompanyname == 1) {
+				vm.showcompanyname = true;
+			} else {
+				vm.showcompanyname = false;
+			}
+			var workDic = JSON.parse(data.result.experience);
+			for (var i = 0; i < workDic.length; i++) {
+				var obj = workDic[i];
+				obj.id = i;
+			}
+			var jiaoyuDic = JSON.parse(data.result.education);
+			for (var i = 0; i < jiaoyuDic.length; i++) {
+				var obj = jiaoyuDic[i];
+				obj.id = i;
+				switch (obj.xueli) {
+					case '2':
+						obj.xueli = "初中";
+						break;
+					case '3':
+						obj.xueli = "高中";
+						break;
+					case '4':
+						obj.xueli = "大专";
+						break;
+					case '5':
+						obj.xueli = "本科";
+						break;
+					case '6':
+						obj.xueli = "研究生";
+						break;
+					case '7':
+						obj.xueli = "博士";
+						break;
+					default:
+						break;
+				}
+			}
+			vm.workDic = workDic;
+			vm.jiaoyuDic = jiaoyuDic;
+			this.exprience = data.result.exprience;
+		})
+
+		function previewStatus() {
+			$.ajax({
+				type: "post",
+				url: ip + "/webQz/getResumeIsPerfect",
+				async: true,
+				traditional: true,
+				data: {
+					"publishId": this.publishId
+				},
+				success: function(data) {
+					console.log(data);
+					vm.$dialog.loading.close();
+					if (data.result_code != 1) {
+						new Vue().$dialog.alert({
+							mes: data.reason
+						});
+						return;
+					} else {
+						if (data.reason == 'accept') {
+							preview = 1;
+						} else {
+							preview = 0;
+						}
+					}
+				},
+				error: function() {
+					vm.$dialog.loading.close();
+					vm.$dialog.alert({
+						mes: '服务器连接失败!'
+					});
+				}
+			});
+		}
 		var vm = new Vue({
 			el: '#app',
 			data: {
@@ -306,7 +323,7 @@
 			methods: {
 				preview() {
 					if (preview == 1) {
-						window.location.href = "../../home/qiuzhi/qiuzhidetail.html?id=" + localStorage.publishId;
+						window.location.href = "../../home/qiuzhi/qiuzhidetail.html?id=" + publishId;
 					} else {
 						vm.$dialog.toast({
 							mes: "信息填写完整才可预览和被企业查看!",
@@ -328,10 +345,11 @@
 						sildOff = 0;
 						vm.showqiuzhi = true;
 					}
+					
 					//					sildOff = sildOff == 1 ? 0 : 1;
 					post('/webQz/showExhibitionJob', {
 						"showStatus": sildOff,
-						"publishId": localStorage.publishId
+						"publishId": publishId
 					}, function(data) {
 						if (data.result_code == '1') {
 							alert("操作成功!");
@@ -376,8 +394,8 @@
 				$('#avatar').attr('src', e.target.result);
 				post('/webQz/editPersonalBasicInfo', {
 					"userId": localStorage.userId,
-					"id": localStorage.jobWanId,
-					"publishId": localStorage.publishId,
+					"id": this.jobWanId,
+					"publishId": this.publishId,
 					"lifePhotoImg": e.target.result,
 				}, function(data) {
 					if (data.result_code == '1') {
@@ -396,8 +414,8 @@
 			}
 			post('/webQz/editPersonalBasicInfo', {
 				"userId": localStorage.userId,
-				"id": localStorage.jobWanId,
-				"publishId": localStorage.publishId,
+				"id": this.jobWanId,
+				"publishId": this.publishId,
 				"operationType": 0,
 				"experienceIndex": id
 			}, function(data) {
@@ -417,8 +435,8 @@
 			}
 			post('/webQz/editPersonalBasicInfo', {
 				"userId": localStorage.userId,
-				"id": localStorage.jobWanId,
-				"publishId": localStorage.publishId,
+				"id": this.jobWanId,
+				"publishId": this.publishId,
 				"operationType": 0,
 				"educationIndex": id
 			}, function(data) {
@@ -443,8 +461,8 @@
 				}
 				dataa = {
 					"userId": localStorage.userId,
-					"id": localStorage.jobWanId,
-					"publishId": localStorage.publishId,
+					"id": this.jobWanId,
+					"publishId": this.publishId,
 					"showfullname": showfullname
 				};
 			} else {
@@ -457,8 +475,8 @@
 				}
 				dataa = {
 					"userId": localStorage.userId,
-					"id": localStorage.jobWanId,
-					"publishId": localStorage.publishId,
+					"id": this.jobWanId,
+					"publishId": this.publishId,
 					"showcompanyname": showcompanyname
 				};
 			}

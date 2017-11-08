@@ -28,20 +28,26 @@
 		<script type="text/javascript" charset="utf-8">
 			var Request = new QueryString();
 			var itemid = Request["id"];
-			var schoolname,major,graduationyear,xueli;
-			if (itemid) {
-				post1('/webQz/QiuzhiById',false, {
+			var schoolname, major, graduationyear, xueli, jobWanId, publishId;
+			 //			if (itemid) {
+			post1('/webQz/QiuzhiById', false, {
 					"userId": localStorage.userId,
 				}, function(data) {
-					var workDic = JSON.parse(data.result.education);
-					console.log(workDic);
-					var obj = workDic[itemid];
-					this.schoolname = obj.schoolname;
-					this.major = obj.major;
-					this.graduationyear = obj.graduationyear;
-					this.xueli = obj.xueli;
+					if (data.result.jobWanId) {
+						this.jobWanId = data.result.jobWanId;
+						this.publishId = data.result.publishId;
+					}
+					if (data.result.education) {
+						var workDic = JSON.parse(data.result.education);
+						console.log(workDic);
+						var obj = workDic[itemid];
+						this.schoolname = obj.schoolname;
+						this.major = obj.major;
+						this.graduationyear = obj.graduationyear;
+						this.xueli = obj.xueli;
+					}
 				})
-			}
+				//			}
 		</script>
 		<div id="app">
 			<section class="zp-body">
@@ -87,6 +93,14 @@
 		getDicTable(false, "003", function(data) {
 			this.xuelidic = data.result;
 		})
+		var id = "";
+		var publishId1 = "";
+		if (this.jobWanId) {
+			id = this.jobWanId;
+		}
+		if (this.publishId) {
+			publishId1 = this.publishId;
+		}
 		var vm = new Vue({
 			el: '#app',
 			data: {
@@ -114,48 +128,41 @@
 						alert('请选择学历')
 						return
 					}
-					var id = "";
-					var publishId = "";
-					if (localStorage.jobWanId) {
-						id = localStorage.jobWanId;
-					}
-					if (localStorage.publishId) {
-						publishId = localStorage.publishId;
-					}
+					
 					var dataa;
-					if(itemid){
+					if (itemid) {
 						dataa = {
-						"userId": localStorage.userId,
-						"id": id,
-						"publishId": publishId,
-						"schoolname": vm.schoolname,
-						"major": vm.major,
-						"graduationyear": vm.graduationyear,
-						"xueli": vm.xueli,
-						"operationType":1,
-						"educationIndex":itemid
+							"userId": localStorage.userId,
+							"id": id,
+							"publishId": publishId1,
+							"schoolname": vm.schoolname,
+							"major": vm.major,
+							"graduationyear": vm.graduationyear,
+							"xueli": vm.xueli,
+							"operationType": 1,
+							"educationIndex": itemid
 						}
-					}else{
+					} else {
 						dataa = {
-						"userId": localStorage.userId,
-						"id": id,
-						"publishId": publishId,
-						"schoolname": vm.schoolname,
-						"major": vm.major,
-						"graduationyear": vm.graduationyear,
-						"xueli": vm.xueli,
+							"userId": localStorage.userId,
+							"id": id,
+							"publishId": publishId1,
+							"schoolname": vm.schoolname,
+							"major": vm.major,
+							"graduationyear": vm.graduationyear,
+							"xueli": vm.xueli,
 						}
 					}
-					post('/webQz/editPersonalBasicInfo', dataa, 
-					function(data) {
-						console.log(data);
-						if (data.result_code == '1') {
-							alert("保存成功!");
-							window.history.back();
-						} else {
-							alert("发布失败，请重试！");
-						}
-					})
+					post('/webQz/editPersonalBasicInfo', dataa,
+						function(data) {
+							console.log(data);
+							if (data.result_code == '1') {
+								alert("保存成功!");
+								window.history.back();
+							} else {
+								alert("发布失败，请重试！");
+							}
+						})
 				}
 			}
 		})

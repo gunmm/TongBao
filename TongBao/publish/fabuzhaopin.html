@@ -33,8 +33,9 @@
 	<body class="bg-fff">
 
 		<script type="text/javascript" charset="utf-8">
-			var companynames;
+			var companyname;
 			getUserInfo(localStorage.userId, function(data) {
+				console.log(data);
 				if (data.result.regStatus != 1) {
 					window.location.href = "../register/register.html";
 				} else {
@@ -45,7 +46,7 @@
 						window.location.href = "../fabu.html";
 					} else {
 						if (data.result.regist == 0) {
-							window.location.href = "register/company.html";
+							window.location.href = "../register/company.html";
 						} else {
 							if (data.result.expire == 0) {
 								alert("您的注册申请正在审核中,审核通过后会有消息提醒");
@@ -57,7 +58,7 @@
 			})
 			var Request = new QueryString();
 			var itemid = Request["id"];
-			var obj;
+			var obj = '';
 			var title, address, content, quantity, contact, phone, email, fuli, gender;
 			if (itemid) {
 				post1('/webZp/ZhaopinById', false, {
