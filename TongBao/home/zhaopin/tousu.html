@@ -95,11 +95,15 @@
 						continue;
 					}
 					var reader = new FileReader();
-					reader.onload = function(e) {
-						vm.img = e.target.result;
-						$('#tsimg').attr('src', e.target.result);
-					};
 					reader.readAsDataURL(file);
+					reader.onload = function(e) {
+						dealImage(e.target.result, {
+							quality: 0.1
+						}, function(value) {
+							vm.img = value;
+							$('#tsimg').attr('src', value);
+						});
+					};
 				}
 			}
 		</script>
