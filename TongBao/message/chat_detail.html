@@ -114,7 +114,6 @@
 		var qs = new QueryString();
 		var toId = parseInt(qs['id']);
 
-		log(localStorage.userId + "==" + toId);
 		post('/webUser/myAllMessage', {
 			userId: localStorage.userId,
 			toId: toId

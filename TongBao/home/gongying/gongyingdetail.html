@@ -44,6 +44,7 @@
 				text-align: center;
 				zoom: 1.6;
 			}
+			
 			.understandMore {
 				font-weight: 600;
 				text-align: center;
@@ -186,11 +187,11 @@
 	<script type="text/javascript">
 		var userInfo = '';
 		getUserInfo(localStorage.userId, function(data) {
-				userInfo = data.result;
-			})
-			/* 如果是分享跳转的链接显示我要发布按钮*/
+			userInfo = data.result;
+		})
+		/* 如果是分享跳转的链接显示我要发布按钮*/
 		var urlStr = window.location.href;
-		if ((urlStr.indexOf('from=singlemessage')) > 0 ||
+		if((urlStr.indexOf('from=singlemessage')) > 0 ||
 			(urlStr.indexOf('from=timeline')) > 0 ||
 			(urlStr.indexOf('from=groupmessage')) > 0) {
 			$('.fabuDetail').css('display', 'block');
@@ -198,7 +199,7 @@
 		}
 		var qs = new QueryString();
 		var id = parseInt(qs['id']);
-		if (qs['isgy']) {
+		if(qs['isgy']) {
 			window.history.pushState({}, "首页", "");
 			window.addEventListener("popstate", function(e) {
 				window.location.replace('gongying.html');
@@ -228,21 +229,21 @@
 			vm.guiges = d.guiges;
 			imglist = d.imgUrl;
 		})
-		 post('/webSc/isFavorite', {
+		post('/webSc/isFavorite', {
 			id: id,
 			userId: localStorage.userId
 		}, function(data) {
 			vm.isShoucang = data.result;
-			if (data.result) {
+			if(data.result) {
 				$('.on').css('color', '#ec9d1d');
 				$('.on').html('取消');
 			}
 		})
-		 post('/webUser/addBrowser', {
+		post('/webUser/addBrowser', {
 			userId: localStorage.userId,
 			articleId: id
 		}, function(data) {})
-		 post('/webGy/Gongying', {
+		post('/webGy/Gongying', {
 			pageNo: 1,
 			pageSize: 2
 		}, function(data) {
@@ -275,7 +276,7 @@
 			},
 			methods: {
 				favouritec: function() {
-					if (userInfo.regStatus != 1) {
+					if(userInfo.regStatus != 1) {
 						window.location.href = '../../register/register.html';
 						return;
 					}
@@ -285,7 +286,7 @@
 						shoucang: !vm.isShoucang
 					}, function(data) {
 						vm.isShoucang = !vm.isShoucang;
-						if (vm.isShoucang) {
+						if(vm.isShoucang) {
 							$('.on').css('color', '#ec9d1d');
 							$('.on').html('取消');
 						} else {

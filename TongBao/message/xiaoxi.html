@@ -64,7 +64,7 @@
 				<div class="msg-right">
 					<p class="overflow-h">
 						<span class="fl" onclick="detail(1)">系统通知</span>
-						<span class="fr mr-8" onclick="deleteMessage(this)">删除</span>
+						<span id="system" class="fr mr-8" @click="deleteMessage(1, systemMessage.fromUid==localStorage.userId?systemMessage.toUid:systemMessage.fromUid)">删除</span>
 						<span class="fr">{{systemMessage.strCreatedAt}}</span>
 					</p>
 					<p id="sys_content" class="msg-news" v-html="systemMessage.messageContent" onclick="detail(1)">
@@ -79,7 +79,7 @@
 				<div class="msg-right">
 					<p class="overflow-h">
 						<span class="fl" @click="chat(item.fromUid==localStorage.userId?item.toUid:item.fromUid)">{{item.nickName}}</span>
-						<span class="fr mr-8" onclick="deleteMessage(this)">删除</span>
+						<span :id="item.fromUid==localStorage.userId?item.toUid:item.fromUid" class="fr mr-8" @click="deleteMessage(2, item.fromUid==localStorage.userId?item.toUid:item.fromUid)">删除</span>
 						<span class="fr">{{item.strCreatedAt}}</span>
 					</p>
 					<p class="msg-news" @click="chat(item.fromUid==localStorage.userId?item.toUid:item.fromUid)">
@@ -151,9 +151,20 @@
 			window.location.href = "msg_detail.html?id=" + id;
 		}
 
-		function deleteMessage(obj) {
+		function deleteMessage(type, id) {
+			console.log(id);
 			if(confirm("确定要删除吗?")) {
-				$(obj).parent().parent().parent().remove();
+				post('/webUser/deleteMessage', {
+					fromId: id,
+					toId: localStorage.userId,
+					messageType: type
+				}, function(data) {
+					if(type == 1) {
+						$('#system').parent().parent().parent().remove();
+					} else {
+						$('#' + id).parent().parent().parent().remove();
+					}
+				})
 			}
 		}
 

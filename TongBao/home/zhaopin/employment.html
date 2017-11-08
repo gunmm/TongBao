@@ -420,13 +420,13 @@
 			})
 
 			var state = window.history.state;
-			if (localStorage.zhaopinsign) {
-				if (localStorage.zhaopinsign == 1) {
+			if(localStorage.zhaopinsign) {
+				if(localStorage.zhaopinsign == 1) {
 					localStorage.zhaopinsign = 0;
-				}else{
+				} else {
 					state = null;
 				}
-			}else{
+			} else {
 				state = null;
 			}
 			if(!state) {
@@ -435,7 +435,6 @@
 					pageNo: 1,
 					pageSize: 10
 				}, function(data) {
-					console.log(data);
 					vm.datalist = data.result;
 				})
 			}
@@ -498,10 +497,12 @@
 								vm.datalist = vm.datalist.concat(_list);
 							}
 
-							window.history.pushState({
-								items: vm.datalist,
-								page: vm.page += 1
-							}, "", "employment.html");
+							if(!isIPhone()) {
+								window.history.pushState({
+									items: vm.datalist,
+									page: vm.page += 1
+								}, "", "employment.html");
+							}
 
 							if(vm.page > 1 && _list.length < vm.pageSize) {
 								window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');

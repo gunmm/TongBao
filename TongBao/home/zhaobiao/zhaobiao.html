@@ -182,9 +182,11 @@
 				this.job = a;
 				this.jobList = bM;
 			})
+
 			getDicTable(false, '013', function(data) {
 				this.xinzi = data.result;
 			})
+
 			var state = window.history.state;
 			if(localStorage.zhaobiaosign) {
 				if(localStorage.zhaobiaosign == 1) {
@@ -264,10 +266,14 @@
 							} else {
 								vm.datalist = vm.datalist.concat(_list);
 							}
-							window.history.pushState({
-								items: vm.datalist,
-								page: vm.page += 1
-							}, "", "zhaobiao.html");
+
+							if(!isIPhone()) {
+								window.history.pushState({
+									items: vm.datalist,
+									page: vm.page += 1
+								}, "", "zhaobiao.html");
+							}
+
 							if(vm.page > 2 && _list.length < vm.pageSize) {
 								window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
 								return;

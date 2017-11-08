@@ -189,22 +189,21 @@
 		})
 
 		var state = window.history.state;
-		if (localStorage.gongyingsign) {
-				if (localStorage.gongyingsign == 1) {
-					localStorage.gongyingsign = 0;
-				}else{
-					state = null;
-				}
-			}else{
+		if(localStorage.gongyingsign) {
+			if(localStorage.gongyingsign == 1) {
+				localStorage.gongyingsign = 0;
+			} else {
 				state = null;
 			}
+		} else {
+			state = null;
+		}
 		if(!state) {
 			state = '';
 			post('/webGy/Gongying', {
 				pageNo: 1,
 				pageSize: 10
 			}, function(data) {
-				console.log(data);
 				vm.datalist = data.result;
 			})
 		}
@@ -263,10 +262,12 @@
 							vm.datalist = vm.datalist.concat(_list);
 						}
 
-						window.history.pushState({
-							items: vm.datalist,
-							page: vm.page += 1
-						}, "", "gongying.html");
+						if(!isIPhone()) {
+							window.history.pushState({
+								items: vm.datalist,
+								page: vm.page += 1
+							}, "", "gongying.html");
+						}
 
 						if(vm.page > 1 && _list.length < vm.pageSize) {
 							window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');

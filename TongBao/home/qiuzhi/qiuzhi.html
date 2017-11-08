@@ -252,15 +252,15 @@
 		})
 
 		var state = window.history.state;
-		if (localStorage.qiuzhisign) {
-				if (localStorage.qiuzhisign == 1) {
-					localStorage.qiuzhisign = 0;
-				}else{
-					state = null;
-				}
-			}else{
+		if(localStorage.qiuzhisign) {
+			if(localStorage.qiuzhisign == 1) {
+				localStorage.qiuzhisign = 0;
+			} else {
 				state = null;
 			}
+		} else {
+			state = null;
+		}
 		if(!state) {
 			state = '';
 			post('/webQz/Qiuzhi', {
@@ -329,10 +329,12 @@
 							vm.datalist = vm.datalist.concat(_list);
 						}
 
-						window.history.pushState({
-							items: vm.datalist,
-							page: vm.page += 1
-						}, "", "qiuzhi.html");
+						if(!isIPhone()) {
+							window.history.pushState({
+								items: vm.datalist,
+								page: vm.page += 1
+							}, "", "qiuzhi.html");
+						}
 
 						if(vm.page > 1 && _list.length < vm.pageSize) {
 							window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
