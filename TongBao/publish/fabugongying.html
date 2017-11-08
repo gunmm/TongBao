@@ -28,6 +28,7 @@
 		<link rel="stylesheet" type="text/css" href="../static/css/zhaopin-index.css">
 		<link rel="stylesheet" type="text/css" href="../static/css/date.css">
 		<script src="../js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
 
 		<style type="text/css">
 			.show-pic ul li {
@@ -44,7 +45,7 @@
 	<body class="bg-f8f8f8">
 		<script>
 			getUserInfo(localStorage.userId, function(data) {
-				if(data.result.regStatus != 1){
+				if (data.result.regStatus != 1) {
 					window.location.href = "../register/register.html";
 				}
 			})
@@ -382,59 +383,65 @@
 							alert('参数规格填写不完整!');
 							return;
 						}
-						var dataa, urlstr;
-						var Request = new QueryString();
-						var itemid = Request["id"];
-						if (itemid) {
-							urlstr = '/webGy/editSupply';
-							dataa = {
-								"publishId": itemid,
-								"userId": localStorage.userId,
-								"supplyTitle": vm.title,
-								"categoryId": $("#choosedgangwei").val(),
-								"quantity": vm.quantity,
-								"price": vm.price,
-								"unit": vm.unit,
-								"endAt": vm.end_at,
-								"province": $("#choosedprovince").val(),
-								"city": $("#choosedcity").val(),
-								"address": vm.address,
-								"contact": vm.contact,
-								"phone": vm.phone,
-								"content": vm.content,
-								"specificationArray": guigecanshu,
-								"imgBaseArray": vm.productpic
-							}
-						} else {
-							urlstr = '/webGy/addSupply';
-							dataa = {
-								"userId": localStorage.userId,
-								"supplyTitle": vm.title,
-								"categoryId": $("#choosedgangwei").val(),
-								"quantity": vm.quantity,
-								"price": vm.price,
-								"unit": vm.unit,
-								"endAt": vm.end_at,
-								"province": $("#choosedprovince").val(),
-								"city": $("#choosedcity").val(),
-								"address": vm.address,
-								"contact": vm.contact,
-								"phone": vm.phone,
-								"content": vm.content,
-								"specificationArray": guigecanshu,
-								"imgBaseArray": vm.productpic
-							}
-						}
-						post(urlstr, dataa,
-							function(data) {
-								if (data.result_code == 1) {
-									console.log(data);
-									alert("发布成功！");
-									window.location.href = "../home/gongying/gongyingdetail.html?id=" + data.result.publishId + "&isgy=isgy";
-								} else {
-									alert("发布失败，请重试！");
+						addressToLatlng($("#city").html() + vm.address, function(result) {
+							var dataa, urlstr;
+							var Request = new QueryString();
+							var itemid = Request["id"];
+							if (itemid) {
+								urlstr = '/webGy/editSupply';
+								dataa = {
+									"publishId": itemid,
+									"userId": localStorage.userId,
+									"supplyTitle": vm.title,
+									"categoryId": $("#choosedgangwei").val(),
+									"quantity": vm.quantity,
+									"price": vm.price,
+									"unit": vm.unit,
+									"endAt": vm.end_at,
+									"province": $("#choosedprovince").val(),
+									"city": $("#choosedcity").val(),
+									"address": vm.address,
+									"contact": vm.contact,
+									"phone": vm.phone,
+									"content": vm.content,
+									"specificationArray": guigecanshu,
+									"imgBaseArray": vm.productpic,
+									"lat": result.lat,
+									"lng": result.lng
 								}
-							})
+							} else {
+								urlstr = '/webGy/addSupply';
+								dataa = {
+									"userId": localStorage.userId,
+									"supplyTitle": vm.title,
+									"categoryId": $("#choosedgangwei").val(),
+									"quantity": vm.quantity,
+									"price": vm.price,
+									"unit": vm.unit,
+									"endAt": vm.end_at,
+									"province": $("#choosedprovince").val(),
+									"city": $("#choosedcity").val(),
+									"address": vm.address,
+									"contact": vm.contact,
+									"phone": vm.phone,
+									"content": vm.content,
+									"specificationArray": guigecanshu,
+									"imgBaseArray": vm.productpic,
+									"lat": result.lat,
+									"lng": result.lng
+								}
+							}
+							post(urlstr, dataa,
+								function(data) {
+									if (data.result_code == 1) {
+										console.log(data);
+										alert("发布成功！");
+										window.location.href = "../home/gongying/gongyingdetail.html?id=" + data.result.publishId + "&isgy=isgy";
+									} else {
+										alert("发布失败，请重试！");
+									}
+								})
+						})
 					},
 				},
 			});

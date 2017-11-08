@@ -26,6 +26,7 @@
 		<link rel="stylesheet" type="text/css" href="../static/css/common.css">
 		<link rel="stylesheet" href="../static/css/zhaopin-index.css">
 		<script src="../js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
 
 	</head>
 
@@ -448,65 +449,71 @@
 							alert('请填写联系人姓名')
 							return;
 						}
-						var dataa, urlstr;
-						var Request = new QueryString();
-						var itemid = Request["id"];
-						if (itemid) {
-							urlstr = '/webZp/editZhaopin';
-							dataa = {
-								"publishId": itemid,
-								"userId": localStorage.userId,
-								"positionName": vm.title,
-								"post": $("#choosedgangwei").val(),
-								"salary": vm.xinzi,
-								"welfares": vm.fuli,
-								"province": $("#choosedprovince").val(),
-								"city": $("#choosedcity").val(),
-								"address": vm.address,
-								"education": vm.xueli,
-								"experience": vm.jingyan,
-								"professionalRank": vm.zhicheng,
-								"quantity": vm.quantity,
-								"contact": vm.contact,
-								"phone": vm.phone,
-								"email": vm.email,
-								"age": vm.age,
-								"gender": vm.gender,
-								"content": vm.content
-							}
-						} else {
-							urlstr = '/webZp/addZhaopin';
-							dataa = {
-								"userId": localStorage.userId,
-								"positionName": vm.title,
-								"post": $("#choosedgangwei").val(),
-								"salary": vm.xinzi,
-								"welfares": vm.fuli,
-								"province": $("#choosedprovince").val(),
-								"city": $("#choosedcity").val(),
-								"address": vm.address,
-								"education": vm.xueli,
-								"experience": vm.jingyan,
-								"professionalRank": vm.zhicheng,
-								"quantity": vm.quantity,
-								"contact": vm.contact,
-								"phone": vm.phone,
-								"email": vm.email,
-								"age": vm.age,
-								"gender": vm.gender,
-								"content": vm.content
-							}
-						}
-						post(urlstr, dataa,
-							function(data) {
-								if (data.result_code == '1') {
-									alert("发布成功!");
-									window.location.href = "../home/zhaopin/zhaopindetail.html?id=" + data.result
-										.publishId + "&isfb=isfb";
-								} else {
-									alert("发布失败，请重试！");
+						addressToLatlng($("#city").html() + vm.address, function(result) {
+							var dataa, urlstr;
+							var Request = new QueryString();
+							var itemid = Request["id"];
+							if (itemid) {
+								urlstr = '/webZp/editZhaopin';
+								dataa = {
+									"publishId": itemid,
+									"userId": localStorage.userId,
+									"positionName": vm.title,
+									"post": $("#choosedgangwei").val(),
+									"salary": vm.xinzi,
+									"welfares": vm.fuli,
+									"province": $("#choosedprovince").val(),
+									"city": $("#choosedcity").val(),
+									"address": vm.address,
+									"education": vm.xueli,
+									"experience": vm.jingyan,
+									"professionalRank": vm.zhicheng,
+									"quantity": vm.quantity,
+									"contact": vm.contact,
+									"phone": vm.phone,
+									"email": vm.email,
+									"age": vm.age,
+									"gender": vm.gender,
+									"content": vm.content,
+									"lat": result.lat,
+									"lng": result.lng
 								}
-							})
+							} else {
+								urlstr = '/webZp/addZhaopin';
+								dataa = {
+									"userId": localStorage.userId,
+									"positionName": vm.title,
+									"post": $("#choosedgangwei").val(),
+									"salary": vm.xinzi,
+									"welfares": vm.fuli,
+									"province": $("#choosedprovince").val(),
+									"city": $("#choosedcity").val(),
+									"address": vm.address,
+									"education": vm.xueli,
+									"experience": vm.jingyan,
+									"professionalRank": vm.zhicheng,
+									"quantity": vm.quantity,
+									"contact": vm.contact,
+									"phone": vm.phone,
+									"email": vm.email,
+									"age": vm.age,
+									"gender": vm.gender,
+									"content": vm.content,
+									"lat": result.lat,
+									"lng": result.lng
+								}
+							}
+							post(urlstr, dataa,
+								function(data) {
+									if (data.result_code == '1') {
+										alert("发布成功!");
+										window.location.href = "../home/zhaopin/zhaopindetail.html?id=" + data.result
+											.publishId + "&isfb=isfb";
+									} else {
+										alert("发布失败，请重试！");
+									}
+								})
+						})
 					},
 				}
 			});
