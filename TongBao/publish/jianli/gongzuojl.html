@@ -25,25 +25,31 @@
 	</head>
 
 	<body>
-		
+
 		<script type="text/javascript" charset="utf-8">
 			var Request = new QueryString();
 			var itemid = Request["id"];
-			var brief,companyname,gangwei,startdate,enddate;
-			if (itemid) {
-				post1('/webQz/QiuzhiById',false, {
+			var brief, companyname, gangwei, startdate, enddate, jobWanId, publishId;
+			 //			if (itemid) {
+			post1('/webQz/QiuzhiById', false, {
 					"userId": localStorage.userId,
 				}, function(data) {
 					console.log(data);
-					var workDic = JSON.parse(data.result.experience);
-					var obj = workDic[itemid];
-					this.companyname = obj.companyname;
-					this.gangwei = obj.gangwei;
-					this.startdate = obj.startdate;
-					this.enddate = obj.enddate;
-					this.brief = obj.brief;
+					if (data.result.jobWanId) {
+						this.jobWanId = data.result.jobWanId;
+						this.publishId = data.result.publishId;
+					}
+					if (data.result.experience) {
+						var workDic = JSON.parse(data.result.experience);
+						var obj = workDic[itemid];
+						this.companyname = obj.companyname;
+						this.gangwei = obj.gangwei;
+						this.startdate = obj.startdate;
+						this.enddate = obj.enddate;
+						this.brief = obj.brief;
+					}
 				})
-			}
+				//			}
 		</script>
 		<div id="app">
 			<section class="zp-body">
@@ -88,6 +94,14 @@
 	</body>
 
 	<script type="text/javascript">
+		var id = "";
+		var publishId1 = "";
+		if (this.jobWanId) {
+			id = this.jobWanId;
+		}
+		if (this.publishId) {
+			publishId1 = this.publishId;
+		}
 		var vm = new Vue({
 			el: '#app',
 			data: {
@@ -123,20 +137,12 @@
 						alert('请填写工作内容')
 						return
 					}
-					var id = "";
-					var publishId = "";
-					if (localStorage.jobWanId) {
-						id = localStorage.jobWanId;
-					}
-					if (localStorage.publishId) {
-						publishId = localStorage.publishId;
-					}
 					var dataa;
 					if (itemid) {
 						dataa = {
 							"userId": localStorage.userId,
 							"id": id,
-							"publishId": publishId,
+							"publishId": publishId1,
 							"companyname": vm.companyname,
 							"gangwei": vm.gangwei,
 							"startdate": vm.startdate,
@@ -149,7 +155,7 @@
 						dataa = {
 							"userId": localStorage.userId,
 							"id": id,
-							"publishId": publishId,
+							"publishId": publishId1,
 							"companyname": vm.companyname,
 							"gangwei": vm.gangwei,
 							"startdate": vm.startdate,

@@ -27,12 +27,16 @@
 
 	<body>
 		<script type="text/javascript" charset="utf-8">
-			var name, phone, email, birth, evaluation, bigdata, isboy, provinceId, cityId, provincee, cityy;
+			var name, phone, email, birth, evaluation, bigdata, isboy, provinceId, cityId, provincee, cityy, jobWanId, publishId;
 			post1('/webQz/QiuzhiById', false, {
 				"userId": localStorage.userId,
 			}, function(data) {
 				this.bigdata = data.result;
 				console.log(data);
+				if (data.result.jobWanId) {
+					this.jobWanId = data.result.jobWanId;
+					this.publishId = data.result.publishId;
+				}
 				if (data.result.name) {
 					this.name = data.result.name;
 					this.phone = data.result.phone;
@@ -93,7 +97,7 @@
 	                <option v-for="item in gzzc" :value="item.itemCode"  >{{item.itemName}}</option>
 	            </select><i class="ico ico-right1"></i></span>
 				</div>
-				<div class="zp-list overflow-h">
+				<!--<div class="zp-list overflow-h">
 					<span class="fl">最高学历</span>
 					<span class="fr zp-next select-btn">
 					<select v-model="xueli">
@@ -102,7 +106,7 @@
 	            		</select>
 						<i class="ico ico-right1"></i>
 					</span>
-				</div>
+				</div>-->
 				<div class="zp-list overflow-h">
 					<span class="fl">联系电话</span>
 					<span class="fr zp-next">
@@ -167,38 +171,45 @@
 			})
 			//职称要求
 		 getDicTable(true, "005", function(data) {
-			vm.gzzc = data.result;
-			if (bigdata.profession) {
-				for (var i = 0; i < vm.gzzc.length; i++) {
-					var obj = vm.gzzc[i];
-					if (obj.itemName == bigdata.profession) {
-						vm.zhicheng = obj.itemCode;
+				vm.gzzc = data.result;
+				if (bigdata.profession) {
+					for (var i = 0; i < vm.gzzc.length; i++) {
+						var obj = vm.gzzc[i];
+						if (obj.itemName == bigdata.profession) {
+							vm.zhicheng = obj.itemCode;
+						}
 					}
 				}
-			}
-		})
-		 //学历要求
-		getDicTable(true, "003", function(data) {
-			vm.xuelidic = data.result;
-			if (bigdata.educational) {
-				for (var i = 0; i < vm.xuelidic.length; i++) {
-					var obj = vm.xuelidic[i];
-					if (obj.itemName == bigdata.educational) {
-						vm.xueli = obj.itemCode;
-					}
-				}
-			}
-		})
+			})
+//			//学历要求
+//		 getDicTable(true, "003", function(data) {
+//			vm.xuelidic = data.result;
+//			if (bigdata.educational) {
+//				for (var i = 0; i < vm.xuelidic.length; i++) {
+//					var obj = vm.xuelidic[i];
+//					if (obj.itemName == bigdata.educational) {
+//						vm.xueli = obj.itemCode;
+//					}
+//				}
+//			}
+//		})
 		var province;
 		var city;
 		getCity(function(p, c) {
 			province = p;
 			city = c;
-			if(this.cityId){
+			if (this.cityId) {
 				selectProvinceAndCity();
 			}
-			
 		});
+		var id = "";
+		var publishId2 = "";
+		if (this.jobWanId) {
+			id = this.jobWanId;
+		}
+		if (this.publishId) {
+			publishId2 = this.publishId;
+		}
 		var vm = new Vue({
 				el: '#app',
 				data: {
@@ -209,8 +220,6 @@
 					gzjy: [],
 					zhicheng: '',
 					gzzc: [],
-					xuelidic:[],
-					xueli:'',
 					phone: this.phone,
 					email: this.email,
 					province: province,
@@ -252,18 +261,10 @@
 							alert('请填写所在城市')
 							return
 						}
-						var id = "";
-						var publishId = "";
-						if (localStorage.jobWanId) {
-							id = localStorage.jobWanId;
-						}
-						if (localStorage.publishId) {
-							publishId = localStorage.publishId;
-						}
 						post('/webQz/editPersonalBasicInfo', {
 							"userId": localStorage.userId,
 							"id": id,
-							"publishId": publishId,
+							"publishId": publishId2,
 							"name": vm.name,
 							"gender": $('#gender').val(),
 							"birth": vm.birth,
@@ -273,8 +274,7 @@
 							"email": vm.email,
 							"province": $("#choosedprovince").val(),
 							"city": $("#choosedcity").val(),
-							"evaluation": vm.evaluation,
-							"educationalBackground":vm.xueli
+							"evaluation": vm.evaluation
 						}, function(data) {
 							console.log(data);
 							if (data.result_code == '1') {
