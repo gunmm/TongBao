@@ -73,7 +73,7 @@
 								icon: 'success',
 								timeout: 1500,
 								callback: function() {
-									window.history.go(-1);
+									window.history.back();
 								}
 							});
 						})
@@ -100,7 +100,14 @@
 						dealImage(e.target.result, {
 							quality: 0.1
 						}, function(value) {
-							vm.img = value;
+							post('/upload/fileMobileBase', {
+									"imgBases": value
+								},
+								function(data) {
+									if(data.result.length > 0) {
+										vm.img = data.result[0];
+									}
+								})
 							$('#tsimg').attr('src', value);
 						});
 					};
