@@ -168,7 +168,7 @@
 							console.log(data);
 							if (data.result_code == '1') {
 								alert("保存成功!");
-								window.history.back();
+								window.history.go(-1);
 							} else {
 								alert("发布失败，请重试！");
 							}
