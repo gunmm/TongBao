@@ -211,7 +211,7 @@
 					<img src="../static/img/QQ.png" />
 				</div>
 				<div class="banner-name pos-a">
-					<img :src="userInfo.touxiang?ip+userInfo.touxiang:'../static/img/avatar_96x96.png'" />
+					<img :src="userInfo.touxiang?getAvatar(userInfo.touxiang):'../static/img/avatar_96x96.png'" />
 				</div>
 				<p class="name">
 					{{userInfo.orgName}}

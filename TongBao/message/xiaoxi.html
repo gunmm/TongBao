@@ -112,6 +112,18 @@
 
 	<script type="text/javascript" src="../js/config.js"></script>
 	<script type="text/javascript">
+		$(function() {
+			var isPageHide = false;
+			window.addEventListener('pageshow', function() {
+				if(isPageHide) {
+					window.location.reload();
+				}
+			});
+			window.addEventListener('pagehide', function() {
+				isPageHide = true;
+			});
+		})
+
 		var userInfo = '';
 		getUserInfo(localStorage.userId, function(data) {
 			userInfo = data.result;
