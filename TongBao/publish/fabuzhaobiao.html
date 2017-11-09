@@ -399,7 +399,8 @@
 									function(data) {
 										if(data.result_code == 1) {
 											alert("发布成功！");
-											window.location.href = "../home/zhaobiao/zhaobiaodetail.html?id=" + data.result.publishId + "&iszb=iszb";
+											window.location.replace("../home/zhaobiao/zhaobiaodetail.html?id=" + data.result.publishId + "&iszb=iszb");
+//											window.location.href = "../home/zhaobiao/zhaobiaodetail.html?id=" + data.result.publishId + "&iszb=iszb";
 										} else {
 											alert("发布失败，请重试！");
 										}

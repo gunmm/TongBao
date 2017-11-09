@@ -58,7 +58,7 @@
 			})
 			var Request = new QueryString();
 			var itemid = Request["id"];
-			var obj = '';
+			var obj;
 			var title, address, content, quantity, contact, phone, email, fuli, gender;
 			if (itemid) {
 				post1('/webZp/ZhaopinById', false, {
@@ -78,21 +78,15 @@
 					var sexyaoqiu = data.result.sexyaoqiu;
 					if (sexyaoqiu == '男') {
 						this.gender = 1;
-					} else {
+					} else if (sexyaoqiu == '女') {
 						this.gender = 2;
+					}else{
+						this.gender = '';
 					}
 				})
 			} else {
-				this.obj = null;
 				this.gender = '';
 				this.fuli = [];
-				this.title = '';
-				this.address = '';
-				this.content = '';
-				this.quantity = '';
-				this.contact = '';
-				this.phone = '';
-				this.email = '';
 			}
 		</script>
 
@@ -159,11 +153,11 @@
 				<div class="tab-panl none" id="sl-dizhi">
 					<div class=" overflow-h">
 						<ul class=" province fl">
-							<li v-for="item in province" @click="selectprovince(item.itemCode,item.name)">{{item.name}}</li>
+							<li v-for="item in province" @click="selectprovince(item.id,item.name)">{{item.name}}</li>
 						</ul>
 						<div class="city fl none" v-for="item in city">
 							<ul>
-								<li v-for="c in item" @click="selectcity(c.itemCode,c.name)">{{c.name}}</li>
+								<li v-for="c in item" @click="selectcity(c.id,c.name)">{{c.name}}</li>
 							</ul>
 						</div>
 					</div>
@@ -292,7 +286,7 @@
 					}
 					this.job = job;
 					this.jobList = jobM;
-					if (obj) {
+					if (this.obj) {
 						selectProvinceAndCity();
 					}
 				})
@@ -351,14 +345,18 @@
 			 getDicTable(true, "005", function(data) {
 					vm.zhichengdic = data.result;
 					if (this.obj) {
-						vm.zhicheng = this.obj.professionalId;
+						if (this.obj.professionalId) {
+							vm.zhicheng = this.obj.professionalId;
+						}
 					}
 				})
 				//年龄要求
 			 getDicTable(true, "012", function(data) {
 				vm.agedic = data.result;
 				if (this.obj) {
-					vm.age = this.obj.ageId;
+					if (this.obj.ageId) {
+						vm.age = this.obj.ageId;
+					}
 				}
 			})
 			var vm = new Vue({
@@ -516,8 +514,10 @@
 								function(data) {
 									if (data.result_code == '1') {
 										alert("发布成功!");
-										window.location.href = "../home/zhaopin/zhaopindetail.html?id=" + data.result
-											.publishId + "&isfb=isfb";
+										window.location.replace("../home/zhaopin/zhaopindetail.html?id=" + data.result
+											.publishId + "&isfb=isfb")
+//										window.location.href = "../home/zhaopin/zhaopindetail.html?id=" + data.result
+//											.publishId + "&isfb=isfb";
 									} else {
 										alert("发布失败，请重试！");
 									}
