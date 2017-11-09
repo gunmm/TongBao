@@ -103,7 +103,7 @@
 										<h4 class="fl">{{item.orgName}}</h4>
 										<span class="fr time">{{item.updatedAt}}</span>
 									</div>
-									<p class="recruit-pos"><span>{{item.city}}</span> <span class="ml-10">{{item.experience}}</span> <span class="ml-10">{{item.education}}</span></p>
+									<p class="recruit-pos mr-10"><span>{{item.city}}</span> <span class="mr-10">{{item.experience}}</span> <span class="">{{item.education}}</span></p>
 								</div>
 							</a>
 						</li>
@@ -144,7 +144,7 @@
 										</ul>
 										<span class="fr time">{{item.updatedAt}}</span>
 									</div>
-									<p class="recruit-pos"><span>{{item.city}}</span> <span class="ml-10">{{item.experience}}</span> <span class="ml-10">{{item.education}}</span></p>
+									<p class="recruit-pos mr-10"><span>{{item.city}}</span> <span class="mr-10">{{item.experience}}</span> <span class="">{{item.education}}</span></p>
 								</div>
 							</a>
 						</li>
@@ -249,9 +249,8 @@
 			userInfo = data.result;
 		})
 
-		var imglist = [];
 		post('/webLb/Carousel', {}, function(data) {
-			imglist = data.result;
+			vm.imglist = data.result;
 		})
 
 		post('/webZx/Base', {
@@ -304,6 +303,7 @@
 				qzlist: [],
 				zblist: [],
 				gylist: [],
+				imglist: [],
 				xiaoxi: ''
 			},
 			methods: {

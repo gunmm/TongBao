@@ -348,7 +348,11 @@
 						"companyshowPic": vm.shilipic
 					}, function(data) {
 						localStorage.orgId = data.result.orgId;
-						window.location.replace('../home.html');
+						if(name == 'register') {
+							window.location.replace('../home.html');
+						} else {
+							window.history.go(-1);
+						}
 					}, function() {})
 				}
 			}

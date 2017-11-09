@@ -5,7 +5,8 @@ var provinceCity = '[{"deep":1,"name":"北京市","id":1,"sort":0,"parentId":0},
 
 var vm = new Vue();
 
-localStorage.userId = 85;
+
+//localStorage.userId = 837;
 
 var urlStr = window.location.href;
 if(urlStr.indexOf('userInfoJson=') > 0) {
@@ -343,42 +344,45 @@ function dealImage(path, obj, callback) {
 	}
 
 	vm.$dialog.loading.open('');
-	var img = new Image();
-	img.src = path;
-	img.onload = function() {
-		var that = this;
-		// 默认按比例压缩
-		var w = that.width,
-			h = that.height,
-			scale = w / h;
-		w = obj.width || w;
-		h = obj.height || (w / scale);
-		var quality = 0.7; // 默认图片质量为0.7
-		//生成canvas
-		var canvas = document.createElement('canvas');
-		var ctx = canvas.getContext('2d');
-		// 创建属性节点
-		var anw = document.createAttribute("width");
-		anw.nodeValue = w;
-		var anh = document.createAttribute("height");
-		anh.nodeValue = h;
-		canvas.setAttributeNode(anw);
-		canvas.setAttributeNode(anh);
-		ctx.drawImage(that, 0, 0, w, h);
-		// 图像质量
-		if(obj.quality && obj.quality <= 1 && obj.quality > 0) {
-			quality = obj.quality;
-		}
-		// quality值越小，所绘制出的图像越模糊
-		var base64 = canvas.toDataURL('image/jpeg', quality);
 
-		if(base64.length > 1 * 1024 * 1024) {
-			dealImage(base64, {
-				quality: 0.5
-			}, callback);
-		} else {
-			vm.$dialog.loading.close();
-			callback(base64);
+	setTimeout(function() {
+		var img = new Image();
+		img.src = path;
+		img.onload = function() {
+			var that = this;
+			// 默认按比例压缩
+			var w = that.width,
+				h = that.height,
+				scale = w / h;
+			w = obj.width || w;
+			h = obj.height || (w / scale);
+			var quality = 0.7; // 默认图片质量为0.7
+			//生成canvas
+			var canvas = document.createElement('canvas');
+			var ctx = canvas.getContext('2d');
+			// 创建属性节点
+			var anw = document.createAttribute("width");
+			anw.nodeValue = w;
+			var anh = document.createAttribute("height");
+			anh.nodeValue = h;
+			canvas.setAttributeNode(anw);
+			canvas.setAttributeNode(anh);
+			ctx.drawImage(that, 0, 0, w, h);
+			// 图像质量
+			if(obj.quality && obj.quality <= 1 && obj.quality > 0) {
+				quality = obj.quality;
+			}
+			// quality值越小，所绘制出的图像越模糊
+			var base64 = canvas.toDataURL('image/jpeg', quality);
+
+			if(base64.length > 1 * 1024 * 1024) {
+				dealImage(base64, {
+					quality: 0.1
+				}, callback);
+			} else {
+				vm.$dialog.loading.close();
+				callback(base64);
+			}
 		}
-	}
+	})
 }
