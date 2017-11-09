@@ -142,15 +142,22 @@
 						});
 						return false;
 					}
-					if(!(/^1(3|4|5|7|8)\d{9}$/.test(vm.phone))) {
+					if(vm.confirmpassword == '') {
 						this.$dialog.toast({
-							mes: '手机号码有误，请重填',
+							mes: '确认密码不能为空',
 							icon: 'error',
 							timeout: 1500
 						});
 						return false;
 					}
-
+					if(vm.confirmpassword != vm.password) {
+						this.$dialog.toast({
+							mes: '两次密码输入不一致',
+							icon: 'error',
+							timeout: 1500
+						});
+						return false;
+					}
 					post('/webRegist/userRegist', {
 						userType: type,
 						telPhone: vm.phone,
