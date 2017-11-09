@@ -285,10 +285,7 @@
 					console.log(data);
 					vm.$dialog.loading.close();
 					if (data.result_code != 1) {
-						new Vue().$dialog.alert({
-							mes: data.reason
-						});
-						return;
+						preview = 0;
 					} else {
 						if (data.reason == 'accept') {
 							preview = 1;
