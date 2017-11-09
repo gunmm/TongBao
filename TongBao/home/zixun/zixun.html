@@ -35,8 +35,8 @@
 		<div id="app" class="zixun">
 			<section class="nav-list">
 				<ul class="nav-head">
-					<li id="category_" class="current" @click="loadFirstPage('')">推荐</li>
-					<li v-for="categorie in categories" :id="'category_'+categorie.id" @click="loadFirstPage(categorie.id)">
+					<li id="tuijian" class="current" @click="loadFirstPage('')">推荐</li>
+					<li :id="categorie.id" v-for="categorie in categories" :id="'category_'+categorie.id" @click="loadFirstPage(categorie.id)">
 						{{categorie.title}}
 					</li>
 				</ul>
@@ -114,6 +114,14 @@
 						})
 					},
 					loadFirstPage: function(categoryid) {
+						if(categoryid) {
+							$('#' + categoryid).addClass('current').siblings('.nav-head li').removeClass('current');
+							$('.car-list').eq($('#' + categoryid).index()).show().siblings('.car-list').hide();
+						} else {
+							$('#tuijian').addClass('current').siblings('.nav-head li').removeClass('current');
+							$('.car-list').eq($('#tuijian').index()).show().siblings('.car-list').hide();
+						}
+
 						this.categoryid = categoryid;
 						post('/webZx/Base', {
 							pageNo: 1,
@@ -125,16 +133,6 @@
 					}
 				}
 			})
-
-			$(function() {
-				$('.nav-head li').click(function() {
-					$(this).addClass('current').siblings('.nav-head li').removeClass('current');
-					$('.car-list').eq($(this).index()).show().siblings('.car-list').hide();
-					//window.location.href="/site/zixun?categoryid="+$(this).attr("id").split("_")[1]; 
-					//var id = $(this).attr("id").split("_").length > 1 ? $(this).attr("id").split("_")[1] : "";
-					//$("#choosecategory").val(id); 
-				});
-			});
 		</script>
 	</body>
 

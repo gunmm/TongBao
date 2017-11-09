@@ -337,6 +337,10 @@
 		}
 
 		$(function() {
+			window.addEventListener("popstate", function(e) {
+				window.location.replace('../../home.html');
+			}, false);
+
 			$('.tab-nav li').on("click", function() {
 				$('.tab-nav li span').removeClass('current');
 				$(this).find('span').addClass('current');

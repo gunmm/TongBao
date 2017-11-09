@@ -222,7 +222,7 @@
 				<ul class="nav-head">
 					<li id="cardgongying" class="current">供应信息</li>
 					<li id="cardzhaobiao">招标信息</li>
-					<li v-if="localStorage.type==2" id="cardzhaopin">招聘信息</li>
+					<li v-show="userInfo.type==2" id="cardzhaopin">招聘信息</li>
 				</ul>
 			</section>
 
@@ -262,7 +262,7 @@
 			<div class="footer">
 				<ul class="overflow-h">
 					<li class="fl" id="phone">
-						<a :href="'tel:'+userInfo.teletphone">
+						<a :href="'tel:'+userInfo.telephone">
 							<div class="footer-pic">
 								<img src="../static/img/ico-phone.png" />
 							</div>
