@@ -187,7 +187,7 @@
 				vm.jingyans = data.result;
 				if(this.obj){
 					if(this.obj.jingyanId){
-						vm.jingyanId = this.obj.jingyanId;
+						vm.jingyan = this.obj.jingyanId;
 					}
 				}
 				
@@ -198,7 +198,7 @@
 				vm.xuelis = data.result;
 				if(this.obj){
 					if(this.obj.xueliId){
-						vm.xueliId = this.obj.xueliId;
+						vm.xueli = this.obj.xueliId;
 					}
 				}
 			})
@@ -318,7 +318,7 @@
 								console.log(data);
 								if (data.result_code == '1') {
 									alert("订阅成功!");
-									window.history.back();
+									window.history.go(-1);
 								} else {
 									alert("订阅失败，请重试！");
 								}
