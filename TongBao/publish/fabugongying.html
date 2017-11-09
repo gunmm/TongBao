@@ -461,7 +461,8 @@
 									if (data.result_code == 1) {
 										console.log(data);
 										alert("发布成功！");
-										window.location.href = "../home/gongying/gongyingdetail.html?id=" + data.result.publishId + "&isgy=isgy";
+										window.location.replace("../home/gongying/gongyingdetail.html?id=" + data.result.publishId + "&isgy=isgy");
+//										window.location.href = "../home/gongying/gongyingdetail.html?id=" + data.result.publishId + "&isgy=isgy";
 									} else {
 										alert("发布失败，请重试！");
 									}
