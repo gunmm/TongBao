@@ -402,18 +402,22 @@
 			reader.readAsDataURL(file);
 			reader.onload = function(e) {
 				$('#avatar').attr('src', e.target.result);
-				post('/webQz/editPersonalBasicInfo', {
-					"userId": localStorage.userId,
-					"id": jobWanId,
-					"publishId": publishId,
-					"lifePhotoImg": e.target.result,
-				}, function(data) {
-					if(data.result_code == '1') {
-						alert("更新成功!");
-					} else {
-						alert("更新失败，请重试！");
-					}
-				})
+				dealImage(e.target.result, {
+					quality: 0.1
+				}, function(value) {
+					post('/webQz/editPersonalBasicInfo', {
+						"userId": localStorage.userId,
+						"id": jobWanId,
+						"publishId": publishId,
+						"lifePhotoImg": value,
+					}, function(data) {
+						if(data.result_code == '1') {
+							alert("更新成功!");
+						} else {
+							alert("更新失败，请重试！");
+						}
+					})
+				});
 			};
 		}
 

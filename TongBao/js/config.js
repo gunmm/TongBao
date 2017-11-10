@@ -5,7 +5,7 @@ var provinceCity = '[{"deep":1,"name":"北京市","id":1,"sort":0,"parentId":0},
 
 var vm = new Vue();
 
-localStorage.userId = 835;
+localStorage.userId = 837;
 
 var urlStr = window.location.href;
 if(urlStr.indexOf('userInfoJson=') > 0) {
@@ -43,6 +43,9 @@ function post(url, data, callback, callback1) {
 				new Vue().$dialog.alert({
 					mes: data.reason
 				});
+				if(callback1 != null) {
+					callback1();
+				}
 				return;
 			}
 			callback(data);
@@ -52,9 +55,6 @@ function post(url, data, callback, callback1) {
 			vm.$dialog.alert({
 				mes: '服务器连接失败!'
 			});
-			if(callback1 != null) {
-				callback1();
-			}
 		}
 	});
 }

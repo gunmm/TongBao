@@ -113,18 +113,22 @@
 				reader.readAsDataURL(file);
 				reader.onload = function(e) {
 					$('#headImg').attr('src', e.target.result);
-					post('/webUser/changeMyTouxiang', {
-							'userId': localStorage.userId,
-							'img': e.target.result
-						},
-						function(data) {
-							console.log(data);
-							if(data.result_code == 1) {
-								alert("修改成功！");
-							} else {
-								alert("修改失败，请重试！");
-							}
-						})
+					dealImage(e.target.result, {
+						quality: 0.1
+					}, function(value) {
+						post('/webUser/changeMyTouxiang', {
+								'userId': localStorage.userId,
+								'img': value
+							},
+							function(data) {
+								console.log(data);
+								if(data.result_code == 1) {
+									alert("修改成功！");
+								} else {
+									alert("修改失败，请重试！");
+								}
+							})
+					});
 				};
 			}
 		</script>
