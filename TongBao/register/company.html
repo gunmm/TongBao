@@ -28,7 +28,6 @@
 				height: 90px;
 				width: 33.33%;
 			}
-			
 			.show-pic ul li div {
 				margin: auto;
 			}
@@ -173,7 +172,7 @@
 		var itemid = Request["id"];
 		var obj;
 		var companyname, companyphone, companyemail, companyscale, companytype, companyaddress, companybrief, picarray, logostr, renzhengpic;
-		if(itemid) {
+		if (itemid) {
 			post1('/webUser/findUserMessage', false, {
 				userId: localStorage.userId
 			}, function(data) {
@@ -186,9 +185,9 @@
 				this.companytype = data.result.compnay.orgType;
 				this.companyaddress = data.result.compnay.orgAddress;
 				this.companybrief = data.result.compnay.orgBrief;
-				if(data.result.compnay.companyshowFileName) {
+				if (data.result.compnay.companyshowFileName) {
 					this.picarray = data.result.compnay.companyshowFileName;
-					for(var i = 0; i < data.result.compnay.companyshowFileName.length; i++) {
+					for (var i = 0; i < data.result.compnay.companyshowFileName.length; i++) {
 						var str = data.result.compnay.companyshowFileName[i];
 						$("#xz").before(
 							"<li class='pos-r fl'>" +
@@ -204,11 +203,11 @@
 				} else {
 					this.picarray = [];
 				}
-				if(data.result.compnay.logo) {
+				if (data.result.compnay.logo) {
 					this.logostr = data.result.compnay.logo;
 					$('#logocompany').attr('src', ip + data.result.compnay.logo);
 				}
-				if(data.result.compnay.companycertification) {
+				if (data.result.compnay.companycertification) {
 					this.renzhengpic = data.result.compnay.companycertification;
 					$('#ziliao').attr('src', ip + data.result.compnay.companycertification);
 				}
@@ -223,7 +222,7 @@
 		var name = Request["name"];
 		var uid = Request["uid"];
 		$(function() {
-			if(name == 'register') {
+			if (name == 'register') {
 				pushHistory();
 				window.addEventListener("popstate", function(e) {
 					window.location.replace('../home.html');
@@ -249,7 +248,7 @@
 		function Trim(str, is_global) {
 			var result;
 			result = str.replace(/(^\s+)|(\s+$)/g, "");
-			if(is_global.toLowerCase() == "g") {
+			if (is_global.toLowerCase() == "g") {
 				result = result.replace(/\s/g, "");
 			}
 			return result;
@@ -259,7 +258,7 @@
 		getCity(function(p, c) {
 			province = p;
 			city = c;
-			if(this.obj) {
+			if (this.obj) {
 				selectProvinceAndCity();
 			}
 		});
@@ -301,34 +300,34 @@
 					$("input[name='shilizhanshi']").each(function(index) {
 						shilizhanshi += this.value + ",";
 					});
-					if(shilizhanshi.length > 1) {
+					if (shilizhanshi.length > 1) {
 						$("#companyshow").val(shilizhanshi.substring(0, shilizhanshi.length - 1));
 					}
-					if(!checkEmail() || !checkTel()) {
+					if (!checkEmail() || !checkTel()) {
 						return false;
 					}
 					vm.companyname = Trim(vm.companyname, 'g');
-					if(vm.companyname == "") {
+					if (vm.companyname == "") {
 						alert('请填写企业名称')
 						return
 					}
-					if($('.info-select1').val() == "") {
+					if ($('.info-select1').val() == "") {
 						alert('请选择企业规模')
 						return
 					}
-					if($('.info-select2').val() == "") {
+					if ($('.info-select2').val() == "") {
 						alert('请选择企业性质')
 						return
 					}
-					if($('.city-choice').text() == '请选择') {
+					if ($('.city-choice').text() == '请选择') {
 						alert('请选择城市所在地')
 						return
 					}
-					if($('.address-info').val() == "") {
+					if ($('.address-info').val() == "") {
 						alert('请填写详细地址')
 						return
 					}
-					if($('.jishao-com').val() == "") {
+					if ($('.jishao-com').val() == "") {
 						alert('请填写企业介绍')
 						return
 					}
@@ -348,7 +347,7 @@
 						"companyshowPic": vm.shilipic
 					}, function(data) {
 						localStorage.orgId = data.result.orgId;
-						if(name == 'register') {
+						if (name == 'register') {
 							window.location.replace('../home.html');
 						} else {
 							window.history.go(-1);
@@ -369,7 +368,7 @@
 
 		function checkEmail() {
 			var email = vm.companyemail;
-			if(!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+			if (!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
 				vm.$dialog.alert({
 					mes: 'email格式不正确！请重新输入!'
 				});
@@ -379,7 +378,11 @@
 		}
 
 		function checkTel() {
-			if(!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.companyphone))) {
+			
+			
+			//			if (!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.companyphone))) {
+			//			if (!(/^(([0+]d{2,3}-)?(0d{2,3})-)(d{7,8})(-(d{3,}))?$/.test(vm.companyphone))) {
+			if (!(/^(((0\d{3}[\-])?\d{7}|(0\d{2}[\-])?\d{8}))([\-]\d{2,4})?$/.test(vm.companyphone))) {
 				vm.$dialog.alert({
 					mes: '电话格式不正确!固定电话请在区号后和分机号前加-,如:010-6501345-123'
 				});
@@ -402,7 +405,7 @@
 		})
 
 		function chooseImg(e) {
-			switch(e) {
+			switch (e) {
 				case 1:
 					$('#ip_logo').click();
 					break;
@@ -419,7 +422,7 @@
 			var files = input.files;
 			var file = files[0];
 			var imageType = /^image\//;
-			if(!imageType.test(file.type)) {
+			if (!imageType.test(file.type)) {
 				alert("请选择图片类型上传");
 				return;
 			}
@@ -434,7 +437,7 @@
 							"imgBases": value
 						},
 						function(data) {
-							if(data.result.length > 0) {
+							if (data.result.length > 0) {
 								vm.logostr = data.result[0];
 							}
 						})
@@ -444,10 +447,10 @@
 
 		function uploadShiLi(input) {
 			var files = input.files;
-			for(var i = 0; i < files.length; i++) { //预览新添加的图片
+			for (var i = 0; i < files.length; i++) { //预览新添加的图片
 				var file = files[i];
 				var imageType = /^image\//;
-				if(!imageType.test(file.type)) {
+				if (!imageType.test(file.type)) {
 					alert("请选择图片类型上传");
 					continue;
 				}
@@ -471,7 +474,7 @@
 								"imgBases": value
 							},
 							function(data) {
-								if(data.result.length > 0) {
+								if (data.result.length > 0) {
 									vm.shilipic.push(data.result[0]);
 								}
 							})
@@ -482,10 +485,10 @@
 
 		function uploadZiLiao(input) {
 			var files = input.files;
-			for(var i = 0; i < files.length; i++) { //预览新添加的图片
+			for (var i = 0; i < files.length; i++) { //预览新添加的图片
 				var file = files[i];
 				var imageType = /^image\//;
-				if(!imageType.test(file.type)) {
+				if (!imageType.test(file.type)) {
 					alert("请选择图片类型上传");
 					continue;
 				}
@@ -500,7 +503,7 @@
 								"imgBases": value
 							},
 							function(data) {
-								if(data.result.length > 0) {
+								if (data.result.length > 0) {
 									vm.renzhengpic = data.result[0];
 								}
 							})

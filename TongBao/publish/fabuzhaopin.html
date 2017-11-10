@@ -35,26 +35,30 @@
 		<script type="text/javascript" charset="utf-8">
 			var companyname;
 			getUserInfo(localStorage.userId, function(data) {
-				console.log(data);
 				if (data.result.regStatus != 1) {
 					window.location.href = "../register/register.html";
+					return;
 				} else {
 					vm.companyname = data.result.orgName;
 					this.companyname = data.result.orgName;
 					if (data.result.type == 1) {
 						alert("个人用户不能发布招聘信息!");
 						window.location.href = "../fabu.html";
+						return;
 					} else {
 						if (data.result.regist == 0) {
 							window.location.href = "../register/company.html";
+							return;
 						} else {
 							if (data.result.expire == 0) {
 								alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 								window.location.href = "../fabu.html";
+								return;
 							}
 						}
 					}
 				}
+				$('#app').show();
 			})
 			var Request = new QueryString();
 			var itemid = Request["id"];
@@ -90,7 +94,7 @@
 			}
 		</script>
 
-		<div id="app" class="overflow-h">
+		<div id="app" class="overflow-h" hidden>
 			<section class="zp-body ">
 				<div class="company-name pl-10">
 					{{companyname}}
