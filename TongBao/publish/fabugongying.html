@@ -180,7 +180,7 @@
 				</div>
 			</section>
 			<div class="h-20"></div>
-			<div class="public-sure-btn" @click="fabu()">
+			<div id="confirmBtn" class="public-sure-btn" @click="fabu()">
 				确认发布
 				<!--<?=empty($id)?'确认发布':'确认修改' ?>-->
 			</div>
@@ -292,6 +292,7 @@
 			});
 			var items = new Array();
 			var isfabu = false;
+			var isrepetition = false;
 			var vm = new Vue({
 				el: "#app",
 				data: {
@@ -407,6 +408,10 @@
 							alert('参数规格填写不完整!');
 							return;
 						}
+						if(isrepetition){
+							return;
+						}
+						isrepetition = true;
 						addressToLatlng($("#city").html() + vm.address, function(result) {
 							var dataa, urlstr;
 							var Request = new QueryString();
@@ -457,6 +462,7 @@
 							}
 							post(urlstr, dataa,
 								function(data) {
+									isrepetition = false;
 									if (data.result_code == 1) {
 										console.log(data);
 										alert("发布成功！");
