@@ -363,6 +363,7 @@
 					}
 				}
 			})
+			 var isrepetition = false;
 			var vm = new Vue({
 				el: "#app",
 				data: {
@@ -460,6 +461,10 @@
 							alert('请填写联系人姓名')
 							return;
 						}
+						if (isrepetition) {
+							return;
+						}
+						isrepetition = true;
 						addressToLatlng($("#city").html() + vm.address, function(result) {
 							var dataa, urlstr;
 							var Request = new QueryString();
@@ -516,15 +521,14 @@
 							}
 							post(urlstr, dataa,
 								function(data) {
+									isrepetition = false;
 									if (data.result_code == '1') {
 										alert("发布成功!");
 										window.location.replace("../home/zhaopin/zhaopindetail.html?id=" + data.result
 											.publishId + "&isfb=isfb")
-//										window.location.href = "../home/zhaopin/zhaopindetail.html?id=" + data.result
-//											.publishId + "&isfb=isfb";
-									} else {
-										alert("发布失败，请重试！");
 									}
+								},function(){
+									isrepetition = false;
 								})
 						})
 					},

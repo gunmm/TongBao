@@ -464,13 +464,11 @@
 								function(data) {
 									isrepetition = false;
 									if (data.result_code == 1) {
-										console.log(data);
 										alert("发布成功！");
 										window.location.replace("../home/gongying/gongyingdetail.html?id=" + data.result.publishId + "&isgy=isgy");
-										//										window.location.href = "../home/gongying/gongyingdetail.html?id=" + data.result.publishId + "&isgy=isgy";
-									} else {
-										alert("发布失败，请重试！");
 									}
+								},function(){
+									isrepetition = false;
 								})
 						})
 					},
