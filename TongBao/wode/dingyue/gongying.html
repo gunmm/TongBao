@@ -31,22 +31,29 @@
 			getUserInfo(localStorage.userId, function(data) {
 				if (data.result.regStatus != 1) {
 					window.location.href = "../../register/register.html";
+					return;
 				} else {
 					if (data.result.type == 2) {
 						if (data.result.regist == 0) {
 							window.location.href = "../../register/company.html";
+							return;
 						} else {
 							if (data.result.expire == 0) {
 								alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 								window.location.href = "../../fabu.html";
+								return;
 							}
 						}
+						vm.type = false;
+					}else{
+						vm.type = true;
 					}
 				}
+				$('#app').show();
 			})
 			 
 		</script>
-		<div id="app">
+		<div id="app" hidden>
 			<section class="content-list  lh-24" style="padding-top: 2.25rem;">
 				<yd-infinitescroll :on-infinite="loadList">
 					<yd-list theme="4" slot="list">
@@ -135,12 +142,12 @@
 				}
 			}
 		})
-		if (localStorage.type == 1) {
-			console.log(localStorage.type);
-			vm.type = true;
-		} else {
-			vm.type = false;
-		}
+//		if (localStorage.type == 1) {
+//			console.log(localStorage.type);
+//			vm.type = true;
+//		} else {
+//			vm.type = false;
+//		}
 		var tab = new auiTab({
 			element: document.getElementById("tab"),
 			index: 1

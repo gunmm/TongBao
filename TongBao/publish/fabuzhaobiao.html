@@ -35,19 +35,24 @@
 			getUserInfo(localStorage.userId, function(data) {
 				if(data.result.regStatus != 1) {
 					window.location.href = "../register/register.html";
+					return;
 				} else {
 					if(data.result.type == 2) {
 						if(data.result.regist == 0) {
 							window.location.href = "../register/company.html";
+							return;
 						} else {
 							if(data.result.expire == 0) {
 								alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 								window.location.href = "../fabu.html";
+								return;
 							}
 						}
 					}
 				}
+				$('#app').show();
 			})
+			
 
 			var Request = new QueryString();
 			var itemid = Request["id"];
@@ -72,7 +77,7 @@
 			}
 		</script>
 
-		<div id="app">
+		<div id="app" hidden>
 			<section class="tender-top mb-10">
 				<div class="tender-common">
 					<span class="fl">招标类别</span>

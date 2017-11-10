@@ -29,17 +29,19 @@
 			getUserInfo(localStorage.userId, function(data) {
 				if(data.result.regStatus != 1) {
 					window.location.href = "../../register/register.html";
+					return;
 				} else {
 					if(data.result.type == 2) {
 						alert("企业用户不能发布求职信息!");
 						window.location.href = "../../fabu.html";
+						return;
 					}
 				}
+				$('#app').show();
 			})
-			//			history.replaceState({}, "建立", 'jianli.html' + '?time=' + (+new Date()));
 		</script>
 
-		<div id="app">
+		<div id="app" hidden>
 			<section class="compile-head  bg-fff">
 				<div class="overflow-h"><span class="fl ">近期证件照</span>
 					<div class="fr compile-pic"><img style="border-radius: 50%;" id="avatar" src="../../static/img/my-logo.png" alt="" onclick="chooseImage()"><span class="fr g-right"><i class="ico ico-right1 right-posi"></i></span></div>
@@ -402,8 +404,8 @@
 				$('#avatar').attr('src', e.target.result);
 				post('/webQz/editPersonalBasicInfo', {
 					"userId": localStorage.userId,
-					"id": this.jobWanId,
-					"publishId": this.publishId,
+					"id": jobWanId,
+					"publishId": publishId,
 					"lifePhotoImg": e.target.result,
 				}, function(data) {
 					if(data.result_code == '1') {
