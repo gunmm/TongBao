@@ -259,7 +259,7 @@
 			</section>
 
 			<div class="div-one-bot "></div>
-			<div class="footer">
+			<div v-if="id!=localStorage.userId" class="footer">
 				<ul class="overflow-h">
 					<li class="fl" id="phone">
 						<a :href="'tel:'+userInfo.telephone">

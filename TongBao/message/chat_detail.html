@@ -68,28 +68,28 @@
 					<li v-for="item in chatlist" class="aui-chat">
 						<div class="aui-chat-header">{{item.strCreatedAt}}</div>
 						<div v-if="item.fromUid!=localStorage.userId" class="aui-chat-item aui-chat-left">
-							<div class="aui-chat-media" style="height: 2rem;">
-								<a :href="'cardgongying.html?id='+item.fromUid">
-									<img style="height: 2rem;" :src="item.toTouxiang?getAvatar(item.toTouxiang):'../static/img/avatar_96x96.png'" />
+							<div class="aui-chat-media">
+								<a style="width: 2rem; height: 2rem;" :href="'cardgongying.html?id='+item.fromUid">
+									<img style="width: 2rem; height: 2rem;" :src="item.toTouxiang?getAvatar(item.toTouxiang):'../static/img/avatar_96x96.png'" />
 								</a>
 							</div>
 							<div class="aui-chat-inner">
 								<div class="aui-chat-content">
 									<div class="aui-chat-arrow"></div>
-									{{item.messageContent}}
+									{{decodeURI(item.messageContent)}}
 								</div>
 							</div>
 						</div>
 						<div v-else class="aui-chat-item aui-chat-right">
-							<div class="aui-chat-media" style="height: 2rem;">
-								<a :href="'cardgongying.html?id='+item.fromUid">
-									<img style="height: 2rem;" :src="item.fromTouxiang?getAvatar(item.fromTouxiang):'../static/img/avatar_96x96.png'" />
+							<div class="aui-chat-media">
+								<a style="width: 2rem; height: 2rem;" :href="'cardgongying.html?id='+item.fromUid">
+									<img style="width: 2rem; height: 2rem;" :src="userInfo.touxiang?getAvatar(userInfo.touxiang):'../static/img/avatar_96x96.png'" />
 								</a>
 							</div>
 							<div class="aui-chat-inner">
 								<div class="aui-chat-content">
 									<div class="aui-chat-arrow"></div>
-									{{item.messageContent}}
+									{{decodeURI(item.messageContent)}}
 								</div>
 								<div class="aui-chat-status"></div>
 							</div>
@@ -150,9 +150,16 @@
 				post('/webUser/mySendMessage', {
 					fromUid: localStorage.userId,
 					toUid: toId,
-					messageContent: v
+					messageContent: encodeURI(v)
 				}, function(data) {
-					$('#chat').append('<li class="aui-chat"><div class="aui-chat-header"></div><div class="aui-chat-item aui-chat-right"><div class = "aui-chat-media" style="height: 2rem;"><img style="height: 100%;" src = "' + getAvatar(vm.userInfo.touxiang) + '" /></div><div class = "aui-chat-inner"><div class = "aui-chat-content"><div class = "aui-chat-arrow"></div>' + v + '</div><div class = "aui-chat-status"></div></div></div></li>');
+					var src = '';
+					if(vm.userInfo.touxiang) {
+						src = getAvatar(vm.userInfo.touxiang);
+					} else {
+						src = '../static/img/avatar_96x96.png';
+					}
+
+					$('#chat').append('<li class="aui-chat"><div class="aui-chat-header"></div><div class="aui-chat-item aui-chat-right"><div class = "aui-chat-media" style="height: 2rem;"><img style="height: 100%;" src = "' + src + '" /></div><div class = "aui-chat-inner"><div class = "aui-chat-content"><div class = "aui-chat-arrow"></div>' + v + '</div><div class = "aui-chat-status"></div></div></div></li>');
 					window.scrollTo(0, document.body.scrollHeight);
 				})
 				$('#in').val("");

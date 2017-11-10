@@ -73,7 +73,9 @@
 			</section>
 			<section v-for="item in chatMessage" class="mesg overflow-h border-b">
 				<div class="pic pos-r">
-					<a :href="item.fromUid==localStorage.userId?'cardgongying.html?id='+item.toUid:'cardgongying.html?id='+item.fromUid"><img :src="item.touxiang?ip+item.touxiang:'../static/img/avatar_96x96.png'" /></a>
+					<a style="width: 2.8rem; height: 2.8rem;" :href="item.fromUid==localStorage.userId?'cardgongying.html?id='+item.toUid:'cardgongying.html?id='+item.fromUid">
+						<img :src="item.toTouxiang?getAvatar(item.toTouxiang):'../static/img/avatar_96x96.png'" />
+					</a>
 					<i v-if="item.fromUid!=localStorage.userId&&item.read==0" class="red"></i>
 				</div>
 				<div class="msg-right">
@@ -83,7 +85,7 @@
 						<span class="fr">{{item.strCreatedAt}}</span>
 					</p>
 					<p class="msg-news" @click="chat(item.fromUid==localStorage.userId?item.toUid:item.fromUid)">
-						{{item.messageContent}}
+						{{decodeURI(item.messageContent)}}
 					</p>
 				</div>
 			</section>

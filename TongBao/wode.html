@@ -313,17 +313,17 @@
 			window.addEventListener('pagehide', function() {
 				isPageHide = true;
 			});
-		})
 
-		getUserInfo(localStorage.userId, function(data) {
-			vm.userInfo = data.result;
+			getUserInfo(localStorage.userId, function(data) {
+				vm.userInfo = data.result;
 
-			if(data.result.regStatus != 1) {
-				window.location.replace('register/register.html');
-				return;
-			}
+				if(data.result.regStatus != 1) {
+					window.location.replace('register/register.html');
+					return;
+				}
 
-			$('#app').show();
+				$('#app').show();
+			})
 		})
 
 		post('/webUser/allNotReadMessage', {

@@ -226,7 +226,7 @@
 			</article>
 			<section v-for="item in bidlist" :id="item.id" class="mesg overflow-h border-b">
 				<div class="pic">
-					<a href=""><img :src="ip+item.touxiangUrl" /></a>
+					<a href=""><img :src="getAvatar(touxiangUrl)" /></a>
 				</div>
 				<div class="msg-right">
 					<p class="overflow-h">
