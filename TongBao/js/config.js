@@ -7,6 +7,10 @@ var vm = new Vue();
 
 localStorage.userId = 837;
 
+function setuserId(userId) {
+	localStorage.userId = userId;
+}
+
 var urlStr = window.location.href;
 if(urlStr.indexOf('userInfoJson=') > 0) {
 	var str = decodeURI(urlStr);
