@@ -196,6 +196,10 @@
 			.g-fix-ios-overflow-scrolling-bug {
 				-webkit-overflow-scrolling: auto!important
 			}
+			
+			.m-toast p {
+				color: white;
+			}
 		</style>
 	</head>
 
@@ -204,7 +208,7 @@
 			<section class="content-list lh-24" style="padding-top: 2.25rem;">
 				<yd-infinitescroll :on-infinite="loadList">
 					<yd-list theme="4" slot="list">
-						<yd-list-item v-for="item in datalist" type="link">
+						<yd-list-item v-for="item in datalist" :href='"zhaobiaodetail.html?id="+item.id'>
 							<p slot="title" class="f-16 ">
 								<a :href='"zhaobiaodetail.html?id="+item.id' class="w-55">
 									<span>{{item.title}}</span>
@@ -216,13 +220,15 @@
 									<span class="fl">{{item.city}}</span>
 									<span class="ml-15">{{item.quantity==-1||item.quantity==''?'已招标文件为主	单位：':item.quantity}}{{item.unit}}</span>
 									<span class="fr time">{{item.updatedAt}}</span>
-								</h4>
+									</h4>
 								<p class="recruit-pos f-14 mt-5  overflow-h">
 									<span class="fl">{{item.orgName}}</span>
 									<span class="fr">
-							  		<button :id="item.id" class="f-13 c-ccc mr-10" :value='item.id' @click="remove(item.id)">删除</button>
-									<button class="f-13 c-3095e3 mr-10" :value='item.id' @click="refresh(item.id)">更新</button>
-									<span class="f-13 "><a :href='"../../publish/fabuzhaobiao.html?id="+item.id' class="c-3095e3" >编辑</a></span>
+										<a href="#">
+							  			<button :id="item.id" class="f-13 c-ccc mr-10" :value='item.id' @click="remove(item.id)">删除</button>
+										<button class="f-13 c-3095e3 mr-10" :value='item.id' @click="refresh(item.id)">更新</button>
+										</a>
+										<span class="f-13 "><a :href='"../../publish/fabuzhaobiao.html?id="+item.id' class="c-3095e3" >编辑</a></span>
 									</span>
 								</p>
 							</yd-list-other>
@@ -253,7 +259,6 @@
 			messageType: 2,
 			userId: localStorage.userId
 		}, function(data) {
-			console.log(data)
 			vm.datalist = data.result;
 		})
 
@@ -291,7 +296,7 @@
 							post('/webUser/DeleteById', {
 								id: id
 							}, function(data) {
-								$('#' + id).parent().parent().parent().parent().parent().remove();
+								$('#' + id).parent().parent().parent().parent().parent().parent().remove();
 							})
 						}
 					});

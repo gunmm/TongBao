@@ -204,7 +204,7 @@
 	<body class="bg-fff">
 		<div id="app">
 			<article class="m-list list-theme4">
-				<a :href="'../../home/zhaobiao/zhaobiaodetail.html?id='+data.id" class="list-item">
+				<a v-if='data' :href="'../../home/zhaobiao/zhaobiaodetail.html?id='+data.id" class="list-item">
 					<div class="list-img"></div>
 					<div class="list-mes">
 						<div class="list-title">
@@ -219,14 +219,16 @@
 								<span class="ml-15">{{data.quantity==-1||data.quantity==''?'已招标文件为主	单位：':data.quantity}}{{data.unit}}</span> 
 								<span class="fr time ">{{data.updatedAt}}</span>
 							</h4>
-							<p class="recruit-pos f-14 mt-5 pos-name">{{data.orgName}}</p>
+							<p class="recruit-pos f-14 mt-10 pos-name">{{data.orgName}}</p>
 						</div>
 					</div>
 				</a>
 			</article>
 			<section v-for="item in bidlist" :id="item.id" class="mesg overflow-h border-b">
 				<div class="pic">
-					<a href=""><img :src="getAvatar(touxiangUrl)" /></a>
+					<a style="width: 4.5rem; height: 4.5rem;" :href="'../../message/cardgongying.html?id='+item.userId">
+						<img :src="item.touxiangUrl?getAvatar(item.touxiangUrl):'../../static/img/avatar_96x96.png'" />
+					</a>
 				</div>
 				<div class="msg-right">
 					<p class="overflow-h">
@@ -253,7 +255,6 @@
 			pageSize: null,
 			id: id
 		}, function(data) {
-			console.log(data);
 			vm.data = data.result.zhaobiao;
 			vm.bidlist = data.result.bidList;
 		})

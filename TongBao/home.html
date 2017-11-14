@@ -247,6 +247,7 @@
 		var userInfo = '';
 		getUserInfo(localStorage.userId, function(data) {
 			userInfo = data.result;
+			$('#app').show();
 		})
 
 		post('/webLb/Carousel', {}, function(data) {
@@ -310,7 +311,7 @@
 
 			},
 			mounted: function() {
-				$('#app').show();
+
 			}
 		});
 

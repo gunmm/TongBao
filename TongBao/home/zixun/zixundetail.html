@@ -57,9 +57,8 @@
 
 		<script type="text/javascript" src="../../js/config.js"></script>
 		<script type="text/javascript">
-			var userInfo = '';
 			getUserInfo(localStorage.userId, function(data) {
-				userInfo = data.result;
+				vm.userInfo = data.result;
 			})
 
 			var qs = new QueryString();
@@ -107,11 +106,12 @@
 					trueView: "",
 					upTotal: 0,
 					isShoucang: false,
-					isZan: false
+					isZan: false,
+					userInfo: ''
 				},
 				methods: {
 					favourite: function() {
-						if(userInfo.regStatus != 1) {
+						if(vm.userInfo.regStatus != 1) {
 							window.location.href = '../../register/register.html';
 							return;
 						}

@@ -68,6 +68,11 @@
 						return
 					}
 
+					if(vm.price.length > 10) {
+						alert('输入的单价不合法')
+						return
+					}
+
 					post('/webZb/Toubiao', {
 						publishId: id,
 						userId: localStorage.userId,

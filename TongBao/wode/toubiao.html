@@ -51,21 +51,27 @@
 										</p>
 									</div>
 									<div class="list-other">
-										<h4 class="mt-10 f-14 ">
+										<a style="width: 100%;" :href="'../home/zhaobiao/zhaobiaodetail.html?id='+item.zhaobiao.id">
+											<h4 class="mt-10 f-14 ">
 											<span class="fl">{{item.zhaobiao.city}}</span>
 											<span class="ml-15">{{item.zhaobiao.quantity==-1||item.zhaobiao.quantity==''?'已招标文件为主	单位：':item.zhaobiao.quantity}}{{item.zhaobiao.unit}}</span> 
 											<span class="fr time ">{{item.zhaobiao.updatedAt}}</span>
 										</h4>
+										</a>
 										<p class="recruit-pos overflow-h mt-10">
-											<span class="fl">{{item.zhaobiao.orgName}}</span>
-											<span class="delet fr" style="margin-right: 0;" @click="deleteToubiao(item.id)">删除</span>
+											<a style="width: 70%;" :href="'../home/zhaobiao/zhaobiaodetail.html?id='+item.zhaobiao.id">
+												<span class="fl">{{item.zhaobiao.orgName}}</span>
+											</a>
+											<a class="fr" href="#">
+												<span class="delet fr" style="margin-right: 0;" @click="deleteToubiao(item.id)">删除</span>
+											</a>
 										</p>
 									</div>
 								</div>
 							</div>
 						</article>
 						<li class="overflow-h  border-b padd">
-							<a href="">
+							<a href="#">
 								<div class="recruit-list fl ml-10 ">
 									<div class="recruit-header overflow-h">
 										<h3 class="fl product-num">{{item.toubiaoPrice}}元/{{item.unit}}</h3>

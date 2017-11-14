@@ -136,7 +136,7 @@
 				</div>
 			</section>
 			<div class="tousu pos-r">
-				<a :href="userInfo.regStatus == 1?'../zhaopin/tousu.html?id=' + id + '&name=' + name:'../../register/register.html'" charset="utf-8">
+				<a v-if="localStorage.userId!=userId" :href="userInfo.regStatus == 1?'../zhaopin/tousu.html?id=' + id + '&name=' + name:'../../register/register.html'" charset="utf-8">
 					<div class="tousu-main pos-a">
 						<i class="ico ico-tousu"></i>
 						<span>投诉</span>
@@ -251,9 +251,8 @@
 	</script>-->
 
 	<script type="text/javascript">
-		var userInfo = '';
 		getUserInfo(localStorage.userId, function(data) {
-			userInfo = data.result;
+			vm.userInfo = data.result;
 			vm.type = data.result.type;
 		})
 
@@ -364,11 +363,12 @@
 				userId: '',
 				qiyetupian: [],
 				isShoucang: false,
-				isToudi: false
+				isToudi: false,
+				userInfo: ''
 			},
 			methods: {
 				favourite: function() {
-					if(userInfo.regStatus != 1) {
+					if(vm.userInfo.regStatus != 1) {
 						window.location.href = '../../register/register.html';
 						return;
 					}

@@ -33,16 +33,16 @@
 	<body class="bg-f8f8f8">
 		<script type="text/javascript" charset="utf-8">
 			getUserInfo(localStorage.userId, function(data) {
-				if (data.result.regStatus != 1) {
+				if(data.result.regStatus != 1) {
 					window.location.href = "../register/register.html";
 					return;
 				} else {
-					if (data.result.type == 2) {
-						if (data.result.regist == 0) {
+					if(data.result.type == 2) {
+						if(data.result.regist == 0) {
 							window.location.href = "../register/company.html";
 							return;
 						} else {
-							if (data.result.expire == 0) {
+							if(data.result.expire == 0) {
 								alert("您的注册申请正在审核中,审核通过后会有消息提醒");
 								window.location.href = "../fabu.html";
 								return;
@@ -56,7 +56,7 @@
 			var itemid = Request["id"];
 			var obj;
 			var title, quantity, price, unit, end_at, address, contact, phone, content;
-			if (itemid) {
+			if(itemid) {
 				post1('/webZb/ZhaobiaoDetail', false, {
 					id: itemid,
 				}, function(data) {
@@ -187,7 +187,7 @@
 
 		<script src="../static/lib/js/axios.min.js"></script>
 		<script>
-			 //类别
+			//类别
 			var job;
 			var jobList;
 			getClassifyTable(false, "zhaobiao", function(data) {
@@ -195,26 +195,26 @@
 				var job = [];
 				var jobList = [];
 				var jobM = {};
-				for (var i = 0; i < list.length; i++) {
+				for(var i = 0; i < list.length; i++) {
 					var obj = list[i];
-					if (obj.pid == 0) {
+					if(obj.pid == 0) {
 						job.push(obj);
 					} else {
 						jobList.push(obj);
 					}
 				}
-				for (var i = 0; i < job.length; i++) {
+				for(var i = 0; i < job.length; i++) {
 					var array = [];
-					for (var j = 0; j < jobList.length; j++) {
-						if (job[i].id == jobList[j].pid) {
+					for(var j = 0; j < jobList.length; j++) {
+						if(job[i].id == jobList[j].pid) {
 							array.push(jobList[j]);
 							jobM['' + job[i].id] = array;
 						}
 					}
 				}
-				for (var i = 0; i < job.length - 1; i++) {
-					for (var j = 0; j < job.length - 1 - i; j++) {
-						if (job[j].id > job[j + 1].id) {
+				for(var i = 0; i < job.length - 1; i++) {
+					for(var j = 0; j < job.length - 1 - i; j++) {
+						if(job[j].id > job[j + 1].id) {
 							var temp = job[j];
 							job[j] = job[j + 1];
 							job[j + 1] = temp;
@@ -223,7 +223,7 @@
 				}
 				this.job = job;
 				this.jobList = jobM;
-				if (this.obj) {
+				if(this.obj) {
 					selectGangweiA();
 				}
 			})
@@ -232,7 +232,7 @@
 			getCity(function(p, c) {
 				province = p;
 				city = c;
-				if (this.obj) {
+				if(this.obj) {
 					selectProvinceAndCity();
 				}
 			});
@@ -262,15 +262,15 @@
 						$("#choosedgangwei").val(id);
 						$("#gangwei").text(name);
 						$("#gangweilist").addClass('none');
-						if (id == '') {
+						if(id == '') {
 							$("#guigecanshu").html('');
 							return true;
 						}
 						$("#guigecanshu").html('');
-						if (descriptions.length > 0) {
+						if(descriptions.length > 0) {
 							$("#guigecanshu").append('<div class="bottom-title bg-fff">规格参数</div>');
 						}
-						for (i = 0; i < descriptions.length; i++) {
+						for(i = 0; i < descriptions.length; i++) {
 							$("#guigecanshu").append(
 								'<div class="tender-common">' +
 								'<span class="fl c-17">' + descriptions[i] + '</span>' +
@@ -302,57 +302,65 @@
 							guigecanshu.push(this.value);
 						});
 						console.log(guigecanshu);
-						if (!checkEndAt() || !checkTel() || !checkint || !checkfushu()) {
+						if(!checkEndAt() || !checkTel() || !checkint || !checkfushu()) {
 							return false;
 						}
-						if ($('#gangwei').text() == '请选择') {
+						if($('#gangwei').text() == '请选择') {
 							alert('请选择招标类别')
 							return
 						}
-						if (vm.title == "") {
+						if(vm.title == "") {
 							alert('请填写招标标题')
 							return
 						}
-						if (vm.quantity == "") {
+						if(vm.quantity == "") {
 							alert('请填写招标数量')
 							return
 						}
-						if (vm.unit == "") {
+						if(vm.quantity.length > 10) {
+							alert('输入的供应数量不合法')
+							return
+						}
+						if(vm.price.length > 10) {
+							alert('输入的单价不合法')
+							return
+						}
+						if(vm.unit == "") {
 							alert('请填写单位')
 							return
 						}
-						if ($('.kbtn').val() == '') {
+						if($('.kbtn').val() == '') {
 							alert('请选择有效日期')
 							return
 						}
-						if ($('#city').text() == '请选择') {
+						if($('#city').text() == '请选择') {
 							alert('请选择工作城市')
 							return
 						}
-						if (vm.address == "") {
+						if(vm.address == "") {
 							alert('请填写详细地址')
 							return
 						}
-						if (vm.contact == "") {
+						if(vm.contact == "") {
 							alert('请填写联系人姓名')
 							return
 						}
-						if (vm.content == "") {
+						if(vm.content == "") {
 							alert('请填写招标详细描述')
 							return
 						}
 						var yes = 1;
 						$(".inp").each(function() {
-							if ($(this).val() == '') {
+							if($(this).val() == '') {
 								yes = 0;
 								return;
 							}
 						})
-						if (yes == 0) {
+						if(yes == 0) {
 							alert('参数规格填写不完整!');
 							return;
 						}
-						if (isrepetition) {
+						if(isrepetition) {
 							return;
 						}
 						isrepetition = true;
@@ -361,7 +369,7 @@
 								var dataa, urlstr;
 								var Request = new QueryString();
 								var itemid = Request["id"];
-								if (itemid) {
+								if(itemid) {
 									urlstr = '/webZb/editZhaobiao';
 									dataa = {
 										"publishId": itemid,
@@ -406,11 +414,12 @@
 								post(urlstr, dataa,
 									function(data) {
 										isrepetition = false;
-										if (data.result_code == 1) {
+										if(data.result_code == 1) {
 											alert("发布成功！");
 											window.location.replace("../home/zhaobiao/zhaobiaodetail.html?id=" + data.result.publishId + "&iszb=iszb");
 										}
-									}, function() {
+									},
+									function() {
 										isrepetition = false;
 									})
 							})
@@ -422,7 +431,7 @@
 				var endTime = vm.end_at;
 				var end = Date.parse(new Date(endTime.replace(/\-/g, "/").replace(/\-/g, "/")));
 				var current = Date.parse(new Date());
-				if (end < current) {
+				if(end < current) {
 					vm.$dialog.alert({
 						mes: '有效日期必须在今天之后!'
 					});
@@ -432,7 +441,7 @@
 			}
 
 			function checkfushu() {
-				if (vm.price != '' && !(/^\d+(\.\d{2})?$/.test(vm.price))) {
+				if(vm.price != '' && !(/^\d+(\.\d{2})?$/.test(vm.price))) {
 					vm.$dialog.alert({
 						mes: '请输入数字'
 					});
@@ -442,7 +451,7 @@
 			}
 
 			function checkTel() {
-				if (!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.phone))) {
+				if(!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.phone))) {
 					vm.$dialog.alert({
 						mes: '电话格式不正确!'
 					});
@@ -452,7 +461,7 @@
 			}
 
 			function checkint() {
-				if (!(/^[A-Z|a-z\u4e00-\u9fa5]*$/.test(vm.unit))) {
+				if(!(/^[A-Z|a-z\u4e00-\u9fa5]*$/.test(vm.unit))) {
 					vm.$dialog.alert({
 						mes: '单位只能输入中文或英文'
 					});
@@ -466,13 +475,13 @@
 					$(this).css('background', '#FFFFFF').siblings('.province li').css('background', '#ededed');
 				});
 				$('.city li').click(function() {
-						$('.address span').text($(this).text())
-							//					$(this).addClass('on-blue').siblings('.job-list li').removeClass('on-blue');
-						$('.city li ').removeClass('on-blue');
-						$(this).addClass('on-blue');
-						$('.tab-panl').addClass('none')
-					})
-					/*职位*/
+					$('.address span').text($(this).text())
+					//					$(this).addClass('on-blue').siblings('.job-list li').removeClass('on-blue');
+					$('.city li ').removeClass('on-blue');
+					$(this).addClass('on-blue');
+					$('.tab-panl').addClass('none')
+				})
+				/*职位*/
 				$('.job li').click(function() {
 					$('.job-list').eq($(this).index()).removeClass('none').siblings('.job-list').addClass('none');
 					$(this).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
