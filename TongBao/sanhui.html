@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta charset="UTF-8">
+		<title>招聘信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<!--UC 浏览器-->
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<!--QQ x5内核-->
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+		<link rel="stylesheet" type="text/css" href="static/lib/css/mkui.css">
+		<link rel="stylesheet" href="static/lib/css/ydui.rem.css">
+		<script src="static/lib/js/jquery-1.11.1.min.js"></script>
+		<script src="static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/config.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="static/css/common.css">
+		<link rel="stylesheet" type="text/css" href="static/css/qiuzhi.css">
+		<style>
+			.tab-panl {
+				top: 44px;
+			}
+			.div1 {
+				height: 44px;
+			}
+			.job {
+				width: 100%;
+			}
+			.priceText {
+				width: 100%;
+				margin: 0px auto;
+			}
+			.input1 {
+				border: none;
+				margin: 8%;
+				width: 30%;
+				height: 30px;
+				text-align: center;
+				box-shadow: 0px 0px 2px #888888;
+				background: white;
+			}
+			.input2 {
+				border: none;
+				width: 50%;
+				height: 30px;
+				text-align: center;
+				margin: 0px;
+			}
+			.bg {
+				background: rgb(237, 238, 244);
+			}
+			#btndiv {
+				width: 100%;
+				background: red;
+				display: flex;
+			}
+			#resetbtn {
+				background: white;
+			}
+			#confirmbtn {
+				background: #007ec5;
+				color: white;
+			}
+			#footer {
+				width: 100%;
+				position: absolute;
+				background: white;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				display: inline-flex;
+			}
+			.footer_item {
+				width: 50%;
+				text-align: center;
+				padding: 0.2rem;
+			}
+			.footer_item img {
+				width: 1.6rem;
+				height: 1.6rem;
+			}
+			.footer_item div {
+				font-size: 0.8rem;
+				margin-top: -0.2rem;
+			}
+			.sel_color {
+				color: #039be5;
+			}
+		</style>
+	</head>
+
+	<body class="bg-fff">
+		<div id="app" class="none no-select-two">
+			<div class="both-all">
+				<section class="term ">
+					<ul class="tab-nav  overflow-h ">
+						<li class="border-r  address"><span class="">城市</span><i class="ico ico-bottom"></i></li>
+						<li class="border-r zhiwei"><span>搅拌站</span><i class="ico ico-bottom"></i></li>
+						<li class="border-r xinzi"><span>价格</span><i class="ico ico-bottom"></i></li>
+						<li class="border-r quanbu"><span>商品</span><i class="ico ico-bottom"></i></li>
+					</ul>
+				</section>
+				<input type="hidden" id="choosedprovince" />
+				<input type="hidden" id="choosedcity" />
+				<input type="hidden" id="choosedgangwei" />
+
+				<input type="hidden" id="choosedxinzi" />
+
+				<input type="hidden" id="choosedgoods" />
+				<input type="hidden" id="choosedqiangdu" />
+			</div>
+			<div class="div1"></div>
+			<div class="tab-panl none">
+				<div class=" overflow-h">
+					<ul class=" province fl">
+						<li @click="buxian('city')">不限</li>
+						<li v-for="item in province">{{item.name}}</li>
+					</ul>
+					<div class="city fl none">
+						<ul>
+							<li class="ret"></li>
+						</ul>
+					</div>
+					<div class="city fl none" v-for="item in city">
+						<ul>
+							<li v-for="c in item" @click="selectcity(c.name)">{{c.name}}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--搅拌站-->
+			<div class="tab-panl none">
+				<div class="overflow-h h-100">
+					<ul class="fl job h-100">
+						<li @click="buxian('gangwei')">不限</li>
+						<li v-for="item in job" @click="selectgangwei(item.name)">{{item.name}}</li>
+					</ul>
+				</div>
+			</div>
+			<!--价格-->
+			<div class="tab-panl none bg">
+				<!--<ul class="money gongzi">
+					<li @click="selectxinzi('')">不限</li>
+					<li v-for="item in xinzi" @click="selectxinzi(item.id)">{{item.name}}</li>
+				</ul>-->
+				<div class="priceText">
+					<input id="downprice" class="input1" type="number" placeholder="最低价 元/m³" class="single-price" min="0" />至
+					<input id="upprice" class="input1" type="number" placeholder="最高价 元/m³" class="single-price" min="0" />
+					<div id="btndiv">
+						<input id="resetbtn" class="input2" type="submit" value="重置" />
+						<input id="confirmbtn" class="input2" type="submit" value="确定" />
+					</div>
+
+				</div>
+
+			</div>
+			<div class="tab-panl none">
+				<div class=" overflow-h">
+					<ul class=" goods fl">
+						<li @click="buxian('goods')">不限</li>
+						<li v-for="item in goods">{{item.name}}</li>
+					</ul>
+					<div class="goodslist fl none">
+						<ul>
+							<li class="ret"></li>
+						</ul>
+					</div>
+					<div class="goodslist fl none" v-for="item in strengths">
+						<ul>
+							<li @click="buxian('strengths')">不限</li>
+							<li v-for="c in item" @click="selectgoods(c.name)">{{c.name}}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<section class="content-list  lh-24">
+				<yd-infinitescroll :on-infinite="loadList">
+					<yd-list theme="4" slot="list">
+						<yd-list-item v-for="item in datalist">
+							<p slot="title" class="f-16 ">
+								<span>{{item.hzsName}}</span>
+							</p>
+							<yd-list-other slot="other">
+								<h4 class="mt-10 f-14 overflow-h">
+									<span>商品：{{item.goodsName}}</span>
+									<span class="ml-10">强度等级：{{item.intensityLevel}}</span>
+									<span class="ml-10">抗渗等级：{{item.ksdj}}</span>
+								</h4>
+								<p class="recruit-pos f-14 mt-5 pos-name">
+									<span>价格：{{item.price}}元/立方米</span>
+								</p>
+							</yd-list-other>
+						</yd-list-item>
+					</yd-list>
+					<!-- 数据全部加载完毕显示 -->
+					<span slot="doneTip" class="text-c mt-5 f-14">全部数据已加载完成</span>
+					<!-- 加载中提示 -->
+					<img slot="loadingTip" src="static/img/loading10.svg" />
+				</yd-infinitescroll>
+			</section>
+
+			<footer id="footer">
+				<div class="footer_item" onclick="window.location.replace('')">
+					<img src="static/img/other_order.png" />
+					<div>散灰</div>
+				</div>
+				<div class="footer_item">
+					<img src="static/img/mixhopper_selector.png" />
+					<div class="sel_color">搅拌站</div>
+				</div>
+			</footer>
+
+		</div>
+		<script>
+			var sjqddj = [];
+			var intensityLevel = [];
+			post("/webMobile/getDictionary", {
+				"type": "sjqddj"
+			}, function(data) {
+				this.sjqddj = data.result;
+				vm.strengths = {
+					"1": this.intensityLevel,
+					"2": this.sjqddj
+				}
+			}, function(data) {
+				console.log("error：" + data);
+			})
+			 post("/webMobile/getDictionary", {
+				"type": "intensityLevel"
+			}, function(data) {
+				this.intensityLevel = data.result;
+				vm.strengths = {
+					"1": this.intensityLevel,
+					"2": this.sjqddj
+				}
+			}, function(data) {
+				console.log("error：" + data);
+			})
+			 getHzs("");
+			var province;
+			var city;
+			var job;
+			var jobList;
+			var xinzi;
+			getCity(function(p, c) {
+				this.province = p;
+				this.city = c;
+			})
+			 getDicTable(false, "006", function(data) {
+				var list = data.result;
+				var job = [];
+				var jobList = [];
+				var jobM = {};
+				for (var i = 0; i < list.length; i++) {
+					var obj = list[i];
+					if (!obj.pid) {
+						job.push(obj);
+					} else {
+						jobList.push(obj);
+					}
+				}
+				for (var i = 0; i < job.length; i++) {
+					var array = [];
+					for (var j = 0; j < jobList.length; j++) {
+						if (job[i].id == jobList[j].pid) {
+							array.push(jobList[j]);
+							jobM['' + job[i].id] = array;
+						}
+					}
+				}
+				this.job = job;
+				this.jobList = jobM;
+			})
+			 getDicTable(false, "001", function(data) {
+				this.xinzi = data.result;
+			})
+			 getDicTable(true, "004", function(data) {
+				vm.jingyans = data.result;
+			})
+			 getDicTable(true, "003", function(data) {
+				vm.xuelis = data.result;
+			})
+			 getDicTable(true, "012", function(data) {
+				vm.ages = data.result;
+			})
+			 getDicTable(true, "005", function(data) {
+				vm.zhichengs = data.result;
+			})
+			 loadList();
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					datalist: [],
+					job: [{
+						"name": "曙光搅拌站1"
+					}, {
+						"name": "曙光搅拌站2"
+					}, {
+						"name": "曙光搅拌站3"
+					}],
+					joblist: jobList,
+					xinzi: xinzi,
+					province: province,
+					city: city,
+					jingyan: '',
+					jingyans: [],
+					xueli: '',
+					xuelis: [],
+					zhicheng: '',
+					zhichengs: [],
+					age: '',
+					ages: [],
+					gender: '',
+					title: '',
+					goods: [{
+						"name": "混凝土"
+					}, {
+						"name": "砂浆"
+					}],
+					strengths: {
+						"1": [{
+							"name": "p10"
+						}, {
+							"name": "p15"
+						}, {
+							"name": "p20"
+						}, {
+							"name": "p25"
+						}, {
+							"name": "p20"
+						}],
+						"2": [{
+							"name": "M10"
+						}, {
+							"name": "M15"
+						}, {
+							"name": "M20"
+						}, {
+							"name": "M25"
+						}, {
+							"name": "M20"
+						}]
+					}
+				},
+				methods: {
+					selectgoods: function(name) {
+						$("#choosedqiangdu").val(name);
+						$('.quanbu').children('i').removeClass('ico-bottom2').addClass('ico-bottom');
+						loadList();
+					},
+					selectcity: function(name) {
+						if (name.indexOf('全') == 0) {
+							$("#choosedcity").val('');
+						} else {
+							$("#choosedcity").val(name);
+						}
+						$("#choosedgangwei").val('');
+						$(".tab-nav>.zhiwei>span").html('搅拌站');
+						getHzs($("#choosedprovince").val() + $("#choosedcity").val());
+						$('.address').children('i').removeClass('ico-bottom2').addClass('ico-bottom');
+						loadList();
+					},
+					selectgangwei: function(itemName) {
+						$("#choosedgangwei").val(itemName);
+						$('.zhiwei').children('i').removeClass('ico-bottom2').addClass('ico-bottom');
+						$('.zhiwei span').text(itemName);
+						var lis = $('.job').children();
+						for (var i = 0; i < vm.job.length; i++) {
+							var obj = vm.job[i];
+							if (obj.name == itemName) {
+								$(lis[i + 1]).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
+							}
+						}
+						$('.tab-panl').addClass('none');
+						loadList();
+					},
+					selectxinzi: function(id) {
+						$("#choosedxinzi").val(id);
+						$('.xinzi').children('i').removeClass('ico-bottom2').addClass('ico-bottom');
+						loadList();
+					},
+					filter: function() {
+						$('.tab-panl').addClass('none');
+						$('.quanbu').children('i').removeClass('ico-bottom2').addClass('ico-bottom');
+						loadList();
+					},
+					buxian: function(t) {
+						if (t == 'gangwei') {
+							$(".tab-nav>.zhiwei>span").html('搅拌站');
+							$(".tab-nav>.zhiwei>span").removeClass('current');
+							$(".tab-nav>.zhiwei>i").removeClass('ico-bottom2').addClass('ico-bottom');;
+							$("#choosedgangwei").val('')
+							var lis = $('.job').children();
+							$(".tab-nav>.zhiwei>span").html('搅拌站');
+							$(lis[0]).css('background', '#FFFFFF').siblings('.job li').css('background', '#ededed');
+						}
+						if (t == 'city') {
+							$(".tab-nav>.address>span").html('城市');
+							$(".tab-nav>.address>span").removeClass('current');
+							$(".tab-nav>.address>i").removeClass('ico-bottom2').addClass('ico-bottom');
+							$("#choosedcity").val('');
+							$("#choosedprovince").val('');
+							$("#choosedgangwei").val('');
+							$(".tab-nav>.zhiwei>span").html('搅拌站');
+							getHzs("");
+						}
+						if (t == 'goods') {
+							$(".tab-nav>.quanbu>span").html('商品');
+							$(".tab-nav>.quanbu>span").removeClass('current');
+							$(".tab-nav>.quanbu>i").removeClass('ico-bottom2').addClass('ico-bottom');
+							$("#choosedgoods").val('')
+							$("#choosedqiangdu").val('')
+						}
+						if (t == 'strengths') {
+							$(".tab-nav>.quanbu>span").html('商品');
+							$(".tab-nav>.quanbu>span").removeClass('current');
+							$(".tab-nav>.quanbu>i").removeClass('ico-bottom2').addClass('ico-bottom');
+							$("#choosedqiangdu").val('')
+						}
+						$('.tab-panl').addClass('none');
+						loadList();
+					}
+				},
+				mounted: function() {
+					$("#app").show();
+				}
+			});
+
+			function loadList() {
+				post('/webMobile/getHzsPashOrderInfoList', {
+					formateAddress: $('#choosedprovince').val() + $("#choosedcity").val(),
+					startPrice: $('#downprice').val(),
+					endPrice: $('#upprice').val(),
+					hzsName: $("#choosedgangwei").val(),
+					goodsName: $("#choosedgoods").val(),
+					intensityLevel: $("#choosedqiangdu").val()
+				}, function(data) {
+					vm.datalist = data.result;
+					window.$yduiBus.$emit('ydui.infinitescroll.loadedDone');
+				})
+			}
+
+			function getHzs(address) {
+				post("/webMobile/pashHzsListByAddress", {
+					"formateAddress": address
+				}, function(data) {
+					vm.job = data.result;
+				}, function(data) {
+					console.log("error：" + data);
+				})
+			}
+			$(function() {
+				$('.tab-nav li').on("click", function() {
+					$('.tab-nav li span').removeClass('current');
+					$(this).find('span').addClass('current');
+					if ($('.tab-panl').eq($(this).index()).hasClass('none')) {
+						$('.tab-panl').eq($(this).index()).removeClass('none').siblings('.tab-panl').addClass('none');
+						$(this).children('i').removeClass('ico-bottom').addClass('ico-bottom2');
+						$(this).siblings().children('i').removeClass('ico-bottom2').addClass('ico-bottom')
+					} else {
+						$('.tab-panl').eq($(this).index()).addClass('none').siblings('.tab-panl').addClass('none');
+						$(this).children('i').removeClass('ico-bottom2').addClass('ico-bottom');
+						$(this).find('span').removeClass('current')
+					}
+					//$(this).children('i').removeClass('ico-bottom2').addClass('ico-bottom1');
+				});
+				$('.goods li').click(function() {
+					$('.goodslist').eq($(this).index()).removeClass('none').siblings('.goodslist').addClass('none');
+					$(this).css('background', '#FFFFFF').siblings('.goods li').css('background', '#ededed');
+					if ($(this).text() != '不限') {
+						$("#choosedgoods").val($(this).text());
+					}
+				});
+				$('.goodslist li').click(function() {
+					if ($(this).text() != '不限') {
+						$('.quanbu span').text($(this).text());
+					}
+					$('.goodslist li ').removeClass('current');
+					$(this).addClass('current')
+					$('.tab-panl').addClass('none')
+					$('.address span').removeClass('current');
+				})
+				$('.province li').click(function() {
+					$('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
+					$(this).css('background', '#FFFFFF').siblings('.province li').css('background', '#ededed');
+					if ($(this).text() != '不限') {
+						$("#choosedprovince").val($(this).text());
+					}
+				});
+				$('.city li').click(function() {
+						$('.address span').text($(this).text())
+						$('.city li ').removeClass('current');
+						$(this).addClass('current')
+						$('.tab-panl').addClass('none')
+						$('.address span').removeClass('current');
+					})
+					/*职位*/
+				$('.job li').click(function() {});
+				$('#resetbtn').click(function() {
+					$('#downprice').val("");
+					$('#upprice').val("");
+				})
+				$('#confirmbtn').click(function() {
+					if (parseInt($('#downprice').val()) >= parseInt($('#upprice').val())) {
+						alert("请输入正确的价格区间");
+						$('#downprice').val("");
+						$('#upprice').val("");
+						return;
+					}
+					if ($('#downprice').val().length == 0 && $('#upprice').val().length == 0) {
+						$(".tab-nav>.xinzi>span").html('价格');
+						$(".tab-nav>.xinzi>span").removeClass('current');
+						$(".tab-nav>.xinzi>i").removeClass('ico-bottom2').addClass('ico-bottom');
+					} else if ($('#downprice').val().length == 0 && $('#upprice').val().length != 0) {
+						$(".tab-nav>.xinzi>span").html($('#upprice').val() + '元以下');
+						$(".tab-nav>.xinzi>span").removeClass('current');
+						$(".tab-nav>.xinzi>i").removeClass('ico-bottom2').addClass('ico-bottom');
+					} else if ($('#downprice').val().length != 0 && $('#upprice').val().length == 0) {
+						$(".tab-nav>.xinzi>span").html($('#downprice').val() + '元以上');
+						$(".tab-nav>.xinzi>span").removeClass('current');
+						$(".tab-nav>.xinzi>i").removeClass('ico-bottom2').addClass('ico-bottom');
+					} else if ($('#downprice').val().length != 0 && $('#upprice').val().length != 0) {
+						$(".tab-nav>.xinzi>span").html($('#downprice').val() + '至' + $('#upprice').val() + '元');
+						$(".tab-nav>.xinzi>span").removeClass('current');
+						$(".tab-nav>.xinzi>i").removeClass('ico-bottom2').addClass('ico-bottom');
+					}
+					$('.tab-panl').addClass('none');
+					loadList();
+				})
+			});
+		</script>
+	</body>
+
+</html>

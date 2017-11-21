@@ -249,53 +249,45 @@
 			userInfo = data.result;
 			$('#app').show();
 		})
-
-		post('/webLb/Carousel', {}, function(data) {
+		 post('/webLb/Carousel', {}, function(data) {
 			vm.imglist = data.result;
 		})
-
-		post('/webZx/Base', {
+		 post('/webZx/Base', {
 			pageNo: 1,
 			pageSize: 1,
 			categoryId: ''
 		}, function(data) {
 			vm.zxlist = data.result;
 		})
-
-		post('/webZp/Zhaopin', {
+		 post('/webZp/Zhaopin', {
 			pageNo: 1,
 			pageSize: 2
 		}, function(data) {
 			vm.zplist = data.result;
 		})
-
-		post('/webQz/Qiuzhi', {
+		 post('/webQz/Qiuzhi', {
 			pageNo: 1,
 			pageSize: 2
 		}, function(data) {
 			vm.qzlist = data.result;
 		})
-
-		post('/webZb/Zhaobiao', {
+		 post('/webZb/Zhaobiao', {
 			pageNo: 1,
 			pageSize: 2
 		}, function(data) {
 			vm.zblist = data.result;
 		})
-
-		post('/webGy/Gongying', {
+		 post('/webGy/Gongying', {
 			pageNo: 1,
 			pageSize: 2
 		}, function(data) {
 			vm.gylist = data.result;
 		})
-
-		post('/webUser/allNotReadMessage', {
+		 post('/webUser/allNotReadMessage', {
 			userId: localStorage.userId
 		}, function(data) {
 			vm.xiaoxi = data.result;
 		})
-
 		var vm = new Vue({
 			el: '#app',
 			data: {
@@ -307,39 +299,33 @@
 				imglist: [],
 				xiaoxi: ''
 			},
-			methods: {
-
-			},
-			mounted: function() {
-
-			}
+			methods: {},
+			mounted: function() {}
 		});
-
 		$(function() {
 			$('router-link').click(function() {
 				window.location.href = $(this).attr("to");
 			});
 		});
-
 		var tab = new auiTab({
 			element: document.getElementById("footer"),
 			index: 1
 		}, function(ret) {
-			switch(ret.index) {
+			switch (ret.index) {
 				case 1:
 					break;
 				case 2:
 					window.location.replace("fabu.html")
 					break;
 				case 3:
-					if(userInfo.regStatus != 1) {
+					if (userInfo.regStatus != 1) {
 						window.location.href = 'register/register.html';
 						return;
 					}
 					window.location.replace("message/xiaoxi.html")
 					break;
 				case 4:
-					if(userInfo.regStatus != 1) {
+					if (userInfo.regStatus != 1) {
 						window.location.href = 'register/register.html';
 						return;
 					}
@@ -347,6 +333,7 @@
 					break;
 			}
 		});
+
 	</script>
 
 </html>
