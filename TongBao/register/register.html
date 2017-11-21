@@ -169,7 +169,7 @@
 					post('/webRegist/userRegist', {
 						userType: type,
 						telPhone: vm.phone,
-						pwdHash: hexMD5(vm.password),
+						pwdHash: vm.password,
 						id: localStorage.userId
 					}, function(data) {
 						//						localStorage.userId = data.result.userId;

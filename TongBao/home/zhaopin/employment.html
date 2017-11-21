@@ -15,14 +15,16 @@
 		<meta name="x5-orientation" content="portrait">
 		<meta name="x5-fullscreen" content="true">
 		<meta name="format-detection" content="telephone=no, email=no">
-		<link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
-		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
 		<script src="../../static/lib/js/jquery-1.11.1.min.js"></script>
 		<script src="../../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="../../js/config.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../static/lib/css/mkui.css">
+		<link rel="stylesheet" href="../../static/lib/css/ydui.rem.css">
+		<link rel="stylesheet" type="text/css" href="../../static/css/common.css">
+		<link rel="stylesheet" type="text/css" href="../../static/css/qiuzhi.css">
 		<style type="text/css">
 			*,
 			 :after,
@@ -195,9 +197,12 @@
 			.g-fix-ios-overflow-scrolling-bug {
 				-webkit-overflow-scrolling: auto !important
 			}
+			
+			.list-theme4 .list-item .list-mes .list-title {
+				max-height: none!important;
+				line-height: normal!important;
+			}
 		</style>
-		<link rel="stylesheet" type="text/css" href="../../static/css/common.css">
-		<link rel="stylesheet" type="text/css" href="../../static/css/qiuzhi.css">
 	</head>
 
 	<body class="bg-fff">
@@ -341,7 +346,7 @@
 								<span class="fr c-ec9d1d">{{item.salary}}</span>
 							</p>
 							<yd-list-other slot="other">
-								<h4 class="mt-10 f-14 overflow-h">
+								<h4 class=" f-14 overflow-h">
                             <span class="fl" style="width: 70%;">{{item.orgName}}</span>
                             <span class="fr time ">{{item.updatedAt}}</span>
                         </h4>
@@ -565,11 +570,25 @@
 
 			function shouye() {
 				window.location.replace('../../home.html');
+				//				if(state) {
+				//					if(state.page) {
+				//						window.history.go(-(state.page - 1));
+				//					}
+				//				} else {
+				//					window.history.go(-1);
+				//				}
 			}
 
 			$(function() {
 				window.addEventListener("popstate", function(e) {
-					window.location.replace('../../home.html');
+					//					window.location.replace('../../home.html');
+					if(state) {
+						if(state.page) {
+							window.history.go(-(state.page - 1));
+						}
+					} else {
+						window.history.go(-1);
+					}
 				}, false);
 
 				$('.tab-nav li').on("click", function() {

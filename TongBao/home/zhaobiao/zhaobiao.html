@@ -25,6 +25,13 @@
 		<script type="text/javascript" src="../../js/config.js"></script>
 		<link rel="stylesheet" type="text/css" href="../../static/css/common.css">
 		<link rel="stylesheet" type="text/css" href="../../static/css/qiuzhi.css">
+
+		<style>
+			.list-theme4 .list-item .list-mes .list-title {
+				max-height: none!important;
+				line-height: normal!important;
+			}
+		</style>
 	</head>
 
 	<body class="bg-fff">
@@ -120,7 +127,7 @@
 								<span class="fr c-ec9d1d">{{item.price==''?'面议':item.price+'元'}}/{{item.unit}}</span>
 							</p>
 							<yd-list-other slot="other">
-								<h4 class="mt-10 f-14 ">
+								<h4 class=" f-14 ">
                             		<span class="fl">{{item.city}}</span>
                             		<span class="ml-15">{{item.quantity==-1||item.quantity==''?'已招标文件为主	单位：':item.quantity}}{{item.unit}}</span>
                             		<span class="fr time ">{{item.updatedAt}}</span>
@@ -341,11 +348,25 @@
 
 			function shouye() {
 				window.location.replace('../../home.html');
+				//				if(state) {
+				//					if(state.page) {
+				//						window.history.go(-(state.page - 1));
+				//					}
+				//				} else {
+				//					window.history.go(-1);
+				//				}
 			}
 
 			$(function() {
 				window.addEventListener("popstate", function(e) {
-					window.location.replace('../../home.html');
+					//					window.location.replace('../../home.html');
+					if(state) {
+						if(state.page) {
+							window.history.go(-(state.page - 1));
+						}
+					} else {
+						window.history.go(-1);
+					}
 				}, false);
 				$('.tab-nav li').on("click", function() {
 					$('.tab-nav li span').removeClass('current');

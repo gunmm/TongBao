@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>附近搅拌站</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="no">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+
+		<script type="text/javascript" src="../static/lib/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../static/lib/js/vue.min.js"></script>
+		<script type="text/javascript" src="../static/lib/js/ydui.js"></script>
+		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css" />
+		<link rel="stylesheet" href="../static/css/common.css" />
+
+		<style type="text/css">
+			html {
+				height: 100%;
+			}
+			
+			body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px;
+			}
+			
+			#container {
+				height: 100%;
+			}
+			
+			#input_container {
+				position: absolute;
+				top: 1.5rem;
+				width: 100%;
+				height: 2.0rem;
+				text-align: center;
+			}
+			
+			#in_search {
+				width: 80%;
+				height: 100%;
+				padding-left: 0.5rem;
+				padding-right: 0.5rem;
+				background-color: white;
+				-webkit-appearance: textarea;
+			}
+			
+			#footer {
+				width: 100%;
+				position: absolute;
+				background: white;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				display: inline-flex;
+			}
+			
+			.footer_item {
+				width: 50%;
+				text-align: center;
+				padding: 0.2rem;
+			}
+			
+			.footer_item img {
+				width: 1.5rem;
+				height: 1.5rem;
+				display: inline-block;
+			}
+			
+			.footer_item div {
+				font-size: 0.8rem;
+				margin-top: -0.2rem;
+			}
+			
+			.sel_color {
+				color: #039be5;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="container"></div>
+		<footer id="footer">
+			<div class="footer_item" onclick="window.location.replace('../home.html')">
+				<img src="../static/img/other_order.png" />
+				<div>散灰</div>
+			</div>
+			<div class="footer_item">
+				<img src="../static/img/mixhopper_selector.png" />
+				<div class="sel_color">搅拌站</div>
+			</div>
+		</footer>
+		<div id="input_container">
+			<input id="in_search" type="text" placeholder="输入地址查找" />
+		</div>
+		<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+	</body>
+
+	<script type="text/javascript" src="../js/config.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jG3A5vx0mRqdayjK6XmaNS1ZTeUA2XfU"></script>
+	<script type="text/javascript">
+		var mLocation;
+
+		var map = new BMap.Map("container");
+		var point = new BMap.Point(116.404, 39.915);
+		map.centerAndZoom(point, 15);
+		//		map.addControl(new BMap.MapTypeControl({
+		//			mapTypes: [
+		//				BMAP_NORMAL_MAP,
+		//				BMAP_HYBRID_MAP
+		//			]
+		//		}));
+		map.addControl(new BMap.NavigationControl({
+			offset: new BMap.Size(10, 60)
+		}));
+		map.addControl(new BMap.GeolocationControl({
+			offset: new BMap.Size(10, 60)
+		}));
+		map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+
+		var geolocation = new BMap.Geolocation();
+		geolocation.getCurrentPosition(function(r) {
+			if(this.getStatus() == BMAP_STATUS_SUCCESS) {
+				mLocation = r.point;
+				var mk = new BMap.Marker(r.point);
+				map.addOverlay(mk);
+				map.panTo(r.point);
+				getHzsList();
+			} else {
+				alert('获取位置失败');
+			}
+		}, {
+			enableHighAccuracy: true
+		})
+
+		var ac = new BMap.Autocomplete( //建立一个自动完成的对象
+			{
+				"input": "in_search",
+				"location": map
+			});
+
+		ac.addEventListener("onhighlight", function(e) { //鼠标放在下拉列表上的事件
+			var str = "";
+			var _value = e.fromitem.value;
+			var value = "";
+			if(e.fromitem.index > -1) {
+				value = _value.province + _value.city + _value.district + _value.street + _value.business;
+			}
+			str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+			value = "";
+			if(e.toitem.index > -1) {
+				_value = e.toitem.value;
+				value = _value.province + _value.city + _value.district + _value.street + _value.business;
+			}
+			str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+			$('#searchResultPanel').innerHTML = str;
+		});
+
+		ac.addEventListener("onconfirm", function(e) { //鼠标点击下拉列表后的事件
+			var _value = e.item.value;
+			var myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+			$('#searchResultPanel').innerHTML = "onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+			setPlace(myValue);
+		});
+
+		function setPlace(myValue) {
+			$('#in_search').blur();
+			map.clearOverlays(); //清除地图上所有覆盖物
+			function myFun() {
+				var pp = local.getResults().getPoi(0).point; //获取第一个智能搜索的结果
+				mLocation = pp;
+				map.centerAndZoom(pp, 15);
+				var myMarker = new BMap.Marker(pp)
+				map.addOverlay(myMarker); //添加标注
+				getHzsList();
+			}
+			var local = new BMap.LocalSearch(map, { //智能搜索
+				onSearchComplete: myFun
+			});
+			local.search(myValue);
+		}
+
+		map.addEventListener("dragend", function() {
+			getHzsList();
+		})
+
+		function getHzsList() {
+			// 获取经纬度范围参数
+			var bs = map.getBounds(); //获取可视区域
+			var bssw = bs.getSouthWest(); //可视区域左下角
+			var bsne = bs.getNorthEast(); //可视区域右上角
+
+			post("/webMobile/pashHzsListByCoordinate", {
+				starLat: bssw.lat,
+				starLng: bssw.lng,
+				endLat: bsne.lat,
+				endLng: bsne.lng
+			}, function(data) {
+				map.clearOverlays();
+				var result = data.result;
+				for(var i = 0; i < result.length; i++) {
+					addMarkers(result[i])
+				}
+			})
+		}
+
+		function addMarkers(obj) {
+			//创建小狐狸
+			var point = new BMap.Point(obj.lng, obj.lat);
+			var marker = new BMap.Marker(point, {
+				icon: new BMap.Icon("../static/img/icon_mix_hopper.png", new BMap.Size(48, 48))
+			}); // 创建标注
+			map.addOverlay(marker); // 将标注添加到地图中
+			var label = new BMap.Label('<div style="background-color: #039be5; border-radius: 5px; color: white; padding: 3px; border-style: none;">' + obj.name + '</div>', {
+				offset: new BMap.Size(0, -14)
+			});
+			label.setStyle({
+				backgroundColor: 'transparent',
+				border: ''
+			});
+			marker.setLabel(label);
+			marker.addEventListener("click", function(e) {
+				var distance = map.getDistance(mLocation, point);
+				window.location.href = "hzsdetail.html?data=" + JSON.stringify(obj) + "&distance=" + distance;
+			});
+		}
+	</script>
+
+</html>

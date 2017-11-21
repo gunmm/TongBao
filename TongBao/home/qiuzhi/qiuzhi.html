@@ -26,6 +26,13 @@
 
 		<link rel="stylesheet" type="text/css" href="../../static/css/common.css">
 		<link rel="stylesheet" type="text/css" href="../../static/css/qiuzhi.css">
+
+		<style>
+			.list-theme4 .list-item .list-mes .list-title {
+				max-height: none!important;
+				line-height: normal!important;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -169,7 +176,7 @@
 								<span class="fr c-ec9d1d">{{item.salary}}</span>
 							</p>
 							<yd-list-other slot="other">
-								<h4 class="mt-10 f-14 ">
+								<h4 class=" f-14 ">
                             		<span class="fl">{{item.showfullname==1?item.orgName:hideStr(item.orgName)}}</span>
                             		<span class="ml-15">{{item.gender}}性</span>
                             		<span class="ml-10">{{item.age}}</span >
@@ -397,11 +404,25 @@
 
 		function shouye() {
 			window.location.replace('../../home.html');
+			//			if(state) {
+			//				if(state.page) {
+			//					window.history.go(-(state.page - 1));
+			//				}
+			//			} else {
+			//				window.history.go(-1);
+			//			}
 		}
 
 		$(function() {
 			window.addEventListener("popstate", function(e) {
-				window.location.replace('../../home.html');
+				//				window.location.replace('../../home.html');
+				if(state) {
+					if(state.page) {
+						window.history.go(-(state.page - 1));
+					}
+				} else {
+					window.history.go(-1);
+				}
 			}, false);
 
 			$('.tab-nav li').on("click", function() {
