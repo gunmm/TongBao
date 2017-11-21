@@ -5,12 +5,13 @@ var provinceCity = '[{"deep":1,"name":"北京市","id":1,"sort":0,"parentId":0},
 
 var vm = new Vue();
 
-//localStorage.userId = 837;
+localStorage.userId = 835;
 
 function setuserId(userId) {
 	alert(userId);
 
 }
+
 //post('/webUser/touristLogin', {
 //	userId: '868b715bd6693563d945ec618006eca5'
 //}, function(data) {
@@ -23,6 +24,7 @@ if(urlStr.indexOf('userInfoJson=') > 0) {
 	var str = decodeURI(urlStr);
 	var userInfo = JSON.parse(str.split('userInfoJson=')[1]);
 	localStorage.userId = userInfo.userId;
+	localStorage.accessToken = userInfo.accessToken;
 }
 
 if(!localStorage.userId) {
@@ -34,6 +36,7 @@ if(!localStorage.userId) {
 }
 
 log(localStorage.userId);
+log(localStorage.accessToken);
 
 /**
  * 网络请求 * @param {Object} url	链接
@@ -42,6 +45,7 @@ log(localStorage.userId);
  * @param {Object} callback1  请求失败回调
  */
 function post(url, data, callback, callback1) {
+	data['requestToken'] = localStorage.accessToken;
 	vm.$dialog.loading.open('');
 	$.ajax({
 		type: "post",
@@ -73,6 +77,7 @@ function post(url, data, callback, callback1) {
 }
 
 function post1(url, async, data, callback) {
+	data['requestToken'] = localStorage.accessToken;
 	vm.$dialog.loading.open('');
 	$.ajax({
 		type: "post",
@@ -244,7 +249,8 @@ function getDicTable(async, classId, callback) {
 		url: ip + '/webItem/ItemData',
 		async: async,
 		data: {
-			classId: classId
+			classId: classId,
+			accessToken: localStorage.accessToken
 		},
 		success: function(data) {
 			vm.$dialog.loading.close();
@@ -273,7 +279,8 @@ function getClassifyTable(async, classType, callback) {
 		url: ip + '/webItem/getCategoryList',
 		async: async,
 		data: {
-			type: classType
+			type: classType,
+			accessToken: localStorage.accessToken
 		},
 		success: function(data) {
 			vm.$dialog.loading.close();
@@ -302,7 +309,8 @@ function getClassifyTable(async, classType, callback) {
 function getUserInfo(userId, callback) {
 	if(userId) {
 		post('/webUser/findUserMessage', {
-			userId: userId
+			userId: userId,
+			accessToken: localStorage.accessToken
 		}, function(data) {
 			callback(data);
 		})
