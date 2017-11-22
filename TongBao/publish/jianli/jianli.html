@@ -281,7 +281,9 @@
 				async: true,
 				traditional: true,
 				data: {
-					"publishId": this.publishId
+					"publishId": this.publishId,
+					"userId":localStorage.userId,
+					"requestToken":localStorage.accessToken
 				},
 				success: function(data) {
 					console.log(data);
