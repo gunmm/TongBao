@@ -355,7 +355,7 @@
 				<li class="last">
 					<span v-if="isToudi" class="todi" id="asd">已投标</span>
 					<span v-else class="todi">
-						<a :href="'toubiao.html?id='+id+'&unit='+unit">立即投标</a>
+						<a :href="userInfo.regStatus == 1?'toubiao.html?id='+id+'&unit='+unit:'../../register/register.html'">立即投标</a>
 					</span>
 				</li>
 			</ul>

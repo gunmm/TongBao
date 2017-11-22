@@ -63,6 +63,17 @@
 
 	<script type="text/javascript" src="../js/config.js"></script>
 	<script type="text/javascript">
+		if(!isWx()) {
+			if(isIPhone()) {
+				window.webkit.messageHandlers.AppModel.postMessage({
+					body: '1'
+				});
+			} else {
+				asJump();
+			}
+			window.history.back();
+		}
+
 		var vm = new Vue({
 			el: '#app',
 			data: {
