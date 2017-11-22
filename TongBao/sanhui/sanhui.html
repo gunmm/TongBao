@@ -2,10 +2,8 @@
 <html>
 
 	<head>
-		<meta charset="utf-8">
-		<title></title>
 		<meta charset="UTF-8">
-		<title>招聘信息</title>
+		<title>散灰交易</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -267,52 +265,9 @@
 			getHzs("");
 			var province;
 			var city;
-			var job;
-			var jobList;
-			var xinzi;
 			getCity(function(p, c) {
 				this.province = p;
 				this.city = c;
-			})
-			getDicTable(false, "006", function(data) {
-				var list = data.result;
-				var job = [];
-				var jobList = [];
-				var jobM = {};
-				for(var i = 0; i < list.length; i++) {
-					var obj = list[i];
-					if(!obj.pid) {
-						job.push(obj);
-					} else {
-						jobList.push(obj);
-					}
-				}
-				for(var i = 0; i < job.length; i++) {
-					var array = [];
-					for(var j = 0; j < jobList.length; j++) {
-						if(job[i].id == jobList[j].pid) {
-							array.push(jobList[j]);
-							jobM['' + job[i].id] = array;
-						}
-					}
-				}
-				this.job = job;
-				this.jobList = jobM;
-			})
-			getDicTable(false, "001", function(data) {
-				this.xinzi = data.result;
-			})
-			getDicTable(true, "004", function(data) {
-				vm.jingyans = data.result;
-			})
-			getDicTable(true, "003", function(data) {
-				vm.xuelis = data.result;
-			})
-			getDicTable(true, "012", function(data) {
-				vm.ages = data.result;
-			})
-			getDicTable(true, "005", function(data) {
-				vm.zhichengs = data.result;
 			})
 			loadList();
 			var vm = new Vue({
@@ -326,19 +281,8 @@
 					}, {
 						"name": "曙光搅拌站3"
 					}],
-					joblist: jobList,
-					xinzi: xinzi,
 					province: province,
 					city: city,
-					jingyan: '',
-					jingyans: [],
-					xueli: '',
-					xuelis: [],
-					zhicheng: '',
-					zhichengs: [],
-					age: '',
-					ages: [],
-					gender: '',
 					title: '',
 					goods: [{
 						"name": "混凝土"
