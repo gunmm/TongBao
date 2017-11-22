@@ -192,6 +192,10 @@
 			getHzsList();
 		})
 
+		map.addEventListener("zoomend", function() {
+			getHzsList();
+		})
+
 		function getHzsList() {
 			// 获取经纬度范围参数
 			var bs = map.getBounds(); //获取可视区域

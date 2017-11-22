@@ -24,7 +24,7 @@
 	</head>
 
 	<body>
-		<div id="app" class="register-btn">
+		<div id="app" class="register-btn" hidden>
 			<section class="reg">
 				<yd-cell-group>
 					<yd-cell-item>
@@ -72,6 +72,8 @@
 				asJump();
 			}
 			window.history.back();
+		} else {
+			$('#app').show();
 		}
 
 		var vm = new Vue({

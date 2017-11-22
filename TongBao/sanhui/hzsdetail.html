@@ -72,8 +72,29 @@
 		var vm = new Vue({
 			el: '#app',
 			data: {
-				datalist: []
+				datalist: ["", ""]
 			}
+		})
+
+		$(function() {
+			$('li').click(function() {
+				vm.$dialog.confirm({
+					title: '提示',
+					mes: '如需下单请下载仝仝APP！',
+					opts: [{
+							txt: '取消',
+							color: false
+						},
+						{
+							txt: '立即下载',
+							color: '#039be5',
+							callback: function() {
+								window.location.href = "http://mobile.tongtongww.com:8080/static/downLoadAndOpenApp.html";
+							}
+						}
+					]
+				});
+			})
 		})
 	</script>
 

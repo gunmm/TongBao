@@ -204,7 +204,7 @@
 			<section class="content-list  lh-24">
 				<yd-infinitescroll :on-infinite="loadList">
 					<yd-list theme="4" slot="list">
-						<yd-list-item v-for="item in datalist">
+						<yd-list-item v-for="item in datalist" href="javascript:tip()">
 							<p slot="title" class="f-16 ">
 								<span>{{item.hzsName}}</span>
 							</p>
@@ -477,6 +477,26 @@
 					console.log("error：" + data);
 				})
 			}
+
+			function tip() {
+				vm.$dialog.confirm({
+					title: '提示',
+					mes: '如需下单请下载仝仝APP！',
+					opts: [{
+							txt: '取消',
+							color: false
+						},
+						{
+							txt: '立即下载',
+							color: '#039be5',
+							callback: function() {
+								window.location.href = "http://mobile.tongtongww.com:8080/static/downLoadAndOpenApp.html";
+							}
+						}
+					]
+				});
+			}
+
 			$(function() {
 				$('.tab-nav li').on("click", function() {
 					$('.tab-nav li span').removeClass('current');
