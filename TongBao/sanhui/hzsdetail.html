@@ -46,10 +46,12 @@
 			<section>
 				<ul>
 					<li v-for="item in datalist">
-						<div style="width: 100%; padding: 0.8rem 1rem 1rem 1rem;">{{item.hzsName}}</div>
-						<div style="width: 100%; padding: 0rem 1rem 0.8rem 1rem;">商品:{{item.goodsName}}&nbsp;&nbsp;&nbsp;强度等级:{{item.intensityLevel}}&nbsp;&nbsp;&nbsp;抗渗等级:{{item.ksdj}}</div>
-						<div style="width: 100%; padding: 0rem 1rem 0.8rem 1rem;">价格:￥{{item.price}}元/立方米</div>
-						<div style="width: 100%; height: 1px; background-color: lightgray;"></div>
+						<a style="width: 100%;" :href="'sanhuidetail.html?data=' + JSON.stringify(item)">
+							<div style="width: 100%; padding: 0.8rem 1rem 1rem 1rem;">{{item.hzsName}}</div>
+							<div style="width: 100%; padding: 0rem 1rem 0.8rem 1rem;">商品:{{item.goodsName}}&nbsp;&nbsp;&nbsp;强度等级:{{item.intensityLevel}}&nbsp;&nbsp;&nbsp;抗渗等级:{{item.ksdj}}</div>
+							<div style="width: 100%; padding: 0rem 1rem 0.8rem 1rem;">价格:￥{{item.price}}元/立方米</div>
+							<div style="width: 100%; height: 1px; background-color: lightgray;"></div>
+						</a>
 					</li>
 				</ul>
 			</section>
@@ -62,39 +64,16 @@
 		var data = JSON.parse(qs['data']);
 		var distance = (qs['distance'] / 1000).toFixed(2);
 		$(document).attr('title', data.name);
-
 		post('/webMobile/getHzsPashOrderInfoList', {
 			hzsName: data.name
 		}, function(data) {
 			vm.datalist = data.result;
 		})
-
 		var vm = new Vue({
 			el: '#app',
 			data: {
 				datalist: ["", ""]
 			}
-		})
-
-		$(function() {
-			$('li').click(function() {
-				vm.$dialog.confirm({
-					title: '提示',
-					mes: '如需下单请下载仝仝APP！',
-					opts: [{
-							txt: '取消',
-							color: false
-						},
-						{
-							txt: '立即下载',
-							color: '#039be5',
-							callback: function() {
-								window.location.href = "http://mobile.tongtongww.com:8080/static/downLoadAndOpenApp.html";
-							}
-						}
-					]
-				});
-			})
 		})
 	</script>
 

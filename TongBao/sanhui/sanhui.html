@@ -121,8 +121,8 @@
 					<ul class="tab-nav  overflow-h ">
 						<li class="border-r  address"><span class="">城市</span><i class="ico ico-bottom"></i></li>
 						<li class="border-r zhiwei"><span>搅拌站</span><i class="ico ico-bottom"></i></li>
-						<li class="border-r xinzi"><span>价格</span><i class="ico ico-bottom"></i></li>
 						<li class="border-r quanbu"><span>商品</span><i class="ico ico-bottom"></i></li>
+						<li class="border-r xinzi"><span>价格</span><i class="ico ico-bottom"></i></li>
 					</ul>
 				</section>
 				<input type="hidden" id="choosedprovince" />
@@ -162,23 +162,6 @@
 					</ul>
 				</div>
 			</div>
-			<!--价格-->
-			<div class="tab-panl none bg">
-				<!--<ul class="money gongzi">
-					<li @click="selectxinzi('')">不限</li>
-					<li v-for="item in xinzi" @click="selectxinzi(item.id)">{{item.name}}</li>
-				</ul>-->
-				<div class="priceText">
-					<input id="downprice" class="input1" type="number" placeholder="最低价 元/m³" class="single-price" min="0" />至
-					<input id="upprice" class="input1" type="number" placeholder="最高价 元/m³" class="single-price" min="0" />
-					<div id="btndiv">
-						<input id="resetbtn" class="input2" type="submit" value="重置" />
-						<input id="confirmbtn" class="input2" type="submit" value="确定" />
-					</div>
-
-				</div>
-
-			</div>
 			<div class="tab-panl none">
 				<div class=" overflow-h">
 					<ul class=" goods fl">
@@ -198,11 +181,27 @@
 					</div>
 				</div>
 			</div>
+			<!--价格-->
+			<div class="tab-panl none bg">
+				<!--<ul class="money gongzi">
+					<li @click="selectxinzi('')">不限</li>
+					<li v-for="item in xinzi" @click="selectxinzi(item.id)">{{item.name}}</li>
+				</ul>-->
+				<div class="priceText">
+					<input id="downprice" class="input1" type="number" placeholder="最低价 元/m³" class="single-price" min="0" />至
+					<input id="upprice" class="input1" type="number" placeholder="最高价 元/m³" class="single-price" min="0" />
+					<div id="btndiv">
+						<input id="resetbtn" class="input2" type="submit" value="重置" />
+						<input id="confirmbtn" class="input2" type="submit" value="确定" />
+					</div>
+
+				</div>
+			</div>
 
 			<section class="content-list  lh-24">
 				<yd-infinitescroll :on-infinite="loadList">
 					<yd-list theme="4" slot="list">
-						<yd-list-item v-for="item in datalist" href="javascript:tip()">
+						<yd-list-item v-for="item in datalist" :href="'sanhuidetail.html?data=' + JSON.stringify(item)">
 							<p slot="title" class="f-16 ">
 								<span>{{item.hzsName}}</span>
 							</p>
@@ -384,7 +383,7 @@
 							$("#choosedqiangdu").val('')
 						}
 						if(t == 'strengths') {
-							$(".tab-nav>.quanbu>span").html('商品');
+							$(".tab-nav>.quanbu>span").html($("#choosedgoods").val());
 							$(".tab-nav>.quanbu>span").removeClass('current');
 							$(".tab-nav>.quanbu>i").removeClass('ico-bottom2').addClass('ico-bottom');
 							$("#choosedqiangdu").val('')
@@ -423,22 +422,7 @@
 			}
 
 			function tip() {
-				vm.$dialog.confirm({
-					title: '提示',
-					mes: '如需下单请下载仝仝APP！',
-					opts: [{
-							txt: '取消',
-							color: false
-						},
-						{
-							txt: '立即下载',
-							color: '#039be5',
-							callback: function() {
-								window.location.href = "http://mobile.tongtongww.com:8080/static/downLoadAndOpenApp.html";
-							}
-						}
-					]
-				});
+
 			}
 
 			$(function() {

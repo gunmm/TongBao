@@ -282,8 +282,8 @@
 				traditional: true,
 				data: {
 					"publishId": this.publishId,
-					"userId":localStorage.userId,
-					"requestToken":localStorage.accessToken
+					"userId": localStorage.userId,
+					"requestToken": localStorage.accessToken
 				},
 				success: function(data) {
 					console.log(data);
@@ -300,9 +300,11 @@
 				},
 				error: function() {
 					vm.$dialog.loading.close();
-					vm.$dialog.alert({
-						mes: '服务器连接失败!'
-					});
+					if(data.status != 510) {
+						vm.$dialog.alert({
+							mes: '服务器连接失败!'
+						});
+					}
 				}
 			});
 		}

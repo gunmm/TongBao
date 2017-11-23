@@ -66,23 +66,18 @@
 		<script>
 			if(localStorage.userId) {
 				getUserInfo(localStorage.userId, function(data) {
-					localStorage.type = data.result.type;
-					//企业名称|个人昵称
-					localStorage.companyname = data.result.orgName;
-					//头像
-					localStorage.avatar = data.result.touxiang;
-					//手机号
-					localStorage.phone = data.result.telephone;
-					if(localStorage.avatar) {
-						$('#headImg').attr('src', getAvatar(localStorage.avatar));
+					if(data.result.touxiang) {
+						$('#headImg').attr('src', getAvatar(data.result.touxiang));
 					}
-					if(localStorage.type == 1) {
+					if(data.result.type == 1) {
 						vm.type = true;
 					} else {
 						vm.type = false;
 					}
-					vm.phone = localStorage.phone;
-					vm.nickname = localStorage.companyname;
+					if(data.result.telephone) {
+						vm.phone = data.result.telephone;
+					}
+					vm.nickname = data.result.orgName;
 				})
 			}
 		</script>
@@ -92,7 +87,7 @@
 				data: {
 					type: true,
 					nickname: 'All is well',
-					phone: '13001689161'
+					phone: ''
 				},
 				methods: {},
 			});

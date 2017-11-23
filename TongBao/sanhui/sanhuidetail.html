@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>下单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="renderer" content="webkit">
+		<!--UC 浏览器-->
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<!--QQ x5内核-->
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="format-detection" content="telephone=no, email=no">
+		<link rel="stylesheet" type="text/css" href="../static/lib/css/mkui.css">
+		<link rel="stylesheet" href="../static/lib/css/ydui.rem.css">
+		<script src="../static/lib/js/jquery-1.11.1.min.js"></script>
+		<script src="../static/lib/js/ydui,flexible.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/lib/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
+
+		<link rel="stylesheet" type="text/css" href="../static/css/common.css">
+		<link rel="stylesheet" type="text/css" href="../static/css/qiuzhi.css">
+		<script type="text/javascript" src="../js/config.js"></script>
+
+		<style>
+			.footer {
+				width: 100%;
+				height: 3.5rem;
+				bottom: 0;
+				position: absolute;
+				background: lightgray;
+				/*#007ec5;*/
+			}
+			
+			#orderbtn {
+				width: 4rem;
+				height: 2rem;
+				background: #007ec5;
+				text-align: center;
+				color: white;
+				font-size: 1.4rem;
+				position: absolute;
+				right: 0.8rem;
+				top: 0.8rem;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div style="display: inline-flex; width: 100%;">
+				<div style="padding: 1rem 0rem 1rem 1rem; width: 50%;">搅拌站名称</div>
+				<div style="padding: 1rem 1rem 1rem 1rem; width: 50%; text-align: right;">{{data.hzsName}}</div>
+			</div>
+			<div style="width: 100%; height: 1px; background-color: lightgray;"></div>
+			<div style="display: inline-flex; width: 100%;">
+				<div style="padding: 1rem 0rem 1rem 1rem; width: 50%;">商品名称</div>
+				<div style="padding: 1rem 1rem 1rem 1rem; width: 50%; text-align: right;">{{data.goodsName}}</div>
+			</div>
+			<div style="width: 100%; height: 1px; background-color: lightgray;"></div>
+			<div style="display: inline-flex; width: 100%;">
+				<div style="padding: 1rem 0rem 1rem 1rem; width: 50%;">强度等级</div>
+				<div style="padding: 1rem 1rem 1rem 1rem; width: 50%; text-align: right;">{{data.intensityLevel}}</div>
+			</div>
+			<div style="width: 100%; height: 1px; background-color: lightgray;"></div>
+			<div style="display: inline-flex; width: 100%;">
+				<div style="padding: 1rem 0rem 1rem 1rem; width: 50%;">抗渗等级</div>
+				<div style="padding: 1rem 1rem 1rem 1rem; width: 50%; text-align: right;">{{data.ksdj}}</div>
+			</div>
+			<div style="width: 100%; height: 1px; background-color: lightgray;"></div>
+			<div style="display: inline-flex; width: 100%;">
+				<div style="padding: 1rem 0rem 1rem 1rem; width: 30%;">联系人</div>
+				<div style="padding: 1rem 1rem 1rem 1rem; width: 70%; text-align: right;">
+					{{data.sysUserName}}
+					<a :href="'tel:'+data.contactTel" style="color: blue;">{{data.contactTel}}</a>
+				</div>
+			</div>
+			<div style="width: 100%; height: 1px; background-color: lightgray;"></div>
+			<div style="display: inline-flex; width: 100%;">
+				<div style="padding: 1rem 0rem 1rem 1rem; width: 50%;">单价</div>
+				<div style="padding: 1rem 1rem 1rem 1rem; width: 50%; text-align: right;">{{data.price}}</div>
+			</div>
+			<div style="width: 100%; height: 1px; background-color: lightgray;"></div>
+			<div class="footer">
+				<div id="orderbtn" onclick="tip()">下单</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var qs = new QueryString();
+			var data = JSON.parse(qs['data']);
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					datalist: ["", ""]
+				}
+			})
+
+			function tip() {
+				vm.$dialog.confirm({
+					title: '提示',
+					mes: '如需下单请下载仝仝APP！',
+					opts: [{
+						txt: '取消',
+						color: false
+					}, {
+						txt: '立即下载',
+						color: '#039be5',
+						callback: function() {
+							window.location.href = "http://mobile.tongtongww.com:8080/static/downLoadAndOpenApp.html";
+						}
+					}]
+				});
+			}
+		</script>
+	</body>
+
+</html>

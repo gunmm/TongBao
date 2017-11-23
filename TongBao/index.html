@@ -23,9 +23,15 @@
 		//		localStorage.clear();
 		//		alert('清楚缓存成功');
 
-		//		setuserId(837);
+		//		setuserId(854);
+
+		var ip = 'http://www.cnsyear.cn';
+		//		var ip = 'http://192.168.0.90:8081';
 
 		function setuserId(userId, requestToken) {
+			//			alert(userId);
+			//			alert(requestToken);
+
 			if(requestToken) {
 				localStorage.userId = userId;
 				localStorage.accessToken = requestToken;
@@ -35,7 +41,7 @@
 
 			$.ajax({
 				type: 'post',
-				url: 'http://192.168.0.90:8081/webUser/touristLogin',
+				url: ip + '/webUser/touristLogin',
 				async: true,
 				traditional: true,
 				data: {

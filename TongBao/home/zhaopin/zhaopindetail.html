@@ -178,10 +178,10 @@
 				</section>
 			</section>
 			<div style="height: 57px;"></div>
-			<footer v-if="type==1&&localStorage.userId!=userId">
+			<footer v-if="type!=2&&localStorage.userId!=userId">
 				<ul class="overflow-h">
 					<li style="height: 100px">
-						<a :href='"tel:"+phone'>
+						<a :href="'tel:'+phone">
 							<img src="../../static/img/ico-phone.png" alt="" />
 							<span>电话</span>
 						</a>
@@ -394,6 +394,11 @@
 					})
 				},
 				toudi: function() {
+					if(vm.userInfo.regStatus != 1) {
+						window.location.href = '../../register/register.html';
+						return;
+					}
+
 					post('/webZp/toudi', {
 						userId: localStorage.userId,
 						id: id

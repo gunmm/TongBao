@@ -196,7 +196,7 @@
 			<!--</section>-->
 			<!--<?php }?>-->
 			<div style="height: 57px;"></div>
-			<footer v-if="type==2&&localStorage.userId!=userId">
+			<footer v-if="type!=1&&localStorage.userId!=userId">
 				<ul class="overflow-h">
 					<li>
 						<a :href="'tel:'+phone">
@@ -384,7 +384,7 @@
 					})
 				},
 				toudi: function() {
-					if(!localStorage.userId) {
+					if(vm.userInfo.regStatus != 1) {
 						window.location.href = '../../register/register.html';
 						return;
 					}
