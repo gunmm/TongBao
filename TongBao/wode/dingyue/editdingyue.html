@@ -25,7 +25,7 @@
 	</head>
 
 	<body>
-		<div id="app">
+		<div id="app" hidden>
 			<script>
 				post('/webUser/subscribePersonaListl', {
 						"userId": localStorage.userId
@@ -140,7 +140,15 @@
 	</body>
 
 	<script type="text/javascript">
-		$(function() {
+		getUserInfo(localStorage.userId, function(data) {
+			if (data.result.type == 1) {
+				vm.type = true;
+			}else{
+				vm.type = false;
+			}
+			$('#app').show();
+		})
+		 $(function() {
 			var isPageHide = false;
 			window.addEventListener('pageshow', function() {
 				if (isPageHide) {
@@ -161,11 +169,6 @@
 				dygy: [{}, ]
 			}
 		})
-		if (localStorage.type == 1) {
-			vm.type = true;
-		} else {
-			vm.type = false;
-		}
 
 		function del(type, id) {
 			var mymessage = confirm("确认删除？");
