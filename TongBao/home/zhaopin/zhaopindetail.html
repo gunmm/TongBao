@@ -197,9 +197,11 @@
 						<img v-else src="../../static/img/shoucang1.png" alt="" />
 						<span class="on">收藏</span>
 					</li>
-					<li class="last">
+					<li id="toudi" hidden class="last">
 						<span v-if="isToudi" class="todi" id="asd">已投递简历</span>
 						<span v-else class="todi" @click="toudi()">投递简历</span>
+					</li>
+					<li class="last">
 					</li>
 				</ul>
 			</footer>
@@ -302,6 +304,9 @@
 			vm.phone = d.phone;
 			vm.userId = d.userId;
 			vm.qiyetupian = d.jianjieUrl;
+			if(!d.admin) {
+				$('#toudi').show();
+			}
 		})
 
 		post('/webUser/addBrowser', {

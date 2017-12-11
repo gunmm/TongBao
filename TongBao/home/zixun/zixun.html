@@ -23,6 +23,7 @@
 		<script src="../../static/lib/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../static/lib/js/ydui.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="../../static/css/zixun.css">
+		<link rel="stylesheet" href="../../static/css/common.css" />
 
 		<style>
 			::-webkit-scrollbar {
@@ -66,11 +67,7 @@
 		<script>
 			getClassifyTable(true, 'base', function(data) {
 				var list = data.result;
-				for(var i = 0; i < list.length; i++) {
-					if(list[i].pid != 0) {
-						vm.categories.push(list[i]);
-					}
-				}
+				vm.categories = list;
 			})
 
 			post('/webZx/Base', {
@@ -78,7 +75,6 @@
 				pageSize: 10,
 				categoryId: ''
 			}, function(data) {
-				console.log(data);
 				vm.datalist = data.result;
 			})
 
@@ -122,6 +118,7 @@
 							$('.car-list').eq($('#tuijian').index()).show().siblings('.car-list').hide();
 						}
 
+						vm.pageNo = 2;
 						this.categoryid = categoryid;
 						post('/webZx/Base', {
 							pageNo: 1,

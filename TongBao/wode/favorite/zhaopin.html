@@ -80,7 +80,7 @@
 			data: {
 				pageNo: 2,
 				pageSize: 10,
-				type: localStorage.type,
+				type: 1,
 				datalist: []
 			},
 			methods: {
@@ -102,6 +102,10 @@
 					})
 				}
 			}
+		})
+
+		getUserInfo(localStorage.userId, function(data) {
+			vm.type = data.result.type;
 		})
 
 		var tab = new auiTab({

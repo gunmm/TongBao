@@ -95,7 +95,7 @@
 				mes: '确定删除吗?',
 				opts: function() {
 					post('/webUser/DeletedFavoriteCompanyById/', {
-						userId: 85,
+						userId: localStorage.userId,
 						id: id
 					}, function(data) {
 						$(obj).parent().parent().parent().parent().remove();

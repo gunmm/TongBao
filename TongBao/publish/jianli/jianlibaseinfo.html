@@ -27,17 +27,18 @@
 
 	<body>
 		<script type="text/javascript" charset="utf-8">
-			var name, phone, email, birth, evaluation, bigdata, isboy, provinceId, cityId, provincee, cityy, jobWanId, publishId;
+			var name, phone, email, birth, evaluation, bigdata, isboy = true,
+				provinceId, cityId, provincee, cityy, jobWanId, publishId;
 			post1('/webQz/QiuzhiById', false, {
 				"userId": localStorage.userId,
 			}, function(data) {
 				this.bigdata = data.result;
 				console.log(data);
-				if (data.result.jobWanId) {
+				if(data.result.jobWanId) {
 					this.jobWanId = data.result.jobWanId;
 					this.publishId = data.result.publishId;
 				}
-				if (data.result.name) {
+				if(data.result.name) {
 					this.name = data.result.name;
 					this.phone = data.result.phone;
 					this.email = data.result.email;
@@ -47,7 +48,7 @@
 					this.cityId = data.result.cityId;
 					this.provincee = data.result.province;
 					this.cityy = data.result.city;
-					if (data.result.sex == '男') {
+					if(data.result.sex == '男') {
 						this.isboy = true;
 						$('#gender').val(1);
 					} else {
@@ -70,7 +71,7 @@
 					<span class="fl">性别</span>
 					<span data-value="2" class="fr  sex-js"><i class="orsex" v-bind:class="{orcolor:!isboy}"></i>女</span>
 					<span data-value="1" class="fr  sex-js orboy"><i class="orsex" v-bind:class="{orcolor:isboy}"></i>男</span>
-					<input type="hidden" id="gender">
+					<input type="hidden" id="gender" value="1">
 				</div>
 				<div class="zp-list overflow-h">
 					<span class="fl">出生日期</span>
@@ -157,168 +158,168 @@
 	</body>
 
 	<script type="text/javascript">
-		 //经验要求
+		//经验要求
 		getDicTable(true, "004", function(data) {
-				vm.gzjy = data.result;
-				if (bigdata.exprience) {
-					for (var i = 0; i < vm.gzjy.length; i++) {
-						var obj = vm.gzjy[i];
-						if (obj.itemName == bigdata.exprience) {
-							vm.jingyan = obj.itemCode;
-						}
+			vm.gzjy = data.result;
+			if(bigdata.exprience) {
+				for(var i = 0; i < vm.gzjy.length; i++) {
+					var obj = vm.gzjy[i];
+					if(obj.itemName == bigdata.exprience) {
+						vm.jingyan = obj.itemCode;
 					}
 				}
-			})
-			//职称要求
-		 getDicTable(true, "005", function(data) {
-				vm.gzzc = data.result;
-				if (bigdata.profession) {
-					for (var i = 0; i < vm.gzzc.length; i++) {
-						var obj = vm.gzzc[i];
-						if (obj.itemName == bigdata.profession) {
-							vm.zhicheng = obj.itemCode;
-						}
+			}
+		})
+		//职称要求
+		getDicTable(true, "005", function(data) {
+			vm.gzzc = data.result;
+			if(bigdata.profession) {
+				for(var i = 0; i < vm.gzzc.length; i++) {
+					var obj = vm.gzzc[i];
+					if(obj.itemName == bigdata.profession) {
+						vm.zhicheng = obj.itemCode;
 					}
 				}
-			})
-//			//学历要求
-//		 getDicTable(true, "003", function(data) {
-//			vm.xuelidic = data.result;
-//			if (bigdata.educational) {
-//				for (var i = 0; i < vm.xuelidic.length; i++) {
-//					var obj = vm.xuelidic[i];
-//					if (obj.itemName == bigdata.educational) {
-//						vm.xueli = obj.itemCode;
-//					}
-//				}
-//			}
-//		})
+			}
+		})
+		//			//学历要求
+		//		 getDicTable(true, "003", function(data) {
+		//			vm.xuelidic = data.result;
+		//			if (bigdata.educational) {
+		//				for (var i = 0; i < vm.xuelidic.length; i++) {
+		//					var obj = vm.xuelidic[i];
+		//					if (obj.itemName == bigdata.educational) {
+		//						vm.xueli = obj.itemCode;
+		//					}
+		//				}
+		//			}
+		//		})
 		var province;
 		var city;
 		getCity(function(p, c) {
 			province = p;
 			city = c;
-			if (this.cityId) {
+			if(this.cityId) {
 				selectProvinceAndCity();
 			}
 		});
 		var id = "";
 		var publishId2 = "";
-		if (this.jobWanId) {
+		if(this.jobWanId) {
 			id = this.jobWanId;
 		}
-		if (this.publishId) {
+		if(this.publishId) {
 			publishId2 = this.publishId;
 		}
 		var vm = new Vue({
-				el: '#app',
-				data: {
-					name: this.name,
-					isboy: this.isboy,
-					birth: this.birth,
-					jingyan: '',
-					gzjy: [],
-					zhicheng: '',
-					gzzc: [],
-					phone: this.phone,
-					email: this.email,
-					province: province,
-					city: city,
-					evaluation: this.evaluation,
+			el: '#app',
+			data: {
+				name: this.name,
+				isboy: this.isboy,
+				birth: this.birth,
+				jingyan: '',
+				gzjy: [],
+				zhicheng: '',
+				gzzc: [],
+				phone: this.phone,
+				email: this.email,
+				province: province,
+				city: city,
+				evaluation: this.evaluation,
+			},
+			methods: {
+				chooseaddress: function() {
+					$("#sl-dizhi").show();
 				},
-				methods: {
-					chooseaddress: function() {
-						$("#sl-dizhi").show();
-					},
-					selectprovince: function(id, name) {
-						$("#choosedprovincename").val(name);
-						$("#choosedprovince").val(id);
-						$("#choosedcity").val('');
-					},
-					selectcity: function(id, name) {
-						$("#city").html($("#choosedprovincename").val() + ' ' + name);
-						$("#choosedcity").val(id);
-						$("#sl-dizhi").hide();
-					},
-					update() {
-						if (!checkBirth() || !checkEmail() || !checkTel()) {
-							return false;
-						}
-						vm.name = Trim(vm.name, 'g');
-						if (vm.name == "") {
-							alert('请填写姓名')
-							return
-						}
-						if ($('.kbtn') == "") {
-							alert('请填写出生日期')
-							return
-						}
-						if ($('.gzzc') == "") {
-							alert('请填写出生日期')
-							return
-						}
-						if ($('#city').text() == "请选择") {
-							alert('请填写所在城市')
-							return
-						}
-						post('/webQz/editPersonalBasicInfo', {
-							"userId": localStorage.userId,
-							"id": id,
-							"publishId": publishId2,
-							"name": vm.name,
-							"gender": $('#gender').val(),
-							"birth": vm.birth,
-							"exprience": vm.jingyan,
-							"professionLevel": vm.zhicheng,
-							"phone": vm.phone,
-							"email": vm.email,
-							"province": $("#choosedprovince").val(),
-							"city": $("#choosedcity").val(),
-							"evaluation": vm.evaluation
-						}, function(data) {
-							console.log(data);
-							if (data.result_code == '1') {
-								alert("保存成功!");
-								window.history.go(-1);
-							} else {
-								alert("发布失败，请重试！");
-							}
-						})
+				selectprovince: function(id, name) {
+					$("#choosedprovincename").val(name);
+					$("#choosedprovince").val(id);
+					$("#choosedcity").val('');
+				},
+				selectcity: function(id, name) {
+					$("#city").html($("#choosedprovincename").val() + ' ' + name);
+					$("#choosedcity").val(id);
+					$("#sl-dizhi").hide();
+				},
+				update: function() {
+					if(!checkBirth() || !checkEmail() || !checkTel()) {
+						return false;
 					}
+					vm.name = Trim(vm.name, 'g');
+					if(vm.name == "") {
+						alert('请填写姓名')
+						return
+					}
+					if($('.kbtn') == "") {
+						alert('请填写出生日期')
+						return
+					}
+					if($('.gzzc') == "") {
+						alert('请填写出生日期')
+						return
+					}
+					if($('#city').text() == "请选择") {
+						alert('请填写所在城市')
+						return
+					}
+					post('/webQz/editPersonalBasicInfo', {
+						"userId": localStorage.userId,
+						"id": id,
+						"publishId": publishId2,
+						"name": vm.name,
+						"gender": $('#gender').val(),
+						"birth": vm.birth,
+						"exprience": vm.jingyan,
+						"professionLevel": vm.zhicheng,
+						"phone": vm.phone,
+						"email": vm.email,
+						"province": $("#choosedprovince").val(),
+						"city": $("#choosedcity").val(),
+						"evaluation": vm.evaluation
+					}, function(data) {
+						console.log(data);
+						if(data.result_code == '1') {
+							alert("保存成功!");
+							window.history.go(-1);
+						} else {
+							alert("发布失败，请重试！");
+						}
+					})
 				}
-			})
-			//选择出生日期
+			}
+		})
+		//选择出生日期
 		var birth = vm.birth;
 
 		function checkBirth() {
-				var endTime = vm.birth;
-				var end = new Date(endTime.replace("-", "/").replace("-", "/"));
-				var current = new Date();
-				if (end > current) {
-					vm.$dialog.alert({
-						mes: '出生日期必须在今天之前!'
-					});
-					vm.birth = birth;
-					return false;
-				}
-				return true;
+			var endTime = vm.birth;
+			var end = new Date(endTime.replace("-", "/").replace("-", "/"));
+			var current = new Date();
+			if(end > current) {
+				vm.$dialog.alert({
+					mes: '出生日期必须在今天之前!'
+				});
+				vm.birth = birth;
+				return false;
 			}
-			//检查电话格式
+			return true;
+		}
+		//检查电话格式
 
 		function checkTel() {
-				if (!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.phone))) {
-					vm.$dialog.alert({
-						mes: '电话格式不正确!'
-					});
-					return false;
-				}
-				return true;
+			if(!(/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/.test(vm.phone))) {
+				vm.$dialog.alert({
+					mes: '电话格式不正确!'
+				});
+				return false;
 			}
-			//检查邮箱格式
+			return true;
+		}
+		//检查邮箱格式
 
 		function checkEmail() {
 			var email = vm.email;
-			if (!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+			if(!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
 				vm.$dialog.alert({
 					mes: 'email格式不正确！请重新输入!'
 				});
@@ -336,12 +337,12 @@
 		$(function() {
 			//选择性别
 			$('.orsex').click(function() {
-					$(this).addClass('orcolor');
-					$(this).parent('span').siblings('span').children('i').removeClass('orcolor');
-					var gender = $(this).parent().data('value');
-					$('#gender').val(gender);
-				})
-				//选择省份
+				$(this).addClass('orcolor');
+				$(this).parent('span').siblings('span').children('i').removeClass('orcolor');
+				var gender = $(this).parent().data('value');
+				$('#gender').val(gender);
+			})
+			//选择省份
 			$('.province li').click(function() {
 				$('.city').eq($(this).index()).removeClass('none').siblings('.city').addClass('none');
 				$(this).css('background', '#FFFFFF').siblings('.province li').css('background', '#ededed');
@@ -350,7 +351,7 @@
 			$('.city li').click(function() {
 				$('.address span').text($(this).text())
 				$('.zhiwei').text($(this).text())
-					//					$(this).addClass('on-blue').siblings('.job-list li').removeClass('on-blue');
+				//					$(this).addClass('on-blue').siblings('.job-list li').removeClass('on-blue');
 				$('.city li ').removeClass('on-blue');
 				$(this).addClass('on-blue');
 				$('.tab-panl').addClass('none')
@@ -360,7 +361,7 @@
 		function Trim(str, is_global) {
 			var result;
 			result = str.replace(/(^\s+)|(\s+$)/g, "");
-			if (is_global.toLowerCase() == "g") {
+			if(is_global.toLowerCase() == "g") {
 				result = result.replace(/\s/g, "");
 			}
 			return result;

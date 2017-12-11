@@ -215,9 +215,11 @@
 						<img v-else src="../../static/img/shoucang1.png" alt="" />
 						<span class="on">收藏</span>
 					</li>
-					<li class="last">
+					<li id="toudi" hidden class="last">
 						<span v-if="isToudi" class="todi" id="asd" @click="toudi()">已邀请面试</span>
 						<span v-else class="todi" @click="toudi()">邀请面试</span>
+					</li>
+					<li class="last">
 					</li>
 				</ul>
 			</footer>
@@ -287,6 +289,9 @@
 				vm.gender = d.sex == '男';
 				vm.showcompanyname = d.showcompanyname == 1;
 				vm.userId = d.userId;
+				if(!d.admin) {
+					$('#toudi').show();
+				}
 			})
 		})
 

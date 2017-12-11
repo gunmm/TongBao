@@ -289,7 +289,7 @@
 				opts: function() {
 					post('/webUser/DeleteUserToudiById', {
 						id: id,
-						userId: 85
+						uId: localStorage.userId
 					}, function(data) {
 						$(obj).parent().parent().parent().parent().remove();
 					})

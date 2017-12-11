@@ -352,11 +352,13 @@
 					<img v-else src="../../static/img/shoucang1.png" alt="" />
 					<span class="on">收藏</span>
 				</li>
-				<li class="last">
+				<li id="toudi" hidden class="last">
 					<span v-if="isToudi" class="todi" id="asd">已投标</span>
 					<span v-else class="todi">
 						<a :href="userInfo.regStatus == 1?'toubiao.html?id='+id+'&unit='+unit:'../../register/register.html'">立即投标</a>
 					</span>
+				</li>
+				<li class="last">
 				</li>
 			</ul>
 		</footer>
@@ -397,7 +399,6 @@
 		post('/webZb/ZhaobiaoDetail', {
 			id: id
 		}, function(data) {
-			console.log(data)
 			var d = data.result;
 			vm.category = d.category;
 			vm.price = d.price;
@@ -415,6 +416,9 @@
 			vm.title = d.title;
 			vm.userId = d.userId;
 			vm.guiges = d.guiges;
+			if(!d.admin) {
+				$('#toudi').show();
+			}
 		})
 		post('/webSc/isFavorite', {
 			id: id,

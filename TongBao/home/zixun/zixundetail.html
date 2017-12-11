@@ -97,6 +97,11 @@
 				vm.isZan = data.result;
 			})
 
+			post('/webUser/addBrowser', {
+				userId: localStorage.userId,
+				articleId: id
+			}, function(data) {})
+
 			var vm = new Vue({
 				el: '#app',
 				data: {
