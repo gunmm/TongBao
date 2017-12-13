@@ -295,7 +295,7 @@
 			pageNo: 1,
 			pageSize: 10,
 			messageType: 2,
-			userId: id
+			publishUserId: id
 		}, function(data) {
 			vm.datalist = data.result;
 		})
@@ -314,7 +314,7 @@
 						pageNo: vm.pageNo,
 						pageSize: vm.pageSize,
 						messageType: 2,
-						userId: id
+						publishUserId: id
 					}, function(data) {
 						_list = data.result;
 						vm.datalist = vm.datalist.concat(_list);

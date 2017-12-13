@@ -275,16 +275,21 @@
 		})
 
 		function previewStatus() {
+			var reqdata = {
+				"publishId": this.publishId,
+				"userId": localStorage.userId,
+				"requestToken": localStorage.accessToken
+			};
+			if(isWx()) {
+				reqdata['openid'] = localStorage.openid;
+			}
+
 			$.ajax({
 				type: "post",
 				url: ip + "/webQz/getResumeIsPerfect",
 				async: true,
 				traditional: true,
-				data: {
-					"publishId": this.publishId,
-					"userId": localStorage.userId,
-					"requestToken": localStorage.accessToken
-				},
+				data: reqdata,
 				success: function(data) {
 					console.log(data);
 					vm.$dialog.loading.close();

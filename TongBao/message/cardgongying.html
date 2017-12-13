@@ -287,7 +287,6 @@
 		var qs = new QueryString();
 		var id = parseInt(qs['id']);
 		getUserInfo(id, function(data) {
-			console.log(data)
 			vm.userInfo = data.result;
 		})
 
@@ -295,9 +294,8 @@
 			pageNo: 1,
 			pageSize: 10,
 			messageType: 5,
-			userId: id
+			publishUserId: id
 		}, function(data) {
-			console.log(data)
 			vm.datalist = data.result;
 		})
 
@@ -315,7 +313,7 @@
 						pageNo: vm.pageNo,
 						pageSize: vm.pageSize,
 						messageType: 5,
-						userId: id
+						publishUserId: id
 					}, function(data) {
 						_list = data.result;
 						vm.datalist = vm.datalist.concat(_list);
