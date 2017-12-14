@@ -5,7 +5,7 @@ var provinceCity = '[{"deep":1,"name":"北京市","id":1,"sort":0,"parentId":0},
 
 var vm = new Vue();
 
-//localStorage.userId = 837;
+//localStorage.userId = 831;
 
 function asJump() {
 	as.jump();
@@ -358,7 +358,9 @@ function getClassifyTable(async, classType, callback) {
  */
 function getUserInfo(userId, callback) {
 	if(userId) {
-		post('/webUser/findUserMessage', {}, function(data) {
+		post('/webUser/findUserMessage', {
+			uid: userId
+		}, function(data) {
 			callback(data);
 		})
 	}
