@@ -431,20 +431,19 @@
 			var reader = new FileReader();
 			reader.readAsDataURL(file);
 			reader.onload = function(e) {
-				
 				dealImage(e.target.result, {
 					quality: 0.1
 				}, function(value) {
 					managerotateImg(value, Orientation, function(base64) {
 						$('#logocompany').attr('src', base64);
 						post('/upload/fileMobileBase', {
-							"imgBases": base64
-						},
-						function(data) {
-							if (data.result.length > 0) {
-								vm.logostr = data.result[0];
-							}
-						})
+								"imgBases": base64
+							},
+							function(data) {
+								if (data.result.length > 0) {
+									vm.logostr = data.result[0];
+								}
+							})
 					})
 				});
 			};
@@ -462,16 +461,6 @@
 				var reader = new FileReader();
 				reader.readAsDataURL(file);
 				reader.onload = function(e) {
-					$("#xz").before(
-						"<li class='pos-r fl'>" +
-						"<div class='zhanshi2 pos-r'>" +
-						"<img src='" + e.target.result + "'/>" +
-						"<input type='hidden' name='shilizhanshi' value=''/>" +
-						"<div id='" + e.target.result + "' class='delet-pic' onclick='removeLi(this)'>" +
-						"<img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' />" +
-						"</div>" +
-						"</div>" +
-						"</li>");
 					dealImage(e.target.result, {
 						quality: 0.1
 					}, function(value) {
@@ -480,6 +469,16 @@
 							},
 							function(data) {
 								if (data.result.length > 0) {
+									$("#xz").before(
+									"<li class='pos-r fl'>" +
+									"<div class='zhanshi2 pos-r'>" +
+									"<img src='" + ip+data.result[0]+ "'/>" +
+									"<input type='hidden' name='shilizhanshi' value=''/>" +
+									"<div id='" + data.result[0] + "' class='delet-pic' onclick='removeLi(this)'>" +
+									"<img src='../static/img/9E9E7268-4F63-4B93-8850-DFF862172AEA@2x.png' />" +
+									"</div>" +
+									"</div>" +
+									"</li>");
 									vm.shilipic.push(data.result[0]);
 								}
 							})
@@ -497,7 +496,6 @@
 					alert("请选择图片类型上传");
 					continue;
 				}
-				
 				var Orientation = null;
 				//获取照片方向角属性，用户旋转控制  
 				EXIF.getData(file, function() {
@@ -507,20 +505,19 @@
 				var reader = new FileReader();
 				reader.readAsDataURL(file);
 				reader.onload = function(e) {
-					
 					dealImage(e.target.result, {
 						quality: 0.1
 					}, function(value) {
 						managerotateImg(value, Orientation, function(base64) {
 							$('#ziliao').attr('src', base64);
 							post('/upload/fileMobileBase', {
-								"imgBases": base64
-							},
-							function(data) {
-								if (data.result.length > 0) {
-									vm.renzhengpic = data.result[0];
-								}
-							})
+									"imgBases": base64
+								},
+								function(data) {
+									if (data.result.length > 0) {
+										vm.renzhengpic = data.result[0];
+									}
+								})
 						})
 					});
 				};
