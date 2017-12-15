@@ -321,10 +321,10 @@
 		})
 
 		function selectProvinceAndCity() {
-			$("#choosedprovincename").val(this.bigdata.province);
-			$("#choosedprovince").val(this.bigdata.provinceId);
-			$("#city").html($("#choosedprovincename").val() + ' ' + this.bigdata.city);
-			$("#choosedcity").val(this.bigdata.cityId);
+			$("#choosedprovincename").val(this.bigdata.targetprovince);
+			$("#choosedprovince").val(this.bigdata.targetprovinceId);
+			$("#city").html($("#choosedprovincename").val() + ' ' + this.bigdata.targetcity);
+			$("#choosedcity").val(this.bigdata.targetcityId);
 		}
 
 		function selectGangweiA() {
