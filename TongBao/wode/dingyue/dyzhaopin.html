@@ -31,7 +31,7 @@
 			var Request = new QueryString();
 			var itemid = Request["id"];
 			var obj, fuli;
-			if (itemid) {
+			if(itemid) {
 				post1('/webUser/subscribePersonaListl', false, {
 					"userId": localStorage.userId,
 				}, function(data) {
@@ -129,92 +129,91 @@
 	</body>
 
 	<script type="text/javascript">
-		 //地址
+		//地址
 		var province;
 		var city;
 		getCity(function(p, c) {
 			province = p;
 			city = c;
-			if (this.obj) {
+			if(this.obj) {
 				selectProvinceAndCity();
 			}
 		});
-		 //岗位类别
+		//岗位类别
 		var job;
 		var jobList;
 		getDicTable(false, "006", function(data) {
-				var list = data.result;
-				var job = [];
-				var jobList = [];
-				var jobM = {};
-				for (var i = 0; i < list.length; i++) {
-					var obj = list[i];
-					if (!obj.pid) {
-						job.push(obj);
-					} else {
-						jobList.push(obj);
+			var list = data.result;
+			var job = [];
+			var jobList = [];
+			var jobM = {};
+			for(var i = 0; i < list.length; i++) {
+				var obj = list[i];
+				if(!obj.pid) {
+					job.push(obj);
+				} else {
+					jobList.push(obj);
+				}
+			}
+			for(var i = 0; i < job.length; i++) {
+				var array = [];
+				for(var j = 0; j < jobList.length; j++) {
+					if(job[i].id == jobList[j].pid) {
+						array.push(jobList[j]);
+						jobM['' + job[i].id] = array;
 					}
 				}
-				for (var i = 0; i < job.length; i++) {
-					var array = [];
-					for (var j = 0; j < jobList.length; j++) {
-						if (job[i].id == jobList[j].pid) {
-							array.push(jobList[j]);
-							jobM['' + job[i].id] = array;
-						}
+			}
+			this.job = job;
+			this.jobList = jobM;
+			if(this.obj) {
+				selectGangweiA();
+			}
+		})
+		//公司性质
+		getDicTable(true, "010", function(data) {
+			vm.companytypes = data.result;
+			if(this.obj) {
+				for(var i = 0; i < vm.companytypes.length; i++) {
+					var obj = vm.companytypes[i];
+					if(obj.itemName == this.obj.companytype) {
+						vm.companytype = obj.itemCode;
 					}
 				}
-				this.job = job;
-				this.jobList = jobM;
-				if (this.obj) {
-					selectGangweiA();
-				}
-			})
-			//公司性质
-		 getDicTable(true, "010", function(data) {
-				vm.companytypes = data.result;
-				if (this.obj) {
-					for (var i = 0; i < vm.companytypes.length; i++) {
-						var obj = vm.companytypes[i];
-						if (obj.itemName == this.obj.companytype) {
-							vm.companytype = obj.itemCode;
-						}
-					}
-				}
-			})
-			//经验要求
+			}
+		})
+		//经验要求
 		getDicTable(true, "004", function(data) {
-				vm.jingyans = data.result;
-				if(this.obj){
-					if(this.obj.jingyanId){
-						vm.jingyan = this.obj.jingyanId;
-					}
+			vm.jingyans = data.result;
+			if(this.obj) {
+				if(this.obj.jingyanId) {
+					vm.jingyan = this.obj.jingyanId;
 				}
-				
+			}
 
-			})
-			//学历要求
+		})
+		//学历要求
 		getDicTable(true, "003", function(data) {
-				vm.xuelis = data.result;
-				if(this.obj){
-					if(this.obj.xueliId){
-						vm.xueli = this.obj.xueliId;
+			vm.xuelis = data.result;
+			if(this.obj) {
+				if(this.obj.xueliId) {
+					vm.xueli = this.obj.xueliId;
+				}
+			}
+		})
+		//职称要求
+		getDicTable(true, "005", function(data) {
+			vm.zhichengs = data.result;
+			if(this.obj) {
+				for(var i = 0; i < vm.zhichengs.length; i++) {
+					var obj = vm.zhichengs[i];
+					if(obj.itemName == this.obj.zhicheng) {
+						vm.zhicheng = obj.itemCode;
 					}
 				}
-			})
-			//职称要求
-		 getDicTable(true, "005", function(data) {
-				vm.zhichengs = data.result;
-				if (this.obj) {
-					for (var i = 0; i < vm.zhichengs.length; i++) {
-						var obj = vm.zhichengs[i];
-						if (obj.itemName == this.obj.zhicheng) {
-							vm.zhicheng = obj.itemCode;
-						}
-					}
-				}
-			})
-			//福利待遇
+			}
+		})
+		//福利待遇
 		var fulidic;
 		getDicTable(false, "002", function(data) {
 			this.fulidic = data.result;
@@ -269,22 +268,22 @@
 					$("#choosedcity").val('');
 				},
 				save: function() {
-					if ($('#gangwei').text() == '请选择') {
+					if($('#gangwei').text() == '请选择') {
 						alert('请选择职位')
 						return
 					}
-					if ($('.info-select1').val() == "") {
-						alert('请选择公司性质')
-						return
-					}
-					if ($('#city').text() == '请选择') {
+					//					if ($('.info-select1').val() == "") {
+					//						alert('请选择公司性质')
+					//						return
+					//					}
+					if($('#city').text() == '请选择') {
 						alert('请选择工作城市')
 						return
 					}
 					var dataa;
 					var Request = new QueryString();
 					var itemid = Request["id"];
-					if (itemid) {
+					if(itemid) {
 						dataa = {
 							"userId": localStorage.userId,
 							"province": $("#choosedprovince").val(),
@@ -296,8 +295,8 @@
 							"xueli": vm.xueli,
 							"zhicheng": vm.zhicheng,
 							"subscribeType": "3",
-							"operationIndex":itemid,
-							"operationType":1
+							"operationIndex": itemid,
+							"operationType": 1
 						}
 					} else {
 						dataa = {
@@ -313,16 +312,16 @@
 							"subscribeType": "3",
 						}
 					}
-						post('/webUser/subscribePersonal', dataa,
-							function(data) {
-								console.log(data);
-								if (data.result_code == '1') {
-									alert("订阅成功!");
-									window.history.go(-1);
-								} else {
-									alert("订阅失败，请重试！");
-								}
-							})
+					post('/webUser/subscribePersonal', dataa,
+						function(data) {
+							console.log(data);
+							if(data.result_code == '1') {
+								alert("订阅成功!");
+								window.history.go(-1);
+							} else {
+								alert("订阅失败，请重试！");
+							}
+						})
 				},
 			},
 		});
