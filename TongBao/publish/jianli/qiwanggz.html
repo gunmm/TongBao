@@ -287,7 +287,7 @@
 						"targetSalary": vm.targetxinzi,
 						"onduty": vm.onduty,
 						"jointime": vm.jointime,
-						"targetcity": vm.targetcity
+						"targetcity": $("#choosedcity").val()
 					}, function(data) {
 						console.log(data);
 						if (data.result_code == '1') {
